@@ -1,0 +1,230 @@
+// Here you can add other styles
+
+.project-accordion {
+  --cui-accordion-btn-color: white;
+  --cui-accordion-btn-bg: #3c763d;
+  --cui-accordion-active-color: white;
+  --cui-accordion-active-bg: #3c763d;
+}
+
+.nav-accordion {
+  z-index: 1000;
+  .accordion-button {
+    // padding-bottom: 0px !important;
+    .nav-link {
+      color: white;
+    }
+    .active {
+      color: black;
+    }
+  }
+}
+
+.informative-panel-accordion {
+  .btn {
+    background-color: #ff9512;
+    color: white;
+    margin-left: 40%;
+  }
+}
+
+.skynav {
+  .btn {
+    background-color: #ff9512;
+    color: white;
+    margin-left: 40%;
+  }
+}
+
+.technicalDocumentation {
+  .btn {
+    background-color: #ff9512;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .actions-card {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.turnOverPackage {
+  .btn {
+    background-color: #ff9512;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .actions-card {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.proyect-administration {
+  .action-buttons {
+    margin-bottom: 10px;
+    .btn {
+      background-color: #ff9512;
+      color: white;
+      margin-left: 10px;
+    }
+  }
+}
+
+.contract-administration {
+  .action-buttons {
+    margin-bottom: 10px;
+    .btn {
+      background-color: #ff9512;
+      color: white;
+      margin-left: 10px;
+    }
+  }
+}
+
+.project-creation-modal {
+  .row {
+    margin-bottom: 2%;
+  }
+  .btn-add {
+    background-color: #ff9512;
+    color: white;
+  }
+}
+
+.category-creation-modal {
+  .row {
+    margin-bottom: 2%;
+  }
+  .btn-add {
+    background-color: #ff9512;
+    color: white;
+  }
+  .btn-edit {
+    background-color: #ff9512;
+    color: white;
+    margin-right: 5px;
+  }
+  .btn-del {
+    background-color: #ff9512;
+    color: white;
+  }
+}
+
+.project-list {
+  --cui-accordion-btn-color: black;
+  --cui-accordion-btn-bg: white;
+  --cui-accordion-active-color: black;
+  --cui-accordion-active-bg: white;
+  --cui-accordion-btn-focus-border-color: white;
+  --cui-accordion-btn-focus-box-shadow: white;
+
+  .accordion-body {
+    background-color: #dee2e6;
+  }
+
+  .btn-project-action {
+    background-color: #00778b;
+    margin: 5px;
+    color: white;
+  }
+}
+
+.contract-list {
+  --cui-accordion-btn-color: black;
+  --cui-accordion-btn-bg: white;
+  --cui-accordion-active-color: black;
+  --cui-accordion-active-bg: white;
+  --cui-accordion-btn-focus-border-color: white;
+  --cui-accordion-btn-focus-box-shadow: white;
+
+  .accordion-body {
+    background-color: #dee2e6;
+  }
+
+  .btn-project-action {
+    background-color: #00778b;
+    margin: 5px;
+    color: white;
+  }
+}
+
+.login-container {
+  background-color: #557a95;
+
+  .login-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+    color: white;
+  }
+
+  .text-body-secondary {
+    text-align: center;
+  }
+
+  .login-button {
+    background-color: #b0a295;
+    border-color: #b0a295;
+    color: white;
+    width: 100%;
+  }
+}
+
+.project-selector-container {
+  .project-title {
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: 300;
+    text-align: justify;
+  }
+
+  .project-manager {
+    color: #fff;
+    font-size: 1em;
+    font-weight: 300;
+    text-align: center;
+  }
+}
+
+.project-description {
+  .project-img-container {
+    text-align: center;
+  }
+}
+
+.dailyReport {
+  input {
+    border-style: solid;
+    border-color: gray;
+  }
+
+  textarea {
+    border-style: solid;
+    border-color: black;
+  }
+  .dailyReport-accordion {
+    --cui-accordion-btn-color: white;
+    --cui-accordion-btn-bg: #6f0404;
+    --cui-accordion-active-color: white;
+    --cui-accordion-active-bg: #6f0404;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .table {
+    --cui-table-bg: none;
+  }
+
+  .company-report {
+    .row {
+      margin-bottom: 2%;
+    }
+  }
+}
+
+h2 {
+  color: #ff9512;
+}

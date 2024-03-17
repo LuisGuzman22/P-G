@@ -1,0 +1,66 @@
+import { useContext } from 'react'
+import { DailyReportContext } from 'src/context/DailyReportContext'
+
+const useRegisterDailyReportCompany = () => {
+  const {
+    storeCompanyData,
+    storeIndirectWorkForceData,
+    storeDirectWorkForce,
+    removeDirectWorkForce,
+    directWorkForceList,
+    indirectWorkForceList,
+    removeIndirectWorkForce,
+    storeTotalIndirectWorkForce,
+    storeTotalDirectWorkForce,
+    storeIndirectDotationWorkForceData,
+    removeIndirectDotationWorkForce,
+    indirectDotationWorkForceList,
+    storeDirectDotationWorkForceData,
+    removeDirectDotationWorkForce,
+    directDotationWorkForceList,
+    storeDotationWorkfoce,
+    machineryWorkForceList,
+    storeMachineryWorkForce,
+    removeMachineryWorkForce,
+    storeEquipmentWorkForce,
+    removeEquipmentWorkForce,
+    equipmentWorkForceList,
+    storeVehicleWorkForce,
+    removeVehicleWorkForce,
+    vehicleWorkForceList,
+    storeComment,
+    storeIncident,
+  } = useContext(DailyReportContext)
+
+  return {
+    storeCompanyData,
+    storeIndirectWorkForceData,
+    storeDirectWorkForce,
+    removeDirectWorkForce,
+    directWorkForceList,
+    indirectWorkForceList,
+    removeIndirectWorkForce,
+    storeTotalIndirectWorkForce,
+    storeTotalDirectWorkForce,
+    storeIndirectDotationWorkForceData,
+    removeIndirectDotationWorkForce,
+    indirectDotationWorkForceList,
+    storeDirectDotationWorkForceData,
+    removeDirectDotationWorkForce,
+    directDotationWorkForceList,
+    storeDotationWorkfoce,
+    machineryWorkForceList,
+    storeMachineryWorkForce,
+    removeMachineryWorkForce,
+    storeEquipmentWorkForce,
+    removeEquipmentWorkForce,
+    equipmentWorkForceList,
+    storeVehicleWorkForce,
+    removeVehicleWorkForce,
+    vehicleWorkForceList,
+    storeComment,
+    storeIncident,
+  }
+}
+
+export default useRegisterDailyReportCompany
