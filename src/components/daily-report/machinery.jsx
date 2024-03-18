@@ -1,9 +1,9 @@
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 import {
-  CForm,
+  CButton,
   CFormInput,
   CRow,
-  CFormTextarea,
+  CFormSelect,
   CTable,
   CTableHead,
   CTableHeaderCell,
@@ -11,828 +11,320 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
+import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
+import { v4 as uuidv4 } from 'uuid'
+
 const Machinery = () => {
+  const initialState = {
+    machinery: undefined,
+    machineryOfferedNumber: undefined,
+    machineryCertifiedNumber: undefined,
+    machineryWorkNumber: undefined,
+    machineryEffectiveTime: undefined,
+    machineryUnscheduleMaintenance: undefined,
+    machineryScheduleMaintenance: undefined,
+    machineryUnscheduleDelay: undefined,
+    machineryReserves: undefined,
+    machineryHorometer: undefined,
+    machineryOpperationalLoss: undefined,
+    machineryScheduleDelay: undefined,
+  }
+
+  const [machinery, setMachinery] = useState(initialState)
+  const [machineryList, setMachineryList] = useState([])
+
+  const {
+    storeMachinery,
+    removeMachinery,
+    machineryList: machineryListContext,
+  } = useRegisterDailyReportCompany()
+
+  const onChangeData = (e) => {
+    if (e.target.id === 'machinery') {
+      setMachinery(initialState) // Clear the object
+      setMachinery({ [e.target.id]: e.target.value })
+    }
+    setMachinery({ ...machinery, [e.target.id]: e.target.value })
+  }
+
+  const registerMachinery = () => {
+    const machineryInitialState = {
+      id: uuidv4(),
+      machinery: machinery.machinery,
+      actions: {
+        machineryOfferedNumber: machinery.machineryOfferedNumber,
+        machineryCertifiedNumber: machinery.machineryCertifiedNumber,
+        machineryWorkNumber: machinery.machineryWorkNumber,
+        machineryEffectiveTime: machinery.machineryEffectiveTime,
+        machineryUnscheduleMaintenance: machinery.machineryUnscheduleMaintenance,
+        machineryScheduleMaintenance: machinery.machineryScheduleMaintenance,
+        machineryUnscheduleDelay: machinery.machineryUnscheduleDelay,
+        machineryReserves: machinery.machineryReserves,
+        machineryHorometer: machinery.machineryHorometer,
+        machineryOpperationalLoss: machinery.machineryOpperationalLoss,
+        machineryScheduleDelay: machinery.machineryScheduleDelay,
+      },
+    }
+    setMachinery(initialState) // Clear the object
+    setMachineryList([...machineryList, machineryInitialState])
+  }
+
+  const deleteMachinery = (id) => {
+    const newData = machineryList.filter((item) => item.id !== id)
+    setMachineryList(newData)
+
+    removeMachinery(id)
+  }
+
+  useEffect(() => {
+    storeMachinery(machineryList)
+  }, [machineryList])
+
   return (
     <div className="work-force-report">
-      <span>FALTA</span>
+      <CFormSelect
+        aria-label="Default select example"
+        id="machinery"
+        onChange={(e) => {
+          onChangeData(e)
+        }}
+      >
+        <option>Seleccione</option>
+        <option value="maquina_1">Maquina 1</option>
+        <option value="maquina_2">Maquina 2</option>
+        <option value="maquina_3">Maquina 3</option>
+      </CFormSelect>
+
       <CTable>
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col"></CTableHeaderCell>
-            <CTableHeaderCell scope="col">Maquinaria 1 + Patente</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Maquinaria 2 + Patente</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Maquinaria 3 + Patente</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Maquinaria 4 + Patente</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Maquinaria 5 + Patente</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Maquinaria 6 + Patente</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Maquinaria 7 + Patente</CTableHeaderCell>
+            <CTableHeaderCell scope="col">N° maq oferta</CTableHeaderCell>
+            <CTableHeaderCell scope="col">N° maq Acreditado</CTableHeaderCell>
+            <CTableHeaderCell scope="col">N° maq en Obra</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Tiempo Efectivo (Hrs)</CTableHeaderCell>
+            <CTableHeaderCell scope="col">
+              Mantenimiento No Programado (Hrs) (Por alguna falla o alerta)
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
           <CTableRow>
-            <CTableHeaderCell scope="row">N° maq oferta</CTableHeaderCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
+                id="machineryOfferedNumber"
+                value={machinery.machineryOfferedNumber || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
+                id="machineryCertifiedNumber"
+                value={machinery.machineryCertifiedNumber || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
+                id="machineryWorkNumber"
+                value={machinery.machineryWorkNumber || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
+                id="machineryEffectiveTime"
+                value={machinery.machineryEffectiveTime || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
+                id="machineryUnscheduleMaintenance"
+                value={machinery.machineryUnscheduleMaintenance || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableHeaderCell scope="row">N° maq Acreditado</CTableHeaderCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">N° Maq en Obra</CTableHeaderCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">Tiempo Efectivo (Hrs)</CTableHeaderCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">
-              Mantenimiento No Programado (Hrs) (Por alguna falla o alerta)
-            </CTableHeaderCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">Mantenimiento Programado (Hrs)</CTableHeaderCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">
+            <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
+            <CTableHeaderCell scope="col">
               Demora No Programada (Hrs) (Interrupción al ciclo de trabajo)
             </CTableHeaderCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">
+            <CTableHeaderCell scope="col">
               Reservas (Hrs) (Sin operador, factores externos)
             </CTableHeaderCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">Horometro (Hrs)</CTableHeaderCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">
+            <CTableHeaderCell scope="col">Horometro (Hrs)</CTableHeaderCell>
+            <CTableHeaderCell scope="col">
               Pérdida Operacional (Hrs) (depende de otro equipo)
             </CTableHeaderCell>
+          </CTableRow>
+          <CTableRow>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
+                id="machineryScheduleMaintenance"
+                value={machinery.machineryScheduleMaintenance || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
+                id="machineryUnscheduleDelay"
+                value={machinery.machineryUnscheduleDelay || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
+                id="machineryReserves"
+                value={machinery.machineryReserves || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
+                id="machineryHorometer"
+                value={machinery.machineryHorometer || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
+                id="machineryOpperationalLoss"
+                value={machinery.machineryOpperationalLoss || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableHeaderCell scope="row">
+            <CTableHeaderCell scope="col">
               Demoras Programadas (Hrs) (Colación y cambio de turno)
             </CTableHeaderCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableHeaderCell scope="row">Total</CTableHeaderCell>
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
+                id="machineryScheduleDelay"
+                value={machinery.machineryScheduleDelay || ''}
                 text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Contratados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="Acreditados"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Descanso"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Obra"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="HH (Turno)"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractDetail"
-                // placeholder="N° Ofertado"
-                text=""
-                // aria-describedby="exampleFormControlInputHelpInline"
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
               />
             </CTableDataCell>
           </CTableRow>
         </CTableBody>
       </CTable>
+
+      <CButton
+        className="btn-project-action"
+        onClick={() => {
+          registerMachinery()
+        }}
+      >
+        Registrar
+      </CButton>
+
+      {machineryListContext.length > 0 && machineryListContext[0].machinery && (
+        <CTable>
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell scope="col"></CTableHeaderCell>
+              <CTableHeaderCell scope="col">N° maq oferta</CTableHeaderCell>
+              <CTableHeaderCell scope="col">N° maq Acreditado</CTableHeaderCell>
+              <CTableHeaderCell scope="col">N° maq en Obra</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Tiempo Efectivo (Hrs)</CTableHeaderCell>
+              <CTableHeaderCell scope="col">
+                Mantenimiento No Programado (Hrs) (Por alguna falla o alerta)
+              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
+              <CTableHeaderCell scope="col">
+                Demora No Programada (Hrs) (Interrupción al ciclo de trabajo)
+              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">
+                Reservas (Hrs) (Sin operador, factores externos)
+              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">Horometro (Hrs)</CTableHeaderCell>
+              <CTableHeaderCell scope="col">
+                Pérdida Operacional (Hrs) (depende de otro equipo)
+              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">
+                Demoras Programadas (Hrs) (Colación y cambio de turno)
+              </CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody>
+            {machineryListContext.map((item, index) => {
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell>{item.machinery}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryOfferedNumber}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryCertifiedNumber}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryWorkNumber}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryEffectiveTime}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryUnscheduleMaintenance}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryScheduleMaintenance}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryUnscheduleDelay}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryReserves}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryHorometer}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryOpperationalLoss}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryScheduleDelay}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      className="btn-project-action"
+                      onClick={() => {
+                        deleteMachinery(item.id)
+                      }}
+                    >
+                      eliminar
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
+          </CTableBody>
+        </CTable>
+      )}
     </div>
   )
 }

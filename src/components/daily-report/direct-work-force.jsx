@@ -90,10 +90,6 @@ const DirectWorkForce = () => {
     storeDirectWorkForce(directWorkForceList)
   }, [directWorkForceList])
 
-  useEffect(() => {
-    console.log('directWorkForceListContext', directWorkForceListContext)
-  }, [directWorkForceListContext])
-
   return (
     <div className="work-force-report">
       <CFormSelect

@@ -69,6 +69,7 @@ export const DailyReportProvider = ({ children }) => {
     incident: '',
     nonConformity: '',
   })
+  const [machineryList, setMachineryList] = useState([])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,
@@ -346,9 +347,18 @@ export const DailyReportProvider = ({ children }) => {
     setIncident(data)
   }
 
+  const storeMachinery = async (data) => {
+    setMachineryList(data)
+  }
+
+  const removeMachinery = async (id) => {
+    const newData = machineryList.filter((item) => item.id !== id)
+    setMachineryList(newData)
+  }
+
   useEffect(() => {
-    console.log('incident', incident)
-  }, [incident])
+    console.log('machineryList', machineryList)
+  }, [machineryList])
 
   return (
     <DailyReportContext.Provider
@@ -383,6 +393,11 @@ export const DailyReportProvider = ({ children }) => {
         vehicleWorkForceList,
         storeComment,
         storeIncident,
+        incident,
+        comments,
+        storeMachinery,
+        removeMachinery,
+        machineryList,
       }}
     >
       {children}
