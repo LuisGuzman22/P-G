@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/596.f129edd9.chunk.js","mappings":"sNAEA,MAIA,EAJaA,KACJC,EAAAA,EAAAA,KAAAC,EAAAA,SAAA,CAAAC,SAAE,a","sources":["pages/User.js"],"sourcesContent":["import React from 'react'\n\nconst User = () => {\n  return <>Mis datos</>\n}\n\nexport default User\n"],"names":["User","_jsx","_Fragment","children"],"sourceRoot":""}
