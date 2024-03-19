@@ -33,6 +33,9 @@ const useRegisterDailyReportCompany = () => {
     storeMachinery,
     removeMachinery,
     machineryList,
+    storeEquipment,
+    removeEquipment,
+    equipmentList,
   } = useContext(DailyReportContext)
 
   return {
@@ -66,6 +69,9 @@ const useRegisterDailyReportCompany = () => {
     storeMachinery,
     removeMachinery,
     machineryList,
+    storeEquipment,
+    removeEquipment,
+    equipmentList,
   }
 }
 
