@@ -1,7 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import { cilDrop, cilPencil } from '@coreui/icons'
-import { CNavItem, CNavTitle } from '@coreui/react'
+import { CNavItem, CNavTitle, CNavGroup } from '@coreui/react'
 
 const _nav = [
   {
@@ -9,11 +9,54 @@ const _nav = [
     name: 'Proyectos',
   },
   {
-    component: CNavItem,
-    name: 'Proyectos en curso',
-    to: '/dashboard',
+    component: CNavGroup,
+    name: 'Dashboard',
+    to: '/base',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Inicio',
+        to: '/dashboard',
+      },
+      {
+        component: CNavItem,
+        name: 'Panel Informativo',
+        to: '/panel-informativo',
+      },
+      {
+        component: CNavItem,
+        name: 'Proyecto',
+        to: '/proyecto',
+      },
+      {
+        component: CNavItem,
+        name: 'Informe diario',
+        to: '/informe-diario',
+      },
+      {
+        component: CNavItem,
+        name: 'Actividades Trisemanal',
+        to: '/trisemanal',
+      },
+      {
+        component: CNavItem,
+        name: 'Carta Gantt',
+        to: '/carta-gantt',
+      },
+      {
+        component: CNavItem,
+        name: 'Detalles de avance',
+        to: '/avance',
+      },
+    ],
   },
+  // {
+  //   component: CNavItem,
+  //   name: 'Proyectos en curso',
+  //   to: '/dashboard',
+  //   icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  // },
   {
     component: CNavItem,
     name: 'Administrar Proyectos',

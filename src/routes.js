@@ -1,6 +1,12 @@
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
+const DailyReport = React.lazy(() => import('./pages/DailyReportPage'))
+const Detail = React.lazy(() => import('./pages/DetailPage'))
+const Gantt = React.lazy(() => import('./pages/GanttPage'))
+const Project = React.lazy(() => import('./pages/ProjectPage'))
+const InformativePanel = React.lazy(() => import('./pages/InformativePanelPage'))
+const Trisemanal = React.lazy(() => import('./pages/TrisemanalPage'))
 const ProjectSelector = React.lazy(() => import('./pages/ProjectSelector'))
 const Login = React.lazy(() => import('./pages/Login'))
 const ProjectAdministration = React.lazy(() => import('./pages/ProjectAdministration'))
@@ -60,6 +66,13 @@ const routes = [
   { path: '/login', name: 'Login' },
   { path: '/project_selector', name: 'Project Selector', element: ProjectSelector },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/trisemanal', name: 'Trisemanal', element: Trisemanal },
+  { path: '/panel-informativo', name: 'Panel Informativo', element: InformativePanel },
+  { path: '/proyecto', name: 'Proyecto', element: Project },
+  { path: '/informe-diario', name: 'Informe Diario', element: DailyReport },
+  { path: '/trisemanal', name: 'Actividades Trisemanal', element: Trisemanal },
+  { path: '/carta-gantt', name: 'Carta Gantt', element: Gantt },
+  { path: '/avance', name: 'Detalles de avance', element: Detail },
   { path: '/administrar_proyectos', name: 'Administrar Proyectos', element: ProjectAdministration },
   {
     path: '/administrar_contratos',
