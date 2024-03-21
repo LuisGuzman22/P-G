@@ -71,6 +71,8 @@ export const DailyReportProvider = ({ children }) => {
   })
   const [machineryList, setMachineryList] = useState([])
   const [equipmentList, setEquipmentList] = useState([])
+  const [vehicleList, setVehicleList] = useState([])
+  const [activityList, setActivityList] = useState([])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,
@@ -269,10 +271,6 @@ export const DailyReportProvider = ({ children }) => {
     }
   }
 
-  useEffect(() => {
-    console.log('totalDirectWorkForce', totalDirectWorkForce)
-  }, [totalDirectWorkForce])
-
   const storeDirectWorkForce = async (data) => {
     setDirectWorkForceList(data)
   }
@@ -366,10 +364,23 @@ export const DailyReportProvider = ({ children }) => {
     setEquipmentList(newData)
   }
 
-  useEffect(() => {
-    console.log('equipmentList', equipmentList)
-  }, [equipmentList])
+  const storeVehicle = async (data) => {
+    setVehicleList(data)
+  }
 
+  const removeVehicle = async (id) => {
+    const newData = equipmentList.filter((item) => item.id !== id)
+    setVehicleList(newData)
+  }
+
+  const storeActivity = async (data) => {
+    setActivityList(data)
+  }
+
+  const removeActivity = async (id) => {
+    const newData = activityList.filter((item) => item.id !== id)
+    setActivityList(newData)
+  }
   return (
     <DailyReportContext.Provider
       value={{
@@ -411,6 +422,12 @@ export const DailyReportProvider = ({ children }) => {
         storeEquipment,
         removeEquipment,
         equipmentList,
+        storeVehicle,
+        removeVehicle,
+        vehicleList,
+        storeActivity,
+        removeActivity,
+        activityList,
       }}
     >
       {children}
