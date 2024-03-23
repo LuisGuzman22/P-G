@@ -4,16 +4,15 @@ import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@
 
 const DailyReportPage = () => {
   return (
-    <>
+    <div className="daily-report">
       <CCard>
-        <CCardHeader>Informe diario</CCardHeader>
         <CCardBody>
           <CCardText>
             <DailyReportCollapse />
           </CCardText>
         </CCardBody>
       </CCard>
-    </>
+    </div>
   )
 }
 

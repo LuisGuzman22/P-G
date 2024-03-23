@@ -183,6 +183,93 @@ const DotationWorkForce = () => {
               />
             </CTableDataCell>
           </CTableRow>
+          <CTableRow>
+            <CTableHeaderCell scope="row">Total</CTableHeaderCell>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="workforceDotationPersonalFront1"
+                // placeholder="N° Ofertado"
+                text=""
+                disabled
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="workforceDotationPersonalFront2"
+                // placeholder="N° Contratados"
+                text=""
+                disabled
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="workforceDotationPersonalFront3"
+                // placeholder="Acreditados"
+                text=""
+                disabled
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="workforceDotationPersonalFront4"
+                // placeholder="N° Descanso"
+                text=""
+                disabled
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="workforceDotationPersonalFront5"
+                // placeholder="N° Obra"
+                text=""
+                disabled
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="workforceDotationPersonalFront6"
+                // placeholder="HH (Turno)"
+                text=""
+                disabled
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="workforceDotationPersonalFront7"
+                // placeholder="N° Ofertado"
+                text=""
+                disabled
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+          </CTableRow>
         </CTableBody>
       </CTable>
 

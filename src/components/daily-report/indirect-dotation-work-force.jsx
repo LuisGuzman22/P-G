@@ -29,8 +29,21 @@ const IndirectDotationWorkForce = () => {
     indirectWorkForceFront7: undefined,
   }
 
+  const indirectDotationTotalsInitialState = {
+    indirectWorkForceFront1: 0,
+    indirectWorkForceFront2: 0,
+    indirectWorkForceFront3: 0,
+    indirectWorkForceFront4: 0,
+    indirectWorkForceFront5: 0,
+    indirectWorkForceFront6: 0,
+    indirectWorkForceFront7: 0,
+  }
+
   const [indirectDotationWorkForce, setIndirectDotationWorkForce] = useState(initialState)
   const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([])
+  const [indirectDotationTotals, setIndirectDotationTotals] = useState(
+    indirectDotationTotalsInitialState,
+  )
 
   const {
     storeIndirectDotationWorkForceData,
@@ -39,7 +52,6 @@ const IndirectDotationWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    // storeIndirectWorkForceData(e)
     switch (e.target.id) {
       case 'indirectWorkForce':
         setIndirectDotationWorkForce({
@@ -133,6 +145,45 @@ const IndirectDotationWorkForce = () => {
   useEffect(() => {
     storeIndirectDotationWorkForceData(indirectDotationWorkForceList)
   }, [indirectDotationWorkForceList])
+
+  useEffect(() => {
+    let indirectDotationTotalsCounter = {
+      indirectWorkForceFront1: 0,
+      indirectWorkForceFront2: 0,
+      indirectWorkForceFront3: 0,
+      indirectWorkForceFront4: 0,
+      indirectWorkForceFront5: 0,
+      indirectWorkForceFront6: 0,
+      indirectWorkForceFront7: 0,
+    }
+
+    for (let data of indirectDotationWorkForceListContext) {
+      indirectDotationTotalsCounter = {
+        indirectWorkForceFront1:
+          Number(indirectDotationTotalsCounter.indirectWorkForceFront1) +
+          Number(data.actions.indirectWorkForceFront1 ?? 0),
+        indirectWorkForceFront2:
+          Number(indirectDotationTotalsCounter.indirectWorkForceFront2) +
+          Number(data.actions.indirectWorkForceFront2 ?? 0),
+        indirectWorkForceFront3:
+          Number(indirectDotationTotalsCounter.indirectWorkForceFront3) +
+          Number(data.actions.indirectWorkForceFront3 ?? 0),
+        indirectWorkForceFront4:
+          Number(indirectDotationTotalsCounter.indirectWorkForceFront4) +
+          Number(data.actions.indirectWorkForceFront4 ?? 0),
+        indirectWorkForceFront5:
+          Number(indirectDotationTotalsCounter.indirectWorkForceFront5) +
+          Number(data.actions.indirectWorkForceFront5 ?? 0),
+        indirectWorkForceFront6:
+          Number(indirectDotationTotalsCounter.indirectWorkForceFront6) +
+          Number(data.actions.indirectWorkForceFront6 ?? 0),
+        indirectWorkForceFront7:
+          Number(indirectDotationTotalsCounter.indirectWorkForceFront7) +
+          Number(data.actions.indirectWorkForceFront7 ?? 0),
+      }
+    }
+    setIndirectDotationTotals(indirectDotationTotalsCounter)
+  }, [indirectDotationWorkForceListContext])
 
   return (
     <div className="work-force-report">
@@ -273,6 +324,7 @@ const IndirectDotationWorkForce = () => {
           <CTable>
             <CTableHead>
               <CTableRow>
+                <CTableHeaderCell scope="col"></CTableHeaderCell>
                 <CTableHeaderCell scope="col">Frente de trabajo 1</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Frente de trabajo 2</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Frente de trabajo 3</CTableHeaderCell>
@@ -288,13 +340,13 @@ const IndirectDotationWorkForce = () => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{item.indirectWorkForce}</CTableDataCell>
-                    <CTableDataCell>{item.actions.indirectWorkForceFront1}</CTableDataCell>
-                    <CTableDataCell>{item.actions.indirectWorkForceFront2}</CTableDataCell>
-                    <CTableDataCell>{item.actions.indirectWorkForceFront3}</CTableDataCell>
-                    <CTableDataCell>{item.actions.indirectWorkForceFront4}</CTableDataCell>
-                    <CTableDataCell>{item.actions.indirectWorkForceFront5}</CTableDataCell>
-                    <CTableDataCell>{item.actions.indirectWorkForceFront6}</CTableDataCell>
-                    <CTableDataCell>{item.actions.indirectWorkForceFront7}</CTableDataCell>
+                    <CTableDataCell>{item.actions.indirectWorkForceFront1 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.indirectWorkForceFront2 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.indirectWorkForceFront3 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.indirectWorkForceFront4 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.indirectWorkForceFront5 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.indirectWorkForceFront6 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.indirectWorkForceFront7 ?? 0}</CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         className="btn-project-action"
@@ -308,6 +360,16 @@ const IndirectDotationWorkForce = () => {
                   </CTableRow>
                 )
               })}
+              <CTableRow key={'total'}>
+                <CTableDataCell>Total</CTableDataCell>
+                <CTableDataCell>{indirectDotationTotals.indirectWorkForceFront1}</CTableDataCell>
+                <CTableDataCell>{indirectDotationTotals.indirectWorkForceFront2}</CTableDataCell>
+                <CTableDataCell>{indirectDotationTotals.indirectWorkForceFront3}</CTableDataCell>
+                <CTableDataCell>{indirectDotationTotals.indirectWorkForceFront4}</CTableDataCell>
+                <CTableDataCell>{indirectDotationTotals.indirectWorkForceFront5}</CTableDataCell>
+                <CTableDataCell>{indirectDotationTotals.indirectWorkForceFront6}</CTableDataCell>
+                <CTableDataCell>{indirectDotationTotals.indirectWorkForceFront7}</CTableDataCell>
+              </CTableRow>
             </CTableBody>
           </CTable>
         )}

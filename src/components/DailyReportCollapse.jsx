@@ -1,5 +1,11 @@
 import React from 'react'
-import { CAccordion, CAccordionBody, CAccordionHeader, CAccordionItem } from '@coreui/react'
+import {
+  CAccordion,
+  CAccordionBody,
+  CAccordionHeader,
+  CAccordionItem,
+  CButton,
+} from '@coreui/react'
 import CompanyReport from './daily-report/company-report'
 import IndirectWorkForce from './daily-report/indirect-work-force'
 import TotalIndirectWorkForce from './daily-report/total-indirect-work-force'
@@ -18,127 +24,141 @@ import Comments from './daily-report/comments'
 import Graphs from './daily-report/graphs'
 import Incidents from './daily-report/incidents'
 import DirectWorkForce from './daily-report/direct-work-force'
+import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
+
 const DailyReportCollapse = () => {
+  const { registerData } = useRegisterDailyReport()
+
   return (
     <div className="dailyReport">
       <CAccordion className="dailyReport-accordion" activeItemKey={1}>
         <CAccordionItem itemKey={1}>
-          <CAccordionHeader>Empresa</CAccordionHeader>
+          <CAccordionHeader>1) Empresa</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <CompanyReport />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={2}>
-          <CAccordionHeader>Fuerza de trabajo personal indirecto</CAccordionHeader>
+          <CAccordionHeader>2) Fuerza de trabajo personal indirecto</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <IndirectWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={3}>
-          <CAccordionHeader>Fuerza laboral total personal indirecto</CAccordionHeader>
+          <CAccordionHeader>3) Fuerza laboral total personal indirecto</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <TotalIndirectWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={4}>
-          <CAccordionHeader>Fuerza laboral contratista personal directo</CAccordionHeader>
+          <CAccordionHeader>4) Fuerza laboral contratista personal directo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <DirectWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={5}>
-          <CAccordionHeader>Fuerza laboral total personal directo</CAccordionHeader>
+          <CAccordionHeader>5) Fuerza laboral total personal directo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <TotalDirectWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={6}>
-          <CAccordionHeader>Dotación por frente de trabajo personal indirecto</CAccordionHeader>
+          <CAccordionHeader>6) Dotación por frente de trabajo personal indirecto</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <IndirectDotationWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={7}>
-          <CAccordionHeader>Dotación por frente de trabajo personal directo</CAccordionHeader>
+          <CAccordionHeader>7) Dotación por frente de trabajo personal directo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <DirectDotationWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={8}>
-          <CAccordionHeader>Dotación por frente de trabajo</CAccordionHeader>
+          <CAccordionHeader>8) Dotación por frente de trabajo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <DotationWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={9}>
-          <CAccordionHeader>Maquinarias contratistas</CAccordionHeader>
+          <CAccordionHeader>9) Maquinarias contratistas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Machinery />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={10}>
-          <CAccordionHeader>Maquinarias por frente de trabajo</CAccordionHeader>
+          <CAccordionHeader>10) Maquinarias por frente de trabajo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <MachineryWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={11}>
-          <CAccordionHeader>Equipos y maquinarias contratistas</CAccordionHeader>
+          <CAccordionHeader>11) Equipos contratistas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <EquipmentMachinery />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={12}>
-          <CAccordionHeader>Equipos por frente de trabajo</CAccordionHeader>
+          <CAccordionHeader>12) Equipos por frente de trabajo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <EquipmentWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={13}>
-          <CAccordionHeader>Equipos, maquinarias y vehiculos menores contratistas</CAccordionHeader>
+          <CAccordionHeader>
+            13) Equipos, maquinarias y vehiculos menores contratistas
+          </CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Vehicle />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={14}>
           <CAccordionHeader>
-            Equipos, maquinarias y vehiculos menores por frente de trabajo
+            14) Equipos, maquinarias y vehiculos menores por frente de trabajo
           </CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <VehicleWorkForce />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={15}>
-          <CAccordionHeader>Descripción de actividades desarrolladas</CAccordionHeader>
+          <CAccordionHeader>15) Descripción de actividades desarrolladas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Activities />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={16}>
-          <CAccordionHeader>Comentarios y alertas en general</CAccordionHeader>
+          <CAccordionHeader>16) Comentarios y alertas en general</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Comments />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={17}>
-          <CAccordionHeader>Graficos del día</CAccordionHeader>
+          <CAccordionHeader>17) Graficos del día</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Graphs />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={18}>
-          <CAccordionHeader>Incidentes, lesiones o eventos</CAccordionHeader>
+          <CAccordionHeader>18) Incidentes, lesiones o eventos</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Incidents />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={19}>
-          <CAccordionHeader>Firmas</CAccordionHeader>
+          <CAccordionHeader>19) Firmas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <></>
           </CAccordionBody>
         </CAccordionItem>
       </CAccordion>
+      <CButton
+        className="btn-project-action"
+        onClick={() => {
+          registerData()
+        }}
+      >
+        Registrar informe diario
+      </CButton>
     </div>
   )
 }

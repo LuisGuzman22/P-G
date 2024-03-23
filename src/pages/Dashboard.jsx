@@ -2,6 +2,7 @@ import React from 'react'
 import InformativePanel from 'src/components/InformativePanel'
 import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
+import ProjectCollapse from 'src/components/ProjectCollapse'
 
 const Dashboard = () => {
   let navigate = useNavigate()
@@ -16,6 +17,14 @@ const Dashboard = () => {
         <CCardBody>
           <CCardText>
             <InformativePanel />
+          </CCardText>
+        </CCardBody>
+      </CCard>
+      <br />
+      <CCard>
+        <CCardBody>
+          <CCardText>
+            <ProjectCollapse />
           </CCardText>
         </CCardBody>
       </CCard>

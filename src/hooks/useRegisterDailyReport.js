@@ -16,7 +16,12 @@ const useRegisterDailyReport = () => {
     equipmentWorkForceList,
     vehicleWorkForceList,
     incident,
+    workforceDotation,
     comments,
+    machineryList,
+    equipmentList,
+    vehicleList,
+    activityList,
   } = useContext(DailyReportContext)
 
   const mutation = useMutation({
@@ -26,38 +31,25 @@ const useRegisterDailyReport = () => {
   })
 
   const registerData = async () => {
-    console.log('🚀 ~ useRegisterDailyReport ~ company:', company)
-    console.log('🚀 ~ useRegisterDailyReport ~ indirectWorkForceList:', indirectWorkForceList)
-    console.log('🚀 ~ useRegisterDailyReport ~ directWorkForceList:', directWorkForceList)
-    console.log('🚀 ~ useRegisterDailyReport ~ totalIndirectWorkForce:', totalIndirectWorkForce)
-    console.log('🚀 ~ useRegisterDailyReport ~ totalDirectWorkForce:', totalDirectWorkForce)
-    console.log(
-      '🚀 ~ useRegisterDailyReport ~ indirectDotationWorkForceList:',
-      indirectDotationWorkForceList,
-    )
-    console.log(
-      '🚀 ~ useRegisterDailyReport ~ directDotationWorkForceList:',
-      directDotationWorkForceList,
-    )
-    console.log('🚀 ~ useRegisterDailyReport ~ machineryWorkForceList:', machineryWorkForceList)
-    console.log('🚀 ~ useRegisterDailyReport ~ equipmentWorkForceList:', equipmentWorkForceList)
-    console.log('🚀 ~ useRegisterDailyReport ~ vehicleWorkForceList:', vehicleWorkForceList)
-    console.log('🚀 ~ useRegisterDailyReport ~ incident:', incident)
-    console.log('🚀 ~ useRegisterDailyReport ~ comments:', comments)
-
     mutation.mutate({
-      company,
-      indirectWorkForceList,
-      directWorkForceList,
-      totalIndirectWorkForce,
-      totalDirectWorkForce,
-      indirectDotationWorkForceList,
-      directDotationWorkForceList,
-      machineryWorkForceList,
-      equipmentWorkForceList,
-      vehicleWorkForceList,
-      incident,
-      comments,
+      company, // 1
+      indirectWorkForceList, // 2
+      totalIndirectWorkForce, // 3
+      directWorkForceList, // 4
+      totalDirectWorkForce, // 5
+      indirectDotationWorkForceList, // 6
+      directDotationWorkForceList, // 7
+      workforceDotation, // 8
+      machineryList, // 9
+      machineryWorkForceList, // 10
+      equipmentList, // 11
+      equipmentWorkForceList, // 12
+      vehicleList, // 13
+      vehicleWorkForceList, // 14
+      activityList, // 15
+      comments, // 16
+      // 17 (graficos)
+      incident, // 18 //
     })
   }
 

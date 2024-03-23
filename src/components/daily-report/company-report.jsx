@@ -156,14 +156,6 @@ const CompanyReport = () => {
           </CCol>
         </CRow>
       </CForm>
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerData()
-        }}
-      >
-        asd
-      </CButton>
     </div>
   )
 }

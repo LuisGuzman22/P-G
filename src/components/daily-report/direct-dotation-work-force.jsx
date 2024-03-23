@@ -26,8 +26,19 @@ const DirectDotationWorkForce = () => {
     directWorkForceFront7: undefined,
   }
 
+  const directDotationTotalsInitialState = {
+    directWorkForceFront1: 0,
+    directWorkForceFront2: 0,
+    directWorkForceFront3: 0,
+    directWorkForceFront4: 0,
+    directWorkForceFront5: 0,
+    directWorkForceFront6: 0,
+    directWorkForceFront7: 0,
+  }
+
   const [directDotationWorkForce, setDirectDotationWorkForce] = useState(initialState)
   const [directDotationWorkForceList, setDirectDotationWorkForceList] = useState([])
+  const [directDotationTotals, setDirectDotationTotals] = useState(directDotationTotalsInitialState)
 
   const {
     storeDirectDotationWorkForceData,
@@ -126,6 +137,45 @@ const DirectDotationWorkForce = () => {
   useEffect(() => {
     storeDirectDotationWorkForceData(directDotationWorkForceList)
   }, [directDotationWorkForceList])
+
+  useEffect(() => {
+    let directDotationTotalsCounter = {
+      directWorkForceFront1: 0,
+      directWorkForceFront2: 0,
+      directWorkForceFront3: 0,
+      directWorkForceFront4: 0,
+      directWorkForceFront5: 0,
+      directWorkForceFront6: 0,
+      directWorkForceFront7: 0,
+    }
+
+    for (let data of directDotationWorkForceListContext) {
+      directDotationTotalsCounter = {
+        directWorkForceFront1:
+          Number(directDotationTotalsCounter.directWorkForceFront1) +
+          Number(data.actions.directWorkForceFront1 ?? 0),
+        directWorkForceFront2:
+          Number(directDotationTotalsCounter.directWorkForceFront2) +
+          Number(data.actions.directWorkForceFront2 ?? 0),
+        directWorkForceFront3:
+          Number(directDotationTotalsCounter.directWorkForceFront3) +
+          Number(data.actions.directWorkForceFront3 ?? 0),
+        directWorkForceFront4:
+          Number(directDotationTotalsCounter.directWorkForceFront4) +
+          Number(data.actions.directWorkForceFront4 ?? 0),
+        directWorkForceFront5:
+          Number(directDotationTotalsCounter.directWorkForceFront5) +
+          Number(data.actions.directWorkForceFront5 ?? 0),
+        directWorkForceFront6:
+          Number(directDotationTotalsCounter.directWorkForceFront6) +
+          Number(data.actions.directWorkForceFront6 ?? 0),
+        directWorkForceFront7:
+          Number(directDotationTotalsCounter.directWorkForceFront7) +
+          Number(data.actions.directWorkForceFront7 ?? 0),
+      }
+    }
+    setDirectDotationTotals(directDotationTotalsCounter)
+  }, [directDotationWorkForceListContext])
 
   return (
     <div className="work-force-report">
@@ -274,13 +324,13 @@ const DirectDotationWorkForce = () => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{item.directWorkForce}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront1}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront2}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront3}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront4}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront5}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront6}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront7}</CTableDataCell>
+                    <CTableDataCell>{item.actions.directWorkForceFront1 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.directWorkForceFront2 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.directWorkForceFront3 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.directWorkForceFront4 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.directWorkForceFront5 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.directWorkForceFront6 ?? 0}</CTableDataCell>
+                    <CTableDataCell>{item.actions.directWorkForceFront7 ?? 0}</CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         className="btn-project-action"
@@ -294,6 +344,16 @@ const DirectDotationWorkForce = () => {
                   </CTableRow>
                 )
               })}
+              <CTableRow key={'total'}>
+                <CTableDataCell>Total</CTableDataCell>
+                <CTableDataCell>{directDotationTotals.directWorkForceFront1}</CTableDataCell>
+                <CTableDataCell>{directDotationTotals.directWorkForceFront2}</CTableDataCell>
+                <CTableDataCell>{directDotationTotals.directWorkForceFront3}</CTableDataCell>
+                <CTableDataCell>{directDotationTotals.directWorkForceFront4}</CTableDataCell>
+                <CTableDataCell>{directDotationTotals.directWorkForceFront5}</CTableDataCell>
+                <CTableDataCell>{directDotationTotals.directWorkForceFront6}</CTableDataCell>
+                <CTableDataCell>{directDotationTotals.directWorkForceFront7}</CTableDataCell>
+              </CTableRow>
             </CTableBody>
           </CTable>
         )}

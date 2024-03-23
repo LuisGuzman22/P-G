@@ -125,7 +125,7 @@ const IndirectWorkForce = () => {
           <CTableRow>
             <CTableHeaderCell scope="col">N° Ofertado</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Contratados</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Acreditados</CTableHeaderCell>
+            <CTableHeaderCell scope="col">N° Acreditados</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Descanso</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
             <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
