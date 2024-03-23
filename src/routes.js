@@ -7,8 +7,9 @@ const Gantt = React.lazy(() => import('./pages/GanttPage'))
 const Project = React.lazy(() => import('./pages/ProjectPage'))
 const InformativePanel = React.lazy(() => import('./pages/InformativePanelPage'))
 const Trisemanal = React.lazy(() => import('./pages/TrisemanalPage'))
-const ProjectSelector = React.lazy(() => import('./pages/ProjectSelector'))
-const Login = React.lazy(() => import('./pages/Login'))
+// const ProjectSelector = React.lazy(() => import('./pages/ProjectSelector'))
+// const ContractSelector = React.lazy(() => import('./pages/ContractSelector'))
+// const Login = React.lazy(() => import('./pages/Login'))
 const ProjectAdministration = React.lazy(() => import('./pages/ProjectAdministration'))
 const ContractAdministration = React.lazy(() => import('./pages/ContractAdministration'))
 const User = React.lazy(() => import('./pages/User'))
@@ -64,7 +65,6 @@ const User = React.lazy(() => import('./pages/User'))
 const routes = [
   { path: '/', name: 'Login' },
   { path: '/login', name: 'Login' },
-  { path: '/project_selector', name: 'Project Selector', element: ProjectSelector },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/trisemanal', name: 'Trisemanal', element: Trisemanal },
   { path: '/panel-informativo', name: 'Panel Informativo', element: InformativePanel },
@@ -74,6 +74,7 @@ const routes = [
   { path: '/carta-gantt', name: 'Carta Gantt', element: Gantt },
   { path: '/avance', name: 'Detalles de avance', element: Detail },
   { path: '/administrar_proyectos', name: 'Administrar Proyectos', element: ProjectAdministration },
+
   {
     path: '/administrar_contratos',
     name: 'Administrar Contratos',

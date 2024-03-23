@@ -20,18 +20,17 @@ const Machinery = () => {
     machineryOfferedNumber: undefined,
     machineryCertifiedNumber: undefined,
     machineryWorkNumber: undefined,
-    machineryEffectiveTime: undefined,
-    machineryUnscheduleMaintenance: undefined,
-    machineryScheduleMaintenance: undefined,
-    machineryUnscheduleDelay: undefined,
-    machineryReserves: undefined,
-    machineryHorometer: undefined,
-    machineryOpperationalLoss: undefined,
-    machineryScheduleDelay: undefined,
+  }
+
+  const machineryTotalsInitialState = {
+    machineryOfferedNumber: 0,
+    machineryCertifiedNumber: 0,
+    machineryWorkNumber: 0,
   }
 
   const [machinery, setMachinery] = useState(initialState)
   const [machineryList, setMachineryList] = useState([])
+  const [machineryTotals, setMachineryTotals] = useState(machineryTotalsInitialState)
 
   const {
     storeMachinery,
@@ -55,14 +54,6 @@ const Machinery = () => {
         machineryOfferedNumber: machinery.machineryOfferedNumber,
         machineryCertifiedNumber: machinery.machineryCertifiedNumber,
         machineryWorkNumber: machinery.machineryWorkNumber,
-        machineryEffectiveTime: machinery.machineryEffectiveTime,
-        machineryUnscheduleMaintenance: machinery.machineryUnscheduleMaintenance,
-        machineryScheduleMaintenance: machinery.machineryScheduleMaintenance,
-        machineryUnscheduleDelay: machinery.machineryUnscheduleDelay,
-        machineryReserves: machinery.machineryReserves,
-        machineryHorometer: machinery.machineryHorometer,
-        machineryOpperationalLoss: machinery.machineryOpperationalLoss,
-        machineryScheduleDelay: machinery.machineryScheduleDelay,
       },
     }
     setMachinery(initialState) // Clear the object
@@ -79,6 +70,29 @@ const Machinery = () => {
   useEffect(() => {
     storeMachinery(machineryList)
   }, [machineryList])
+
+  useEffect(() => {
+    let machineryTotalsCounter = {
+      machineryOfferedNumber: 0,
+      machineryCertifiedNumber: 0,
+      machineryWorkNumber: 0,
+    }
+
+    for (let data of machineryListContext) {
+      machineryTotalsCounter = {
+        machineryOfferedNumber:
+          Number(machineryTotalsCounter.machineryOfferedNumber) +
+          Number(data.actions.machineryOfferedNumber ?? 0),
+        machineryCertifiedNumber:
+          Number(machineryTotalsCounter.machineryCertifiedNumber) +
+          Number(data.actions.machineryCertifiedNumber ?? 0),
+        machineryWorkNumber:
+          Number(machineryTotalsCounter.machineryWorkNumber) +
+          Number(data.actions.machineryWorkNumber ?? 0),
+      }
+    }
+    setMachineryTotals(machineryTotalsCounter)
+  }, [machineryListContext])
 
   return (
     <div className="work-force-report">
@@ -101,10 +115,6 @@ const Machinery = () => {
             <CTableHeaderCell scope="col">N° maq oferta</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° maq Acreditado</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° maq en Obra</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Tiempo Efectivo (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">
-              Mantenimiento No Programado (Hrs) (Por alguna falla o alerta)
-            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -142,116 +152,6 @@ const Machinery = () => {
                 }}
               />
             </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryEffectiveTime"
-                value={machinery.machineryEffectiveTime || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryUnscheduleMaintenance"
-                value={machinery.machineryUnscheduleMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">
-              Demora No Programada (Hrs) (Interrupción al ciclo de trabajo)
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col">
-              Reservas (Hrs) (Sin operador, factores externos)
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col">Horometro (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">
-              Pérdida Operacional (Hrs) (depende de otro equipo)
-            </CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryScheduleMaintenance"
-                value={machinery.machineryScheduleMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryUnscheduleDelay"
-                value={machinery.machineryUnscheduleDelay || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryReserves"
-                value={machinery.machineryReserves || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryHorometer"
-                value={machinery.machineryHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryOpperationalLoss"
-                value={machinery.machineryOpperationalLoss || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">
-              Demoras Programadas (Hrs) (Colación y cambio de turno)
-            </CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryScheduleDelay"
-                value={machinery.machineryScheduleDelay || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
           </CTableRow>
         </CTableBody>
       </CTable>
@@ -273,24 +173,6 @@ const Machinery = () => {
               <CTableHeaderCell scope="col">N° maq oferta</CTableHeaderCell>
               <CTableHeaderCell scope="col">N° maq Acreditado</CTableHeaderCell>
               <CTableHeaderCell scope="col">N° maq en Obra</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Tiempo Efectivo (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">
-                Mantenimiento No Programado (Hrs) (Por alguna falla o alerta)
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">
-                Demora No Programada (Hrs) (Interrupción al ciclo de trabajo)
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">
-                Reservas (Hrs) (Sin operador, factores externos)
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Horometro (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">
-                Pérdida Operacional (Hrs) (depende de otro equipo)
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">
-                Demoras Programadas (Hrs) (Colación y cambio de turno)
-              </CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
@@ -298,17 +180,9 @@ const Machinery = () => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{item.machinery}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryOfferedNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryCertifiedNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryWorkNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryEffectiveTime}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryUnscheduleMaintenance}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryScheduleMaintenance}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryUnscheduleDelay}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryReserves}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryHorometer}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryOpperationalLoss}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryScheduleDelay}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryOfferedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryCertifiedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.actions.machineryWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
                       className="btn-project-action"
@@ -322,6 +196,12 @@ const Machinery = () => {
                 </CTableRow>
               )
             })}
+            <CTableRow key={'total'}>
+              <CTableDataCell>Total</CTableDataCell>
+              <CTableDataCell>{machineryTotals.machineryOfferedNumber}</CTableDataCell>
+              <CTableDataCell>{machineryTotals.machineryCertifiedNumber}</CTableDataCell>
+              <CTableDataCell>{machineryTotals.machineryWorkNumber}</CTableDataCell>
+            </CTableRow>
           </CTableBody>
         </CTable>
       )}

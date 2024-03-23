@@ -8,7 +8,7 @@ import CIcon from '@coreui/icons-react'
 const ProjectSelector = () => {
   const navigate = useNavigate()
 
-  const onClickHandler = () => navigate(`/dashboard`)
+  const onClickHandler = () => navigate(`/contrato`)
 
   return (
     <CRow>
@@ -36,11 +36,7 @@ const ProjectSelector = () => {
             </CContainer>
           }
           style={{ '--cui-card-cap-bg': '#1A4D55' }}
-          values={[
-            { title: 'Trisemanales', value: '1' },
-            { title: 'Creado', value: '23-01-2024' },
-            { title: 'Algo mas', value: '35' },
-          ]}
+          values={[{ title: 'Contratos', value: '1' }]}
         />
       </CCol>
     </CRow>
