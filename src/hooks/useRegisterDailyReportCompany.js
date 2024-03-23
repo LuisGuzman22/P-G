@@ -42,6 +42,9 @@ const useRegisterDailyReportCompany = () => {
     storeActivity,
     removeActivity,
     activityList,
+    storeAsarcoMachinery,
+    removeAsarcoMachinery,
+    asarcoMachineryList,
   } = useContext(DailyReportContext)
 
   return {
@@ -84,6 +87,9 @@ const useRegisterDailyReportCompany = () => {
     storeActivity,
     removeActivity,
     activityList,
+    storeAsarcoMachinery,
+    removeAsarcoMachinery,
+    asarcoMachineryList,
   }
 }
 

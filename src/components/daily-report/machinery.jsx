@@ -99,11 +99,12 @@ const Machinery = () => {
       <CFormSelect
         aria-label="Default select example"
         id="machinery"
+        value={machinery.machinery ?? 0}
         onChange={(e) => {
           onChangeData(e)
         }}
       >
-        <option>Seleccione</option>
+        <option value={0}>Seleccione</option>
         <option value="maquina_1">Maquina 1</option>
         <option value="maquina_2">Maquina 2</option>
         <option value="maquina_3">Maquina 3</option>

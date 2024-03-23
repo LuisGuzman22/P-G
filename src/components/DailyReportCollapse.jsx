@@ -25,6 +25,7 @@ import Graphs from './daily-report/graphs'
 import Incidents from './daily-report/incidents'
 import DirectWorkForce from './daily-report/direct-work-force'
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
+import AsarcoMachinery from './daily-report/asarco-machinery'
 
 const DailyReportCollapse = () => {
   const { registerData } = useRegisterDailyReport()
@@ -93,59 +94,65 @@ const DailyReportCollapse = () => {
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={11}>
-          <CAccordionHeader>11) Equipos contratistas</CAccordionHeader>
+          <CAccordionHeader>11) ASARCO Maquinarias</CAccordionHeader>
+          <CAccordionBody className="dailyReport-accordion">
+            <AsarcoMachinery />
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={12}>
+          <CAccordionHeader>12) Equipos contratistas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <EquipmentMachinery />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={12}>
-          <CAccordionHeader>12) Equipos por frente de trabajo</CAccordionHeader>
+        <CAccordionItem itemKey={13}>
+          <CAccordionHeader>13) Equipos por frente de trabajo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <EquipmentWorkForce />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={13}>
+        <CAccordionItem itemKey={14}>
           <CAccordionHeader>
-            13) Equipos, maquinarias y vehiculos menores contratistas
+            14) Equipos, maquinarias y vehiculos menores contratistas
           </CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Vehicle />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={14}>
+        <CAccordionItem itemKey={15}>
           <CAccordionHeader>
-            14) Equipos, maquinarias y vehiculos menores por frente de trabajo
+            15) Equipos, maquinarias y vehiculos menores por frente de trabajo
           </CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <VehicleWorkForce />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={15}>
-          <CAccordionHeader>15) Descripción de actividades desarrolladas</CAccordionHeader>
+        <CAccordionItem itemKey={16}>
+          <CAccordionHeader>16) Descripción de actividades desarrolladas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Activities />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={16}>
-          <CAccordionHeader>16) Comentarios y alertas en general</CAccordionHeader>
+        <CAccordionItem itemKey={17}>
+          <CAccordionHeader>17) Comentarios y alertas en general</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Comments />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={17}>
-          <CAccordionHeader>17) Graficos del día</CAccordionHeader>
+        <CAccordionItem itemKey={18}>
+          <CAccordionHeader>18) Graficos del día</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Graphs />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={18}>
-          <CAccordionHeader>18) Incidentes, lesiones o eventos</CAccordionHeader>
+        <CAccordionItem itemKey={19}>
+          <CAccordionHeader>19) Incidentes, lesiones o eventos</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Incidents />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={19}>
-          <CAccordionHeader>19) Firmas</CAccordionHeader>
+        <CAccordionItem itemKey={20}>
+          <CAccordionHeader>20) Firmas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <></>
           </CAccordionBody>
