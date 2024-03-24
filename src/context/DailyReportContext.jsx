@@ -74,6 +74,7 @@ export const DailyReportProvider = ({ children }) => {
   const [vehicleList, setVehicleList] = useState([])
   const [activityList, setActivityList] = useState([])
   const [asarcoMachineryList, setAsarcoMachineryList] = useState([])
+  const [equipmentPlateList, setEquipmentPlateList] = useState([])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,
@@ -392,6 +393,15 @@ export const DailyReportProvider = ({ children }) => {
     setAsarcoMachineryList(newData)
   }
 
+  const storeEquipmentPlate = async (data) => {
+    setEquipmentPlateList(data)
+  }
+
+  const removeEquipmentPlate = async (id) => {
+    const newData = equipmentPlateList.filter((item) => item.id !== id)
+    setEquipmentPlateList(newData)
+  }
+
   return (
     <DailyReportContext.Provider
       value={{
@@ -442,6 +452,9 @@ export const DailyReportProvider = ({ children }) => {
         storeAsarcoMachinery,
         removeAsarcoMachinery,
         asarcoMachineryList,
+        storeEquipmentPlate,
+        removeEquipmentPlate,
+        equipmentPlateList,
       }}
     >
       {children}

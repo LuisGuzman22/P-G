@@ -27,58 +27,58 @@ const EquipmentPlate = () => {
     equipmentFinalHorometer: undefined,
   }
 
-  const [equipment, setEquipment] = useState(initialState)
-  const [equipmentList, setEquipmentList] = useState([])
+  const [equipmentPlate, setEquipmentPlate] = useState(initialState)
+  const [equipmentPlateList, setEquipmenPlatetList] = useState([])
 
   const {
-    storeEquipment,
-    removeEquipment,
-    equipmentList: equipmentListContext,
+    storeEquipmentPlate,
+    removeEquipmentPlate,
+    equipmentPlateList: equipmentPlateListContext,
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
     if (e.target.id === 'equipment') {
-      setEquipment(initialState) // Clear the object
-      setEquipment({ [e.target.id]: e.target.value })
+      setEquipmentPlate(initialState) // Clear the object
+      setEquipmentPlate({ [e.target.id]: e.target.value })
     }
-    setEquipment({ ...equipment, [e.target.id]: e.target.value })
+    setEquipmentPlate({ ...equipmentPlate, [e.target.id]: e.target.value })
   }
 
   const registerEquipment = () => {
     const equipmentInitialState = {
       id: uuidv4(),
-      equipment: equipment.equipment,
+      equipment: equipmentPlate.equipment,
       actions: {
-        equipmentEffectiveTime: equipment.equipmentEffectiveTime,
-        equipmentCorrectiveMaintenance: equipment.equipmentCorrectiveMaintenance,
-        equipmentPreventiveMaintenance: equipment.equipmentPreventiveMaintenance,
-        equipmentOutOfService: equipment.equipmentOutOfService,
-        equipmentWaiting: equipment.equipmentWaiting,
-        equipmentNoOperator: equipment.equipmentNoOperator,
-        equipmentInitialHorometer: equipment.equipmentInitialHorometer,
-        equipmentFinalHorometer: equipment.equipmentFinalHorometer,
+        equipmentEffectiveTime: equipmentPlate.equipmentEffectiveTime,
+        equipmentCorrectiveMaintenance: equipmentPlate.equipmentCorrectiveMaintenance,
+        equipmentPreventiveMaintenance: equipmentPlate.equipmentPreventiveMaintenance,
+        equipmentOutOfService: equipmentPlate.equipmentOutOfService,
+        equipmentWaiting: equipmentPlate.equipmentWaiting,
+        equipmentNoOperator: equipmentPlate.equipmentNoOperator,
+        equipmentInitialHorometer: equipmentPlate.equipmentInitialHorometer,
+        equipmentFinalHorometer: equipmentPlate.equipmentFinalHorometer,
       },
     }
-    setEquipment(initialState) // Clear the object
-    setEquipmentList([...equipmentList, equipmentInitialState])
+    setEquipmentPlate(initialState) // Clear the object
+    setEquipmenPlatetList([...equipmentPlateList, equipmentInitialState])
   }
 
   const deleteEquipment = (id) => {
-    const newData = equipmentList.filter((item) => item.id !== id)
-    setEquipmentList(newData)
-    removeEquipment(id)
+    const newData = equipmentPlateList.filter((item) => item.id !== id)
+    setEquipmenPlatetList(newData)
+    removeEquipmentPlate(id)
   }
 
   useEffect(() => {
-    storeEquipment(equipmentList)
-  }, [equipmentList])
+    storeEquipmentPlate(equipmentPlateList)
+  }, [equipmentPlateList])
 
   return (
     <div className="work-force-report">
       <CFormSelect
         aria-label="Default select example"
         id="equipment"
-        value={equipment.equipment ?? 0}
+        value={equipmentPlate.equipment ?? 0}
         onChange={(e) => {
           onChangeData(e)
         }}
@@ -105,7 +105,7 @@ const EquipmentPlate = () => {
               <CFormInput
                 type="text"
                 id="equipmentEffectiveTime"
-                value={equipment.equipmentEffectiveTime || ''}
+                value={equipmentPlate.equipmentEffectiveTime || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -116,7 +116,7 @@ const EquipmentPlate = () => {
               <CFormInput
                 type="text"
                 id="equipmentCorrectiveMaintenance"
-                value={equipment.equipmentCorrectiveMaintenance || ''}
+                value={equipmentPlate.equipmentCorrectiveMaintenance || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -127,7 +127,7 @@ const EquipmentPlate = () => {
               <CFormInput
                 type="text"
                 id="equipmentPreventiveMaintenance"
-                value={equipment.equipmentPreventiveMaintenance || ''}
+                value={equipmentPlate.equipmentPreventiveMaintenance || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -138,7 +138,7 @@ const EquipmentPlate = () => {
               <CFormInput
                 type="text"
                 id="equipmentOutOfService"
-                value={equipment.equipmentOutOfService || ''}
+                value={equipmentPlate.equipmentOutOfService || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -149,7 +149,7 @@ const EquipmentPlate = () => {
               <CFormInput
                 type="text"
                 id="equipmentWaiting"
-                value={equipment.equipmentWaiting || ''}
+                value={equipmentPlate.equipmentWaiting || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -167,7 +167,7 @@ const EquipmentPlate = () => {
               <CFormInput
                 type="text"
                 id="equipmentNoOperator"
-                value={equipment.equipmentNoOperator || ''}
+                value={equipmentPlate.equipmentNoOperator || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -178,7 +178,7 @@ const EquipmentPlate = () => {
               <CFormInput
                 type="text"
                 id="equipmentInitialHorometer"
-                value={equipment.equipmentInitialHorometer || ''}
+                value={equipmentPlate.equipmentInitialHorometer || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -189,7 +189,7 @@ const EquipmentPlate = () => {
               <CFormInput
                 type="text"
                 id="equipmentFinalHorometer"
-                value={equipment.equipmentFinalHorometer || ''}
+                value={equipmentPlate.equipmentFinalHorometer || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -209,7 +209,7 @@ const EquipmentPlate = () => {
         Registrar
       </CButton>
 
-      {equipmentListContext.length > 0 && equipmentListContext[0].equipment && (
+      {equipmentPlateListContext.length > 0 && equipmentPlateListContext[0].equipment && (
         <CTable>
           <CTableHead>
             <CTableRow>
@@ -226,7 +226,7 @@ const EquipmentPlate = () => {
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {equipmentListContext.map((item, index) => {
+            {equipmentPlateListContext.map((item, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{item.equipment}</CTableDataCell>
