@@ -14,24 +14,23 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
 
-const Equipmentequipment = () => {
+const EquipmentMachinery = () => {
   const initialState = {
     equipment: undefined,
     equipmentOfferedNumber: undefined,
     equipmentCertifiedNumber: undefined,
     equipmentWorkNumber: undefined,
-    equipmentEffectiveTime: undefined,
-    equipmentCorrectiveMaintenance: undefined,
-    equipmentPreventiveMaintenance: undefined,
-    equipmentOutOfService: undefined,
-    equipmentWaiting: undefined,
-    equipmentNoOperator: undefined,
-    equipmentInitialHorometer: undefined,
-    equipmentFinalHorometer: undefined,
+  }
+
+  const equipmentTotalsInitialState = {
+    equipmentOfferedNumber: 0,
+    equipmentCertifiedNumber: 0,
+    equipmentWorkNumber: 0,
   }
 
   const [equipment, setEquipment] = useState(initialState)
   const [equipmentList, setEquipmentList] = useState([])
+  const [equipmentTotals, setEquipmentTotals] = useState(equipmentTotalsInitialState)
 
   const {
     storeEquipment,
@@ -55,14 +54,6 @@ const Equipmentequipment = () => {
         equipmentOfferedNumber: equipment.equipmentOfferedNumber,
         equipmentCertifiedNumber: equipment.equipmentCertifiedNumber,
         equipmentWorkNumber: equipment.equipmentWorkNumber,
-        equipmentEffectiveTime: equipment.equipmentEffectiveTime,
-        equipmentCorrectiveMaintenance: equipment.equipmentCorrectiveMaintenance,
-        equipmentPreventiveMaintenance: equipment.equipmentPreventiveMaintenance,
-        equipmentOutOfService: equipment.equipmentOutOfService,
-        equipmentWaiting: equipment.equipmentWaiting,
-        equipmentNoOperator: equipment.equipmentNoOperator,
-        equipmentInitialHorometer: equipment.equipmentInitialHorometer,
-        equipmentFinalHorometer: equipment.equipmentFinalHorometer,
       },
     }
     setEquipment(initialState) // Clear the object
@@ -79,11 +70,35 @@ const Equipmentequipment = () => {
     storeEquipment(equipmentList)
   }, [equipmentList])
 
+  useEffect(() => {
+    let equipmentTotalsInitialStateCounter = {
+      equipmentOfferedNumber: 0,
+      equipmentCertifiedNumber: 0,
+      equipmentWorkNumber: 0,
+    }
+
+    for (let data of equipmentListContext) {
+      equipmentTotalsInitialStateCounter = {
+        equipmentOfferedNumber:
+          Number(equipmentTotalsInitialStateCounter.equipmentOfferedNumber) +
+          Number(data.actions.equipmentOfferedNumber ?? 0),
+        equipmentCertifiedNumber:
+          Number(equipmentTotalsInitialStateCounter.equipmentCertifiedNumber) +
+          Number(data.actions.equipmentCertifiedNumber ?? 0),
+        equipmentWorkNumber:
+          Number(equipmentTotalsInitialStateCounter.equipmentWorkNumber) +
+          Number(data.actions.equipmentWorkNumber ?? 0),
+      }
+    }
+    setEquipmentTotals(equipmentTotalsInitialStateCounter)
+  }, [equipmentListContext])
+
   return (
     <div className="work-force-report">
       <CFormSelect
         aria-label="Default select example"
         id="equipment"
+        value={equipment.equipment ?? 0}
         onChange={(e) => {
           onChangeData(e)
         }}
@@ -100,8 +115,6 @@ const Equipmentequipment = () => {
             <CTableHeaderCell scope="col">N° Equipos oferta</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Equipos Acreditado</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Equipos en Obra</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -139,108 +152,6 @@ const Equipmentequipment = () => {
                 }}
               />
             </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentEffectiveTime"
-                value={equipment.equipmentEffectiveTime || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentCorrectiveMaintenance"
-                value={equipment.equipmentCorrectiveMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
-            <CTableHeaderCell scope="col">Sin Operador (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Horometro Inicial </CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentPreventiveMaintenance"
-                value={equipment.equipmentPreventiveMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentOutOfService"
-                value={equipment.equipmentOutOfService || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentWaiting"
-                value={equipment.equipmentWaiting || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentNoOperator"
-                value={equipment.equipmentNoOperator || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentInitialHorometer"
-                value={equipment.equipmentInitialHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Horometro Final </CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentFinalHorometer"
-                value={equipment.equipmentFinalHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
           </CTableRow>
         </CTableBody>
       </CTable>
@@ -262,15 +173,6 @@ const Equipmentequipment = () => {
               <CTableHeaderCell scope="col">N° Equipos oferta</CTableHeaderCell>
               <CTableHeaderCell scope="col">N° Equipos Acreditado</CTableHeaderCell>
               <CTableHeaderCell scope="col">N° Equipos en Obra</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Sin Operador (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Horometro Inicial </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Horometro Final </CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
@@ -278,17 +180,9 @@ const Equipmentequipment = () => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{item.equipment}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentOfferedNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentCertifiedNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentWorkNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentEffectiveTime}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentCorrectiveMaintenance}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentPreventiveMaintenance}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentOutOfService}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentWaiting}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentNoOperator}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentInitialHorometer}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentFinalHorometer}</CTableDataCell>
+                  <CTableDataCell>{item.actions.equipmentOfferedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.actions.equipmentCertifiedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.actions.equipmentWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
                       className="btn-project-action"
@@ -302,6 +196,12 @@ const Equipmentequipment = () => {
                 </CTableRow>
               )
             })}
+            <CTableRow key={'total'}>
+              <CTableDataCell>Total</CTableDataCell>
+              <CTableDataCell>{equipmentTotals.equipmentOfferedNumber ?? 0}</CTableDataCell>
+              <CTableDataCell>{equipmentTotals.equipmentCertifiedNumber ?? 0}</CTableDataCell>
+              <CTableDataCell>{equipmentTotals.equipmentWorkNumber ?? 0}</CTableDataCell>
+            </CTableRow>
           </CTableBody>
         </CTable>
       )}
@@ -309,4 +209,4 @@ const Equipmentequipment = () => {
   )
 }
 
-export default Equipmentequipment
+export default EquipmentMachinery

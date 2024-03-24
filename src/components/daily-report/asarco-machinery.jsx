@@ -27,8 +27,22 @@ const AsarcoMachinery = () => {
     asarcoMachineryScheduleDelay: undefined,
   }
 
+  const asarcoMachineryTotalsInitialState = {
+    asarcoMachineryEffectiveTime: 0,
+    asarcoMachineryUnscheduleMaintenance: 0,
+    asarcoMachineryScheduleMaintenance: 0,
+    asarcoMachineryUnscheduleDelay: 0,
+    asarcoMachineryReserves: 0,
+    asarcoMachineryHorometer: 0,
+    asarcoMachineryOpperationalLoss: 0,
+    asarcoMachineryScheduleDelay: 0,
+  }
+
   const [asarcoMachinery, setAsarcoMachinery] = useState(initialState)
   const [asarcoMachineryList, setAsarcoMachineryList] = useState([])
+  const [asarcoMachineryTotals, setAsarcoMachineryTotals] = useState(
+    asarcoMachineryTotalsInitialState,
+  )
 
   const {
     storeAsarcoMachinery,
@@ -73,6 +87,49 @@ const AsarcoMachinery = () => {
   useEffect(() => {
     storeAsarcoMachinery(asarcoMachineryList)
   }, [asarcoMachineryList])
+
+  useEffect(() => {
+    let asarcoMachineryTotalsCounter = {
+      asarcoMachineryEffectiveTime: 0,
+      asarcoMachineryUnscheduleMaintenance: 0,
+      asarcoMachineryScheduleMaintenance: 0,
+      asarcoMachineryUnscheduleDelay: 0,
+      asarcoMachineryReserves: 0,
+      asarcoMachineryHorometer: 0,
+      asarcoMachineryOpperationalLoss: 0,
+      asarcoMachineryScheduleDelay: 0,
+    }
+
+    for (let data of asarcoMachineryListContext) {
+      asarcoMachineryTotalsCounter = {
+        asarcoMachineryEffectiveTime:
+          Number(asarcoMachineryTotalsCounter.asarcoMachineryEffectiveTime) +
+          Number(data.actions.asarcoMachineryEffectiveTime ?? 0),
+        asarcoMachineryUnscheduleMaintenance:
+          Number(asarcoMachineryTotalsCounter.asarcoMachineryUnscheduleMaintenance) +
+          Number(data.actions.asarcoMachineryUnscheduleMaintenance ?? 0),
+        asarcoMachineryScheduleMaintenance:
+          Number(asarcoMachineryTotalsCounter.asarcoMachineryScheduleMaintenance) +
+          Number(data.actions.asarcoMachineryScheduleMaintenance ?? 0),
+        asarcoMachineryUnscheduleDelay:
+          Number(asarcoMachineryTotalsCounter.asarcoMachineryUnscheduleDelay) +
+          Number(data.actions.asarcoMachineryUnscheduleDelay ?? 0),
+        asarcoMachineryReserves:
+          Number(asarcoMachineryTotalsCounter.asarcoMachineryReserves) +
+          Number(data.actions.asarcoMachineryReserves ?? 0),
+        asarcoMachineryHorometer:
+          Number(asarcoMachineryTotalsCounter.asarcoMachineryHorometer) +
+          Number(data.actions.asarcoMachineryHorometer ?? 0),
+        asarcoMachineryOpperationalLoss:
+          Number(asarcoMachineryTotalsCounter.asarcoMachineryOpperationalLoss) +
+          Number(data.actions.asarcoMachineryOpperationalLoss ?? 0),
+        asarcoMachineryScheduleDelay:
+          Number(asarcoMachineryTotalsCounter.asarcoMachineryScheduleDelay) +
+          Number(data.actions.asarcoMachineryScheduleDelay ?? 0),
+      }
+    }
+    setAsarcoMachineryTotals(asarcoMachineryTotalsCounter)
+  }, [asarcoMachineryListContext])
 
   return (
     <div className="work-force-report">
@@ -273,6 +330,25 @@ const AsarcoMachinery = () => {
                 </CTableRow>
               )
             })}
+            <CTableRow key={'total'}>
+              <CTableDataCell>Total</CTableDataCell>
+              <CTableDataCell>{asarcoMachineryTotals.asarcoMachineryEffectiveTime}</CTableDataCell>
+              <CTableDataCell>
+                {asarcoMachineryTotals.asarcoMachineryUnscheduleMaintenance}
+              </CTableDataCell>
+              <CTableDataCell>
+                {asarcoMachineryTotals.asarcoMachineryScheduleMaintenance}
+              </CTableDataCell>
+              <CTableDataCell>
+                {asarcoMachineryTotals.asarcoMachineryUnscheduleDelay}
+              </CTableDataCell>
+              <CTableDataCell>{asarcoMachineryTotals.asarcoMachineryReserves}</CTableDataCell>
+              <CTableDataCell>{asarcoMachineryTotals.asarcoMachineryHorometer}</CTableDataCell>
+              <CTableDataCell>
+                {asarcoMachineryTotals.asarcoMachineryOpperationalLoss}
+              </CTableDataCell>
+              <CTableDataCell>{asarcoMachineryTotals.asarcoMachineryScheduleDelay}</CTableDataCell>
+            </CTableRow>
           </CTableBody>
         </CTable>
       )}

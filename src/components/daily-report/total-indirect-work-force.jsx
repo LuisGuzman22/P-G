@@ -110,7 +110,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectPreviusAccumulated"
-                placeholder="N° Ofertado"
+                placeholder="Total"
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -124,7 +124,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectCurrentAccumulated"
-                placeholder="N° Ofertado"
+                placeholder="Total"
                 text=""
                 onChange={(e) => {
                   onChangeData(e)

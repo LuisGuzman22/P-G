@@ -112,17 +112,13 @@ const DailyReportCollapse = () => {
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={14}>
-          <CAccordionHeader>
-            14) Equipos, maquinarias y vehiculos menores contratistas
-          </CAccordionHeader>
+          <CAccordionHeader>14) Vehículos menores contratistas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Vehicle />
           </CAccordionBody>
         </CAccordionItem>
         <CAccordionItem itemKey={15}>
-          <CAccordionHeader>
-            15) Equipos, maquinarias y vehiculos menores por frente de trabajo
-          </CAccordionHeader>
+          <CAccordionHeader>15) Vehiculos menores por frente de trabajo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <VehicleWorkForce />
           </CAccordionBody>

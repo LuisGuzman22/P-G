@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { CForm, CFormInput, CRow, CCol, CButton } from '@coreui/react'
+import { CForm, CFormInput, CRow, CCol, CFormSelect } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 
@@ -81,16 +81,18 @@ const CompanyReport = () => {
         </CRow>
         <CRow>
           <CCol sm={4}>
-            <CFormInput
-              type="text"
+            <CFormSelect
+              aria-label="Turno (Personal directo)"
               id="dailyReportDirectPersonalShift"
               label="Turno (Personal directo)"
-              placeholder="Turno (Personal directo)"
-              text=""
               onChange={(e) => {
                 onChangeData(e)
               }}
-            />
+            >
+              <option>Seleccione</option>
+              <option value="4x4">4x4</option>
+              <option value="7x7">7x7</option>
+            </CFormSelect>
           </CCol>
           <CCol sm={4}>
             <CFormInput
@@ -105,30 +107,34 @@ const CompanyReport = () => {
             />
           </CCol>
           <CCol sm={4}>
-            <CFormInput
-              type="text"
+            <CFormSelect
+              aria-label="Jornada (Personal directo)"
               id="dailyReportDirectPersonalJourney"
               label="Jornada (Personal directo)"
-              placeholder="Jornada (Personal directo)"
-              text=""
               onChange={(e) => {
                 onChangeData(e)
               }}
-            />
+            >
+              <option>Seleccione</option>
+              <option value="dia">Día</option>
+              <option value="noche">Noche</option>
+            </CFormSelect>
           </CCol>
         </CRow>
         <CRow>
           <CCol sm={4}>
-            <CFormInput
-              type="text"
+            <CFormSelect
+              aria-label="Turno (Personal indirecto)"
               id="dailyReportIndirectPersonalShift"
               label="Turno (Personal indirecto)"
-              placeholder="Turno (Personal indirecto)"
-              text=""
               onChange={(e) => {
                 onChangeData(e)
               }}
-            />
+            >
+              <option>Seleccione</option>
+              <option value="4x4">4x4</option>
+              <option value="7x7">7x7</option>
+            </CFormSelect>
           </CCol>
           <CCol sm={4}>
             <CFormInput
@@ -143,16 +149,18 @@ const CompanyReport = () => {
             />
           </CCol>
           <CCol sm={4}>
-            <CFormInput
-              type="text"
+            <CFormSelect
+              aria-label="Jornada (Personal indirecto)"
               id="dailyReportIndirectPersonalJourney"
               label="Jornada (Personal indirecto)"
-              placeholder="Jornada (Personal indirecto)"
-              text=""
               onChange={(e) => {
                 onChangeData(e)
               }}
-            />
+            >
+              <option>Seleccione</option>
+              <option value="dia">Día</option>
+              <option value="noche">Noche</option>
+            </CFormSelect>
           </CCol>
         </CRow>
       </CForm>
