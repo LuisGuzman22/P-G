@@ -26,8 +26,21 @@ const EquipmentWorkForce = () => {
     equipmentWorkForceFront7: undefined,
   }
 
+  const equipmentWorkForceTotalsInitialState = {
+    equipmentWorkForceFront1: 0,
+    equipmentWorkForceFront2: 0,
+    equipmentWorkForceFront3: 0,
+    equipmentWorkForceFront4: 0,
+    equipmentWorkForceFront5: 0,
+    equipmentWorkForceFront6: 0,
+    equipmentWorkForceFront7: 0,
+  }
+
   const [equipmentWorkForce, setEquipmentWorkForce] = useState(initialState)
   const [equipmentWorkForceList, setEquipmentWorkForceList] = useState([])
+  const [equipmentWorkForceTotals, setEquipmentWorkForceTotals] = useState(
+    equipmentWorkForceTotalsInitialState,
+  )
 
   const {
     storeEquipmentWorkForce,
@@ -101,11 +114,51 @@ const EquipmentWorkForce = () => {
     storeEquipmentWorkForce(equipmentWorkForceList)
   }, [equipmentWorkForceList])
 
+  useEffect(() => {
+    let equipmentWorkForceTotalsCounter = {
+      equipmentWorkForceFront1: 0,
+      equipmentWorkForceFront2: 0,
+      equipmentWorkForceFront3: 0,
+      equipmentWorkForceFront4: 0,
+      equipmentWorkForceFront5: 0,
+      equipmentWorkForceFront6: 0,
+      equipmentWorkForceFront7: 0,
+    }
+
+    for (let data of equipmentWorkForceListContext) {
+      equipmentWorkForceTotalsCounter = {
+        equipmentWorkForceFront1:
+          Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront1) +
+          Number(data.actions.equipmentWorkForceFront1 ?? 0),
+        equipmentWorkForceFront2:
+          Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront2) +
+          Number(data.actions.equipmentWorkForceFront2 ?? 0),
+        equipmentWorkForceFront3:
+          Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront3) +
+          Number(data.actions.equipmentWorkForceFront3 ?? 0),
+        equipmentWorkForceFront4:
+          Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront4) +
+          Number(data.actions.equipmentWorkForceFront4 ?? 0),
+        equipmentWorkForceFront5:
+          Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront5) +
+          Number(data.actions.equipmentWorkForceFront5 ?? 0),
+        equipmentWorkForceFront6:
+          Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront6) +
+          Number(data.actions.equipmentWorkForceFront6 ?? 0),
+        equipmentWorkForceFront7:
+          Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront7) +
+          Number(data.actions.equipmentWorkForceFront7 ?? 0),
+      }
+    }
+    setEquipmentWorkForceTotals(equipmentWorkForceTotalsCounter)
+  }, [equipmentWorkForceListContext])
+
   return (
     <div className="work-force-report">
       <CFormSelect
         aria-label="Default select example"
         id="equipmentWorkForce"
+        value={equipmentWorkForce.equipmentWorkForce || ''}
         onChange={(e) => {
           onChangeData(e)
         }}
@@ -261,6 +314,16 @@ const EquipmentWorkForce = () => {
                   </CTableRow>
                 )
               })}
+              <CTableRow key={'total'}>
+                <CTableDataCell>Total</CTableDataCell>
+                <CTableDataCell>{equipmentWorkForceTotals.equipmentWorkForceFront1}</CTableDataCell>
+                <CTableDataCell>{equipmentWorkForceTotals.equipmentWorkForceFront2}</CTableDataCell>
+                <CTableDataCell>{equipmentWorkForceTotals.equipmentWorkForceFront3}</CTableDataCell>
+                <CTableDataCell>{equipmentWorkForceTotals.equipmentWorkForceFront4}</CTableDataCell>
+                <CTableDataCell>{equipmentWorkForceTotals.equipmentWorkForceFront5}</CTableDataCell>
+                <CTableDataCell>{equipmentWorkForceTotals.equipmentWorkForceFront6}</CTableDataCell>
+                <CTableDataCell>{equipmentWorkForceTotals.equipmentWorkForceFront7}</CTableDataCell>
+              </CTableRow>
             </CTableBody>
           </CTable>
         )}
