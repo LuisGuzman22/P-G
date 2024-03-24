@@ -26,6 +26,7 @@ import Incidents from './daily-report/incidents'
 import DirectWorkForce from './daily-report/direct-work-force'
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import AsarcoMachinery from './daily-report/asarco-machinery'
+import EquipmentPlate from './daily-report/equipment-plate'
 
 const DailyReportCollapse = () => {
   const { registerData } = useRegisterDailyReport()
@@ -105,6 +106,13 @@ const DailyReportCollapse = () => {
             <EquipmentMachinery />
           </CAccordionBody>
         </CAccordionItem>
+        <CAccordionItem itemKey={13}>
+          <CAccordionHeader>13) Equipos con patentes contratistas</CAccordionHeader>
+          <CAccordionBody className="dailyReport-accordion">
+            <EquipmentPlate />
+          </CAccordionBody>
+        </CAccordionItem>
+
         <CAccordionItem itemKey={13}>
           <CAccordionHeader>13) Equipos por frente de trabajo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
