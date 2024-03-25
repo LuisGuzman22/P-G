@@ -12,6 +12,8 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
+import { validate } from 'src/utils/validate'
+
 const DotationWorkForce = () => {
   const initialState = {
     workforceDotationPersonalFront1: undefined,
@@ -29,57 +31,11 @@ const DotationWorkForce = () => {
   const { storeDotationWorkfoce } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    switch (e.target.id) {
-      case 'workforceDotationPersonalFront1':
-        setWorkforceDotation({
-          ...workforceDotation,
-          workforceDotationPersonalFront1: e.target.value,
-        })
-        break
-      case 'workforceDotationPersonalFront2':
-        setWorkforceDotation({
-          ...workforceDotation,
-          workforceDotationPersonalFront2: e.target.value,
-        })
-        break
-      case 'workforceDotationPersonalFront3':
-        setWorkforceDotation({
-          ...workforceDotation,
-          workforceDotationPersonalFront3: e.target.value,
-        })
-        break
-      case 'workforceDotationPersonalFront4':
-        setWorkforceDotation({
-          ...workforceDotation,
-          workforceDotationPersonalFront4: e.target.value,
-        })
-        break
-      case 'workforceDotationPersonalFront5':
-        setWorkforceDotation({
-          ...workforceDotation,
-          workforceDotationPersonalFront5: e.target.value,
-        })
-        break
-      case 'workforceDotationPersonalFront6':
-        setWorkforceDotation({
-          ...workforceDotation,
-          workforceDotationPersonalFront6: e.target.value,
-        })
-        break
-      case 'workforceDotationPersonalFront7':
-        setWorkforceDotation({
-          ...workforceDotation,
-          workforceDotationPersonalFront7: e.target.value,
-        })
-        break
-      case 'workforceDotationObservation':
-        setWorkforceDotation({
-          ...workforceDotation,
-          workforceDotationObservation: e.target.value,
-        })
-        break
-      default:
-        break
+    if (validate(e.target.value)) {
+      setWorkforceDotation({
+        ...workforceDotation,
+        workforceDotationPersonalFront1: e.target.value,
+      })({ ...workforceDotation, [e.target.id]: e.target.value })
     }
   }
 

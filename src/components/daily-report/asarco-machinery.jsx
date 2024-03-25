@@ -13,6 +13,7 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import { validate } from 'src/utils/validate'
 
 const AsarcoMachinery = () => {
   const initialState = {
@@ -55,7 +56,9 @@ const AsarcoMachinery = () => {
       setAsarcoMachinery(initialState) // Clear the object
       setAsarcoMachinery({ [e.target.id]: e.target.value })
     }
-    setAsarcoMachinery({ ...asarcoMachinery, [e.target.id]: e.target.value })
+    if (validate(e.target.value)) {
+      setAsarcoMachinery({ ...asarcoMachinery, [e.target.id]: e.target.value })
+    }
   }
 
   const registerAsarcoMachinery = () => {

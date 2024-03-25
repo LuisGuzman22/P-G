@@ -12,6 +12,7 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import { validate } from 'src/utils/validate'
 
 const EquipmentWorkForce = () => {
   const initialState = {
@@ -49,39 +50,12 @@ const EquipmentWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    switch (e.target.id) {
-      case 'equipmentWorkForce':
-        setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForce: e.target.value })
-        break
-      case 'equipmentWorkForceObservation':
-        setEquipmentWorkForce({
-          ...equipmentWorkForce,
-          equipmentWorkForceObservation: e.target.value,
-        })
-        break
-      case 'equipmentWorkForceFront1':
-        setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForceFront1: e.target.value })
-        break
-      case 'equipmentWorkForceFront2':
-        setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForceFront2: e.target.value })
-        break
-      case 'equipmentWorkForceFront3':
-        setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForceFront3: e.target.value })
-        break
-      case 'equipmentWorkForceFront4':
-        setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForceFront4: e.target.value })
-        break
-      case 'equipmentWorkForceFront5':
-        setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForceFront5: e.target.value })
-        break
-      case 'equipmentWorkForceFront6':
-        setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForceFront6: e.target.value })
-        break
-      case 'equipmentWorkForceFront7':
-        setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForceFront7: e.target.value })
-        break
-      default:
-        break
+    if (e.target.id === 'equipmentWorkForce') {
+      setEquipmentWorkForce(initialState) // Clear the object
+      setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForce: e.target.value })
+    }
+    if (validate(e.target.value)) {
+      setEquipmentWorkForce({ ...equipmentWorkForce, [e.target.id]: e.target.value })
     }
   }
 

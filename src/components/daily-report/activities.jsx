@@ -13,7 +13,8 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
-
+import { validate } from 'src/utils/validate'
+// FALTA VALIDAR
 const Activities = () => {
   const initialState = {
     activity: undefined,
@@ -44,7 +45,9 @@ const Activities = () => {
       setActivity(initialState) // Clear the object
       setActivity({ [e.target.id]: e.target.value })
     }
-    setActivity({ ...activity, [e.target.id]: e.target.value })
+    if (validate(e.target.value)) {
+      setActivity({ ...activity, [e.target.id]: e.target.value })
+    }
   }
 
   const registerActivity = () => {

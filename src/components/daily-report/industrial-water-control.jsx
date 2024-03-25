@@ -13,6 +13,7 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import { validate } from 'src/utils/validate'
 
 const IndustrialWaterControl = () => {
   const initialState = {
@@ -42,7 +43,9 @@ const IndustrialWaterControl = () => {
       setAlgibe(initialState) // Clear the object
       setAlgibe({ [e.target.id]: e.target.value })
     }
-    setAlgibe({ ...aljibe, [e.target.id]: e.target.value })
+    if (validate(e.target.value)) {
+      setAlgibe({ ...aljibe, [e.target.id]: e.target.value })
+    }
   }
 
   const registeraljibe = () => {

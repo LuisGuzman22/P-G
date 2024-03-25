@@ -13,6 +13,8 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import { validate } from 'src/utils/validate'
+
 const DirectDotationWorkForce = () => {
   const initialState = {
     directWorkForce: undefined,
@@ -47,60 +49,15 @@ const DirectDotationWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    switch (e.target.id) {
-      case 'directWorkForce':
-        setDirectDotationWorkForce({ ...directDotationWorkForce, directWorkForce: e.target.value })
-        break
-      case 'directWorkForceFront1':
-        setDirectDotationWorkForce({
-          ...directDotationWorkForce,
-          directWorkForceFront1: e.target.value,
-        })
-        break
-      case 'directWorkForceFront2':
-        setDirectDotationWorkForce({
-          ...directDotationWorkForce,
-          directWorkForceFront2: e.target.value,
-        })
-        break
-      case 'directWorkForceFront3':
-        setDirectDotationWorkForce({
-          ...directDotationWorkForce,
-          directWorkForceFront3: e.target.value,
-        })
-        break
-      case 'directWorkForceFront4':
-        setDirectDotationWorkForce({
-          ...directDotationWorkForce,
-          directWorkForceFront4: e.target.value,
-        })
-        break
-      case 'directWorkForceFront5':
-        setDirectDotationWorkForce({
-          ...directDotationWorkForce,
-          directWorkForceFront5: e.target.value,
-        })
-        break
-      case 'directWorkForceFront6':
-        setDirectDotationWorkForce({
-          ...directDotationWorkForce,
-          directWorkForceFront6: e.target.value,
-        })
-        break
-      case 'directWorkForceFront7':
-        setDirectDotationWorkForce({
-          ...directDotationWorkForce,
-          directWorkForceFront7: e.target.value,
-        })
-        break
-      case 'directDotationWorkForceObservation':
-        setDirectDotationWorkForce({
-          ...directDotationWorkForce,
-          directDotationWorkForceObservation: e.target.value,
-        })
-        break
-      default:
-        break
+    if (e.target.id === 'directWorkForce') {
+      setDirectDotationWorkForce(initialState) // Clear the object
+      setDirectDotationWorkForce({ ...directDotationWorkForce, directWorkForce: e.target.value })
+    }
+    if (validate(e.target.value)) {
+      setDirectDotationWorkForce({
+        ...directDotationWorkForce,
+        [e.target.id]: e.target.value,
+      })
     }
   }
 

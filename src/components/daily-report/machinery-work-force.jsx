@@ -13,6 +13,7 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import { validate } from 'src/utils/validate'
 
 const MachineryWorkForce = () => {
   const initialState = {
@@ -37,39 +38,12 @@ const MachineryWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    switch (e.target.id) {
-      case 'machineryWorkForce':
-        setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForce: e.target.value })
-        break
-      case 'machineryWorkForceFront1':
-        setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForceFront1: e.target.value })
-        break
-      case 'machineryWorkForceFront2':
-        setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForceFront2: e.target.value })
-        break
-      case 'machineryWorkForceFront3':
-        setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForceFront3: e.target.value })
-        break
-      case 'machineryWorkForceFront4':
-        setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForceFront4: e.target.value })
-        break
-      case 'machineryWorkForceFront5':
-        setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForceFront5: e.target.value })
-        break
-      case 'machineryWorkForceFront6':
-        setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForceFront6: e.target.value })
-        break
-      case 'machineryWorkForceFront7':
-        setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForceFront7: e.target.value })
-        break
-      case 'machineryWorkForceObservation':
-        setMachineryWorkForce({
-          ...machineryWorkForce,
-          machineryWorkForceObservation: e.target.value,
-        })
-        break
-      default:
-        break
+    if (e.target.id === 'machineryWorkForce') {
+      setMachineryWorkForce(initialState) // Clear the object
+      setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForce: e.target.value })
+    }
+    if (validate(e.target.value)) {
+      setMachineryWorkForce({ ...machineryWorkForce, [e.target.id]: e.target.value })
     }
   }
 

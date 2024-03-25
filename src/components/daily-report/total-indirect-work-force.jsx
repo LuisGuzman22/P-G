@@ -12,10 +12,12 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
+import { validate } from 'src/utils/validate'
 
 const TotalIndirectWorkForce = () => {
   const { storeTotalIndirectWorkForce } = useRegisterDailyReportCompany()
 
+  // FALTA VALIDAR
   const onChangeData = (e) => {
     storeTotalIndirectWorkForce(e)
   }

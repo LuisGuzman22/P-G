@@ -13,6 +13,7 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import { validate } from 'src/utils/validate'
 
 const VehicleWorkForce = () => {
   const initialState = {
@@ -36,36 +37,12 @@ const VehicleWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    switch (e.target.id) {
-      case 'vehicleWorkForce':
-        setVehicleWorkForce({ ...vehicleWorkForce, vehicleWorkForce: e.target.value })
-        break
-      case 'vehicleWorkForceObservation':
-        setVehicleWorkForce({ ...vehicleWorkForce, vehicleWorkForceObservation: e.target.value })
-        break
-      case 'vehicleWorkForceFront1':
-        setVehicleWorkForce({ ...vehicleWorkForce, vehicleWorkForceFront1: e.target.value })
-        break
-      case 'vehicleWorkForceFront2':
-        setVehicleWorkForce({ ...vehicleWorkForce, vehicleWorkForceFront2: e.target.value })
-        break
-      case 'vehicleWorkForceFront3':
-        setVehicleWorkForce({ ...vehicleWorkForce, vehicleWorkForceFront3: e.target.value })
-        break
-      case 'vehicleWorkForceFront4':
-        setVehicleWorkForce({ ...vehicleWorkForce, vehicleWorkForceFront4: e.target.value })
-        break
-      case 'vehicleWorkForceFront5':
-        setVehicleWorkForce({ ...vehicleWorkForce, vehicleWorkForceFront5: e.target.value })
-        break
-      case 'vehicleWorkForceFront6':
-        setVehicleWorkForce({ ...vehicleWorkForce, vehicleWorkForceFront6: e.target.value })
-        break
-      case 'vehicleWorkForceFront7':
-        setVehicleWorkForce({ ...vehicleWorkForce, vehicleWorkForceFront7: e.target.value })
-        break
-      default:
-        break
+    if (e.target.id === 'vehicleWorkForce') {
+      setVehicleWorkForce(initialState) // Clear the object
+      setVehicleWorkForce({ [e.target.id]: e.target.value })
+    }
+    if (validate(e.target.value)) {
+      setVehicleWorkForce({ ...vehicleWorkForce, [e.target.id]: e.target.value })
     }
   }
 

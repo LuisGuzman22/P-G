@@ -13,6 +13,7 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import { validate } from 'src/utils/validate'
 
 const DirectWorkForce = () => {
   const initialStatee = {
@@ -34,31 +35,12 @@ const DirectWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    switch (e.target.id) {
-      case 'directWorkForce':
-        setDirectWorkForce(initialStatee) // Clear the object
-        setDirectWorkForce({ [e.target.id]: e.target.value })
-        break
-      case 'directWorkForceOfferedNumber':
-        setDirectWorkForce({ ...directWorkForce, [e.target.id]: e.target.value })
-        break
-      case 'directWorkForceContractedNumber':
-        setDirectWorkForce({ ...directWorkForce, [e.target.id]: e.target.value })
-        break
-      case 'directWorkForceCertifiedNumber':
-        setDirectWorkForce({ ...directWorkForce, [e.target.id]: e.target.value })
-        break
-      case 'directWorkForceBreakNumber':
-        setDirectWorkForce({ ...directWorkForce, [e.target.id]: e.target.value })
-        break
-      case 'directWorkForceWorkNumber':
-        setDirectWorkForce({ ...directWorkForce, [e.target.id]: e.target.value })
-        break
-      case 'directWorkForceHHNumber':
-        setDirectWorkForce({ ...directWorkForce, [e.target.id]: e.target.value })
-        break
-      default:
-        break
+    if (e.target.id === 'directWorkForce') {
+      setDirectWorkForce(initialStatee) // Clear the object
+      setDirectWorkForce({ [e.target.id]: e.target.value })
+    }
+    if (validate(e.target.value)) {
+      setDirectWorkForce({ ...directWorkForce, [e.target.id]: e.target.value })
     }
   }
 

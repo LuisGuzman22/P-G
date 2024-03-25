@@ -16,6 +16,7 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 const TotalDirectWorkForce = () => {
   const { storeTotalDirectWorkForce } = useRegisterDailyReportCompany()
 
+  // FALTA VALIDAR
   const onChangeData = (e) => {
     storeTotalDirectWorkForce(e)
   }

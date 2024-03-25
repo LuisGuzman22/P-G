@@ -13,6 +13,7 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import { validate } from 'src/utils/validate'
 
 const EquipmentMachinery = () => {
   const initialState = {
@@ -43,7 +44,9 @@ const EquipmentMachinery = () => {
       setEquipment(initialState) // Clear the object
       setEquipment({ [e.target.id]: e.target.value })
     }
-    setEquipment({ ...equipment, [e.target.id]: e.target.value })
+    if (validate(e.target.value)) {
+      setEquipment({ ...equipment, [e.target.id]: e.target.value })
+    }
   }
 
   const registerEquipment = () => {
