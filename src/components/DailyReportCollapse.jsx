@@ -66,12 +66,12 @@ const DailyReportCollapse = () => {
             <TotalDirectWorkForce />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={6}>
+        {/* <CAccordionItem itemKey={6}>
           <CAccordionHeader>6) Dotación por frente de trabajo personal indirecto</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <IndirectDotationWorkForce />
           </CAccordionBody>
-        </CAccordionItem>
+        </CAccordionItem> */}
         <CAccordionItem itemKey={7}>
           <CAccordionHeader>7) Dotación por frente de trabajo personal directo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
