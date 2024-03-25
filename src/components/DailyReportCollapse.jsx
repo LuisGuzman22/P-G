@@ -28,6 +28,7 @@ import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import AsarcoMachinery from './daily-report/asarco-machinery'
 import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
+import IndustrialWaterControl from './daily-report/industrial-water-control'
 
 const DailyReportCollapse = () => {
   const { registerData } = useRegisterDailyReport()
@@ -113,57 +114,62 @@ const DailyReportCollapse = () => {
             <EquipmentPlate />
           </CAccordionBody>
         </CAccordionItem>
-
-        <CAccordionItem itemKey={13}>
-          <CAccordionHeader>13) Equipos por frente de trabajo</CAccordionHeader>
+        <CAccordionItem itemKey={14}>
+          <CAccordionHeader>14) Equipos por frente de trabajo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <EquipmentWorkForce />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={14}>
-          <CAccordionHeader>14) Vehículos menores contratistas</CAccordionHeader>
+        <CAccordionItem itemKey={15}>
+          <CAccordionHeader>15) Vehículos menores contratistas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Vehicle />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={14}>
-          <CAccordionHeader>14) Vehículos con patente menores contratistas</CAccordionHeader>
+        <CAccordionItem itemKey={16}>
+          <CAccordionHeader>16) Vehículos con patente menores contratistas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <VehiclePlate />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={15}>
-          <CAccordionHeader>15) Vehiculos menores por frente de trabajo</CAccordionHeader>
+        <CAccordionItem itemKey={17}>
+          <CAccordionHeader>17) Vehiculos menores por frente de trabajo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <VehicleWorkForce />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={16}>
-          <CAccordionHeader>16) Descripción de actividades desarrolladas</CAccordionHeader>
+        <CAccordionItem itemKey={18}>
+          <CAccordionHeader>18) Descripción de actividades desarrolladas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Activities />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={17}>
-          <CAccordionHeader>17) Comentarios y alertas en general</CAccordionHeader>
+        <CAccordionItem itemKey={19}>
+          <CAccordionHeader>19) Control de aguas industriales utilizadas</CAccordionHeader>
+          <CAccordionBody className="dailyReport-accordion">
+            <IndustrialWaterControl />
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={20}>
+          <CAccordionHeader>20) Comentarios y alertas en general</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Comments />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={18}>
-          <CAccordionHeader>18) Graficos del día</CAccordionHeader>
+        <CAccordionItem itemKey={21}>
+          <CAccordionHeader>21) Graficos del día</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Graphs />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={19}>
-          <CAccordionHeader>19) Incidentes, lesiones o eventos</CAccordionHeader>
+        <CAccordionItem itemKey={22}>
+          <CAccordionHeader>22) Incidentes, lesiones o eventos</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Incidents />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={20}>
-          <CAccordionHeader>20) Firmas</CAccordionHeader>
+        <CAccordionItem itemKey={23}>
+          <CAccordionHeader>23) Firmas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <></>
           </CAccordionBody>

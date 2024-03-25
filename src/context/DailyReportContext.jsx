@@ -76,6 +76,7 @@ export const DailyReportProvider = ({ children }) => {
   const [activityList, setActivityList] = useState([])
   const [asarcoMachineryList, setAsarcoMachineryList] = useState([])
   const [equipmentPlateList, setEquipmentPlateList] = useState([])
+  const [aljibeList, setAljibeList] = useState([])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,
@@ -412,6 +413,15 @@ export const DailyReportProvider = ({ children }) => {
     setVehiclePlateList(newData)
   }
 
+  const storealjibe = async (data) => {
+    setAljibeList(data)
+  }
+
+  const removealjibe = async (id) => {
+    const newData = aljibeList.filter((item) => item.id !== id)
+    setAljibeList(newData)
+  }
+
   return (
     <DailyReportContext.Provider
       value={{
@@ -468,6 +478,9 @@ export const DailyReportProvider = ({ children }) => {
         storeVehiclePlate,
         removeVehiclePlate,
         vehiclePlateList,
+        storealjibe,
+        removealjibe,
+        aljibeList,
       }}
     >
       {children}

@@ -51,6 +51,9 @@ const useRegisterDailyReportCompany = () => {
     storeVehiclePlate,
     removeVehiclePlate,
     vehiclePlateList,
+    storealjibe,
+    removealjibe,
+    aljibeList,
   } = useContext(DailyReportContext)
 
   return {
@@ -102,6 +105,9 @@ const useRegisterDailyReportCompany = () => {
     storeVehiclePlate,
     removeVehiclePlate,
     vehiclePlateList,
+    storealjibe,
+    removealjibe,
+    aljibeList,
   }
 }
 
