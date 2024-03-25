@@ -20,19 +20,17 @@ const Vehicle = () => {
     vehicleOfferedNumber: undefined,
     vehicleCertifiedNumber: undefined,
     vehicleWorkNumber: undefined,
-    vehicleEffectiveTime: undefined,
-    vehicleCorrectiveMaintenance: undefined,
-    vehiclePreventiveMaintenance: undefined,
-    vehicleOutOfService: undefined,
-    vehicleWaiting: undefined,
-    vehicleNoOperator: undefined,
-    vehicleInitialHorometer: undefined,
-    vehicleFinalHorometer: undefined,
+  }
+
+  const vehicleTotalsInitialState = {
+    vehicleOfferedNumber: 0,
+    vehicleCertifiedNumber: 0,
+    vehicleWorkNumber: 0,
   }
 
   const [vehicle, setVehicle] = useState(initialState)
   const [vehicleList, setVehicleList] = useState([])
-
+  const [vehicleTotals, setVehicleTotals] = useState(vehicleTotalsInitialState)
   const {
     storeVehicle,
     removeVehicle,
@@ -55,14 +53,6 @@ const Vehicle = () => {
         vehicleOfferedNumber: vehicle.vehicleOfferedNumber,
         vehicleCertifiedNumber: vehicle.vehicleCertifiedNumber,
         vehicleWorkNumber: vehicle.vehicleWorkNumber,
-        vehicleEffectiveTime: vehicle.vehicleEffectiveTime,
-        vehicleCorrectiveMaintenance: vehicle.vehicleCorrectiveMaintenance,
-        vehiclePreventiveMaintenance: vehicle.vehiclePreventiveMaintenance,
-        vehicleOutOfService: vehicle.vehicleOutOfService,
-        vehicleWaiting: vehicle.vehicleWaiting,
-        vehicleNoOperator: vehicle.vehicleNoOperator,
-        vehicleInitialHorometer: vehicle.vehicleInitialHorometer,
-        vehicleFinalHorometer: vehicle.vehicleFinalHorometer,
       },
     }
     setVehicle(initialState) // Clear the object
@@ -79,11 +69,35 @@ const Vehicle = () => {
     storeVehicle(vehicleList)
   }, [vehicleList])
 
+  useEffect(() => {
+    let vehicleTotalsCounter = {
+      vehicleOfferedNumber: 0,
+      vehicleCertifiedNumber: 0,
+      vehicleWorkNumber: 0,
+    }
+
+    for (let data of vehicleListContext) {
+      vehicleTotalsCounter = {
+        vehicleOfferedNumber:
+          Number(vehicleTotalsCounter.vehicleOfferedNumber) +
+          Number(data.actions.vehicleOfferedNumber ?? 0),
+        vehicleCertifiedNumber:
+          Number(vehicleTotalsCounter.vehicleCertifiedNumber) +
+          Number(data.actions.vehicleCertifiedNumber ?? 0),
+        vehicleWorkNumber:
+          Number(vehicleTotalsCounter.vehicleWorkNumber) +
+          Number(data.actions.vehicleWorkNumber ?? 0),
+      }
+    }
+    setVehicleTotals(vehicleTotalsCounter)
+  }, [vehicleListContext])
+
   return (
     <div className="work-force-report">
       <CFormSelect
         aria-label="Default select example"
         id="vehicle"
+        value={vehicle.vehicle || ''}
         onChange={(e) => {
           onChangeData(e)
         }}
@@ -100,8 +114,6 @@ const Vehicle = () => {
             <CTableHeaderCell scope="col">N° Vehículo oferta</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Vehículo Acreditado</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Vehículo en Obra</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -139,108 +151,6 @@ const Vehicle = () => {
                 }}
               />
             </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleEffectiveTime"
-                value={vehicle.vehicleEffectiveTime || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleCorrectiveMaintenance"
-                value={vehicle.vehicleCorrectiveMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
-            <CTableHeaderCell scope="col">Sin Operador (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Horometro Inicial </CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehiclePreventiveMaintenance"
-                value={vehicle.vehiclePreventiveMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleOutOfService"
-                value={vehicle.vehicleOutOfService || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleWaiting"
-                value={vehicle.vehicleWaiting || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleNoOperator"
-                value={vehicle.vehicleNoOperator || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleInitialHorometer"
-                value={vehicle.vehicleInitialHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Horometro Final </CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleFinalHorometer"
-                value={vehicle.vehicleFinalHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
           </CTableRow>
         </CTableBody>
       </CTable>
@@ -258,18 +168,10 @@ const Vehicle = () => {
         <CTable>
           <CTableHead>
             <CTableRow>
+              <CTableHeaderCell scope="col"></CTableHeaderCell>
               <CTableHeaderCell scope="col">N° Vehículos oferta</CTableHeaderCell>
               <CTableHeaderCell scope="col">N° Vehículos Acreditado</CTableHeaderCell>
               <CTableHeaderCell scope="col">N° Vehículos en Obra</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Sin Operador (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Horometro Inicial </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Horometro Final </CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
@@ -277,17 +179,9 @@ const Vehicle = () => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{item.vehicle}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleOfferedNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleCertifiedNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleWorkNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleEffectiveTime}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleCorrectiveMaintenance}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehiclePreventiveMaintenance}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleOutOfService}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleWaiting}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleNoOperator}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleInitialHorometer}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleFinalHorometer}</CTableDataCell>
+                  <CTableDataCell>{item.actions.vehicleOfferedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.actions.vehicleCertifiedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.actions.vehicleWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
                       className="btn-project-action"
@@ -301,6 +195,12 @@ const Vehicle = () => {
                 </CTableRow>
               )
             })}
+            <CTableRow key={'total'}>
+              <CTableDataCell>Total</CTableDataCell>
+              <CTableDataCell>{vehicleTotals.vehicleOfferedNumber ?? 0}</CTableDataCell>
+              <CTableDataCell>{vehicleTotals.vehicleCertifiedNumber ?? 0}</CTableDataCell>
+              <CTableDataCell>{vehicleTotals.vehicleWorkNumber ?? 0}</CTableDataCell>
+            </CTableRow>
           </CTableBody>
         </CTable>
       )}

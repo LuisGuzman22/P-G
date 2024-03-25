@@ -72,6 +72,7 @@ export const DailyReportProvider = ({ children }) => {
   const [machineryList, setMachineryList] = useState([])
   const [equipmentList, setEquipmentList] = useState([])
   const [vehicleList, setVehicleList] = useState([])
+  const [vehiclePlateList, setVehiclePlateList] = useState([])
   const [activityList, setActivityList] = useState([])
   const [asarcoMachineryList, setAsarcoMachineryList] = useState([])
   const [equipmentPlateList, setEquipmentPlateList] = useState([])
@@ -371,7 +372,7 @@ export const DailyReportProvider = ({ children }) => {
   }
 
   const removeVehicle = async (id) => {
-    const newData = equipmentList.filter((item) => item.id !== id)
+    const newData = vehicleList.filter((item) => item.id !== id)
     setVehicleList(newData)
   }
 
@@ -400,6 +401,15 @@ export const DailyReportProvider = ({ children }) => {
   const removeEquipmentPlate = async (id) => {
     const newData = equipmentPlateList.filter((item) => item.id !== id)
     setEquipmentPlateList(newData)
+  }
+
+  const storeVehiclePlate = async (data) => {
+    setVehiclePlateList(data)
+  }
+
+  const removeVehiclePlate = async (id) => {
+    const newData = vehiclePlateList.filter((item) => item.id !== id)
+    setVehiclePlateList(newData)
   }
 
   return (
@@ -455,6 +465,9 @@ export const DailyReportProvider = ({ children }) => {
         storeEquipmentPlate,
         removeEquipmentPlate,
         equipmentPlateList,
+        storeVehiclePlate,
+        removeVehiclePlate,
+        vehiclePlateList,
       }}
     >
       {children}
