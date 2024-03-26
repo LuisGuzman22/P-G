@@ -31,19 +31,7 @@ export const DailyReportProvider = ({ children }) => {
     dailyReportIndirectPersonalJourney: undefined,
   })
 
-  const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState({
-    indirectSubtotal: {
-      offeredNumber: undefined,
-      contractedNumber: undefined,
-      certified: undefined,
-      breakNumber: undefined,
-      workNumber: undefined,
-      hh: undefined,
-    },
-    indirectPreviusAccumulated: undefined,
-    indirectCurrentAccumulated: undefined,
-  })
-
+  const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState()
   const [totalDirectWorkForce, setTotalDirectWorkForce] = useState()
 
   const [directWorkForceList, setDirectWorkForceList] = useState([])
@@ -119,83 +107,17 @@ export const DailyReportProvider = ({ children }) => {
   }
 
   const storeTotalIndirectWorkForce = async (data) => {
-    switch (data.target.id) {
-      case 'indirectSubtotalOfferedNumber':
-        setTotalIndirectWorkForce({
-          ...totalIndirectWorkForce,
-          indirectSubtotal: {
-            ...totalIndirectWorkForce.indirectSubtotal,
-            offeredNumber: data.target.value,
-          },
-        })
-        break
-      case 'indirectSubtotalContractedNumber':
-        setTotalIndirectWorkForce({
-          ...totalIndirectWorkForce,
-          indirectSubtotal: {
-            ...totalIndirectWorkForce.indirectSubtotal,
-            contractedNumber: data.target.value,
-          },
-        })
-        break
-      case 'indirectSubtotalCertifiedNumber':
-        setTotalIndirectWorkForce({
-          ...totalIndirectWorkForce,
-          indirectSubtotal: {
-            ...totalIndirectWorkForce.indirectSubtotal,
-            certified: data.target.value,
-          },
-        })
-        break
-      case 'indirectSubtotalBreakNumber':
-        setTotalIndirectWorkForce({
-          ...totalIndirectWorkForce,
-          indirectSubtotal: {
-            ...totalIndirectWorkForce.indirectSubtotal,
-            breakNumber: data.target.value,
-          },
-        })
-        break
-      case 'indirectSubtotalWorkNumber':
-        setTotalIndirectWorkForce({
-          ...totalIndirectWorkForce,
-          indirectSubtotal: {
-            ...totalIndirectWorkForce.indirectSubtotal,
-            workNumber: data.target.value,
-          },
-        })
-        break
-      case 'indirectSubtotalHHNumber':
-        setTotalIndirectWorkForce({
-          ...totalIndirectWorkForce,
-          indirectSubtotal: {
-            ...totalIndirectWorkForce.indirectSubtotal,
-            hh: data.target.value,
-          },
-        })
-        break
-      case 'indirectPreviusAccumulated':
-        setTotalIndirectWorkForce({
-          ...totalIndirectWorkForce,
-          indirectPreviusAccumulated: data.target.value,
-        })
-        break
-      case 'indirectCurrentAccumulated':
-        setTotalIndirectWorkForce({
-          ...totalIndirectWorkForce,
-          indirectCurrentAccumulated: data.target.value,
-        })
-        break
-      default:
-        break
-    }
+    setTotalIndirectWorkForce(data)
   }
 
   const storeTotalDirectWorkForce = async (data) => {
     setTotalDirectWorkForce(data)
   }
 
-  console.log('totalDirectWorkForce', totalDirectWorkForce)
+  useEffect(() => {
+    console.log('totalIndirectWorkForce', totalIndirectWorkForce)
+  }, [totalIndirectWorkForce])
+  console.log('totalIndirectWorkForce', totalIndirectWorkForce)
 
   const storeDirectWorkForce = async (data) => {
     setDirectWorkForceList(data)
@@ -353,6 +275,7 @@ export const DailyReportProvider = ({ children }) => {
         storeCompanyData,
         storeIndirectWorkForceData,
         storeTotalIndirectWorkForce,
+        totalIndirectWorkForce,
         storeDirectWorkForce,
         removeDirectWorkForce,
         indirectWorkForceList,

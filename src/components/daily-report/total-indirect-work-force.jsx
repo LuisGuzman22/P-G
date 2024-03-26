@@ -1,9 +1,6 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import {
-  CForm,
   CFormInput,
-  CRow,
-  CCol,
   CTable,
   CTableHead,
   CTableHeaderCell,
@@ -15,12 +12,29 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { validate } from 'src/utils/validate'
 
 const TotalIndirectWorkForce = () => {
+  const initialState = {
+    indirectSubtotalOfferedNumber: undefined,
+    indirectSubtotalContractedNumber: undefined,
+    indirectSubtotalCertifiedNumber: undefined,
+    indirectSubtotalBreakNumber: undefined,
+    indirectSubtotalWorkNumber: undefined,
+    indirectSubtotalHHNumber: undefined,
+    indirectPreviusAccumulated: undefined,
+    indirectCurrentAccumulated: undefined,
+  }
   const { storeTotalIndirectWorkForce } = useRegisterDailyReportCompany()
 
-  // FALTA VALIDAR
+  const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState(initialState)
+
   const onChangeData = (e) => {
-    storeTotalIndirectWorkForce(e)
+    if (validate(e.target.value)) {
+      setTotalIndirectWorkForce({ ...totalIndirectWorkForce, [e.target.id]: e.target.value })
+    }
   }
+
+  useEffect(() => {
+    storeTotalIndirectWorkForce(totalIndirectWorkForce)
+  }, [totalIndirectWorkForce])
 
   return (
     <div className="work-force-report">
@@ -43,6 +57,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectSubtotalOfferedNumber"
+                value={totalIndirectWorkForce.indirectSubtotalOfferedNumber || ''}
                 placeholder="N° Ofertado"
                 text=""
                 onChange={(e) => {
@@ -54,6 +69,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectSubtotalContractedNumber"
+                value={totalIndirectWorkForce.indirectSubtotalContractedNumber || ''}
                 placeholder="N° Contratados"
                 text=""
                 onChange={(e) => {
@@ -65,6 +81,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectSubtotalCertifiedNumber"
+                value={totalIndirectWorkForce.indirectSubtotalCertifiedNumber || ''}
                 placeholder="Acreditados"
                 text=""
                 onChange={(e) => {
@@ -76,6 +93,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectSubtotalBreakNumber"
+                value={totalIndirectWorkForce.indirectSubtotalBreakNumber || ''}
                 placeholder="N° Descanso"
                 text=""
                 onChange={(e) => {
@@ -87,6 +105,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectSubtotalWorkNumber"
+                value={totalIndirectWorkForce.indirectSubtotalWorkNumber || ''}
                 placeholder="N° Obra"
                 text=""
                 onChange={(e) => {
@@ -98,6 +117,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectSubtotalHHNumber"
+                value={totalIndirectWorkForce.indirectSubtotalHHNumber || ''}
                 placeholder="HH (Turno)"
                 text=""
                 onChange={(e) => {
@@ -112,6 +132,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectPreviusAccumulated"
+                value={totalIndirectWorkForce.indirectPreviusAccumulated || ''}
                 placeholder="Total"
                 text=""
                 onChange={(e) => {
@@ -126,6 +147,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectCurrentAccumulated"
+                value={totalIndirectWorkForce.indirectCurrentAccumulated || ''}
                 placeholder="Total"
                 text=""
                 onChange={(e) => {
