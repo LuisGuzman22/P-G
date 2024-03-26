@@ -276,7 +276,7 @@ const Activities = () => {
       </CButton>
 
       {activityListContext.length > 0 && activityListContext[0].activityFrontWork && (
-        <CTable>
+        <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col"></CTableHeaderCell>

@@ -169,7 +169,7 @@ const EquipmentMachinery = () => {
       </CButton>
 
       {equipmentListContext.length > 0 && equipmentListContext[0].equipment && (
-        <CTable>
+        <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col"></CTableHeaderCell>

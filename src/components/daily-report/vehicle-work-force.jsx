@@ -195,7 +195,7 @@ const VehicleWorkForce = () => {
 
       {vehicleWorkForceListContext.length > 0 &&
         vehicleWorkForceListContext[0].vehicleWorkForce && (
-          <CTable>
+          <CTable className="resume-table">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col"></CTableHeaderCell>

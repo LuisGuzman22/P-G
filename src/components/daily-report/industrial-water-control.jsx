@@ -167,7 +167,7 @@ const IndustrialWaterControl = () => {
       </CButton>
 
       {aljibeListContext.length > 0 && aljibeListContext[0].aljibe && (
-        <CTable>
+        <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col"></CTableHeaderCell>

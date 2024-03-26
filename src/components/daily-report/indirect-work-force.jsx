@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 
 const IndirectWorkForce = () => {
-  const initialStatee = {
+  const initialState = {
     indirectWorkForce: undefined,
     indirectWorkForceOfferedNumber: undefined,
     indirectWorkForceContractedNumber: undefined,
@@ -24,7 +24,7 @@ const IndirectWorkForce = () => {
     indirectWorkForceWorkNumber: undefined,
     indirectWorkForceHHNumber: undefined,
   }
-  const [indirectWorkForce, setIndirectWorkForce] = useState(initialStatee)
+  const [indirectWorkForce, setIndirectWorkForce] = useState(initialState)
   const [indirectWorkForceList, setIndirectWorkForceList] = useState([])
 
   const {
@@ -35,7 +35,7 @@ const IndirectWorkForce = () => {
 
   const onChangeData = (e) => {
     if (e.target.id === 'indirectWorkForce') {
-      setIndirectWorkForce(initialStatee) // Clear the object
+      setIndirectWorkForce(initialState) // Clear the object
       setIndirectWorkForce({ [e.target.id]: e.target.value })
     }
     if (validate(e.target.value)) {
@@ -56,7 +56,7 @@ const IndirectWorkForce = () => {
         hh: indirectWorkForce.contractAdministratorHHNumber,
       },
     }
-    setIndirectWorkForce(initialStatee) // Clear the object
+    setIndirectWorkForce(initialState) // Clear the object
     setIndirectWorkForceList([...indirectWorkForceList, indirectWorkForceInitialState])
   }
 
@@ -76,11 +76,12 @@ const IndirectWorkForce = () => {
       <CFormSelect
         aria-label="Default select example"
         id="indirectWorkForce"
+        value={indirectWorkForce.indirectWorkForce || ''}
         onChange={(e) => {
           onChangeData(e)
         }}
       >
-        <option>Seleccione</option>
+        <option value={0}>Seleccione</option>
         <option value="Administrador_de_contrato">Administrador de contrato</option>
         <option value="Jefe_de_Oficina_Técnica">Jefe de Oficina Técnica</option>
         <option value="Jefe_de_Terreno">Jefe de Terreno</option>
@@ -107,9 +108,6 @@ const IndirectWorkForce = () => {
             <CTableHeaderCell scope="col">N° Ofertado</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Contratados</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Acreditados</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Descanso</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
-            <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -150,6 +148,13 @@ const IndirectWorkForce = () => {
                 }}
               />
             </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableHeaderCell scope="col">N° Descanso</CTableHeaderCell>
+            <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
+            <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
+          </CTableRow>
+          <CTableRow>
             <CTableDataCell>
               <CFormInput
                 type="text"
@@ -201,7 +206,7 @@ const IndirectWorkForce = () => {
 
       {indirectWorkForceListContext.length > 0 &&
         indirectWorkForceListContext[0].indirectWorkForce && (
-          <CTable>
+          <CTable className="resume-table">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">Cargo</CTableHeaderCell>

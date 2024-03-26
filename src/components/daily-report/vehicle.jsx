@@ -168,7 +168,7 @@ const Vehicle = () => {
       </CButton>
 
       {vehicleListContext.length > 0 && vehicleListContext[0].vehicle && (
-        <CTable>
+        <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col"></CTableHeaderCell>

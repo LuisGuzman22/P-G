@@ -170,7 +170,7 @@ const DirectWorkForce = () => {
       </CTable>
 
       {directWorkForceListContext.length > 0 && directWorkForceListContext[0].directWorkForce && (
-        <CTable>
+        <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">Cargo</CTableHeaderCell>

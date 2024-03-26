@@ -281,7 +281,7 @@ const AsarcoMachinery = () => {
       </CButton>
 
       {asarcoMachineryListContext.length > 0 && asarcoMachineryListContext[0].machinery && (
-        <CTable>
+        <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col"></CTableHeaderCell>

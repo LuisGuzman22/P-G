@@ -213,7 +213,7 @@ const EquipmentPlate = () => {
       </CButton>
 
       {equipmentPlateListContext.length > 0 && equipmentPlateListContext[0].equipment && (
-        <CTable>
+        <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col"></CTableHeaderCell>

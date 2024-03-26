@@ -197,7 +197,7 @@ const MachineryWorkForce = () => {
 
       {machineryWorkForceListContext.length > 0 &&
         machineryWorkForceListContext[0].machineryWorkForce && (
-          <CTable>
+          <CTable className="resume-table">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col"></CTableHeaderCell>

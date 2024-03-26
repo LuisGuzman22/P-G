@@ -248,6 +248,12 @@
   }
 }
 
+.resume-table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 h2 {
   color: #ff9512;
 }

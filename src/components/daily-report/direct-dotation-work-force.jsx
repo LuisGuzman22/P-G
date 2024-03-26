@@ -262,7 +262,7 @@ const DirectDotationWorkForce = () => {
 
       {directDotationWorkForceListContext.length > 0 &&
         directDotationWorkForceListContext[0].directWorkForce && (
-          <CTable>
+          <CTable className="resume-table">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col"></CTableHeaderCell>
