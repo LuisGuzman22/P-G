@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 import {
   CForm,
   CFormInput,
@@ -12,14 +12,31 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
+import { validate } from 'src/utils/validate'
 
 const TotalDirectWorkForce = () => {
-  const { storeTotalDirectWorkForce } = useRegisterDailyReportCompany()
-
-  // FALTA VALIDAR
-  const onChangeData = (e) => {
-    storeTotalDirectWorkForce(e)
+  const initialState = {
+    directSubtotalOfferedNumber: undefined,
+    directSubtotalContractedNumber: undefined,
+    directSubtotalCertifiedNumber: undefined,
+    directSubtotalBreakNumber: undefined,
+    directSubtotalWorkNumber: undefined,
+    directSubtotalHHNumber: undefined,
+    directPreviusAccumulated: undefined,
+    directCurrentAccumulated: undefined,
   }
+  const { storeTotalDirectWorkForce } = useRegisterDailyReportCompany()
+  const [totalDirectWorkForce, setTotalDirectWorkForce] = useState(initialState)
+
+  const onChangeData = (e) => {
+    if (validate(e.target.value)) {
+      setTotalDirectWorkForce({ ...totalDirectWorkForce, [e.target.id]: e.target.value })
+    }
+  }
+
+  useEffect(() => {
+    storeTotalDirectWorkForce(totalDirectWorkForce)
+  }, [totalDirectWorkForce])
 
   return (
     <div className="work-force-report">
@@ -42,6 +59,7 @@ const TotalDirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="directSubtotalOfferedNumber"
+                value={totalDirectWorkForce.directSubtotalOfferedNumber || ''}
                 placeholder="N° Ofertado"
                 text=""
                 onChange={(e) => {
@@ -54,6 +72,7 @@ const TotalDirectWorkForce = () => {
                 type="text"
                 id="directSubtotalContractedNumber"
                 placeholder="N° Contratados"
+                value={totalDirectWorkForce.directSubtotalContractedNumber || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -65,6 +84,7 @@ const TotalDirectWorkForce = () => {
                 type="text"
                 id="directSubtotalCertifiedNumber"
                 placeholder="Acreditados"
+                value={totalDirectWorkForce.directSubtotalCertifiedNumber || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -76,6 +96,7 @@ const TotalDirectWorkForce = () => {
                 type="text"
                 id="directSubtotalBreakNumber"
                 placeholder="N° Descanso"
+                value={totalDirectWorkForce.directSubtotalBreakNumber || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -87,6 +108,7 @@ const TotalDirectWorkForce = () => {
                 type="text"
                 id="directSubtotalWorkNumber"
                 placeholder="N° Obra"
+                value={totalDirectWorkForce.directSubtotalWorkNumber || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -96,8 +118,9 @@ const TotalDirectWorkForce = () => {
             <CTableDataCell>
               <CFormInput
                 type="text"
-                id="DirectSubtotalHHNumber"
+                id="directSubtotalHHNumber"
                 placeholder="HH (Turno)"
+                value={totalDirectWorkForce.directSubtotalHHNumber || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -111,6 +134,7 @@ const TotalDirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="directPreviusAccumulated"
+                value={totalDirectWorkForce.directPreviusAccumulated || ''}
                 placeholder="Total"
                 text=""
                 onChange={(e) => {
@@ -125,6 +149,7 @@ const TotalDirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="directCurrentAccumulated"
+                value={totalDirectWorkForce.directCurrentAccumulated || ''}
                 placeholder="Total"
                 text=""
                 onChange={(e) => {
