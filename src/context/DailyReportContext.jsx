@@ -114,11 +114,6 @@ export const DailyReportProvider = ({ children }) => {
     setTotalDirectWorkForce(data)
   }
 
-  useEffect(() => {
-    console.log('totalIndirectWorkForce', totalIndirectWorkForce)
-  }, [totalIndirectWorkForce])
-  console.log('totalIndirectWorkForce', totalIndirectWorkForce)
-
   const storeDirectWorkForce = async (data) => {
     setDirectWorkForceList(data)
   }

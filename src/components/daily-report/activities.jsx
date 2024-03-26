@@ -17,7 +17,7 @@ import { validate } from 'src/utils/validate'
 // FALTA VALIDAR
 const Activities = () => {
   const initialState = {
-    activity: undefined,
+    activityFrontWork: undefined,
     primaveraId: undefined,
     activityName: undefined,
     activityDiscipline: undefined,
@@ -41,11 +41,23 @@ const Activities = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    if (e.target.id === 'activity') {
+    if (e.target.id === 'activityFrontWork') {
       setActivity(initialState) // Clear the object
       setActivity({ [e.target.id]: e.target.value })
     }
-    if (validate(e.target.value)) {
+    if (
+      e.target.id === 'activityTotalAmount' ||
+      e.target.id === 'activityPreviousAcumulatedAmount' ||
+      e.target.id === 'activityActualShiftQuantity' ||
+      e.target.id === 'activityAccumulatedAcvancePercent' ||
+      e.target.id === 'activityHoursSpendPrevius' ||
+      e.target.id === 'activityHoursSpendShift' ||
+      e.target.id === 'activityHoursAccumulated'
+    ) {
+      if (validate(e.target.value)) {
+        setActivity({ ...activity, [e.target.id]: e.target.value })
+      }
+    } else {
       setActivity({ ...activity, [e.target.id]: e.target.value })
     }
   }
@@ -53,20 +65,18 @@ const Activities = () => {
   const registerActivity = () => {
     const activityInitialState = {
       id: uuidv4(),
-      activity: activity.activity,
-      actions: {
-        primaveraId: activity.primaveraId,
-        activityName: activity.activityName,
-        activityDiscipline: activity.activityDiscipline,
-        activityTotalAmount: activity.activityTotalAmount,
-        activityPreviousAcumulatedAmount: activity.activityPreviousAcumulatedAmount,
-        activityActualShiftQuantity: activity.activityActualShiftQuantity,
-        activityAccumulatedAcvancePercent: activity.activityAccumulatedAcvancePercent,
-        activityUnit: activity.activityUnit,
-        activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
-        activityHoursSpendShift: activity.activityHoursSpendShift,
-        activityHoursAccumulated: activity.activityHoursAccumulated,
-      },
+      activityFrontWork: activity.activityFrontWork,
+      primaveraId: activity.primaveraId,
+      activityName: activity.activityName,
+      activityDiscipline: activity.activityDiscipline,
+      activityTotalAmount: activity.activityTotalAmount,
+      activityPreviousAcumulatedAmount: activity.activityPreviousAcumulatedAmount,
+      activityActualShiftQuantity: activity.activityActualShiftQuantity,
+      activityAccumulatedAcvancePercent: activity.activityAccumulatedAcvancePercent,
+      activityUnit: activity.activityUnit,
+      activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
+      activityHoursSpendShift: activity.activityHoursSpendShift,
+      activityHoursAccumulated: activity.activityHoursAccumulated,
     }
     setActivity(initialState) // Clear the object
     setActivityList([...activityList, activityInitialState])
@@ -86,7 +96,8 @@ const Activities = () => {
     <div className="work-force-report">
       <CFormSelect
         aria-label="Default select example"
-        id="activity"
+        id="activityFrontWork"
+        value={activity.activityFrontWork}
         onChange={(e) => {
           onChangeData(e)
         }}
@@ -117,7 +128,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="primaveraId"
-                // value={activity.primaveraId || ''}
+                value={activity.primaveraId || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -128,7 +139,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="activityName"
-                // value={activity.activityName || ''}
+                value={activity.activityName || ''}
                 text=""
                 disabled
                 onChange={(e) => {
@@ -153,7 +164,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="activityTotalAmount"
-                // value={activity.activityTotalAmount || ''}
+                value={activity.activityTotalAmount || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -164,7 +175,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="activityPreviousAcumulatedAmount"
-                // value={activity.activityPreviousAcumulatedAmount || ''}
+                value={activity.activityPreviousAcumulatedAmount || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -184,7 +195,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="activityActualShiftQuantity"
-                // value={activity.activityActualShiftQuantity || ''}
+                value={activity.activityActualShiftQuantity || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -195,7 +206,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="activityAccumulatedAcvancePercent"
-                // value={activity.activityAccumulatedAcvancePercent || ''}
+                value={activity.activityAccumulatedAcvancePercent || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -206,7 +217,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="activityUnit"
-                // value={activity.activityUnit || ''}
+                value={activity.activityUnit || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -217,7 +228,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="activityHoursSpendPrevius"
-                // value={activity.activityHoursSpendPrevius || ''}
+                value={activity.activityHoursSpendPrevius || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -228,7 +239,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="activityHoursSpendShift"
-                // value={activity.activityHoursSpendShift || ''}
+                value={activity.activityHoursSpendShift || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -244,7 +255,7 @@ const Activities = () => {
               <CFormInput
                 type="text"
                 id="activityHoursAccumulated"
-                // value={activity.activityHoursAccumulated || ''}
+                value={activity.activityHoursAccumulated || ''}
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -263,6 +274,58 @@ const Activities = () => {
       >
         Registrar
       </CButton>
+
+      {activityListContext.length > 0 && activityListContext[0].activityFrontWork && (
+        <CTable>
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell scope="col"></CTableHeaderCell>
+              <CTableHeaderCell scope="col">ID Actividad Primavera</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Nombre de Actividad</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Disciplina</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Cantidad Total</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Cantidad Acum Anterior</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Cantidad Real Turno</CTableHeaderCell>
+              <CTableHeaderCell scope="col">% Avance Acumulado</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Unidad</CTableHeaderCell>
+              <CTableHeaderCell scope="col">HH Gastada Anterior</CTableHeaderCell>
+              <CTableHeaderCell scope="col">HH Gastada Real Turno</CTableHeaderCell>
+              <CTableHeaderCell scope="col">HH Gastada Acumulada</CTableHeaderCell>
+              <CTableHeaderCell scope="col"></CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody>
+            {activityListContext.map((item, index) => {
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell>{item.activityFrontWork}</CTableDataCell>
+                  <CTableDataCell>{item.primaveraId}</CTableDataCell>
+                  <CTableDataCell>{item.activityName}</CTableDataCell>
+                  <CTableDataCell>{item.activityDiscipline}</CTableDataCell>
+                  <CTableDataCell>{item.activityTotalAmount}</CTableDataCell>
+                  <CTableDataCell>{item.activityPreviousAcumulatedAmount}</CTableDataCell>
+                  <CTableDataCell>{item.activityActualShiftQuantity}</CTableDataCell>
+                  <CTableDataCell>{item.activityAccumulatedAcvancePercent}</CTableDataCell>
+                  <CTableDataCell>{item.activityUnit}</CTableDataCell>
+                  <CTableDataCell>{item.activityHoursSpendPrevius}</CTableDataCell>
+                  <CTableDataCell>{item.activityHoursSpendShift}</CTableDataCell>
+                  <CTableDataCell>{item.activityHoursAccumulated}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      className="btn-project-action"
+                      onClick={() => {
+                        deleteActivity(item.id)
+                      }}
+                    >
+                      eliminar
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
+          </CTableBody>
+        </CTable>
+      )}
     </div>
   )
 }
