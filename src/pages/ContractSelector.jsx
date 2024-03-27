@@ -1,100 +1,86 @@
-import { React } from 'react'
+import { React, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CWidgetStatsD, CRow, CCol, CContainer } from '@coreui/react'
-import { CChartLine } from '@coreui/react-chartjs'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
+import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 import CIcon from '@coreui/icons-react'
 
 const ProjectSelector = () => {
   const navigate = useNavigate()
+  const { getProject, saveContract } = useRegisterGeneralData()
+  const [selectedProject, setSelectedProject] = useState()
+  const projectsQuery = useGetCachedQueryData('projects')
 
-  const onClickHandler = () => navigate(`/dashboard`)
+  const onClickHandler = (contract) => {
+    const data = {
+      name: contract.name,
+      id: contract.id,
+    }
+    saveContract(data)
+    navigate(`/dashboard`)
+  }
+  const projectLS = JSON.parse(getProject())
+
+  useEffect(() => {
+    if (projectLS && projectsQuery) {
+      const projectFinded = projectsQuery.projects.find((projectData) => {
+        return projectData.id === projectLS.id
+      })
+      setSelectedProject(projectFinded)
+    } else {
+      navigate(`/project_selector`)
+    }
+  }, [projectsQuery, projectLS])
 
   return (
-    <CRow>
-      <CCol xs={6}>
-        <CWidgetStatsD
-          onClick={() => {
-            onClickHandler()
-          }}
-          className="mb-3"
-          icon={
-            <CIcon
-              className="my-4 text-white"
-              icon={'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'}
-              height={52}
-            />
-          }
-          chart={
-            <CContainer className="project-selector-container">
-              <CRow>
-                <span className="project-title">Contrato 1</span>
-              </CRow>
-            </CContainer>
-          }
-          style={{ '--cui-card-cap-bg': '#1A4D55' }}
-          values={[
-            { title: 'Trisemanales', value: '1' },
-            { title: 'Avance', value: '1' },
-          ]}
-        />
-      </CCol>
-      <CCol xs={6}>
-        <CWidgetStatsD
-          onClick={() => {
-            onClickHandler()
-          }}
-          className="mb-3"
-          icon={
-            <CIcon
-              className="my-4 text-white"
-              icon={'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'}
-              height={52}
-            />
-          }
-          chart={
-            <CContainer className="project-selector-container">
-              <CRow>
-                <span className="project-title">Contrato 1</span>
-              </CRow>
-            </CContainer>
-          }
-          style={{ '--cui-card-cap-bg': '#1A4D55' }}
-          values={[
-            { title: 'Trisemanales', value: '1' },
-            { title: 'Avance', value: '1' },
-          ]}
-        />
-      </CCol>
-      <CCol xs={6}>
-        <CWidgetStatsD
-          onClick={() => {
-            onClickHandler()
-          }}
-          className="mb-3"
-          icon={
-            <CIcon
-              className="my-4 text-white"
-              icon={'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'}
-              height={52}
-            />
-          }
-          chart={
-            <CContainer className="project-selector-container">
-              <CRow>
-                <span className="project-title">Contrato 1</span>
-              </CRow>
-            </CContainer>
-          }
-          style={{ '--cui-card-cap-bg': '#1A4D55' }}
-          values={[
-            { title: 'Trisemanales', value: '1' },
-            { title: 'Avance', value: '1' },
-          ]}
-        />
-      </CCol>
-    </CRow>
+    <>
+      {selectedProject &&
+        selectedProject?.contracts.map((contract, index) => {
+          return (
+            <CRow key={index}>
+              <CCol xs={6}>
+                <CWidgetStatsD
+                  onClick={() => {
+                    onClickHandler(contract)
+                  }}
+                  className="mb-3"
+                  icon={
+                    <CIcon
+                      className="my-4 text-white"
+                      icon={'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'}
+                      height={52}
+                    />
+                  }
+                  chart={
+                    <CContainer className="project-selector-container">
+                      <CRow>
+                        <span className="project-title">{contract.name}</span>
+                      </CRow>
+                    </CContainer>
+                  }
+                  style={{ '--cui-card-cap-bg': '#1A4D55' }}
+                  values={[
+                    { title: 'Trisemanales', value: contract.trisemanal },
+                    { title: 'Avance', value: contract.progress },
+                  ]}
+                />
+              </CCol>
+            </CRow>
+          )
+        })}
+    </>
   )
+}
+
+// First create a helper function
+export const useGetCachedQueryData = (key) => {
+  const queryClient = useQueryClient()
+
+  // Make sure that the key is wrapped in an array for this to work
+  const data = queryClient.getQueryData([key])
+  return data
 }
 
 export default ProjectSelector

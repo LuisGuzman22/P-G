@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import InformativePanel from 'src/components/InformativePanel'
 import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
 import ProjectCollapse from 'src/components/ProjectCollapse'
+import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 const Dashboard = () => {
   let navigate = useNavigate()
+  const { getProject, getContract } = useRegisterGeneralData()
+
+  const projectLS = JSON.parse(getProject())
+  const contractLS = JSON.parse(getContract())
+
+  useEffect(() => {
+    if (!projectLS || !contractLS) {
+      navigate(`/project_selector`)
+    }
+  }, [projectLS, contractLS])
 
   const redirectTo = (url) => {
     navigate(url)
