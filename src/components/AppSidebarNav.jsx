@@ -1,6 +1,8 @@
 import React from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { CBadge, CNavLink, CSidebarNav } from '@coreui/react'
+import SimpleBar from 'simplebar-react'
 
 export const AppSidebarNav = ({ items }) => {
   const location = useLocation()
@@ -17,6 +19,11 @@ export const AppSidebarNav = ({ items }) => {
               </span>
             )}
         {name && name}
+        {badge && (
+          <CBadge color={badge.color} className="ms-auto">
+            {badge.text}
+          </CBadge>
+        )}
       </>
     )
   }
@@ -25,33 +32,23 @@ export const AppSidebarNav = ({ items }) => {
     const { component, name, badge, icon, ...rest } = item
     const Component = component
     return (
-      <Component
-        {...(rest.to &&
-          !rest.items && {
-            component: NavLink,
-          })}
-        key={index}
-        {...rest}
-        onClick={() => {
-          navigate(item.to)
-        }}
-      >
-        {navLink(name, icon, badge, indent)}
+      <Component as="div" key={index}>
+        {rest.to || rest.href ? (
+          <CNavLink {...(rest.to && { as: NavLink })} {...rest}>
+            {navLink(name, icon, badge, indent)}
+          </CNavLink>
+        ) : (
+          navLink(name, icon, badge, indent)
+        )}
       </Component>
     )
   }
+
   const navGroup = (item, index) => {
     const { component, name, icon, items, to, ...rest } = item
     const Component = component
     return (
-      <Component
-        compact
-        idx={String(index)}
-        key={index}
-        toggler={navLink(name, icon)}
-        visible={location.pathname.startsWith(to)}
-        {...rest}
-      >
+      <Component compact as="div" key={index} toggler={navLink(name, icon)} {...rest}>
         {item.items?.map((item, index) =>
           item.items ? navGroup(item, index) : navItem(item, index, true),
         )}
@@ -60,10 +57,10 @@ export const AppSidebarNav = ({ items }) => {
   }
 
   return (
-    <React.Fragment>
+    <CSidebarNav as={SimpleBar}>
       {items &&
         items.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}
-    </React.Fragment>
+    </CSidebarNav>
   )
 }
 

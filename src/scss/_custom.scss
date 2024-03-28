@@ -233,7 +233,7 @@
   .row {
     padding: 10px;
     .dashboard-button {
-      background-color: red;
+      background-color: #6f0404;
       width: 200px;
       height: 200px;
       color: white;
@@ -279,6 +279,10 @@
 .loading {
   width: 100%;
   height: 100%;
+}
+
+.sidebar-nav .nav-group-toggle:after {
+  background-image: url('../assets/images/icons/arrow.svg');
 }
 
 h2 {

@@ -18,6 +18,8 @@ import 'simplebar-react/dist/simplebar.min.css'
 
 // sidebar nav config
 import navigation from '../_nav'
+import CIcon from '@coreui/icons-react'
+import { cilClipboard } from '@coreui/icons'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
@@ -37,8 +39,8 @@ const AppSidebar = () => {
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
-          {/* <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} /> */}
-          {/* <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} /> */}
+          {/* <CIcon customClassName="sidebar-brand-full" icon={cilClipboard} height={32} /> */}
+          {/* <CIcon customClassName="sidebar-brand-narrow" icon={cilClipboard} height={32} /> */}
           <span>P&G Project Control</span>
         </CSidebarBrand>
         <CCloseButton
