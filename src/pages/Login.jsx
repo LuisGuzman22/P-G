@@ -1,4 +1,4 @@
-import { React } from 'react'
+import { React, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   CButton,
@@ -15,11 +15,36 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import useLogin from 'src/hooks/useLogin'
 
 const Login = () => {
   const navigate = useNavigate()
+  const [errorUser, setErrorUser] = useState(false)
+  const [user, setUser] = useState('')
+  const [password, setPassword] = useState('')
+  const { login, error } = useLogin()
 
-  const onClickHandler = () => navigate(`/project_selector`)
+  const regex =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+  const onChangeData = (e) => {
+    switch (e.target.id) {
+      case 'user':
+        setUser(e.target.value)
+        break
+      case 'password':
+        setPassword(e.target.value)
+        break
+      default:
+        break
+    }
+  }
+
+  useEffect(() => {}, [user])
+
+  const onClickHandler = () => {
+    if (login({ user, password })) navigate(`/project_selector`)
+  }
 
   return (
     <div className="min-vh-100 d-flex flex-row align-items-center login-container">
@@ -37,7 +62,24 @@ const Login = () => {
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Email" autoComplete="email" />
+                      <CFormInput
+                        invalid={errorUser}
+                        placeholder="Email"
+                        type="email"
+                        autoComplete="email"
+                        id="user"
+                        feedback="Error al ingresar el correo"
+                        onBlur={(e) => {
+                          if (user.match(regex)) {
+                            setErrorUser(false)
+                          } else {
+                            setErrorUser(true)
+                          }
+                        }}
+                        onChange={(e) => {
+                          onChangeData(e)
+                        }}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -46,9 +88,15 @@ const Login = () => {
                       <CFormInput
                         type="password"
                         placeholder="Password"
+                        id="password"
                         autoComplete="current-password"
+                        onChange={(e) => {
+                          onChangeData(e)
+                        }}
                       />
                     </CInputGroup>
+                    {error && <>{error}</>}
+
                     <CRow>
                       <CCol xs={12}>
                         <CButton
