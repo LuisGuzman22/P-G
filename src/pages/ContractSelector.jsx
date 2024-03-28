@@ -1,6 +1,15 @@
 import { React, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { CWidgetStatsD, CRow, CCol, CContainer } from '@coreui/react'
+import {
+  CWidgetStatsD,
+  CRow,
+  CCol,
+  CContainer,
+  CCard,
+  CCardBody,
+  CCardText,
+  CCardTitle,
+} from '@coreui/react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
@@ -36,40 +45,56 @@ const ProjectSelector = () => {
 
   return (
     <>
-      {selectedProject &&
-        selectedProject?.contracts.map((contract, index) => {
-          return (
-            <CRow key={index}>
-              <CCol xs={6}>
-                <CWidgetStatsD
-                  onClick={() => {
-                    onClickHandler(contract)
-                  }}
-                  className="mb-3"
-                  icon={
-                    <CIcon
-                      className="my-4 text-white"
-                      icon={'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'}
-                      height={52}
-                    />
-                  }
-                  chart={
-                    <CContainer className="project-selector-container">
-                      <CRow>
-                        <span className="project-title">{contract.name}</span>
-                      </CRow>
-                    </CContainer>
-                  }
-                  style={{ '--cui-card-cap-bg': '#1A4D55' }}
-                  values={[
-                    { title: 'Trisemanales', value: contract.trisemanal },
-                    { title: 'Avance', value: contract.progress },
-                  ]}
-                />
-              </CCol>
-            </CRow>
-          )
-        })}
+      <CCol sm={6} className="contract-selector-container">
+        <CCard>
+          <CCardTitle>
+            <h3>Seleccion de Contrato</h3>
+          </CCardTitle>
+          <CCardBody>
+            <CCardText>
+              {selectedProject?.contracts === undefined && (
+                <h3>No se encontraron contratos asociados</h3>
+              )}
+              {selectedProject &&
+                selectedProject?.contracts?.map((contract, index) => {
+                  return (
+                    <CRow key={index}>
+                      <CCol>
+                        <CWidgetStatsD
+                          onClick={() => {
+                            onClickHandler(contract)
+                          }}
+                          className="mb-3"
+                          icon={
+                            <CIcon
+                              className="my-4 text-white"
+                              icon={
+                                'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'
+                              }
+                              height={52}
+                            />
+                          }
+                          chart={
+                            <CContainer className="project-selector-container">
+                              <CRow>
+                                <span className="project-title">{contract.name}</span>
+                              </CRow>
+                            </CContainer>
+                          }
+                          style={{ '--cui-card-cap-bg': '#1A4D55' }}
+                          values={[
+                            { title: 'Trisemanales', value: contract.trisemanal },
+                            { title: 'Avance', value: contract.progress },
+                          ]}
+                        />
+                      </CCol>
+                    </CRow>
+                  )
+                })}
+            </CCardText>
+          </CCardBody>
+        </CCard>
+      </CCol>
     </>
   )
 }

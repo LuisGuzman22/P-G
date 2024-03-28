@@ -1,9 +1,8 @@
 {
   "name": "P-G",
-  "homepage": "https://LuisGuzman22.github.io/p-g",
+  "homepage": ".",
   "version": "1.0.0",
   "description": "P&G Control Estratégico",
-  "homepage": ".",
   "license": "MIT",
   "author": "Luis Guzman",
   "scripts": {
@@ -32,6 +31,7 @@
     "chart.js": "^4.4.0",
     "classnames": "^2.3.2",
     "core-js": "^3.33.3",
+    "lottie-react": "^2.4.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-app-polyfill": "^3.0.0",

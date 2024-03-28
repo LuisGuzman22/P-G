@@ -4,9 +4,13 @@ import { useLocation } from 'react-router-dom'
 import routes from '../routes'
 
 import { CBreadcrumb, CBreadcrumbItem } from '@coreui/react'
+import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 const AppBreadcrumb = () => {
   const currentLocation = useLocation().pathname
+  const { getProject, getContract } = useRegisterGeneralData()
+  const projectLS = JSON.parse(getProject())
+  const contractLS = JSON.parse(getContract())
 
   const getRouteName = (pathname, routes) => {
     const currentRoute = routes.find((route) => route.path === pathname)
@@ -44,6 +48,8 @@ const AppBreadcrumb = () => {
           </CBreadcrumbItem>
         )
       })}
+      <CBreadcrumbItem active={true}>{projectLS?.name}</CBreadcrumbItem>
+      <CBreadcrumbItem active={true}>{contractLS?.name}</CBreadcrumbItem>
     </CBreadcrumb>
   )
 }
