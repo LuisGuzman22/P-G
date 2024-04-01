@@ -16,12 +16,14 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 import CIcon from '@coreui/icons-react'
 
-const ProjectSelector = () => {
+const ContractSelector = () => {
   const navigate = useNavigate()
   const { getProject, saveContract } = useRegisterGeneralData()
   const [selectedProject, setSelectedProject] = useState()
+  const [contractList, setContractList] = useState()
   const projectsQuery = useGetCachedQueryData('projects')
-
+  const userType = localStorage.getItem('USER_TYPE')
+  console.log('projectsQuery', projectsQuery)
   const onClickHandler = (contract) => {
     const data = {
       name: contract.name,
@@ -32,14 +34,24 @@ const ProjectSelector = () => {
   }
   const projectLS = JSON.parse(getProject())
 
+  const fetchContracts = async () => {
+    const res = await axios.get('https://f1179fc382f143689009ab0068202e5b.api.mockbin.io/')
+    return res.data.data
+  }
+
   useEffect(() => {
-    if (projectLS && projectsQuery) {
-      const projectFinded = projectsQuery.projects.find((projectData) => {
-        return projectData.id === projectLS.id
-      })
-      setSelectedProject(projectFinded)
+    if (userType !== 'admin') {
+      if (projectLS && projectsQuery) {
+        const projectFinded = projectsQuery.projects.find((projectData) => {
+          return projectData.id === projectLS.id
+        })
+        setSelectedProject(projectFinded)
+        setContractList(projectFinded.contracts)
+      } else {
+        navigate(`/project_selector`)
+      }
     } else {
-      navigate(`/project_selector`)
+      console.log('ir a buscar los contratos')
     }
   }, [projectsQuery, projectLS])
 
@@ -52,11 +64,9 @@ const ProjectSelector = () => {
           </CCardTitle>
           <CCardBody>
             <CCardText>
-              {selectedProject?.contracts === undefined && (
-                <h3>No se encontraron contratos asociados</h3>
-              )}
-              {selectedProject &&
-                selectedProject?.contracts?.map((contract, index) => {
+              {contractList === undefined && <h3>No se encontraron contratos asociados</h3>}
+              {contractList &&
+                contractList?.map((contract, index) => {
                   return (
                     <CRow key={index}>
                       <CCol>
@@ -108,4 +118,4 @@ export const useGetCachedQueryData = (key) => {
   return data
 }
 
-export default ProjectSelector
+export default ContractSelector

@@ -10,16 +10,16 @@ import {
   CCardText,
   CCardTitle,
 } from '@coreui/react'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 
 import CIcon from '@coreui/icons-react'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import Loading from 'src/components/loading'
+import useGetProjects from 'src/hooks/useGetProjects'
 
 const ProjectSelector = () => {
   const navigate = useNavigate()
   const { saveProject } = useRegisterGeneralData()
+  const { data, isLoading, error } = useGetProjects(1)
 
   const onClickHandler = (project) => {
     const data = {
@@ -29,18 +29,6 @@ const ProjectSelector = () => {
     saveProject(data)
     navigate(`/contrato`)
   }
-
-  const fetchProducts = async () => {
-    const res = await axios.get('https://42c56e69edd041d8afddac6929f0ea8b.api.mockbin.io/')
-    return res.data.data
-  }
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['projects'],
-    queryFn: async () => {
-      return fetchProducts()
-    },
-  })
 
   return (
     <>

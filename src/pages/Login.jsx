@@ -40,10 +40,8 @@ const Login = () => {
     }
   }
 
-  useEffect(() => {}, [user])
-
   const onClickHandler = () => {
-    if (login({ user, password })) navigate(`/project_selector`)
+    login({ user, password })
   }
 
   return (
