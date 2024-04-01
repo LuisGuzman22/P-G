@@ -1,7 +1,7 @@
-import { useFetch } from './useFetch'
+import { useFetchProyects } from './useFetch'
 
 const useGetProjects = (projectId) => {
-  const { data, isLoading, error } = useFetch(projectId)
+  const { data, isLoading, error } = useFetchProyects(projectId)
   return { data, isLoading, error }
 }
 

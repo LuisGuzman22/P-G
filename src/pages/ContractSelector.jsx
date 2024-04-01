@@ -15,6 +15,8 @@ import axios from 'axios'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 import CIcon from '@coreui/icons-react'
+import useGetContracts from 'src/hooks/useGetContracts'
+import Loading from 'src/components/loading'
 
 const ContractSelector = () => {
   const navigate = useNavigate()
@@ -23,28 +25,33 @@ const ContractSelector = () => {
   const [contractList, setContractList] = useState()
   const projectsQuery = useGetCachedQueryData('projects')
   const userType = localStorage.getItem('USER_TYPE')
-  console.log('projectsQuery', projectsQuery)
-  const onClickHandler = (contract) => {
-    const data = {
-      name: contract.name,
-      id: contract.id,
-    }
-    saveContract(data)
-    navigate(`/dashboard`)
-  }
+  const { data: contractData, isLoading, error } = useGetContracts(1)
   const projectLS = JSON.parse(getProject())
 
-  const fetchContracts = async () => {
-    const res = await axios.get('https://f1179fc382f143689009ab0068202e5b.api.mockbin.io/')
-    return res.data.data
+  const onClickHandler = (contract) => {
+    if (userType !== 'admin') {
+      const data = {
+        name: contract.name,
+        id: contract.id,
+      }
+      saveContract(data)
+      navigate(`/dashboard`)
+    } else {
+      navigate(`/project_selector`)
+    }
   }
 
   useEffect(() => {
+    console.log('projectLS', projectLS)
+    console.log('projectsQuery', projectsQuery)
+
     if (userType !== 'admin') {
       if (projectLS && projectsQuery) {
         const projectFinded = projectsQuery.projects.find((projectData) => {
           return projectData.id === projectLS.id
         })
+        console.log('no es admin')
+        console.log('projectFinded.contracts', projectFinded.contracts)
         setSelectedProject(projectFinded)
         setContractList(projectFinded.contracts)
       } else {
@@ -55,6 +62,10 @@ const ContractSelector = () => {
     }
   }, [projectsQuery, projectLS])
 
+  useEffect(() => {
+    userType === 'admin' && contractData?.contract && setContractList(contractData.contract)
+  }, [contractData])
+
   return (
     <>
       <CCol sm={6} className="contract-selector-container">
@@ -64,6 +75,7 @@ const ContractSelector = () => {
           </CCardTitle>
           <CCardBody>
             <CCardText>
+              {/* {isLoading && <Loading />} */}
               {contractList === undefined && <h3>No se encontraron contratos asociados</h3>}
               {contractList &&
                 contractList?.map((contract, index) => {
