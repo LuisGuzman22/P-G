@@ -37,6 +37,11 @@ const ContractSelector = () => {
       saveContract(data)
       navigate(`/dashboard`)
     } else {
+      const data = {
+        name: contract.name,
+        id: contract.id,
+      }
+      saveContract(data)
       navigate(`/project_selector`)
     }
   }

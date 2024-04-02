@@ -1,4 +1,4 @@
-import { React } from 'react'
+import { React, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   CWidgetStatsD,
@@ -10,6 +10,7 @@ import {
   CCardText,
   CCardTitle,
 } from '@coreui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import CIcon from '@coreui/icons-react'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
@@ -18,17 +19,54 @@ import useGetProjects from 'src/hooks/useGetProjects'
 
 const ProjectSelector = () => {
   const navigate = useNavigate()
-  const { saveProject } = useRegisterGeneralData()
-  const { data, isLoading, error } = useGetProjects(1)
+  const userType = localStorage.getItem('USER_TYPE')
+  const contractsQuery = useGetCachedQueryData('contracts')
+  const { getContract, saveProject, saveContract } = useRegisterGeneralData()
+  const contractLS = JSON.parse(getContract())
+
+  const { data: projectData, isLoading, error } = useGetProjects(1)
+
+  const [selectedContract, setSelectedContract] = useState()
+  const [projectList, setProjectList] = useState()
 
   const onClickHandler = (project) => {
-    const data = {
-      name: project.name,
-      id: project.id,
+    if (userType !== 'admin') {
+      const data = {
+        name: project.name,
+        id: project.id,
+      }
+      saveProject(data)
+      navigate(`/contrato`)
+    } else {
+      const data = {
+        name: project.name,
+        id: project.id,
+      }
+      saveProject(data)
+      navigate(`/dashboard`)
     }
-    saveProject(data)
-    navigate(`/contrato`)
   }
+
+  useEffect(() => {
+    if (userType !== 'admin') {
+      console.log('no es admin')
+      if (contractsQuery && contractLS) {
+      } else {
+        navigate(`/project_selector`)
+      }
+    } else {
+      console.log('es admin')
+      const contractFinded = contractsQuery.contract.find((contractData) => {
+        return contractData.id === contractLS.id
+      })
+      setSelectedContract(contractFinded)
+      setProjectList(contractFinded.project)
+    }
+  }, [contractsQuery, contractLS])
+
+  useEffect(() => {
+    userType !== 'admin' && projectData?.projects && setProjectList(projectData.projects)
+  }, [projectData])
 
   return (
     <>
@@ -41,7 +79,8 @@ const ProjectSelector = () => {
             <CCardText>
               {isLoading && <Loading />}
               {!isLoading &&
-                data?.projects.map((project, index) => {
+                projectList &&
+                projectList.map((project, index) => {
                   return (
                     <CRow key={index}>
                       <CCol>
@@ -84,6 +123,15 @@ const ProjectSelector = () => {
       </CCol>
     </>
   )
+}
+
+// First create a helper function
+export const useGetCachedQueryData = (key) => {
+  const queryClient = useQueryClient()
+
+  // Make sure that the key is wrapped in an array for this to work
+  const data = queryClient.getQueryData([key])
+  return data
 }
 
 export default ProjectSelector
