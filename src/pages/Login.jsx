@@ -40,6 +40,12 @@ const Login = () => {
     }
   }
 
+  useEffect(() => {
+    localStorage.removeItem('project')
+    localStorage.removeItem('contract')
+    localStorage.removeItem('USER_TYPE')
+  }, [])
+
   const onClickHandler = () => {
     login({ user, password })
   }

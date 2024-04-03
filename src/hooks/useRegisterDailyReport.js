@@ -2,8 +2,13 @@ import { useMutation } from '@tanstack/react-query'
 import { useContext } from 'react'
 import axios from 'axios'
 import { DailyReportContext } from 'src/context/DailyReportContext'
+import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useRegisterDailyReport = () => {
+  const { getProject, getContract } = useRegisterGeneralData()
+  const projectLS = JSON.parse(getProject())
+  const contractLS = JSON.parse(getContract())
+
   const {
     company,
     indirectWorkForceList,
@@ -32,6 +37,8 @@ const useRegisterDailyReport = () => {
 
   const registerData = async () => {
     mutation.mutate({
+      projectId: projectLS.id,
+      contractId: contractLS.id,
       company, // 1
       indirectWorkForceList, // 2
       totalIndirectWorkForce, // 3

@@ -15,7 +15,7 @@ import CIcon from '@coreui/icons-react'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import Loading from 'src/components/loading'
 import useGetProjects from 'src/hooks/useGetProjects'
-import useGetCachedQueryData from './ContractSelector'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const ProjectSelector = () => {
   const navigate = useNavigate()
