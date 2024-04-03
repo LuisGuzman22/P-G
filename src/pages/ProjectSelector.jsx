@@ -10,17 +10,19 @@ import {
   CCardText,
   CCardTitle,
 } from '@coreui/react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import CIcon from '@coreui/icons-react'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import Loading from 'src/components/loading'
 import useGetProjects from 'src/hooks/useGetProjects'
+import useGetCachedQueryData from './ContractSelector'
 
 const ProjectSelector = () => {
   const navigate = useNavigate()
   const userType = localStorage.getItem('USER_TYPE')
-  const contractsQuery = useGetCachedQueryData('contracts')
+  const { getData } = useGetCachedQueryData()
+
+  const contractsQuery = getData('contracts')
   const { getContract, saveProject, saveContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
@@ -123,15 +125,6 @@ const ProjectSelector = () => {
       </CCol>
     </>
   )
-}
-
-// First create a helper function
-export const useGetCachedQueryData = (key) => {
-  const queryClient = useQueryClient()
-
-  // Make sure that the key is wrapped in an array for this to work
-  const data = queryClient.getQueryData([key])
-  return data
 }
 
 export default ProjectSelector

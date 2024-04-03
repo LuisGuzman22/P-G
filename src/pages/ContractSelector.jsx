@@ -10,20 +10,21 @@ import {
   CCardText,
   CCardTitle,
 } from '@coreui/react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import axios from 'axios'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 import CIcon from '@coreui/icons-react'
 import useGetContracts from 'src/hooks/useGetContracts'
 import Loading from 'src/components/loading'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const ContractSelector = () => {
   const navigate = useNavigate()
   const { getProject, saveContract } = useRegisterGeneralData()
   const [selectedProject, setSelectedProject] = useState()
   const [contractList, setContractList] = useState()
-  const projectsQuery = useGetCachedQueryData('projects')
+  const { getData } = useGetCachedQueryData()
+
+  const projectsQuery = getData('projects')
   const userType = localStorage.getItem('USER_TYPE')
   const { data: contractData, isLoading, error } = useGetContracts(1)
   const projectLS = JSON.parse(getProject())
@@ -124,15 +125,6 @@ const ContractSelector = () => {
       </CCol>
     </>
   )
-}
-
-// First create a helper function
-export const useGetCachedQueryData = (key) => {
-  const queryClient = useQueryClient()
-
-  // Make sure that the key is wrapped in an array for this to work
-  const data = queryClient.getQueryData([key])
-  return data
 }
 
 export default ContractSelector
