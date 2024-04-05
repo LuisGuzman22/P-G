@@ -88,7 +88,7 @@ const Dashboard = () => {
                   </CButton>
                 </CCol>
                 <CCol sm={4}>
-                  {/* <CButton className="dashboard-button">Trisemanal</CButton> */}
+                  <CButton className="dashboard-button">TOP NO+PAPEL</CButton>
                 </CCol>
                 <CCol sm={4}>
                   {/* <CButton className="dashboard-button">Carta Gantt</CButton> */}
