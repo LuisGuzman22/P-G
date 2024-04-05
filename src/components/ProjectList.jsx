@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   CAccordion,
   CAccordionItem,
@@ -13,7 +13,7 @@ import axios from 'axios'
 
 const ProjectList = () => {
   const fetchProducts = async () => {
-    const res = await axios.get('https://run.mocky.io/v3/d32c4c7a-c223-4c99-ae4c-d6c6f7f3dc71')
+    const res = await axios.get('https://701c573ff182421aa80bd97b52e34a3f.api.mockbin.io/')
     return res.data.data
   }
 
@@ -36,7 +36,8 @@ const ProjectList = () => {
 
       <CAccordion className="project-list">
         {!isLoading &&
-          data?.map((project, index) => {
+          data &&
+          data.map((project, index) => {
             return (
               <CAccordionItem itemKey={project.id} key={project.id}>
                 <CAccordionHeader>

@@ -16,6 +16,7 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import Loading from 'src/components/loading'
 import useGetProjects from 'src/hooks/useGetProjects'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import ModalAddProject from 'src/components/ModalAddProject'
 
 const ProjectSelector = () => {
   const navigate = useNavigate()
@@ -30,6 +31,8 @@ const ProjectSelector = () => {
 
   const [selectedContract, setSelectedContract] = useState()
   const [projectList, setProjectList] = useState()
+
+  const [visibleProject, setVisibleProject] = useState(false)
 
   const onClickHandler = (project) => {
     if (userType !== 'admin') {
@@ -49,15 +52,17 @@ const ProjectSelector = () => {
     }
   }
 
+  const onClickNewProject = () => {
+    setVisibleProject(!visibleProject)
+  }
+
   useEffect(() => {
     if (userType !== 'admin') {
-      console.log('no es admin')
       if (contractsQuery && contractLS) {
       } else {
         navigate(`/project_selector`)
       }
     } else {
-      console.log('es admin')
       const contractFinded = contractsQuery.contract.find((contractData) => {
         return contractData.id === contractLS.id
       })
@@ -72,6 +77,14 @@ const ProjectSelector = () => {
 
   return (
     <>
+      {visibleProject && (
+        <ModalAddProject
+          visible={true}
+          sendDataToParent={(data) => {
+            setVisibleProject(data)
+          }}
+        />
+      )}
       <CCol sm={6} className="project-selector-container">
         <CCard>
           <CCardTitle>
@@ -112,13 +125,38 @@ const ProjectSelector = () => {
                               </CRow>
                             </CContainer>
                           }
-                          style={{ '--cui-card-cap-bg': '#1A4D55' }}
+                          style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
                           values={[{ title: 'Contratos', value: project?.contracts?.length || 0 }]}
                         />
                       </CCol>
                     </CRow>
                   )
                 })}
+              <CRow key={0}>
+                <CCol>
+                  <CWidgetStatsD
+                    onClick={() => {
+                      onClickNewProject()
+                    }}
+                    className="mb-3"
+                    icon={
+                      <CIcon
+                        className="my-4 text-white"
+                        icon={'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'}
+                        height={52}
+                      />
+                    }
+                    chart={
+                      <CContainer className="project-selector-container">
+                        <CRow>
+                          <span className="project-title">Crear nuevo proyecto</span>
+                        </CRow>
+                      </CContainer>
+                    }
+                    style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
+                  />
+                </CCol>
+              </CRow>
             </CCardText>
           </CCardBody>
         </CCard>

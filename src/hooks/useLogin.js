@@ -7,8 +7,6 @@ const useLogin = () => {
 
   const login = (data) => {
     const { user, password } = data
-    console.log('user', user)
-    console.log('password', password)
 
     if (user === 'asd@asd.cl' && password === '12345') {
       setError()

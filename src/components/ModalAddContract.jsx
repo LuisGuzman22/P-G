@@ -42,9 +42,7 @@ const ModalAddContract = (props) => {
                 placeholder="Nombre"
                 text=""
                 // aria-describedby="exampleFormControlInputHelpInline"
-                onChange={(e) => {
-                  console.log(e.target.value)
-                }}
+                onChange={(e) => {}}
               />
             </CCol>
             <CCol sm={6}>

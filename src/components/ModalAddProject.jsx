@@ -42,9 +42,7 @@ const ModalAddProject = (props) => {
                 placeholder="Nombre de proyecto"
                 text=""
                 // aria-describedby="exampleFormControlInputHelpInline"
-                onChange={(e) => {
-                  console.log(e.target.value)
-                }}
+                onChange={(e) => {}}
               />
             </CCol>
             <CCol sm={6}>

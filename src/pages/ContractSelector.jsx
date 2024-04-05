@@ -16,6 +16,7 @@ import CIcon from '@coreui/icons-react'
 import useGetContracts from 'src/hooks/useGetContracts'
 import Loading from 'src/components/loading'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import ModalAddContract from 'src/components/ModalAddContract'
 
 const ContractSelector = () => {
   const navigate = useNavigate()
@@ -28,6 +29,8 @@ const ContractSelector = () => {
   const userType = localStorage.getItem('USER_TYPE')
   const { data: contractData, isLoading, error } = useGetContracts(1)
   const projectLS = JSON.parse(getProject())
+
+  const [visibleContract, setVisibleContract] = useState(false)
 
   const onClickHandler = (contract) => {
     if (userType !== 'admin') {
@@ -47,21 +50,21 @@ const ContractSelector = () => {
     }
   }
 
+  const onClickNewContract = () => {
+    setVisibleContract(!visibleContract)
+  }
+
   useEffect(() => {
     if (userType !== 'admin') {
       if (projectLS && projectsQuery) {
         const projectFinded = projectsQuery.projects.find((projectData) => {
           return projectData.id === projectLS.id
         })
-        console.log('no es admin')
-        console.log('projectFinded.contracts', projectFinded.contracts)
         setSelectedProject(projectFinded)
         setContractList(projectFinded.contracts)
       } else {
         navigate(`/project_selector`)
       }
-    } else {
-      console.log('ir a buscar los contratos')
     }
   }, [projectsQuery, projectLS])
 
@@ -71,6 +74,14 @@ const ContractSelector = () => {
 
   return (
     <>
+      {visibleContract && (
+        <ModalAddContract
+          visible={true}
+          sendDataToParent={(data) => {
+            setVisibleContract(data)
+          }}
+        />
+      )}
       <CCol sm={6} className="contract-selector-container">
         <CCard>
           <CCardTitle>
@@ -78,7 +89,6 @@ const ContractSelector = () => {
           </CCardTitle>
           <CCardBody>
             <CCardText>
-              {/* {isLoading && <Loading />} */}
               {contractList === undefined && <h3>No se encontraron contratos asociados</h3>}
               {contractList &&
                 contractList?.map((contract, index) => {
@@ -106,7 +116,7 @@ const ContractSelector = () => {
                               </CRow>
                             </CContainer>
                           }
-                          style={{ '--cui-card-cap-bg': '#1A4D55' }}
+                          style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
                           values={[
                             { title: 'Trisemanales', value: contract.trisemanal },
                             { title: 'Avance', value: contract.progress },
@@ -116,6 +126,31 @@ const ContractSelector = () => {
                     </CRow>
                   )
                 })}
+              <CRow key={0}>
+                <CCol>
+                  <CWidgetStatsD
+                    onClick={() => {
+                      onClickNewContract()
+                    }}
+                    className="mb-3"
+                    icon={
+                      <CIcon
+                        className="my-4 text-white"
+                        icon={'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'}
+                        height={52}
+                      />
+                    }
+                    chart={
+                      <CContainer className="project-selector-container">
+                        <CRow>
+                          <span className="project-title">Crear nuevo contrato</span>
+                        </CRow>
+                      </CContainer>
+                    }
+                    style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
+                  />
+                </CCol>
+              </CRow>
             </CCardText>
           </CCardBody>
         </CCard>

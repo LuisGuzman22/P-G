@@ -20,7 +20,7 @@ const Project = () => {
           <InformativePanel />
         </CAccordionBody>
       </CAccordionItem>
-      <CAccordionItem itemKey={2} onClick={console.log('click accordion')}>
+      <CAccordionItem itemKey={2}>
         <CAccordionHeader className="nav-accordion">Proyecto</CAccordionHeader>
         <CAccordionBody>
           <ProjectCollapse />

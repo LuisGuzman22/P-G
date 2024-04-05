@@ -46,9 +46,7 @@ const ModalAddCategories = (props) => {
                 placeholder="Categoría"
                 text=""
                 // aria-describedby="exampleFormControlInputHelpInline"
-                onChange={(e) => {
-                  console.log(e.target.value)
-                }}
+                onChange={(e) => {}}
               />
             </CCol>
             <CCol sm={6}>
