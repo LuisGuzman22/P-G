@@ -14,6 +14,7 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const DirectWorkForce = () => {
   const initialStatee = {
@@ -25,6 +26,10 @@ const DirectWorkForce = () => {
     directWorkForceWorkNumber: undefined,
     directWorkForceHHNumber: undefined,
   }
+
+  const { getData } = useGetCachedQueryData()
+  const basicQuery = getData('basics')
+
   const [directWorkForce, setDirectWorkForce] = useState(initialStatee)
   const [directWorkForceList, setDirectWorkForceList] = useState([])
 
@@ -82,9 +87,13 @@ const DirectWorkForce = () => {
         }}
       >
         <option>Seleccione</option>
-        <option value="Capataz_Civil_y_Estructuras">Capataz Civil y Estructuras</option>
-        <option value="Maestro_Primera_Civil">Maestro Primera Civil</option>
-        <option value="Capataz_Mecánico_y_Piping">Capataz Mecánico y Piping</option>
+        {basicQuery.directPersonal.map((directPersonalCached) => {
+          return (
+            <option key={directPersonalCached.id} value={directPersonalCached.id}>
+              {directPersonalCached.name}
+            </option>
+          )
+        })}
       </CFormSelect>
       <CTable>
         <CTableHead>

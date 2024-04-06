@@ -14,6 +14,7 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const DirectDotationWorkForce = () => {
   const initialState = {
@@ -37,6 +38,9 @@ const DirectDotationWorkForce = () => {
     directWorkForceFront6: 0,
     directWorkForceFront7: 0,
   }
+
+  const { getData } = useGetCachedQueryData()
+  const basicQuery = getData('basics')
 
   const [directDotationWorkForce, setDirectDotationWorkForce] = useState(initialState)
   const [directDotationWorkForceList, setDirectDotationWorkForceList] = useState([])
@@ -144,17 +148,13 @@ const DirectDotationWorkForce = () => {
         }}
       >
         <option>Seleccione</option>
-        <option value="Capataz_Civil_y_Estructuras">Capataz Civil y Estructuras</option>
-        <option value="Maestro_Primera_Civil">Maestro Primera Civil</option>
-        <option value="Capataz_Mecánico_y_Piping">Capataz Mecánico y Piping</option>
-        <option value="Maestro_Mayor_Mecánico">Maestro Mayor Mecánico</option>
-        <option value="Maestro_Mayor_Piping">Maestro Mayor Piping</option>
-        <option value="Maestro_Primera_Mecánico">Maestro Primera Mecánico</option>
-        <option value="Soldador_HDPE">Soldador HDPE</option>
-        <option value="Soldador_6G">Soldador 6G</option>
-        <option value="Capataz_Eléctrico">Capataz Eléctrico</option>
-        <option value="Maestro_Mayor_Eléctrico">Maestro Mayor Eléctrico</option>
-        <option value="Maestro_Primera_Eléctrico">Maestro Primera Eléctrico</option>
+        {basicQuery.directPersonal.map((directPersonalCached) => {
+          return (
+            <option key={directPersonalCached.id} value={directPersonalCached.id}>
+              {directPersonalCached.name}
+            </option>
+          )
+        })}
       </CFormSelect>
       <CTable>
         <CTableHead>

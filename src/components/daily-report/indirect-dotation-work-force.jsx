@@ -15,6 +15,7 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const IndirectDotationWorkForce = () => {
   const initialState = {
@@ -38,6 +39,9 @@ const IndirectDotationWorkForce = () => {
     indirectWorkForceFront6: 0,
     indirectWorkForceFront7: 0,
   }
+
+  const { getData } = useGetCachedQueryData()
+  const basicQuery = getData('basics')
 
   const [indirectDotationWorkForce, setIndirectDotationWorkForce] = useState(initialState)
   const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([])
@@ -195,25 +199,13 @@ const IndirectDotationWorkForce = () => {
         }}
       >
         <option>Seleccione</option>
-        <option value="Administrador_de_contrato">Administrador de contrato</option>
-        <option value="Jefe_de_Oficina_Técnica">Jefe de Oficina Técnica</option>
-        <option value="Jefe_de_Terreno">Jefe de Terreno</option>
-        <option value="Jefe_de_Calidad">Jefe de Calidad</option>
-        <option value="Jefe_HSEC">Jefe HSEC</option>
-        <option value="Ingeniero_Costos">Ingeniero Costos</option>
-        <option value="Ingeniero_Programación_y_Control">Ingeniero Programación y Control</option>
-        <option value="Encargado_Control_Documentos">Encargado Control Documentos</option>
-        <option value="Asistente_Oficina_Técnica">Asistente Oficina Técnica</option>
-        <option value="Asesor_HSEC">Asesor HSEC</option>
-        <option value="Topógrafo">Topógrafo</option>
-        <option value="Alarife">Alarife</option>
-        <option value="Supervisor_Logística">Supervisor Logística</option>
-        <option value="Supervisor_Bodega">Supervisor Bodega</option>
-        <option value="Bodeguero">Bodeguero</option>
-        <option value="Jefe_de_Área">Jefe de Área</option>
-        <option value="Supervisor_Civil_v_Estructura">Supervisor Civil v Estructura</option>
-        <option value="Supervisor_Mecánico_y_Piping">Supervisor Mecánico y Piping</option>
-        <option value="Supervisor_Elétrico">Supervisor Elétrico</option>
+        {basicQuery.indirectPersonal.map((indirectPersonalCached) => {
+          return (
+            <option key={indirectPersonalCached.id} value={indirectPersonalCached.id}>
+              {indirectPersonalCached.name}
+            </option>
+          )
+        })}
       </CFormSelect>
       <CTable>
         <CTableHead>
