@@ -4,6 +4,7 @@ import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@
 import { useNavigate } from 'react-router-dom'
 import ProjectCollapse from 'src/components/ProjectCollapse'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
+import useGetBasicData from 'src/hooks/useGetBasicData'
 
 const Dashboard = () => {
   let navigate = useNavigate()
@@ -11,6 +12,8 @@ const Dashboard = () => {
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
+
+  const { data, isLoading, error } = useGetBasicData(contractLS.id)
 
   useEffect(() => {
     if (!projectLS || !contractLS) {

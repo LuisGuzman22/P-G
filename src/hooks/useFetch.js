@@ -11,6 +11,11 @@ const fetchContracts = async (contractId) => {
   return res.data.data
 }
 
+const fetchBasicData = async (contractId) => {
+  const res = await axios.get('https://07a397da689a439a8a9f86b1df79836e.api.mockbin.io/')
+  return res.data.data
+}
+
 export const useFetchProyects = (projectId) => {
   return useQuery({
     queryKey: ['projects'],
@@ -25,6 +30,15 @@ export const useFetchContract = (contractId) => {
     queryKey: ['contracts'],
     queryFn: async () => {
       return fetchContracts(contractId)
+    },
+  })
+}
+
+export const useFetchBasicData = (contractId) => {
+  return useQuery({
+    queryKey: ['basics'],
+    queryFn: async () => {
+      return fetchBasicData(contractId)
     },
   })
 }
