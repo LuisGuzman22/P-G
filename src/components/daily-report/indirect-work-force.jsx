@@ -28,10 +28,6 @@ const IndirectWorkForce = () => {
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
 
-  useEffect(() => {
-    console.log('basicQuery', basicQuery.indirectPersonal)
-  }, [basicQuery])
-
   const [indirectWorkForce, setIndirectWorkForce] = useState(initialState)
   const [indirectWorkForceList, setIndirectWorkForceList] = useState([])
 
