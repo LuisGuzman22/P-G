@@ -14,6 +14,7 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const IndustrialWaterControl = () => {
   const initialState = {
@@ -28,6 +29,9 @@ const IndustrialWaterControl = () => {
     aljibeQuantityTurns: 0,
     aljibeM3: 0,
   }
+
+  const { getData } = useGetCachedQueryData()
+  const basicQuery = getData('basics')
 
   const [aljibe, setAlgibe] = useState(initialState)
   const [aljibeList, setAlgibeList] = useState([])
@@ -104,10 +108,13 @@ const IndustrialWaterControl = () => {
         }}
       >
         <option value={0}>Seleccione</option>
-        <option value="aljibe_1">Aljibe 1 + Patente</option>
-        <option value="aljibe_2">Aljibe 2 + Patente</option>
-        <option value="aljibe_3">Aljibe 3 + Patente</option>
-        <option value="aljibe_4">Aljibe 4 + Patente</option>
+        {basicQuery.aljibe.map((aljibeCached) => {
+          return (
+            <option key={aljibeCached.id} value={aljibeCached.id}>
+              {aljibeCached.name}
+            </option>
+          )
+        })}
       </CFormSelect>
 
       <CTable>

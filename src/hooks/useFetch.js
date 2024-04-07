@@ -19,6 +19,7 @@ const fetchBasicData = async (contractId) => {
 export const useFetchProyects = (projectId) => {
   return useQuery({
     queryKey: ['projects'],
+    refetchType: 'all',
     queryFn: async () => {
       return fetchProducts(projectId)
     },
@@ -28,6 +29,7 @@ export const useFetchProyects = (projectId) => {
 export const useFetchContract = (contractId) => {
   return useQuery({
     queryKey: ['contracts'],
+    refetchType: 'all',
     queryFn: async () => {
       return fetchContracts(contractId)
     },
@@ -37,6 +39,7 @@ export const useFetchContract = (contractId) => {
 export const useFetchBasicData = (contractId) => {
   return useQuery({
     queryKey: ['basics'],
+    refetchType: 'all',
     queryFn: async () => {
       return fetchBasicData(contractId)
     },

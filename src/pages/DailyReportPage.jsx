@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DailyReportCollapse from 'src/components/DailyReportCollapse'
-import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@coreui/react'
+import { CCard, CCardBody, CCardText } from '@coreui/react'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useNavigate } from 'react-router-dom'
 
 const DailyReportPage = () => {
+  let navigate = useNavigate()
+
+  const { getData } = useGetCachedQueryData()
+  const basicQuery = getData('basics')
+
+  useEffect(() => {
+    console.log('basicQuery', basicQuery)
+    if (!basicQuery) {
+      navigate(`/dashboard`)
+    }
+  }, [basicQuery])
+
   return (
     <div className="daily-report">
       <CCard>

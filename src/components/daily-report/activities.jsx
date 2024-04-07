@@ -14,6 +14,7 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 // FALTA VALIDAR
 const Activities = () => {
   const initialState = {
@@ -30,6 +31,9 @@ const Activities = () => {
     activityHoursSpendShift: undefined,
     activityHoursAccumulated: undefined,
   }
+
+  const { getData } = useGetCachedQueryData()
+  const basicQuery = getData('basics')
 
   const [activity, setActivity] = useState(initialState)
   const [activityList, setActivityList] = useState([])
@@ -103,13 +107,13 @@ const Activities = () => {
         }}
       >
         <option>Seleccione</option>
-        <option value="frente_1">Frente de trabajo 1</option>
-        <option value="frente_2">Frente de trabajo 2</option>
-        <option value="frente_3">Frente de trabajo 3</option>
-        <option value="frente_4">Frente de trabajo 4</option>
-        <option value="frente_5">Frente de trabajo 5</option>
-        <option value="frente_6">Frente de trabajo 6</option>
-        <option value="frente_7">Frente de trabajo 7</option>
+        {basicQuery.workFront.map((workFrontCached) => {
+          return (
+            <option key={workFrontCached.id} value={workFrontCached.id}>
+              {workFrontCached.name}
+            </option>
+          )
+        })}{' '}
       </CFormSelect>
 
       <CTable>

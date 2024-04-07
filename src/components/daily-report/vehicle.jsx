@@ -14,6 +14,7 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const Vehicle = () => {
   const initialState = {
@@ -28,6 +29,9 @@ const Vehicle = () => {
     vehicleCertifiedNumber: 0,
     vehicleWorkNumber: 0,
   }
+
+  const { getData } = useGetCachedQueryData()
+  const basicQuery = getData('basics')
 
   const [vehicle, setVehicle] = useState(initialState)
   const [vehicleList, setVehicleList] = useState([])
@@ -106,9 +110,13 @@ const Vehicle = () => {
         }}
       >
         <option>Seleccione</option>
-        <option value="vehiculo_1">Vehículo 1 + Patente</option>
-        <option value="vehiculo_2">Vehículo 2 + Patente</option>
-        <option value="vehiculo_3">Vehículo 3 + Patente</option>
+        {basicQuery.vehicles.map((vehicleCached) => {
+          return (
+            <option key={vehicleCached.id} value={vehicleCached.id}>
+              {vehicleCached.name}
+            </option>
+          )
+        })}
       </CFormSelect>
 
       <CTable>
