@@ -16,9 +16,11 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import useLogin from 'src/hooks/useLogin'
+import { useQueryClient } from '@tanstack/react-query'
 
 const Login = () => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [errorUser, setErrorUser] = useState(false)
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
@@ -44,6 +46,9 @@ const Login = () => {
     localStorage.removeItem('project')
     localStorage.removeItem('contract')
     localStorage.removeItem('USER_TYPE')
+    localStorage.removeItem('REACT_QUERY_OFFLINE_CACHE')
+    // localStorage.clear()
+    queryClient.clear()
   }, [])
 
   const onClickHandler = () => {

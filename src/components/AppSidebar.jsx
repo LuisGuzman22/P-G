@@ -45,11 +45,6 @@ const AppSidebar = () => {
           {/* <CIcon customClassName="sidebar-brand-narrow" icon={cilClipboard} height={32} /> */}
           <span>P&G Project Control</span>
         </CSidebarBrand>
-        {/* <CCloseButton
-          className="d-lg-none"
-          dark
-          onClick={() => dispatch({ type: 'set', sidebarShow: false })}
-        /> */}
       </CSidebarHeader>
       <CSidebarNav>
         <SimpleBar>
@@ -57,20 +52,14 @@ const AppSidebar = () => {
         </SimpleBar>
       </CSidebarNav>
       <CSidebarFooter
-        className="border-top d-lg-flex"
+        className="border-top d-lg-flex nav-item"
         onClick={() => {
           navigate(`/`)
-          // FALTA LIMPIAR CACHE, REACT QUERY Y LOCAL STORAGE AL CERRAR SESION
         }}
       >
         Cerrar sesión
         <CIcon icon={cilExitToApp} size="sm" />
       </CSidebarFooter>
-      {/* <CSidebarFooter className="border-top d-none d-lg-flex">
-        <CSidebarToggler
-          onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
-        />
-      </CSidebarFooter> */}
     </CSidebar>
   )
 }

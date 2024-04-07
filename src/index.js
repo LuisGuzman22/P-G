@@ -39,7 +39,6 @@ createRoot(document.getElementById('root')).render(
         <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
           <App />
         </PersistQueryClientProvider>
-        ,
       </DailyReportProvider>
     </QueryClientProvider>
   </Provider>,
