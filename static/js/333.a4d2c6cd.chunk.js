@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkP_G=self.webpackChunkP_G||[]).push([[333],{6333:(s,e,c)=>{c.r(e),c.d(e,{default:()=>i});c(65043);var d=c(45817),l=c(80861),r=c(96105),a=c(23682),h=c(70579);const i=()=>(0,h.jsx)("div",{className:"daily-report",children:(0,h.jsx)(l.E,{children:(0,h.jsx)(r.W,{children:(0,h.jsx)(a.d,{children:(0,h.jsx)(d.A,{})})})})})}}]);
-//# sourceMappingURL=333.a4d2c6cd.chunk.js.map
