@@ -80,7 +80,7 @@ const routes = [
     name: 'Administrar Contratos',
     element: ContractAdministration,
   },
-  { path: '/mis_datos', name: 'Mis datos', element: User },
+  { path: '/administrar_usuarios', name: 'Administrar usuarios', element: User },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CTable,
   CTableHead,
@@ -8,48 +8,65 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
+import useGetUserList from 'src/hooks/useGetUserList'
+import Loading from './loading'
+import ModalAddUser from './ModalAddUser'
 
 const ProjectList = () => {
-  const fetchProducts = async () => {
-    const res = await axios.get('https://701c573ff182421aa80bd97b52e34a3f.api.mockbin.io/')
-    return res.data.data
+  const { data, isLoading, error } = useGetUserList()
+  const [visibleAddUser, setVisibleAddUser] = useState(false)
+  const [selectedUser, setSelectedUser] = useState()
+
+  const handleEditUser = (user) => {
+    setSelectedUser(user)
+    setVisibleAddUser(!visibleAddUser)
   }
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['projects'],
-    queryFn: async () => {
-      return fetchProducts()
-    },
-  })
-
   return (
-    <CTable>
-      <CTableHead>
-        <CTableRow>
-          <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-          <CTableHeaderCell scope="col">Nombre</CTableHeaderCell>
-          <CTableHeaderCell scope="col">Correo</CTableHeaderCell>
-          <CTableHeaderCell scope="col">Proyecto</CTableHeaderCell>
-          <CTableHeaderCell scope="col">Contrato</CTableHeaderCell>
-          <CTableHeaderCell scope="col">Acción</CTableHeaderCell>
-        </CTableRow>
-      </CTableHead>
-      <CTableBody>
-        <CTableRow>
-          <CTableDataCell>1</CTableDataCell>
-          <CTableDataCell>Juan Perez</CTableDataCell>
-          <CTableDataCell>asd@asd.cl</CTableDataCell>
-          <CTableDataCell>Proyecto 1</CTableDataCell>
-          <CTableDataCell>Contrato 1</CTableDataCell>
-          <CTableDataCell>
-            <CButton className="btn-edit">Editar</CButton>
-            <CButton className="btn-del">Eliminar</CButton>
-          </CTableDataCell>
-        </CTableRow>
-      </CTableBody>
-    </CTable>
+    <>
+      {isLoading && <Loading />}
+      {visibleAddUser && (
+        <ModalAddUser
+          visible={true}
+          selectedUser={selectedUser}
+          sendDataToParent={(data) => {
+            setVisibleAddUser(data)
+          }}
+        />
+      )}
+      <CTable>
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">ID</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Nombre</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Correo</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Proyecto</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Contrato</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Acción</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {data &&
+            data.users.map((user) => {
+              return (
+                <CTableRow key={user.id}>
+                  <CTableDataCell>{user.id}</CTableDataCell>
+                  <CTableDataCell>{user.userName}</CTableDataCell>
+                  <CTableDataCell>{user.userMail}</CTableDataCell>
+                  <CTableDataCell>{user.userProject}</CTableDataCell>
+                  <CTableDataCell>{user.userContract}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton className="btn-edit" onClick={(e) => handleEditUser(user)}>
+                      Editar
+                    </CButton>
+                    <CButton className="btn-del">Eliminar</CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
+        </CTableBody>
+      </CTable>
+    </>
   )
 }
 

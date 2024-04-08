@@ -6,7 +6,8 @@ const AppFooter = () => {
     <CFooter className="px-4">
       <div>
         <span className="ms-1">
-          Copyright © 2023 P&G PROJECT CONTROL ESTRATEGICO. All rights reserved.
+          Copyright © 2023 P&G PROJECT CONTROL ESTRATEGICO. All rights reserved. v
+          {process.env.REACT_APP_VERSION}
         </span>
       </div>
     </CFooter>

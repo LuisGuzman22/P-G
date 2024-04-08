@@ -15,6 +15,7 @@ import {
   CToast,
   CToastBody,
   CToastClose,
+  CFormCheck,
 } from '@coreui/react'
 import useRegisterUser from 'src/hooks/useRegisterUser'
 const ModalAddUser = (props) => {
@@ -24,13 +25,20 @@ const ModalAddUser = (props) => {
     userProject: undefined,
     userContract: undefined,
     userPassword: undefined,
+    isActive: undefined,
   }
 
-  const [user, setUser] = useState(initialState)
+  const [user, setUser] = useState(props.selectedUser ? props.selectedUser : initialState)
   const { register, error, isError } = useRegisterUser()
 
   const onChangeData = (e) => {
+    // if (e.target.id === 'isActive') {
+    //   console.log(e.target.id, e.target.value)
+
+    //   setUser({ ...user, [e.target.id]: e.target.value === 'on' ? true : false })
+    // } else {
     setUser({ ...user, [e.target.id]: e.target.value })
+    // }
   }
 
   const handleClick = () => {
@@ -40,6 +48,10 @@ const ModalAddUser = (props) => {
   const handleRegisterUser = () => {
     register(user)
   }
+
+  useEffect(() => {
+    console.log('user', user)
+  }, [user])
 
   return (
     <CModal
@@ -105,8 +117,8 @@ const ModalAddUser = (props) => {
                 }}
               >
                 <option>Seleccione</option>
-                <option value={'project 1'}>Proyecto 1</option>
-                <option value={'project 2'}>Proyecto 2</option>
+                <option value={'Proyecto 1'}>Proyecto 1</option>
+                <option value={'Proyecto 2'}>Proyecto 2</option>
               </CFormSelect>
             </CCol>
             <CCol sm={6}>
@@ -120,8 +132,8 @@ const ModalAddUser = (props) => {
                 }}
               >
                 <option>Seleccione</option>
-                <option value={'contract 1'}>Contrato 1</option>
-                <option value={'contract 2'}>Contrato 2</option>
+                <option value={'Contrato 1'}>Contrato 1</option>
+                <option value={'Contrato 2'}>Contrato 2</option>
               </CFormSelect>
             </CCol>
           </CRow>
@@ -138,6 +150,31 @@ const ModalAddUser = (props) => {
                   onChangeData(e)
                 }}
               />
+            </CCol>
+            <CCol sm={6}>
+              <CFormCheck
+                id="isActive"
+                label="Activo"
+                // checked={user.isActive}
+                defaultChecked={user.isActive}
+                onChange={(e) => {
+                  setUser({ ...user, [e.target.id]: !user.isActive })
+                }}
+                // value={user.isActive}
+                // onChange={(e) => {
+                //   onChangeData(e)
+                // }}
+              />
+
+              {/* <CFormCheck
+                id="active"
+                label="Activo"
+                
+                // checked={user.isActive ? 'on' : 'off'}
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              /> */}
             </CCol>
           </CRow>
         </CForm>

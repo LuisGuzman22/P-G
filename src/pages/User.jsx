@@ -1,16 +1,5 @@
 import React, { useState } from 'react'
-import {
-  CCard,
-  CTable,
-  CButton,
-  CCardBody,
-  CCardText,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-  CTableBody,
-  CTableDataCell,
-} from '@coreui/react'
+import { CCard, CButton, CCardBody, CCardText } from '@coreui/react'
 import ModalAddUser from 'src/components/ModalAddUser'
 import UserList from 'src/components/UserList'
 
@@ -31,7 +20,6 @@ const User = () => {
       <CCard>
         <CCardBody>
           <CButton onClick={() => setVisibleAddUser(!visibleAddUser)}>Añadir usuario</CButton>
-
           <CCardText>
             <UserList />
           </CCardText>
