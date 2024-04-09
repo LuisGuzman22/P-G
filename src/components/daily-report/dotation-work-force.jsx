@@ -34,8 +34,8 @@ const DotationWorkForce = () => {
     if (validate(e.target.value)) {
       setWorkforceDotation({
         ...workforceDotation,
-        workforceDotationPersonalFront1: e.target.value,
-      })({ ...workforceDotation, [e.target.id]: e.target.value })
+        [e.target.id]: e.target.value,
+      })
     }
   }
 

@@ -31,7 +31,7 @@ const useRegisterDailyReport = () => {
 
   const mutation = useMutation({
     mutationFn: (newTodo) => {
-      return axios.post('/prueba', newTodo)
+      return axios.post('https://pyg-production.up.railway.app/api/v1/reports', newTodo)
     },
   })
 
