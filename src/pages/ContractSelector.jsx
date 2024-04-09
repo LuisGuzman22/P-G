@@ -57,7 +57,7 @@ const ContractSelector = () => {
   useEffect(() => {
     if (userType !== 'admin') {
       if (projectLS && projectsQuery) {
-        const projectFinded = projectsQuery.projects.find((projectData) => {
+        const projectFinded = projectsQuery.find((projectData) => {
           return projectData.id === projectLS.id
         })
         setSelectedProject(projectFinded)

@@ -72,7 +72,7 @@ const ProjectSelector = () => {
   }, [contractsQuery, contractLS])
 
   useEffect(() => {
-    userType !== 'admin' && projectData?.projects && setProjectList(projectData.projects)
+    userType !== 'admin' && projectData && setProjectList(projectData)
   }, [projectData])
 
   return (
@@ -118,11 +118,13 @@ const ProjectSelector = () => {
                               <CRow>
                                 <span className="project-title">{project.name}</span>
                               </CRow>
-                              <CRow>
-                                <span className="project-manager">
-                                  Encargado: {project.manager}
-                                </span>
-                              </CRow>
+                              {project.manager && (
+                                <CRow>
+                                  <span className="project-manager">
+                                    Encargado: {project.manager}
+                                  </span>
+                                </CRow>
+                              )}
                             </CContainer>
                           }
                           style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}

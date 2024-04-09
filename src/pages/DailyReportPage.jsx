@@ -11,7 +11,6 @@ const DailyReportPage = () => {
   const basicQuery = getData('basics')
 
   useEffect(() => {
-    console.log('basicQuery', basicQuery)
     if (!basicQuery) {
       navigate(`/dashboard`)
     }

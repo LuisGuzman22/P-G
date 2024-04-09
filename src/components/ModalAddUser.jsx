@@ -18,6 +18,7 @@ import {
   CFormCheck,
 } from '@coreui/react'
 import useRegisterUser from 'src/hooks/useRegisterUser'
+import { regex } from 'src/utils/regex'
 const ModalAddUser = (props) => {
   const initialState = {
     userName: undefined,
@@ -29,16 +30,15 @@ const ModalAddUser = (props) => {
   }
 
   const [user, setUser] = useState(props.selectedUser ? props.selectedUser : initialState)
+  const [userNameError, setUserNameError] = useState(false)
+  const [userMailError, setUserMailError] = useState(false)
+  const [userProjectError, setUserProjectError] = useState(false)
+  const [userContractError, setUserContractError] = useState(false)
+
   const { register, error, isError } = useRegisterUser()
 
   const onChangeData = (e) => {
-    // if (e.target.id === 'isActive') {
-    //   console.log(e.target.id, e.target.value)
-
-    //   setUser({ ...user, [e.target.id]: e.target.value === 'on' ? true : false })
-    // } else {
     setUser({ ...user, [e.target.id]: e.target.value })
-    // }
   }
 
   const handleClick = () => {
@@ -46,12 +46,20 @@ const ModalAddUser = (props) => {
   }
 
   const handleRegisterUser = () => {
-    register(user)
+    if (user.userName === undefined || user.userName === '') {
+      console.log('error en el usuario')
+      setUserNameError(true)
+    }
+    // if (!user.userMail) setErrorFields({ userMail: true, ...errorFields })
+    // if (!user.userProject) setErrorFields({ userProject: true, ...errorFields })
+    // if (!user.userContract) setErrorFields({ userContract: true, ...errorFields })
+    // if (!user.userPassword) setErrorFields({ userPassword: true, ...errorFields })
+    if (!userMailError) register(user)
   }
 
   useEffect(() => {
-    console.log('user', user)
-  }, [user])
+    console.log(userNameError)
+  }, [userNameError])
 
   return (
     <CModal
@@ -76,16 +84,34 @@ const ModalAddUser = (props) => {
             <CToastBody>{error}</CToastBody>
           </div>
         </CToast>
+        <CToast
+          autohide={true}
+          visible={userMailError}
+          color="danger"
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>Correo inválido</CToastBody>
+          </div>
+        </CToast>
         <CForm>
           <CRow>
             <CCol sm={6}>
               <CFormInput
                 type="text"
+                invalid={userNameError}
                 id="userName"
                 label="Nombre"
                 placeholder="Nombre"
                 value={user.userName || ''}
                 text=""
+                onBlur={(e) => {
+                  if (e.target.value !== '') {
+                    setUserNameError(false)
+                  } else {
+                    setUserNameError(true)
+                  }
+                }}
                 onChange={(e) => {
                   onChangeData(e)
                 }}
@@ -94,11 +120,19 @@ const ModalAddUser = (props) => {
             <CCol sm={6}>
               <CFormInput
                 type="text"
+                invalid={userMailError}
                 id="userMail"
                 value={user.userMail || ''}
                 label="Correo"
                 placeholder="Correo"
                 text=""
+                onBlur={(e) => {
+                  if (e.target.value && e.target.value.match(regex)) {
+                    setUserMailError(false)
+                  } else {
+                    setUserMailError(true)
+                  }
+                }}
                 onChange={(e) => {
                   onChangeData(e)
                 }}
@@ -111,12 +145,25 @@ const ModalAddUser = (props) => {
                 aria-label="Default select example"
                 label="Proyecto"
                 id="userProject"
+                invalid={userProjectError}
                 value={user.userProject}
+                onBlur={(e) => {
+                  if (e.target.value !== '-1') {
+                    setUserProjectError(false)
+                  } else {
+                    setUserProjectError(true)
+                  }
+                }}
                 onChange={(e) => {
+                  if (e.target.value !== '-1') {
+                    setUserProjectError(false)
+                  } else {
+                    setUserProjectError(true)
+                  }
                   onChangeData(e)
                 }}
               >
-                <option>Seleccione</option>
+                <option value={'-1'}>Seleccione</option>
                 <option value={'Proyecto 1'}>Proyecto 1</option>
                 <option value={'Proyecto 2'}>Proyecto 2</option>
               </CFormSelect>
@@ -125,13 +172,26 @@ const ModalAddUser = (props) => {
               <CFormSelect
                 aria-label="Default select example"
                 label="Contrato"
+                invalid={userContractError}
                 value={user.userContract}
                 id="userContract"
+                onBlur={(e) => {
+                  if (e.target.value !== '-1') {
+                    setUserContractError(false)
+                  } else {
+                    setUserContractError(true)
+                  }
+                }}
                 onChange={(e) => {
+                  if (e.target.value !== '-1') {
+                    setUserContractError(false)
+                  } else {
+                    setUserContractError(true)
+                  }
                   onChangeData(e)
                 }}
               >
-                <option>Seleccione</option>
+                <option value={'-1'}>Seleccione</option>
                 <option value={'Contrato 1'}>Contrato 1</option>
                 <option value={'Contrato 2'}>Contrato 2</option>
               </CFormSelect>

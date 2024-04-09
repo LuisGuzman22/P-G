@@ -17,6 +17,7 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import useLogin from 'src/hooks/useLogin'
 import { useQueryClient } from '@tanstack/react-query'
+import { regex } from 'src/utils/regex'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -25,9 +26,6 @@ const Login = () => {
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
   const { login, error } = useLogin()
-
-  const regex =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   const onChangeData = (e) => {
     switch (e.target.id) {

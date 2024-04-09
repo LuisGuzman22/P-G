@@ -2,13 +2,12 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
 const fetchProducts = async (projectId) => {
-  const res = await axios.get('https://42c56e69edd041d8afddac6929f0ea8b.api.mockbin.io/')
+  const res = await axios.get('https://057fad5c781541ef9564e00a00f8e38f.api.mockbin.io/')
   return res.data.data
 }
 
 const fetchUsers = async () => {
   const res = await axios.get('https://b4b07e25f42d4135b6fc3791a6e1d1f8.api.mockbin.io/')
-  console.log('res.data.data', res.data.data)
   return res.data.data
 }
 
