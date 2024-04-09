@@ -34,6 +34,8 @@ const ModalAddUser = (props) => {
   const [userMailError, setUserMailError] = useState(false)
   const [userProjectError, setUserProjectError] = useState(false)
   const [userContractError, setUserContractError] = useState(false)
+  const [userPasswordError, setUserPasswordError] = useState(false)
+  const [errorForm, setErrorForm] = useState(0)
 
   const { register, error, isError } = useRegisterUser()
 
@@ -46,20 +48,49 @@ const ModalAddUser = (props) => {
   }
 
   const handleRegisterUser = () => {
-    if (user.userName === undefined || user.userName === '') {
-      console.log('error en el usuario')
+    if (!user.name || user.name === '') {
+      setErrorForm(1)
       setUserNameError(true)
+    } else {
+      setErrorForm(3)
+      setUserNameError(false)
     }
-    // if (!user.userMail) setErrorFields({ userMail: true, ...errorFields })
-    // if (!user.userProject) setErrorFields({ userProject: true, ...errorFields })
-    // if (!user.userContract) setErrorFields({ userContract: true, ...errorFields })
-    // if (!user.userPassword) setErrorFields({ userPassword: true, ...errorFields })
-    if (!userMailError) register(user)
+    if (!user.userMail || user.userMail === '') {
+      setErrorForm(1)
+      setUserMailError(true)
+    } else {
+      setErrorForm(3)
+      setUserMailError(false)
+    }
+    if (!user.userPassword || user.userPassword === '') {
+      setErrorForm(1)
+      setUserPasswordError(true)
+    } else {
+      setErrorForm(3)
+      setUserPasswordError(false)
+    }
+    if (!user.userContract || user.userContract === '-1') {
+      setErrorForm(1)
+      setUserContractError(true)
+    } else {
+      setErrorForm(3)
+      setUserContractError(false)
+    }
+    if (!user.userProject || user.userProject === '-1') {
+      setErrorForm(1)
+      setUserProjectError(true)
+    } else {
+      setErrorForm(3)
+      setUserProjectError(false)
+    }
   }
 
   useEffect(() => {
-    console.log(userNameError)
-  }, [userNameError])
+    if (user.isActive === undefined) {
+      user.isActive = false
+    }
+    if (errorForm === 3) register(user)
+  }, [errorForm])
 
   return (
     <CModal
@@ -78,7 +109,7 @@ const ModalAddUser = (props) => {
           autohide={true}
           visible={isError}
           color="danger"
-          className="text-white align-items-center"
+          className="text-white align-items-center" // VER EVENTO DE ESCONDERSE PARA RESETEAR EL STATE DE ERROR
         >
           <div className="d-flex">
             <CToastBody>{error}</CToastBody>
@@ -86,12 +117,15 @@ const ModalAddUser = (props) => {
         </CToast>
         <CToast
           autohide={true}
-          visible={userMailError}
+          visible={errorForm === 1}
           color="danger"
+          onClose={() => {
+            setErrorForm(2)
+          }}
           className="text-white align-items-center"
         >
           <div className="d-flex">
-            <CToastBody>Correo inválido</CToastBody>
+            <CToastBody>Debe completar todos los datos para crear el usuario</CToastBody>
           </div>
         </CToast>
         <CForm>
@@ -202,10 +236,18 @@ const ModalAddUser = (props) => {
               <CFormInput
                 type="password"
                 id="userPassword"
+                invalid={userPasswordError}
                 value={user.userPassword || ''}
                 label="Contraseña"
                 placeholder="Contraseña"
                 text=""
+                onBlur={(e) => {
+                  if (e.target.value !== '') {
+                    setUserPasswordError(false)
+                  } else {
+                    setUserPasswordError(true)
+                  }
+                }}
                 onChange={(e) => {
                   onChangeData(e)
                 }}
@@ -215,26 +257,11 @@ const ModalAddUser = (props) => {
               <CFormCheck
                 id="isActive"
                 label="Activo"
-                // checked={user.isActive}
                 defaultChecked={user.isActive}
                 onChange={(e) => {
                   setUser({ ...user, [e.target.id]: !user.isActive })
                 }}
-                // value={user.isActive}
-                // onChange={(e) => {
-                //   onChangeData(e)
-                // }}
               />
-
-              {/* <CFormCheck
-                id="active"
-                label="Activo"
-                
-                // checked={user.isActive ? 'on' : 'off'}
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              /> */}
             </CCol>
           </CRow>
         </CForm>
