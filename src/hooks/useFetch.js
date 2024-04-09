@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
 const fetchProducts = async (projectId) => {
-  const res = await axios.get('https://057fad5c781541ef9564e00a00f8e38f.api.mockbin.io/')
+  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/projects')
   return res.data.data
 }
 

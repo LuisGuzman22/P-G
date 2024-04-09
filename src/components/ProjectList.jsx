@@ -8,43 +8,30 @@ import {
   CCol,
   CButton,
 } from '@coreui/react'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const ProjectList = () => {
-  const fetchProducts = async () => {
-    const res = await axios.get('https://701c573ff182421aa80bd97b52e34a3f.api.mockbin.io/')
-    return res.data.data
-  }
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['projects'],
-    queryFn: async () => {
-      return fetchProducts()
-    },
-  })
+  const { getData } = useGetCachedQueryData()
+  const cachedProjects = getData('projects')
 
   return (
     <>
-      <CRow>
+      {/* <CRow>
         <CCol>ID</CCol>
         <CCol>Proyecto</CCol>
-        <CCol>Contrato</CCol>
         <CCol>Encargado</CCol>
         <CCol>Creado por</CCol>
-      </CRow>
+      </CRow> */}
 
       <CAccordion className="project-list">
-        {!isLoading &&
-          data &&
-          data.map((project, index) => {
+        {cachedProjects &&
+          cachedProjects.map((project, index) => {
             return (
               <CAccordionItem itemKey={project.id} key={project.id}>
                 <CAccordionHeader>
                   <CRow>
                     <CCol>{project.id}</CCol>
-                    <CCol>{project.projectName}</CCol>
-                    <CCol>{project.contract}</CCol>
+                    <CCol>{project.name}</CCol>
                     <CCol>{project.manager}</CCol>
                     <CCol>{project.created_by}</CCol>
                   </CRow>
