@@ -3,10 +3,13 @@ import { CCard, CCardBody, CButton } from '@coreui/react'
 import ProjectList from 'src/components/ProjectList'
 import ModalAddProject from 'src/components/ModalAddProject'
 import ModalAddCategories from 'src/components/ModalAddCategories'
+import useGetProjects from 'src/hooks/useGetProjects'
 
 const ProjectAdministration = () => {
   const [visibleCategories, setVisibleCategories] = useState(false)
   const [visibleProject, setVisibleProject] = useState(false)
+
+  const { refetch } = useGetProjects(1)
 
   return (
     <div className="proyect-administration">
@@ -15,8 +18,9 @@ const ProjectAdministration = () => {
       {visibleProject && (
         <ModalAddProject
           visible={true}
-          sendDataToParent={(data) => {
+          sendDataToParent={async (data) => {
             setVisibleProject(data)
+            await refetch()
           }}
         />
       )}

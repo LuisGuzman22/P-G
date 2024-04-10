@@ -25,6 +25,8 @@ export const useFetchProyects = (projectId) => {
   return useQuery({
     queryKey: ['projects'],
     refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchProducts(projectId)
     },
