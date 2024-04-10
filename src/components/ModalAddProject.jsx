@@ -44,25 +44,38 @@ const ModalAddProject = (props) => {
 
   const handleRegisterProject = () => {
     if (!project.projectName || project.projectName === '') {
-      setErrorForm(1)
+      // setErrorForm(1)
       setProjectNameError(true)
     } else {
-      setErrorForm(3)
+      // setErrorForm(3)
       setProjectNameError(false)
     }
     if (!project.projectManager || project.projectManager === '') {
-      setErrorForm(1)
+      // setErrorForm(1)
       setProjectManagerError(true)
     } else {
-      setErrorForm(3)
+      // setErrorForm(3)
       setProjectManagerError(false)
     }
     if (!project.projectDescription || project.projectDescription === '') {
-      setErrorForm(1)
+      // setErrorForm(1)
       setProjectDescriptionError(true)
     } else {
-      setErrorForm(3)
+      // setErrorForm(3)
       setProjectDescriptionError(false)
+    }
+
+    if (
+      !project.projectName ||
+      project.projectName === '' ||
+      !project.projectManager ||
+      project.projectManager === '' ||
+      !project.projectDescription ||
+      project.projectDescription === ''
+    ) {
+      setErrorForm(1)
+    } else {
+      setErrorForm(3)
     }
   }
 
@@ -70,7 +83,6 @@ const ModalAddProject = (props) => {
     if (project.isActive === undefined) {
       project.isActive = false
     }
-
     if (errorForm === 3) {
       if (props?.selectedProject?.projectId) {
         update({
@@ -79,10 +91,11 @@ const ModalAddProject = (props) => {
           description: project.projectDescription,
           manager: project.projectManager,
         })
+        props.sendDataToParent(false)
       } else {
         register(project)
+        props.sendDataToParent(false)
       }
-      props.sendDataToParent(false)
     }
   }, [errorForm])
 
@@ -234,7 +247,7 @@ const ModalAddProject = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterProject()}>
-          Añadir proyecto
+          Registrar
         </CButton>
       </CModalFooter>
     </CModal>

@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import { useMutation } from '@tanstack/react-query'
 
 const useRegisterUser = () => {
   const [error, setError] = useState()
   const [isError, setIsError] = useState(false)
+  const queryClient = useQueryClient()
 
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
@@ -26,6 +27,9 @@ const useRegisterUser = () => {
           setIsError(true)
           return false
         })
+    },
+    onSuccess: (suc) => {
+      queryClient.invalidateQueries({ queryKey: ['users'] })
     },
     onError: (err) => {
       setError('Error al registrar usuario')
