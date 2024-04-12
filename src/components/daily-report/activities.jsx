@@ -300,9 +300,12 @@ const Activities = () => {
           </CTableHead>
           <CTableBody>
             {activityListContext.map((item, index) => {
+              const charge = basicQuery.workFront.find((work) => {
+                return work.id == item.activityFrontWork
+              })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{item.activityFrontWork}</CTableDataCell>
+                  <CTableDataCell>{charge.name}</CTableDataCell>
                   <CTableDataCell>{item.primaveraId}</CTableDataCell>
                   <CTableDataCell>{item.activityName}</CTableDataCell>
                   <CTableDataCell>{item.activityDiscipline}</CTableDataCell>

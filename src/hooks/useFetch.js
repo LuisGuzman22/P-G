@@ -46,6 +46,8 @@ export const useFetchContract = (contractId) => {
 export const useFetchBasicData = (contractId) => {
   return useQuery({
     queryKey: ['basics'],
+    staleTime: 0,
+    gcTime: 2147483647,
     refetchType: 'all',
     queryFn: async () => {
       return fetchBasicData(contractId)

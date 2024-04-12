@@ -7,6 +7,7 @@ import {
   CRow,
   CCol,
   CButton,
+  CContainer,
 } from '@coreui/react'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import ModalAddProject from './ModalAddProject'
@@ -43,12 +44,14 @@ const ProjectList = () => {
             return (
               <CAccordionItem itemKey={project.id} key={project.id}>
                 <CAccordionHeader>
-                  <CRow>
-                    <CCol>{project.id}</CCol>
-                    <CCol>{project.name}</CCol>
-                    <CCol>{project.manager}</CCol>
-                    <CCol>{project.created_by}</CCol>
-                  </CRow>
+                  <CContainer className="px-4">
+                    <CRow>
+                      <CCol sm={12}>Proyecto: {project.name}</CCol>
+                    </CRow>
+                    <CRow>
+                      <CCol sm={12}>Administrado por: {project.manager}</CCol>
+                    </CRow>
+                  </CContainer>
                 </CAccordionHeader>
                 <CAccordionBody>
                   <CButton className="btn-project-action">Subir Trisemanal</CButton>

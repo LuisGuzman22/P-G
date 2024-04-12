@@ -194,9 +194,12 @@ const DirectWorkForce = () => {
           </CTableHead>
           <CTableBody>
             {directWorkForceListContext.map((item, index) => {
+              const charge = basicQuery.directPersonal.find((personal) => {
+                return personal.id == item.directWorkForce
+              })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{item.directWorkForce}</CTableDataCell>
+                  <CTableDataCell>{charge.name}</CTableDataCell>
                   <CTableDataCell>{item.actions.offeredNumber}</CTableDataCell>
                   <CTableDataCell>{item.actions.contractedNumber}</CTableDataCell>
                   <CTableDataCell>{item.actions.certified}</CTableDataCell>

@@ -238,9 +238,12 @@ const EquipmentPlate = () => {
           </CTableHead>
           <CTableBody>
             {equipmentPlateListContext.map((item, index) => {
+              const charge = basicQuery.equipment.find((personal) => {
+                return personal.id == item.equipment
+              })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{item.equipment}</CTableDataCell>
+                  <CTableDataCell>{charge.name}</CTableDataCell>
                   <CTableDataCell>{item.actions.equipmentEffectiveTime}</CTableDataCell>
                   <CTableDataCell>{item.actions.equipmentCorrectiveMaintenance}</CTableDataCell>
                   <CTableDataCell>{item.actions.equipmentPreventiveMaintenance}</CTableDataCell>

@@ -213,9 +213,12 @@ const IndirectWorkForce = () => {
             </CTableHead>
             <CTableBody>
               {indirectWorkForceListContext.map((item, index) => {
+                const charge = basicQuery.indirectPersonal.find((personal) => {
+                  return personal.id == item.indirectWorkForce
+                })
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell>{item.indirectWorkForce}</CTableDataCell>
+                    <CTableDataCell>{charge.name}</CTableDataCell>
                     <CTableDataCell>{item.actions.offeredNumber}</CTableDataCell>
                     <CTableDataCell>{item.actions.contractedNumber}</CTableDataCell>
                     <CTableDataCell>{item.actions.certified}</CTableDataCell>

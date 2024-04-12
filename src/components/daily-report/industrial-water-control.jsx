@@ -185,9 +185,12 @@ const IndustrialWaterControl = () => {
           </CTableHead>
           <CTableBody>
             {aljibeListContext.map((item, index) => {
+              const charge = basicQuery.aljibe.find((alj) => {
+                return alj.id == item.aljibe
+              })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{item.aljibe}</CTableDataCell>
+                  <CTableDataCell>{charge.name}</CTableDataCell>
                   <CTableDataCell>{item.actions.aljibeCachimbaName ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.aljibeQuantityTurns ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.aljibeM3 ?? 0}</CTableDataCell>

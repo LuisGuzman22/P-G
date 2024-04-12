@@ -315,9 +315,12 @@ const AsarcoMachinery = () => {
           </CTableHead>
           <CTableBody>
             {asarcoMachineryListContext.map((item, index) => {
+              const charge = basicQuery.machinery.find((machinery) => {
+                return machinery.id == item.machinery
+              })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{item.machinery}</CTableDataCell>
+                  <CTableDataCell>{charge.name}</CTableDataCell>
                   <CTableDataCell>{item.actions.asarcoMachineryEffectiveTime}</CTableDataCell>
                   <CTableDataCell>
                     {item.actions.asarcoMachineryUnscheduleMaintenance}

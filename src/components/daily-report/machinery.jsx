@@ -189,9 +189,12 @@ const Machinery = () => {
           </CTableHead>
           <CTableBody>
             {machineryListContext.map((item, index) => {
+              const charge = basicQuery.machinery.find((machinery) => {
+                return machinery.id == item.machinery
+              })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{item.machinery}</CTableDataCell>
+                  <CTableDataCell>{charge.name}</CTableDataCell>
                   <CTableDataCell>{item.actions.machineryOfferedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.machineryCertifiedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.machineryWorkNumber ?? 0}</CTableDataCell>

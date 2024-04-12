@@ -278,9 +278,12 @@ const DirectDotationWorkForce = () => {
             </CTableHead>
             <CTableBody>
               {directDotationWorkForceListContext.map((item, index) => {
+                const charge = basicQuery.directPersonal.find((personal) => {
+                  return personal.id == item.directWorkForce
+                })
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell>{item.directWorkForce}</CTableDataCell>
+                    <CTableDataCell>{charge.name}</CTableDataCell>
                     <CTableDataCell>{item.actions.directWorkForceFront1 ?? 0}</CTableDataCell>
                     <CTableDataCell>{item.actions.directWorkForceFront2 ?? 0}</CTableDataCell>
                     <CTableDataCell>{item.actions.directWorkForceFront3 ?? 0}</CTableDataCell>
