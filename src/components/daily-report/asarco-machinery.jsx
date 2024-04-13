@@ -73,6 +73,7 @@ const AsarcoMachinery = () => {
   }
 
   const registerAsarcoMachinery = () => {
+    setPlates()
     const asarcoMachineryInitialState = {
       id: uuidv4(),
       machinery: asarcoMachinery.machinery,

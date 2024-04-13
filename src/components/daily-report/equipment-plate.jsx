@@ -58,6 +58,7 @@ const EquipmentPlate = () => {
   }
 
   const registerEquipment = () => {
+    setPlates()
     const equipmentInitialState = {
       id: uuidv4(),
       equipment: equipmentPlate.equipment,

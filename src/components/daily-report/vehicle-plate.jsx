@@ -27,6 +27,7 @@ const VehiclePlate = () => {
     vehicleNoOperator: undefined,
     vehicleInitialHorometer: undefined,
     vehicleFinalHorometer: undefined,
+    vehiclePlate: undefined,
   }
 
   const { getData } = useGetCachedQueryData()
@@ -34,6 +35,7 @@ const VehiclePlate = () => {
 
   const [vehiclePlate, setVehiclePlate] = useState(initialState)
   const [vehiclePlateList, setVehiclePlateList] = useState([])
+  const [plates, setPlates] = useState()
 
   const {
     storeVehiclePlate,
@@ -45,6 +47,10 @@ const VehiclePlate = () => {
     if (e.target.id === 'vehicle') {
       setVehiclePlate(initialState) // Clear the object
       setVehiclePlate({ [e.target.id]: e.target.value })
+      const selectedVehicle = basicQuery.vehicles.find((vehic) => {
+        return vehic.id.toString() === e.target.value.toString()
+      })
+      setPlates(selectedVehicle.plate)
     }
     if (validate(e.target.value)) {
       setVehiclePlate({ ...vehiclePlate, [e.target.id]: e.target.value })
@@ -52,19 +58,19 @@ const VehiclePlate = () => {
   }
 
   const registerVehiclePlate = () => {
+    setPlates()
     const vehiclePlateInitialState = {
       id: uuidv4(),
       vehicle: vehiclePlate.vehicle,
-      actions: {
-        vehicleEffectiveTime: vehiclePlate.vehicleEffectiveTime,
-        vehicleCorrectiveMaintenance: vehiclePlate.vehicleCorrectiveMaintenance,
-        vehiclePreventiveMaintenance: vehiclePlate.vehiclePreventiveMaintenance,
-        vehicleOutOfService: vehiclePlate.vehicleOutOfService,
-        vehicleWaiting: vehiclePlate.vehicleWaiting,
-        vehicleNoOperator: vehiclePlate.vehicleNoOperator,
-        vehicleInitialHorometer: vehiclePlate.vehicleInitialHorometer,
-        vehicleFinalHorometer: vehiclePlate.vehicleFinalHorometer,
-      },
+      vehicleEffectiveTime: vehiclePlate.vehicleEffectiveTime,
+      vehicleCorrectiveMaintenance: vehiclePlate.vehicleCorrectiveMaintenance,
+      vehiclePreventiveMaintenance: vehiclePlate.vehiclePreventiveMaintenance,
+      vehicleOutOfService: vehiclePlate.vehicleOutOfService,
+      vehicleWaiting: vehiclePlate.vehicleWaiting,
+      vehicleNoOperator: vehiclePlate.vehicleNoOperator,
+      vehicleInitialHorometer: vehiclePlate.vehicleInitialHorometer,
+      vehicleFinalHorometer: vehiclePlate.vehicleFinalHorometer,
+      vehiclePlate: vehiclePlate.vehiclePlate,
     }
     setVehiclePlate(initialState) // Clear the object
     setVehiclePlateList([...vehiclePlateList, vehiclePlateInitialState])
@@ -99,6 +105,30 @@ const VehiclePlate = () => {
           )
         })}
       </CFormSelect>
+
+      {plates && (
+        <>
+          <br />
+          <CFormSelect
+            aria-label="Default select example"
+            label="Patente"
+            id="vehiclePlate"
+            value={vehiclePlate.vehiclePlate ?? 0}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={0}>Seleccione</option>
+            {plates.map((plate) => {
+              return (
+                <option key={plate.id} value={plate.id}>
+                  {plate.label}
+                </option>
+              )
+            })}
+          </CFormSelect>
+        </>
+      )}
 
       <CTable>
         <CTableHead>
@@ -224,6 +254,8 @@ const VehiclePlate = () => {
         <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
+              <CTableHeaderCell scope="col">Vehículo</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Patente</CTableHeaderCell>
               <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
@@ -237,20 +269,24 @@ const VehiclePlate = () => {
           </CTableHead>
           <CTableBody>
             {vehiclePlateListContext.map((item, index) => {
-              const charge = basicQuery.vehicles.find((vehic) => {
+              const vehicle = basicQuery.vehicles.find((vehic) => {
                 return vehic.id == item.vehicle
+              })
+              const plate = vehicle.plate.find((pl) => {
+                return pl.id.toString() === item.vehiclePlate.toString()
               })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{charge.name}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleEffectiveTime ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleCorrectiveMaintenance ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehiclePreventiveMaintenance ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleOutOfService ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleWaiting ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleNoOperator ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleInitialHorometer ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleFinalHorometer ?? 0}</CTableDataCell>
+                  <CTableDataCell>{vehicle.name}</CTableDataCell>
+                  <CTableDataCell>{plate.label}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleEffectiveTime ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleCorrectiveMaintenance ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehiclePreventiveMaintenance ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleOutOfService ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleWaiting ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleNoOperator ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleInitialHorometer ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleFinalHorometer ?? 0}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
                       className="btn-project-action"
