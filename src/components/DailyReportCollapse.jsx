@@ -29,6 +29,7 @@ import AsarcoMachinery from './daily-report/asarco-machinery'
 import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
+import PhotoRecord from './daily-report/photo-record'
 
 const DailyReportCollapse = () => {
   const { registerData } = useRegisterDailyReport()
@@ -156,20 +157,26 @@ const DailyReportCollapse = () => {
             <Comments />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={18}>
-          <CAccordionHeader>18) Graficos del día</CAccordionHeader>
+        <CAccordionItem itemKey={19}>
+          <CAccordionHeader>19) Registro fotográfico diario</CAccordionHeader>
+          <CAccordionBody className="dailyReport-accordion">
+            <PhotoRecord />
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={20}>
+          <CAccordionHeader>20) Graficos del día</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Graphs />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={19}>
-          <CAccordionHeader>19) Incidentes, lesiones o eventos</CAccordionHeader>
+        <CAccordionItem itemKey={21}>
+          <CAccordionHeader>21) Incidentes, lesiones o eventos</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Incidents />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={20}>
-          <CAccordionHeader>20) Firmas</CAccordionHeader>
+        <CAccordionItem itemKey={22}>
+          <CAccordionHeader>22) Firmas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <></>
           </CAccordionBody>
