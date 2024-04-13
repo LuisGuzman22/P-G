@@ -18,15 +18,11 @@ import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const DirectDotationWorkForce = () => {
   const initialState = {
-    directWorkForce: undefined,
+    directWorkFront: undefined,
     directDotationWorkForceObservation: undefined,
-    directWorkForceFront1: undefined,
-    directWorkForceFront2: undefined,
-    directWorkForceFront3: undefined,
-    directWorkForceFront4: undefined,
-    directWorkForceFront5: undefined,
-    directWorkForceFront6: undefined,
-    directWorkForceFront7: undefined,
+    directSubWorkFront: undefined,
+    directWorkFrontCharge: undefined,
+    directWorkFrontQuantity: undefined,
   }
 
   const directDotationTotalsInitialState = {
@@ -53,11 +49,14 @@ const DirectDotationWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    if (e.target.id === 'directWorkForce') {
-      setDirectDotationWorkForce(initialState) // Clear the object
-      setDirectDotationWorkForce({ ...directDotationWorkForce, directWorkForce: e.target.value })
-    }
-    if (validate(e.target.value)) {
+    if (e.target.id === 'directSubWorkFront' || e.target.id === 'directWorkFrontQuantity') {
+      if (validate(e.target.value)) {
+        setDirectDotationWorkForce({
+          ...directDotationWorkForce,
+          [e.target.id]: e.target.value,
+        })
+      }
+    } else {
       setDirectDotationWorkForce({
         ...directDotationWorkForce,
         [e.target.id]: e.target.value,
@@ -68,18 +67,12 @@ const DirectDotationWorkForce = () => {
   const registerDirectDotationWorkForce = () => {
     const directDotationWorkForceInitialState = {
       id: uuidv4(),
-      directWorkForce: directDotationWorkForce.directWorkForce,
       directDotationWorkForceObservation:
         directDotationWorkForce.directDotationWorkForceObservation,
-      actions: {
-        directWorkForceFront1: directDotationWorkForce.directWorkForceFront1,
-        directWorkForceFront2: directDotationWorkForce.directWorkForceFront2,
-        directWorkForceFront3: directDotationWorkForce.directWorkForceFront3,
-        directWorkForceFront4: directDotationWorkForce.directWorkForceFront4,
-        directWorkForceFront5: directDotationWorkForce.directWorkForceFront5,
-        directWorkForceFront6: directDotationWorkForce.directWorkForceFront6,
-        directWorkForceFront7: directDotationWorkForce.directWorkForceFront7,
-      },
+      directWorkFront: directDotationWorkForce.directWorkFront,
+      directSubWorkFront: directDotationWorkForce.directSubWorkFront,
+      directWorkFrontCharge: directDotationWorkForce.directWorkFrontCharge,
+      directWorkFrontQuantity: directDotationWorkForce.directWorkFrontQuantity,
     }
     setDirectDotationWorkForce(initialState) // Clear the object
     setDirectDotationWorkForceList([
@@ -100,49 +93,79 @@ const DirectDotationWorkForce = () => {
   }, [directDotationWorkForceList])
 
   useEffect(() => {
-    let directDotationTotalsCounter = {
-      directWorkForceFront1: 0,
-      directWorkForceFront2: 0,
-      directWorkForceFront3: 0,
-      directWorkForceFront4: 0,
-      directWorkForceFront5: 0,
-      directWorkForceFront6: 0,
-      directWorkForceFront7: 0,
-    }
-
-    for (let data of directDotationWorkForceListContext) {
-      directDotationTotalsCounter = {
-        directWorkForceFront1:
-          Number(directDotationTotalsCounter.directWorkForceFront1) +
-          Number(data.actions.directWorkForceFront1 ?? 0),
-        directWorkForceFront2:
-          Number(directDotationTotalsCounter.directWorkForceFront2) +
-          Number(data.actions.directWorkForceFront2 ?? 0),
-        directWorkForceFront3:
-          Number(directDotationTotalsCounter.directWorkForceFront3) +
-          Number(data.actions.directWorkForceFront3 ?? 0),
-        directWorkForceFront4:
-          Number(directDotationTotalsCounter.directWorkForceFront4) +
-          Number(data.actions.directWorkForceFront4 ?? 0),
-        directWorkForceFront5:
-          Number(directDotationTotalsCounter.directWorkForceFront5) +
-          Number(data.actions.directWorkForceFront5 ?? 0),
-        directWorkForceFront6:
-          Number(directDotationTotalsCounter.directWorkForceFront6) +
-          Number(data.actions.directWorkForceFront6 ?? 0),
-        directWorkForceFront7:
-          Number(directDotationTotalsCounter.directWorkForceFront7) +
-          Number(data.actions.directWorkForceFront7 ?? 0),
-      }
-    }
-    setDirectDotationTotals(directDotationTotalsCounter)
+    //   let directDotationTotalsCounter = {
+    //     directWorkForceFront1: 0,
+    //     directWorkForceFront2: 0,
+    //     directWorkForceFront3: 0,
+    //     directWorkForceFront4: 0,
+    //     directWorkForceFront5: 0,
+    //     directWorkForceFront6: 0,
+    //     directWorkForceFront7: 0,
+    //   }
+    //   for (let data of directDotationWorkForceListContext) {
+    //     directDotationTotalsCounter = {
+    //       directWorkForceFront1:
+    //         Number(directDotationTotalsCounter.directWorkForceFront1) +
+    //         Number(data.actions.directWorkForceFront1 ?? 0),
+    //       directWorkForceFront2:
+    //         Number(directDotationTotalsCounter.directWorkForceFront2) +
+    //         Number(data.actions.directWorkForceFront2 ?? 0),
+    //       directWorkForceFront3:
+    //         Number(directDotationTotalsCounter.directWorkForceFront3) +
+    //         Number(data.actions.directWorkForceFront3 ?? 0),
+    //       directWorkForceFront4:
+    //         Number(directDotationTotalsCounter.directWorkForceFront4) +
+    //         Number(data.actions.directWorkForceFront4 ?? 0),
+    //       directWorkForceFront5:
+    //         Number(directDotationTotalsCounter.directWorkForceFront5) +
+    //         Number(data.actions.directWorkForceFront5 ?? 0),
+    //       directWorkForceFront6:
+    //         Number(directDotationTotalsCounter.directWorkForceFront6) +
+    //         Number(data.actions.directWorkForceFront6 ?? 0),
+    //       directWorkForceFront7:
+    //         Number(directDotationTotalsCounter.directWorkForceFront7) +
+    //         Number(data.actions.directWorkForceFront7 ?? 0),
+    //     }
+    //   }
+    //   setDirectDotationTotals(directDotationTotalsCounter)
   }, [directDotationWorkForceListContext])
 
   return (
     <div className="work-force-report">
       <CFormSelect
         aria-label="Default select example"
-        id="directWorkForce"
+        id="directWorkFront"
+        label="Frente de trabajo"
+        onChange={(e) => {
+          onChangeData(e)
+        }}
+      >
+        <option>Seleccione</option>
+        {basicQuery.workFront.map((workfrontCached) => {
+          return (
+            <option key={workfrontCached.id} value={workfrontCached.id}>
+              {workfrontCached.name}
+            </option>
+          )
+        })}
+      </CFormSelect>
+      <br />
+      <CFormInput
+        type="text"
+        id="directSubWorkFront"
+        label="SubFrente de trabajo"
+        value={directDotationWorkForce.directSubWorkFront || ''}
+        text=""
+        onChange={(e) => {
+          onChangeData(e)
+        }}
+      />
+      <br />
+
+      <CFormSelect
+        aria-label="Default select example"
+        id="directWorkFrontCharge"
+        label="Cargo"
         onChange={(e) => {
           onChangeData(e)
         }}
@@ -156,100 +179,26 @@ const DirectDotationWorkForce = () => {
           )
         })}
       </CFormSelect>
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Frente de trabajo 1</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 2</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 3</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 4</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 5</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 6</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 7</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceFront1"
-                value={directDotationWorkForce.directWorkForceFront1 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceFront2"
-                value={directDotationWorkForce.directWorkForceFront2 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceFront3"
-                value={directDotationWorkForce.directWorkForceFront3 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceFront4"
-                value={directDotationWorkForce.directWorkForceFront4 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceFront5"
-                value={directDotationWorkForce.directWorkForceFront5 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceFront6"
-                value={directDotationWorkForce.directWorkForceFront6 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceFront7"
-                value={directDotationWorkForce.directWorkForceFront7 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
+      <br />
+      <CFormInput
+        type="text"
+        id="directWorkFrontQuantity"
+        label="Cantidad"
+        value={directDotationWorkForce.directWorkFrontQuantity || ''}
+        text=""
+        onChange={(e) => {
+          onChangeData(e)
+        }}
+      />
+      <br />
+      <CFormTextarea
+        id="directDotationWorkForceObservation"
+        placeholder="Deja un comentario / observación"
+        onChange={(e) => {
+          onChangeData(e)
+        }}
+      ></CFormTextarea>
+      <br />
 
       <CButton
         className="btn-project-action"
@@ -261,70 +210,106 @@ const DirectDotationWorkForce = () => {
       </CButton>
 
       {directDotationWorkForceListContext.length > 0 &&
-        directDotationWorkForceListContext[0].directWorkForce && (
-          <CTable className="resume-table">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col"></CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 1</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 2</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 3</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 4</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 5</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 6</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 7</CTableHeaderCell>
-                <CTableHeaderCell scope="col"></CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {directDotationWorkForceListContext.map((item, index) => {
-                const charge = basicQuery.directPersonal.find((personal) => {
-                  return personal.id == item.directWorkForce
-                })
-                return (
-                  <CTableRow key={index}>
-                    <CTableDataCell>{charge.name}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront1 ?? 0}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront2 ?? 0}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront3 ?? 0}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront4 ?? 0}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront5 ?? 0}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront6 ?? 0}</CTableDataCell>
-                    <CTableDataCell>{item.actions.directWorkForceFront7 ?? 0}</CTableDataCell>
-                    <CTableDataCell>
-                      <CButton
-                        className="btn-project-action"
-                        onClick={() => {
-                          deletedirectDotationWorkForce(item.id)
-                        }}
-                      >
-                        eliminar
-                      </CButton>
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-              <CTableRow key={'total'}>
-                <CTableDataCell>Total</CTableDataCell>
-                <CTableDataCell>{directDotationTotals.directWorkForceFront1}</CTableDataCell>
-                <CTableDataCell>{directDotationTotals.directWorkForceFront2}</CTableDataCell>
-                <CTableDataCell>{directDotationTotals.directWorkForceFront3}</CTableDataCell>
-                <CTableDataCell>{directDotationTotals.directWorkForceFront4}</CTableDataCell>
-                <CTableDataCell>{directDotationTotals.directWorkForceFront5}</CTableDataCell>
-                <CTableDataCell>{directDotationTotals.directWorkForceFront6}</CTableDataCell>
-                <CTableDataCell>{directDotationTotals.directWorkForceFront7}</CTableDataCell>
-              </CTableRow>
-            </CTableBody>
-          </CTable>
-        )}
+        directDotationWorkForceListContext[0].id && (
+          <>
+            <CTable className="resume-table">
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">Frente de trabajo</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Sub frente de trabajo</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Personal</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Cantidad</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Comentario</CTableHeaderCell>
+                  <CTableHeaderCell scope="col"></CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {directDotationWorkForceListContext.map((item, index) => {
+                  const selectedWorkFront = basicQuery.workFront.find((workF) => {
+                    return workF.id == item.directWorkFront
+                  })
+                  const selectedCharge = basicQuery.directPersonal.find((charge) => {
+                    return charge.id == item.directWorkFrontCharge
+                  })
+                  return (
+                    <CTableRow key={item.id}>
+                      <CTableDataCell>
+                        <span key={item.id}>{selectedWorkFront.name}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <span key={item.id}>{item.directSubWorkFront}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <span key={item.id}>{selectedCharge.name}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <span key={item.id}>{item.directWorkFrontQuantity}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <span key={item.id}>{item.directDotationWorkForceObservation}</span>
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
+              </CTableBody>
+            </CTable>
+          </>
 
-      <CFormTextarea
-        id="directDotationWorkForceObservation"
-        placeholder="Deja un comentario / observación"
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      ></CFormTextarea>
+          // <CTable className="resume-table">
+          //   <CTableHead>
+          //     <CTableRow>
+          //       <CTableHeaderCell scope="col"></CTableHeaderCell>
+          //       <CTableHeaderCell scope="col">Frente de trabajo 1</CTableHeaderCell>
+          //       <CTableHeaderCell scope="col">Frente de trabajo 2</CTableHeaderCell>
+          //       <CTableHeaderCell scope="col">Frente de trabajo 3</CTableHeaderCell>
+          //       <CTableHeaderCell scope="col">Frente de trabajo 4</CTableHeaderCell>
+          //       <CTableHeaderCell scope="col">Frente de trabajo 5</CTableHeaderCell>
+          //       <CTableHeaderCell scope="col">Frente de trabajo 6</CTableHeaderCell>
+          //       <CTableHeaderCell scope="col">Frente de trabajo 7</CTableHeaderCell>
+          //       <CTableHeaderCell scope="col"></CTableHeaderCell>
+          //     </CTableRow>
+          //   </CTableHead>
+          //   <CTableBody>
+          //     {directDotationWorkForceListContext.map((item, index) => {
+          //       const charge = basicQuery.directPersonal.find((personal) => {
+          //         return personal.id == item.directWorkForce
+          //       })
+          //       return (
+          //         <CTableRow key={index}>
+          //           <CTableDataCell>{charge.name}</CTableDataCell>
+          //           <CTableDataCell>{item.actions.directWorkForceFront1 ?? 0}</CTableDataCell>
+          //           <CTableDataCell>{item.actions.directWorkForceFront2 ?? 0}</CTableDataCell>
+          //           <CTableDataCell>{item.actions.directWorkForceFront3 ?? 0}</CTableDataCell>
+          //           <CTableDataCell>{item.actions.directWorkForceFront4 ?? 0}</CTableDataCell>
+          //           <CTableDataCell>{item.actions.directWorkForceFront5 ?? 0}</CTableDataCell>
+          //           <CTableDataCell>{item.actions.directWorkForceFront6 ?? 0}</CTableDataCell>
+          //           <CTableDataCell>{item.actions.directWorkForceFront7 ?? 0}</CTableDataCell>
+          //           <CTableDataCell>
+          //             <CButton
+          //               className="btn-project-action"
+          //               onClick={() => {
+          //                 deletedirectDotationWorkForce(item.id)
+          //               }}
+          //             >
+          //               eliminar
+          //             </CButton>
+          //           </CTableDataCell>
+          //         </CTableRow>
+          //       )
+          //     })}
+          //     <CTableRow key={'total'}>
+          //       <CTableDataCell>Total</CTableDataCell>
+          //       <CTableDataCell>{directDotationTotals.directWorkForceFront1}</CTableDataCell>
+          //       <CTableDataCell>{directDotationTotals.directWorkForceFront2}</CTableDataCell>
+          //       <CTableDataCell>{directDotationTotals.directWorkForceFront3}</CTableDataCell>
+          //       <CTableDataCell>{directDotationTotals.directWorkForceFront4}</CTableDataCell>
+          //       <CTableDataCell>{directDotationTotals.directWorkForceFront5}</CTableDataCell>
+          //       <CTableDataCell>{directDotationTotals.directWorkForceFront6}</CTableDataCell>
+          //       <CTableDataCell>{directDotationTotals.directWorkForceFront7}</CTableDataCell>
+          //     </CTableRow>
+          //   </CTableBody>
+          // </CTable>
+        )}
     </div>
   )
 }
