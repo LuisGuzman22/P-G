@@ -22,12 +22,20 @@ const IndustrialWaterControl = () => {
     aljibeCachimbaName: undefined,
     aljibeQuantityTurns: undefined,
     aljibeM3: undefined,
+    aljibePlate: undefined,
+    aljibeOfferedNumber: undefined,
+    aljibeCertifiedNumber: undefined,
+    aljibeWorkNumber: undefined,
   }
 
   const aljibeTotalsInitialState = {
     aljibeCachimbaName: 0,
     aljibeQuantityTurns: 0,
     aljibeM3: 0,
+    aljibePlate: 0,
+    aljibeOfferedNumber: 0,
+    aljibeCertifiedNumber: 0,
+    aljibeWorkNumber: 0,
   }
 
   const { getData } = useGetCachedQueryData()
@@ -36,6 +44,8 @@ const IndustrialWaterControl = () => {
   const [aljibe, setAlgibe] = useState(initialState)
   const [aljibeList, setAlgibeList] = useState([])
   const [aljibeTotals, setAlgibeTotals] = useState(aljibeTotalsInitialState)
+  const [plates, setPlates] = useState()
+
   const {
     storealjibe,
     removealjibe,
@@ -46,6 +56,13 @@ const IndustrialWaterControl = () => {
     if (e.target.id === 'aljibe') {
       setAlgibe(initialState) // Clear the object
       setAlgibe({ [e.target.id]: e.target.value })
+      const selectedAljibe = basicQuery.aljibe.find((alj) => {
+        return alj.id.toString() === e.target.value.toString()
+      })
+      setPlates(selectedAljibe.plate)
+    }
+    if (e.target.id === 'aljibeCachimbaName') {
+      setAlgibe({ ...aljibe, aljibeCachimbaName: e.target.value })
     }
     if (validate(e.target.value)) {
       setAlgibe({ ...aljibe, [e.target.id]: e.target.value })
@@ -53,14 +70,17 @@ const IndustrialWaterControl = () => {
   }
 
   const registeraljibe = () => {
+    setPlates()
     const aljibeInitialState = {
       id: uuidv4(),
       aljibe: aljibe.aljibe,
-      actions: {
-        aljibeCachimbaName: aljibe.aljibeCachimbaName,
-        aljibeQuantityTurns: aljibe.aljibeQuantityTurns,
-        aljibeM3: aljibe.aljibeM3,
-      },
+      aljibeCachimbaName: aljibe.aljibeCachimbaName,
+      aljibeQuantityTurns: aljibe.aljibeQuantityTurns,
+      aljibeM3: aljibe.aljibeM3,
+      aljibePlate: aljibe.aljibePlate,
+      aljibeOfferedNumber: aljibe.aljibeOfferedNumber,
+      aljibeCertifiedNumber: aljibe.aljibeCertifiedNumber,
+      aljibeWorkNumber: aljibe.aljibeWorkNumber,
     }
     setAlgibe(initialState) // Clear the object
     setAlgibeList([...aljibeList, aljibeInitialState])
@@ -78,20 +98,25 @@ const IndustrialWaterControl = () => {
 
   useEffect(() => {
     let aljibeTotalsCounter = {
-      aljibeCachimbaName: 0,
-      aljibeQuantityTurns: 0,
+      aljibeOfferedNumber: 0,
+      aljibeCertifiedNumber: 0,
       aljibeM3: 0,
+      aljibeWorkNumber: 0,
+      aljibeQuantityTurns: 0,
     }
 
     for (let data of aljibeListContext) {
       aljibeTotalsCounter = {
-        aljibeCachimbaName:
-          Number(aljibeTotalsCounter.aljibeCachimbaName) +
-          Number(data.actions.aljibeCachimbaName ?? 0),
+        aljibeOfferedNumber:
+          Number(aljibeTotalsCounter.aljibeOfferedNumber) + Number(data.aljibeOfferedNumber ?? 0),
+        aljibeCertifiedNumber:
+          Number(aljibeTotalsCounter.aljibeCertifiedNumber) +
+          Number(data.aljibeCertifiedNumber ?? 0),
+        aljibeM3: Number(aljibeTotalsCounter.aljibeM3) + Number(data.aljibeM3 ?? 0),
+        aljibeWorkNumber:
+          Number(aljibeTotalsCounter.aljibeWorkNumber) + Number(data.aljibeWorkNumber ?? 0),
         aljibeQuantityTurns:
-          Number(aljibeTotalsCounter.aljibeQuantityTurns) +
-          Number(data.actions.aljibeQuantityTurns ?? 0),
-        aljibeM3: Number(aljibeTotalsCounter.aljibeM3) + Number(data.actions.aljibeM3 ?? 0),
+          Number(aljibeTotalsCounter.aljibeQuantityTurns) + Number(data.aljibeQuantityTurns ?? 0),
       }
     }
     setAlgibeTotals(aljibeTotalsCounter)
@@ -117,6 +142,30 @@ const IndustrialWaterControl = () => {
         })}
       </CFormSelect>
 
+      {plates && (
+        <>
+          <br />
+          <CFormSelect
+            aria-label="Default select example"
+            label="Patente"
+            id="aljibePlate"
+            value={aljibe.aljibePlate ?? 0}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={0}>Seleccione</option>
+            {plates.map((plate) => {
+              return (
+                <option key={plate.id} value={plate.id}>
+                  {plate.label}
+                </option>
+              )
+            })}
+          </CFormSelect>
+        </>
+      )}
+
       <CTable>
         <CTableHead>
           <CTableRow>
@@ -126,6 +175,46 @@ const IndustrialWaterControl = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
+          <CTableRow>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="aljibeOfferedNumber"
+                value={aljibe.aljibeOfferedNumber || ''}
+                text=""
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="aljibeCertifiedNumber"
+                value={aljibe.aljibeCertifiedNumber || ''}
+                text=""
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+            <CTableDataCell>
+              <CFormInput
+                type="text"
+                id="aljibeWorkNumber"
+                value={aljibe.aljibeWorkNumber || ''}
+                text=""
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableHeaderCell scope="col">Nombre Cachimba</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Cantidad de vueltas</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Cantidad de m3</CTableHeaderCell>
+          </CTableRow>
           <CTableRow>
             <CTableDataCell>
               <CFormInput
@@ -177,7 +266,11 @@ const IndustrialWaterControl = () => {
         <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell scope="col"></CTableHeaderCell>
+              <CTableHeaderCell scope="col">Aljibe</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Patente</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Nombre Cachimba</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Cantidad de vueltas</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Cantidad de m3</CTableHeaderCell>
               <CTableHeaderCell scope="col">N° Vehículos oferta</CTableHeaderCell>
               <CTableHeaderCell scope="col">N° Vehículos Acreditado</CTableHeaderCell>
               <CTableHeaderCell scope="col">N° Vehículos en Obra</CTableHeaderCell>
@@ -185,15 +278,22 @@ const IndustrialWaterControl = () => {
           </CTableHead>
           <CTableBody>
             {aljibeListContext.map((item, index) => {
-              const charge = basicQuery.aljibe.find((alj) => {
+              const aljibe = basicQuery.aljibe.find((alj) => {
                 return alj.id == item.aljibe
+              })
+              const plate = aljibe.plate.find((pl) => {
+                return pl.id.toString() === item.aljibePlate.toString()
               })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{charge.name}</CTableDataCell>
-                  <CTableDataCell>{item.actions.aljibeCachimbaName ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.aljibeQuantityTurns ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.aljibeM3 ?? 0}</CTableDataCell>
+                  <CTableDataCell>{aljibe.name}</CTableDataCell>
+                  <CTableDataCell>{plate.label}</CTableDataCell>
+                  <CTableDataCell>{item.aljibeCachimbaName ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.aljibeQuantityTurns ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.aljibeM3 ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.aljibeOfferedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.aljibeCertifiedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.aljibeWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
                       className="btn-project-action"
@@ -209,9 +309,13 @@ const IndustrialWaterControl = () => {
             })}
             <CTableRow key={'total'}>
               <CTableDataCell>Total</CTableDataCell>
-              <CTableDataCell>{aljibeTotals.aljibeCachimbaName ?? 0}</CTableDataCell>
+              <CTableDataCell></CTableDataCell>
+              <CTableDataCell></CTableDataCell>
               <CTableDataCell>{aljibeTotals.aljibeQuantityTurns ?? 0}</CTableDataCell>
               <CTableDataCell>{aljibeTotals.aljibeM3 ?? 0}</CTableDataCell>
+              <CTableDataCell>{aljibeTotals.aljibeOfferedNumber ?? 0}</CTableDataCell>
+              <CTableDataCell>{aljibeTotals.aljibeCertifiedNumber ?? 0}</CTableDataCell>
+              <CTableDataCell>{aljibeTotals.aljibeWorkNumber ?? 0}</CTableDataCell>
             </CTableRow>
           </CTableBody>
         </CTable>

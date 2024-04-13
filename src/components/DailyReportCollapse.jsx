@@ -132,44 +132,44 @@ const DailyReportCollapse = () => {
             <VehiclePlate />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={15}>
+        {/* <CAccordionItem itemKey={15}>
           <CAccordionHeader>15) Vehiculos menores por frente de trabajo</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <VehicleWorkForce />
           </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={16}>
-          <CAccordionHeader>16) Descripción de actividades desarrolladas</CAccordionHeader>
+        </CAccordionItem> */}
+        <CAccordionItem itemKey={15}>
+          <CAccordionHeader>15) Descripción de actividades desarrolladas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Activities />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={17}>
-          <CAccordionHeader>17) Control de aguas industriales utilizadas</CAccordionHeader>
+        <CAccordionItem itemKey={16}>
+          <CAccordionHeader>16) Control de aguas industriales utilizadas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <IndustrialWaterControl />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={18}>
-          <CAccordionHeader>18) Comentarios y alertas en general</CAccordionHeader>
+        <CAccordionItem itemKey={17}>
+          <CAccordionHeader>17) Comentarios y alertas en general</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Comments />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={19}>
-          <CAccordionHeader>19) Graficos del día</CAccordionHeader>
+        <CAccordionItem itemKey={18}>
+          <CAccordionHeader>18) Graficos del día</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Graphs />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={20}>
-          <CAccordionHeader>20) Incidentes, lesiones o eventos</CAccordionHeader>
+        <CAccordionItem itemKey={19}>
+          <CAccordionHeader>19) Incidentes, lesiones o eventos</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Incidents />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={21}>
-          <CAccordionHeader>21) Firmas</CAccordionHeader>
+        <CAccordionItem itemKey={20}>
+          <CAccordionHeader>20) Firmas</CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <></>
           </CAccordionBody>
