@@ -136,7 +136,7 @@ const MachineryWorkForce = () => {
         >
           <div className="d-flex">
             <CToastBody>
-              Debe completar los datos de frente de trabajo, cargo y cantidad para registrar el
+              Debe completar los datos de frente de trabajo, maquinaria y cantidad para registrar el
               personal
             </CToastBody>
           </div>
@@ -182,7 +182,7 @@ const MachineryWorkForce = () => {
         aria-label="Default select example"
         id="machineryWorkFrontCharge"
         value={machineryWorkForce.machineryWorkFrontCharge || ''}
-        label="Cargo"
+        label="Maquinaria"
         onChange={(e) => {
           onChangeData(e)
         }}

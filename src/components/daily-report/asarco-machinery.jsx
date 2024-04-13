@@ -27,6 +27,7 @@ const AsarcoMachinery = () => {
     asarcoMachineryHorometer: undefined,
     asarcoMachineryOpperationalLoss: undefined,
     asarcoMachineryScheduleDelay: undefined,
+    machineryPlate: undefined,
   }
 
   const asarcoMachineryTotalsInitialState = {
@@ -38,6 +39,7 @@ const AsarcoMachinery = () => {
     asarcoMachineryHorometer: 0,
     asarcoMachineryOpperationalLoss: 0,
     asarcoMachineryScheduleDelay: 0,
+    machineryPlate: 0,
   }
 
   const { getData } = useGetCachedQueryData()
@@ -48,6 +50,7 @@ const AsarcoMachinery = () => {
   const [asarcoMachineryTotals, setAsarcoMachineryTotals] = useState(
     asarcoMachineryTotalsInitialState,
   )
+  const [plates, setPlates] = useState()
 
   const {
     storeAsarcoMachinery,
@@ -59,6 +62,10 @@ const AsarcoMachinery = () => {
     if (e.target.id === 'machinery') {
       setAsarcoMachinery(initialState) // Clear the object
       setAsarcoMachinery({ [e.target.id]: e.target.value })
+      const selectedMachinery = basicQuery.machinery.find((mac) => {
+        return mac.id.toString() === e.target.value.toString()
+      })
+      setPlates(selectedMachinery.plate)
     }
     if (validate(e.target.value)) {
       setAsarcoMachinery({ ...asarcoMachinery, [e.target.id]: e.target.value })
@@ -69,16 +76,15 @@ const AsarcoMachinery = () => {
     const asarcoMachineryInitialState = {
       id: uuidv4(),
       machinery: asarcoMachinery.machinery,
-      actions: {
-        asarcoMachineryEffectiveTime: asarcoMachinery.asarcoMachineryEffectiveTime,
-        asarcoMachineryUnscheduleMaintenance: asarcoMachinery.asarcoMachineryUnscheduleMaintenance,
-        asarcoMachineryScheduleMaintenance: asarcoMachinery.asarcoMachineryScheduleMaintenance,
-        asarcoMachineryUnscheduleDelay: asarcoMachinery.asarcoMachineryUnscheduleDelay,
-        asarcoMachineryReserves: asarcoMachinery.asarcoMachineryReserves,
-        asarcoMachineryHorometer: asarcoMachinery.asarcoMachineryHorometer,
-        asarcoMachineryOpperationalLoss: asarcoMachinery.asarcoMachineryOpperationalLoss,
-        asarcoMachineryScheduleDelay: asarcoMachinery.asarcoMachineryScheduleDelay,
-      },
+      asarcoMachineryEffectiveTime: asarcoMachinery.asarcoMachineryEffectiveTime,
+      asarcoMachineryUnscheduleMaintenance: asarcoMachinery.asarcoMachineryUnscheduleMaintenance,
+      asarcoMachineryScheduleMaintenance: asarcoMachinery.asarcoMachineryScheduleMaintenance,
+      asarcoMachineryUnscheduleDelay: asarcoMachinery.asarcoMachineryUnscheduleDelay,
+      asarcoMachineryReserves: asarcoMachinery.asarcoMachineryReserves,
+      asarcoMachineryHorometer: asarcoMachinery.asarcoMachineryHorometer,
+      asarcoMachineryOpperationalLoss: asarcoMachinery.asarcoMachineryOpperationalLoss,
+      asarcoMachineryScheduleDelay: asarcoMachinery.asarcoMachineryScheduleDelay,
+      machineryPlate: asarcoMachinery.machineryPlate,
     }
     setAsarcoMachinery(initialState) // Clear the object
     setAsarcoMachineryList([...asarcoMachineryList, asarcoMachineryInitialState])
@@ -111,28 +117,28 @@ const AsarcoMachinery = () => {
       asarcoMachineryTotalsCounter = {
         asarcoMachineryEffectiveTime:
           Number(asarcoMachineryTotalsCounter.asarcoMachineryEffectiveTime) +
-          Number(data.actions.asarcoMachineryEffectiveTime ?? 0),
+          Number(data.asarcoMachineryEffectiveTime ?? 0),
         asarcoMachineryUnscheduleMaintenance:
           Number(asarcoMachineryTotalsCounter.asarcoMachineryUnscheduleMaintenance) +
-          Number(data.actions.asarcoMachineryUnscheduleMaintenance ?? 0),
+          Number(data.asarcoMachineryUnscheduleMaintenance ?? 0),
         asarcoMachineryScheduleMaintenance:
           Number(asarcoMachineryTotalsCounter.asarcoMachineryScheduleMaintenance) +
-          Number(data.actions.asarcoMachineryScheduleMaintenance ?? 0),
+          Number(data.asarcoMachineryScheduleMaintenance ?? 0),
         asarcoMachineryUnscheduleDelay:
           Number(asarcoMachineryTotalsCounter.asarcoMachineryUnscheduleDelay) +
-          Number(data.actions.asarcoMachineryUnscheduleDelay ?? 0),
+          Number(data.asarcoMachineryUnscheduleDelay ?? 0),
         asarcoMachineryReserves:
           Number(asarcoMachineryTotalsCounter.asarcoMachineryReserves) +
-          Number(data.actions.asarcoMachineryReserves ?? 0),
+          Number(data.asarcoMachineryReserves ?? 0),
         asarcoMachineryHorometer:
           Number(asarcoMachineryTotalsCounter.asarcoMachineryHorometer) +
-          Number(data.actions.asarcoMachineryHorometer ?? 0),
+          Number(data.asarcoMachineryHorometer ?? 0),
         asarcoMachineryOpperationalLoss:
           Number(asarcoMachineryTotalsCounter.asarcoMachineryOpperationalLoss) +
-          Number(data.actions.asarcoMachineryOpperationalLoss ?? 0),
+          Number(data.asarcoMachineryOpperationalLoss ?? 0),
         asarcoMachineryScheduleDelay:
           Number(asarcoMachineryTotalsCounter.asarcoMachineryScheduleDelay) +
-          Number(data.actions.asarcoMachineryScheduleDelay ?? 0),
+          Number(data.asarcoMachineryScheduleDelay ?? 0),
       }
     }
     setAsarcoMachineryTotals(asarcoMachineryTotalsCounter)
@@ -142,6 +148,7 @@ const AsarcoMachinery = () => {
     <div className="work-force-report">
       <CFormSelect
         aria-label="Default select example"
+        label="Maquinaria"
         id="machinery"
         value={asarcoMachinery.machinery ?? 0}
         onChange={(e) => {
@@ -157,6 +164,30 @@ const AsarcoMachinery = () => {
           )
         })}
       </CFormSelect>
+
+      {plates && (
+        <>
+          <br />
+          <CFormSelect
+            aria-label="Default select example"
+            label="Patente"
+            id="machineryPlate"
+            value={asarcoMachinery.machineryPlate ?? 0}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={0}>Seleccione</option>
+            {plates.map((plate) => {
+              return (
+                <option key={plate.id} value={plate.id}>
+                  {plate.label}
+                </option>
+              )
+            })}
+          </CFormSelect>
+        </>
+      )}
 
       <CTable>
         <CTableHead>
@@ -292,7 +323,8 @@ const AsarcoMachinery = () => {
         <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell scope="col"></CTableHeaderCell>
+              <CTableHeaderCell scope="col">Maquinaria</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Patente</CTableHeaderCell>
               <CTableHeaderCell scope="col">Tiempo Efectivo (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">
                 Mantenimiento No Programado (Hrs) (Por alguna falla o alerta)
@@ -315,22 +347,24 @@ const AsarcoMachinery = () => {
           </CTableHead>
           <CTableBody>
             {asarcoMachineryListContext.map((item, index) => {
-              const charge = basicQuery.machinery.find((machinery) => {
+              const machinery = basicQuery.machinery.find((machinery) => {
                 return machinery.id == item.machinery
+              })
+              const plate = machinery.plate.find((pl) => {
+                return pl.id.toString() === item.machineryPlate.toString()
               })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{charge.name}</CTableDataCell>
-                  <CTableDataCell>{item.actions.asarcoMachineryEffectiveTime}</CTableDataCell>
-                  <CTableDataCell>
-                    {item.actions.asarcoMachineryUnscheduleMaintenance}
-                  </CTableDataCell>
-                  <CTableDataCell>{item.actions.asarcoMachineryScheduleMaintenance}</CTableDataCell>
-                  <CTableDataCell>{item.actions.asarcoMachineryUnscheduleDelay}</CTableDataCell>
-                  <CTableDataCell>{item.actions.asarcoMachineryReserves}</CTableDataCell>
-                  <CTableDataCell>{item.actions.asarcoMachineryHorometer}</CTableDataCell>
-                  <CTableDataCell>{item.actions.asarcoMachineryOpperationalLoss}</CTableDataCell>
-                  <CTableDataCell>{item.actions.asarcoMachineryScheduleDelay}</CTableDataCell>
+                  <CTableDataCell>{machinery.name}</CTableDataCell>
+                  <CTableDataCell>{plate.label}</CTableDataCell>
+                  <CTableDataCell>{item.asarcoMachineryEffectiveTime}</CTableDataCell>
+                  <CTableDataCell>{item.asarcoMachineryUnscheduleMaintenance}</CTableDataCell>
+                  <CTableDataCell>{item.asarcoMachineryScheduleMaintenance}</CTableDataCell>
+                  <CTableDataCell>{item.asarcoMachineryUnscheduleDelay}</CTableDataCell>
+                  <CTableDataCell>{item.asarcoMachineryReserves}</CTableDataCell>
+                  <CTableDataCell>{item.asarcoMachineryHorometer}</CTableDataCell>
+                  <CTableDataCell>{item.asarcoMachineryOpperationalLoss}</CTableDataCell>
+                  <CTableDataCell>{item.asarcoMachineryScheduleDelay}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
                       className="btn-project-action"
@@ -346,6 +380,7 @@ const AsarcoMachinery = () => {
             })}
             <CTableRow key={'total'}>
               <CTableDataCell>Total</CTableDataCell>
+              <CTableDataCell></CTableDataCell>
               <CTableDataCell>{asarcoMachineryTotals.asarcoMachineryEffectiveTime}</CTableDataCell>
               <CTableDataCell>
                 {asarcoMachineryTotals.asarcoMachineryUnscheduleMaintenance}
