@@ -2,9 +2,11 @@ import { React, useEffect, useState } from 'react'
 import { createContext } from 'react'
 
 export const DailyReportContext = createContext({
+  dailyReportContractManagerName: undefined,
   dailyReportDate: undefined,
   dailyReportNumber: undefined,
   dailyReportContratistName: undefined,
+  dailyReportWeather: undefined,
   dailyReportContratistNumber: undefined,
   dailyReportContractName: undefined,
   dailyReportDirectPersonalShift: undefined,
@@ -18,9 +20,11 @@ export const DailyReportContext = createContext({
 // eslint-disable-next-line react/prop-types
 export const DailyReportProvider = ({ children }) => {
   const [company, setCompany] = useState({
+    dailyReportContractManagerName: undefined,
     dailyReportDate: undefined,
     dailyReportNumber: undefined,
     dailyReportContratistName: undefined,
+    dailyReportWeather: undefined,
     dailyReportContratistNumber: undefined,
     dailyReportContractName: undefined,
     dailyReportDirectPersonalShift: undefined,
@@ -101,10 +105,20 @@ export const DailyReportProvider = ({ children }) => {
       case 'dailyReportIndirectPersonalJourney':
         setCompany({ ...company, dailyReportIndirectPersonalJourney: data.target.value })
         break
+      case 'dailyReportContractManagerName':
+        setCompany({ ...company, dailyReportContractManagerName: data.target.value })
+        break
+      case 'dailyReportWeather':
+        setCompany({ ...company, dailyReportWeather: data.target.value })
+        break
       default:
         break
     }
   }
+
+  useEffect(() => {
+    console.log(company)
+  }, [company])
 
   const storeTotalIndirectWorkForce = async (data) => {
     setTotalIndirectWorkForce(data)

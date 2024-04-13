@@ -13,7 +13,6 @@ const CompanyReport = () => {
 
   return (
     <div className="company-report">
-      <h4>Empresa</h4>
       <CForm>
         <CRow>
           <CCol sm={4}>
@@ -77,6 +76,42 @@ const CompanyReport = () => {
                 onChangeData(e)
               }}
             />
+          </CCol>
+          <CCol sm={4}>
+            <CFormInput
+              type="text"
+              id="dailyReportContractManagerName"
+              label="Administrador de contrato"
+              placeholder="Administrador de contrato"
+              text=""
+              onChange={(e) => {
+                onChangeData(e)
+              }}
+            />
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm={4}>
+            <CFormSelect
+              aria-label="Clima"
+              id="dailyReportWeather"
+              label="Clima"
+              onChange={(e) => {
+                onChangeData(e)
+              }}
+            >
+              <option>Seleccione</option>
+              <option value="1">Calor moderado</option>
+              <option value="2">Calor intenso</option>
+              <option value="3">Frío moderado</option>
+              <option value="4">Frío intenso</option>
+              <option value="5">Lluvia débil</option>
+              <option value="6">Lluvia moderada</option>
+              <option value="7">Lluvia intensa</option>
+              <option value="8">Viento débil</option>
+              <option value="9">Viento moderado</option>
+              <option value="10">Viento intenso</option>
+            </CFormSelect>
           </CCol>
         </CRow>
         <CRow>
