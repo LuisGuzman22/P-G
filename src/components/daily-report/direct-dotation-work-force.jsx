@@ -43,7 +43,6 @@ const DirectDotationWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
-    console.log(e.target.id, e.target.value)
     setError(false)
     if (e.target.id === 'directWorkFront') {
       const selectedWorkFront = basicQuery.workFront.find((workFront) => {
@@ -246,6 +245,16 @@ const DirectDotationWorkForce = () => {
                       </CTableDataCell>
                       <CTableDataCell>
                         <span key={item.id}>{item.directDotationWorkForceObservation}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <CButton
+                          className="btn-project-action"
+                          onClick={() => {
+                            deletedirectDotationWorkForce(item.id)
+                          }}
+                        >
+                          eliminar
+                        </CButton>
                       </CTableDataCell>
                     </CTableRow>
                   )

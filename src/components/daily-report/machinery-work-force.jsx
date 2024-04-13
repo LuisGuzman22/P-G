@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -20,13 +22,9 @@ const MachineryWorkForce = () => {
   const initialState = {
     machineryWorkForce: undefined,
     machineryWorkForceObservation: undefined,
-    machineryWorkForceFront1: undefined,
-    machineryWorkForceFront2: undefined,
-    machineryWorkForceFront3: undefined,
-    machineryWorkForceFront4: undefined,
-    machineryWorkForceFront5: undefined,
-    machineryWorkForceFront6: undefined,
-    machineryWorkForceFront7: undefined,
+    machinerySubWorkFront: undefined,
+    machineryWorkFrontCharge: undefined,
+    machineryWorkFrontQuantity: undefined,
   }
 
   const { getData } = useGetCachedQueryData()
@@ -34,6 +32,8 @@ const MachineryWorkForce = () => {
 
   const [machineryWorkForce, setMachineryWorkForce] = useState(initialState)
   const [machineryWorkForceList, setMachineryWorkForceList] = useState([])
+  const [enableSubFrontWork, setEnableSubFrontWork] = useState(false)
+  const [error, setError] = useState(false)
 
   const {
     storeMachineryWorkForce,
@@ -42,32 +42,73 @@ const MachineryWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
     if (e.target.id === 'machineryWorkForce') {
-      setMachineryWorkForce(initialState) // Clear the object
-      setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForce: e.target.value })
+      const selectedWorkFront = basicQuery.workFront.find((workFront) => {
+        return workFront.id.toString() === e.target.value.toString()
+      })
+      setEnableSubFrontWork(selectedWorkFront.hasSubFront)
     }
-    if (validate(e.target.value)) {
-      setMachineryWorkForce({ ...machineryWorkForce, [e.target.id]: e.target.value })
+    if (e.target.id === 'machinerySubWorkFront' || e.target.id === 'machineryWorkFrontQuantity') {
+      if (validate(e.target.value)) {
+        setMachineryWorkForce({
+          ...machineryWorkForce,
+          [e.target.id]: e.target.value,
+        })
+      }
+    } else {
+      setMachineryWorkForce({
+        ...machineryWorkForce,
+        [e.target.id]: e.target.value,
+      })
     }
+
+    // if (e.target.id === 'machineryWorkForce') {
+    //   setMachineryWorkForce(initialState) // Clear the object
+    //   setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForce: e.target.value })
+    // }
+    // if (validate(e.target.value)) {
+    //   setMachineryWorkForce({ ...machineryWorkForce, [e.target.id]: e.target.value })
+    // }
   }
 
   const registerMachinerynWorkForce = () => {
-    const machineryWorkForceInitialState = {
-      id: uuidv4(),
-      machineryWorkForce: machineryWorkForce.machineryWorkForce,
-      machineryWorkForcebservation: machineryWorkForce.machineryWorkForceObservation,
-      actions: {
-        machineryWorkForceFront1: machineryWorkForce.machineryWorkForceFront1,
-        machineryWorkForceFront2: machineryWorkForce.machineryWorkForceFront2,
-        machineryWorkForceFront3: machineryWorkForce.machineryWorkForceFront3,
-        machineryWorkForceFront4: machineryWorkForce.machineryWorkForceFront4,
-        machineryWorkForceFront5: machineryWorkForce.machineryWorkForceFront5,
-        machineryWorkForceFront6: machineryWorkForce.machineryWorkForceFront6,
-        machineryWorkForceFront7: machineryWorkForce.machineryWorkForceFront7,
-      },
+    if (
+      !machineryWorkForce.machineryWorkForce ||
+      !machineryWorkForce.machineryWorkFrontCharge ||
+      !machineryWorkForce.machineryWorkFrontQuantity
+    ) {
+      setError(true)
+    } else {
+      setEnableSubFrontWork(false)
+      const machineryWorkForceInitialState = {
+        id: uuidv4(),
+        machineryWorkForcebservation: machineryWorkForce.machineryWorkForceObservation,
+        machineryWorkForce: machineryWorkForce.machineryWorkForce,
+        machinerySubWorkFront: machineryWorkForce.machinerySubWorkFront,
+        machineryWorkFrontCharge: machineryWorkForce.machineryWorkFrontCharge,
+        machineryWorkFrontQuantity: machineryWorkForce.machineryWorkFrontQuantity,
+      }
+      setMachineryWorkForce(initialState) // Clear the object
+      setMachineryWorkForceList([...machineryWorkForceList, machineryWorkForceInitialState])
     }
-    setMachineryWorkForce(initialState) // Clear the object
-    setMachineryWorkForceList([...machineryWorkForceList, machineryWorkForceInitialState])
+
+    // const machineryWorkForceInitialState = {
+    //   id: uuidv4(),
+    //   machineryWorkForce: machineryWorkForce.machineryWorkForce,
+    //   machineryWorkForcebservation: machineryWorkForce.machineryWorkForceObservation,
+    //   actions: {
+    //     machineryWorkForceFront1: machineryWorkForce.machineryWorkForceFront1,
+    //     machineryWorkForceFront2: machineryWorkForce.machineryWorkForceFront2,
+    //     machineryWorkForceFront3: machineryWorkForce.machineryWorkForceFront3,
+    //     machineryWorkForceFront4: machineryWorkForce.machineryWorkForceFront4,
+    //     machineryWorkForceFront5: machineryWorkForce.machineryWorkForceFront5,
+    //     machineryWorkForceFront6: machineryWorkForce.machineryWorkForceFront6,
+    //     machineryWorkForceFront7: machineryWorkForce.machineryWorkForceFront7,
+    //   },
+    // }
+    // setMachineryWorkForce(initialState) // Clear the object
+    // setMachineryWorkForceList([...machineryWorkForceList, machineryWorkForceInitialState])
   }
 
   const deleteMachineryWorkForce = (id) => {
@@ -83,14 +124,70 @@ const MachineryWorkForce = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>
+              Debe completar los datos de frente de trabajo, cargo y cantidad para registrar el
+              personal
+            </CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
+        label="Frente de trabajo"
         id="machineryWorkForce"
+        value={machineryWorkForce.machineryWorkForce || ''}
         onChange={(e) => {
           onChangeData(e)
         }}
       >
         <option>Seleccione</option>
+        {basicQuery.workFront.map((workfrontCached) => {
+          return (
+            <option key={workfrontCached.id} value={workfrontCached.id}>
+              {workfrontCached.name}
+            </option>
+          )
+        })}
+      </CFormSelect>
+      {enableSubFrontWork && (
+        <>
+          <br />
+          <CFormInput
+            type="text"
+            id="machinerySubWorkFront"
+            label="SubFrente de trabajo"
+            value={machineryWorkForce.machinerySubWorkFront || ''}
+            text=""
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          />
+        </>
+      )}
+
+      <br />
+
+      <CFormSelect
+        aria-label="Default select example"
+        id="machineryWorkFrontCharge"
+        value={machineryWorkForce.machineryWorkFrontCharge || ''}
+        label="Cargo"
+        onChange={(e) => {
+          onChangeData(e)
+        }}
+      >
+        <option value={'0'}>Seleccione</option>
         {basicQuery.machinery.map((machineryCached) => {
           return (
             <option key={machineryCached.id} value={machineryCached.id}>
@@ -99,100 +196,29 @@ const MachineryWorkForce = () => {
           )
         })}
       </CFormSelect>
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Frente de trabajo 1</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 2</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 3</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 4</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 5</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 6</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Frente de trabajo 7</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryWorkForceFront1"
-                value={machineryWorkForce.machineryWorkForceFront1 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryWorkForceFront2"
-                value={machineryWorkForce.machineryWorkForceFront2 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryWorkForceFront3"
-                value={machineryWorkForce.machineryWorkForceFront3 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryWorkForceFront4"
-                value={machineryWorkForce.machineryWorkForceFront4 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryWorkForceFront5"
-                value={machineryWorkForce.machineryWorkForceFront5 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryWorkForceFront6"
-                value={machineryWorkForce.machineryWorkForceFront6 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryWorkForceFront7"
-                value={machineryWorkForce.machineryWorkForceFront7 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
+      <br />
+
+      <CFormInput
+        type="text"
+        id="machineryWorkFrontQuantity"
+        label="Cantidad"
+        value={machineryWorkForce.machineryWorkFrontQuantity || ''}
+        text=""
+        onChange={(e) => {
+          onChangeData(e)
+        }}
+      />
+      <br />
+
+      <CFormTextarea
+        id="machineryWorkForceObservation"
+        placeholder="Deja un comentario / observación"
+        value={machineryWorkForce.machineryWorkForceObservation || ''}
+        onChange={(e) => {
+          onChangeData(e)
+        }}
+      ></CFormTextarea>
+      <br />
 
       <CButton
         className="btn-project-action"
@@ -205,56 +231,61 @@ const MachineryWorkForce = () => {
 
       {machineryWorkForceListContext.length > 0 &&
         machineryWorkForceListContext[0].machineryWorkForce && (
-          <CTable className="resume-table">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col"></CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 1</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 2</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 3</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 4</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 5</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 6</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Frente de trabajo 7</CTableHeaderCell>
-                <CTableHeaderCell scope="col"></CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {machineryWorkForceListContext.map((item, index) => {
-                const charge = basicQuery.machinery.find((machinery) => {
-                  return machinery.id == item.machineryWorkForce
-                })
-                return (
-                  <CTableRow key={index}>
-                    <CTableDataCell>{charge.name}</CTableDataCell>
-                    <CTableDataCell>{item.actions.machineryWorkForceFront1}</CTableDataCell>
-                    <CTableDataCell>{item.actions.machineryWorkForceFront2}</CTableDataCell>
-                    <CTableDataCell>{item.actions.machineryWorkForceFront3}</CTableDataCell>
-                    <CTableDataCell>{item.actions.machineryWorkForceFront4}</CTableDataCell>
-                    <CTableDataCell>{item.actions.machineryWorkForceFront5}</CTableDataCell>
-                    <CTableDataCell>{item.actions.machineryWorkForceFront6}</CTableDataCell>
-                    <CTableDataCell>{item.actions.machineryWorkForceFront7}</CTableDataCell>
-                    <CTableDataCell>
-                      <CButton
-                        className="btn-project-action"
-                        onClick={() => {
-                          deleteMachineryWorkForce(item.id)
-                        }}
-                      >
-                        eliminar
-                      </CButton>
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-            </CTableBody>
-          </CTable>
+          <>
+            <CTable className="resume-table">
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">Frente de trabajo</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Sub frente de trabajo</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Personal</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Cantidad</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Comentario</CTableHeaderCell>
+                  <CTableHeaderCell scope="col"></CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {machineryWorkForceListContext.map((item, index) => {
+                  console.log('item', item)
+                  const selectedWorkFront = basicQuery.workFront.find((workF) => {
+                    return workF.id == item.machineryWorkForce
+                  })
+                  const selectedCharge = basicQuery.directPersonal.find((charge) => {
+                    return charge.id == item.machineryWorkFrontCharge
+                  })
+                  return (
+                    <CTableRow key={item.id}>
+                      <CTableDataCell>
+                        <span key={item.id}>{selectedWorkFront.name}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <span key={item.id}>{item.machinerySubWorkFront ?? 'N/A'}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <span key={item.id}>{selectedCharge.name}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <span key={item.id}>{item.machineryWorkFrontQuantity}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <span key={item.id}>{item.machineryWorkForceObservation}</span>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <CButton
+                          className="btn-project-action"
+                          onClick={() => {
+                            deleteMachineryWorkForce(item.id)
+                          }}
+                        >
+                          eliminar
+                        </CButton>
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
+              </CTableBody>
+            </CTable>
+          </>
         )}
-
-      <CFormTextarea
-        id="machineryWorkForceObservation"
-        placeholder="Deja un comentario / observación"
-      ></CFormTextarea>
     </div>
   )
 }
