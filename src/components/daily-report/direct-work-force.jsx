@@ -82,11 +82,12 @@ const DirectWorkForce = () => {
       <CFormSelect
         aria-label="Default select example"
         id="directWorkForce"
+        value={directWorkForce.directWorkForce || ''}
         onChange={(e) => {
           onChangeData(e)
         }}
       >
-        <option>Seleccione</option>
+        <option value={0}>Seleccione</option>
         {basicQuery.directPersonal.map((directPersonalCached) => {
           return (
             <option key={directPersonalCached.id} value={directPersonalCached.id}>
@@ -101,9 +102,6 @@ const DirectWorkForce = () => {
             <CTableHeaderCell scope="col">N° Ofertado</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Contratados</CTableHeaderCell>
             <CTableHeaderCell scope="col">N° Acreditados</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Descanso</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
-            <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -141,6 +139,13 @@ const DirectWorkForce = () => {
                 }}
               />
             </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableHeaderCell scope="col">N° Descanso</CTableHeaderCell>
+            <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
+            <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
+          </CTableRow>
+          <CTableRow>
             <CTableDataCell>
               <CFormInput
                 type="text"

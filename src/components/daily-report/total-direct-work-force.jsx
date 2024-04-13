@@ -25,14 +25,62 @@ const TotalDirectWorkForce = () => {
     directPreviusAccumulated: undefined,
     directCurrentAccumulated: undefined,
   }
-  const { storeTotalDirectWorkForce } = useRegisterDailyReportCompany()
+  const { storeTotalDirectWorkForce, directWorkForceList: directWorkForceListContext } =
+    useRegisterDailyReportCompany()
+
   const [totalDirectWorkForce, setTotalDirectWorkForce] = useState(initialState)
+  const [directAccumulatedHours, setDirectAccumulatedHours] = useState(0)
+  const [directAccumulatedOffered, setDirectAccumulatedOffered] = useState(0)
+  const [directAccumulatedContracted, setDirectAccumulatedContracted] = useState(0)
+  const [directAccumulatedCertified, setDirectAccumulatedCertified] = useState(0)
+  const [directAccumulatedBreaked, setDirectAccumulatedBreaked] = useState(0)
+  const [directAccumulatedWorked, setDirectAccumulatedWorked] = useState(0)
+  const [directAccumulatedPrevious, setDirectAccumulatedPrevious] = useState(0)
+  const [directAccumulatedActual, setDirectAccumulatedActual] = useState(0)
 
   const onChangeData = (e) => {
     if (validate(e.target.value)) {
-      setTotalDirectWorkForce({ ...totalDirectWorkForce, [e.target.id]: e.target.value })
+      setTotalDirectWorkForce({ ...totalDirectWorkForce, directPreviusAccumulated: e.target.value })
+      setDirectAccumulatedActual(Number(e.target.value) + Number(directAccumulatedHours))
     }
   }
+
+  useEffect(() => {
+    let hours = 0
+    let offered = 0
+    let contracted = 0
+    let certified = 0
+    let breaked = 0
+    let workekd = 0
+    for (let directData of directWorkForceListContext) {
+      hours = hours + Number(directData.actions.hh)
+      offered = offered + Number(directData.actions.offeredNumber)
+      contracted = contracted + Number(directData.actions.contractedNumber)
+      certified = certified + Number(directData.actions.certified)
+      breaked = breaked + Number(directData.actions.breakNumber)
+      workekd = workekd + Number(directData.actions.workNumber)
+    }
+    setDirectAccumulatedHours(hours)
+    setDirectAccumulatedOffered(offered)
+    setDirectAccumulatedContracted(contracted)
+    setDirectAccumulatedCertified(certified)
+    setDirectAccumulatedBreaked(breaked)
+    setDirectAccumulatedWorked(workekd)
+    setDirectAccumulatedActual(
+      Number(totalDirectWorkForce.directPreviusAccumulated) + Number(hours),
+    )
+    const data = {
+      directSubtotalOfferedNumber: offered,
+      directSubtotalContractedNumber: contracted,
+      directSubtotalCertifiedNumber: certified,
+      directSubtotalBreakNumber: breaked,
+      directSubtotalWorkNumber: workekd,
+      directSubstotalHHNumber: hours,
+      directPreviusAccumulated: totalDirectWorkForce.directPreviusAccumulated || 0,
+    }
+
+    setTotalDirectWorkForce(data)
+  }, [directWorkForceListContext])
 
   useEffect(() => {
     storeTotalDirectWorkForce(totalDirectWorkForce)
@@ -59,12 +107,10 @@ const TotalDirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="directSubtotalOfferedNumber"
-                value={totalDirectWorkForce.directSubtotalOfferedNumber || ''}
+                value={directAccumulatedOffered || '0'}
                 placeholder="N° Ofertado"
                 text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
+                disabled
               />
             </CTableDataCell>
             <CTableDataCell>
@@ -72,11 +118,9 @@ const TotalDirectWorkForce = () => {
                 type="text"
                 id="directSubtotalContractedNumber"
                 placeholder="N° Contratados"
-                value={totalDirectWorkForce.directSubtotalContractedNumber || ''}
+                value={directAccumulatedContracted || '0'}
                 text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
+                disabled
               />
             </CTableDataCell>
             <CTableDataCell>
@@ -84,11 +128,9 @@ const TotalDirectWorkForce = () => {
                 type="text"
                 id="directSubtotalCertifiedNumber"
                 placeholder="Acreditados"
-                value={totalDirectWorkForce.directSubtotalCertifiedNumber || ''}
+                value={directAccumulatedCertified || '0'}
                 text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
+                disabled
               />
             </CTableDataCell>
             <CTableDataCell>
@@ -96,11 +138,9 @@ const TotalDirectWorkForce = () => {
                 type="text"
                 id="directSubtotalBreakNumber"
                 placeholder="N° Descanso"
-                value={totalDirectWorkForce.directSubtotalBreakNumber || ''}
+                value={directAccumulatedBreaked || '0'}
                 text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
+                disabled
               />
             </CTableDataCell>
             <CTableDataCell>
@@ -108,11 +148,9 @@ const TotalDirectWorkForce = () => {
                 type="text"
                 id="directSubtotalWorkNumber"
                 placeholder="N° Obra"
-                value={totalDirectWorkForce.directSubtotalWorkNumber || ''}
+                value={directAccumulatedWorked || '0'}
                 text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
+                disabled
               />
             </CTableDataCell>
             <CTableDataCell>
@@ -120,11 +158,9 @@ const TotalDirectWorkForce = () => {
                 type="text"
                 id="directSubtotalHHNumber"
                 placeholder="HH (Turno)"
-                value={totalDirectWorkForce.directSubtotalHHNumber || ''}
+                value={directAccumulatedHours || '0'}
                 text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
+                disabled
               />
             </CTableDataCell>
           </CTableRow>
@@ -149,12 +185,10 @@ const TotalDirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="directCurrentAccumulated"
-                value={totalDirectWorkForce.directCurrentAccumulated || ''}
+                value={directAccumulatedActual || '0'}
                 placeholder="Total"
                 text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
+                disabled
               />
             </CTableDataCell>
           </CTableRow>

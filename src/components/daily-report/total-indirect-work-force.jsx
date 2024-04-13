@@ -67,6 +67,10 @@ const TotalIndirectWorkForce = () => {
     setIndirectAccumulatedCertified(certified)
     setIndirectAccumulatedBreaked(breaked)
     setIndirectAccumulatedWorked(workekd)
+    setIndirectAccumulatedActual(
+      Number(totalIndirectWorkForce.indirectPreviusAccumulated) + Number(hours),
+    )
+
     const data = {
       indirectSubtotalOfferedNumber: offered,
       indirectSubtotalContractedNumber: contracted,
@@ -74,13 +78,13 @@ const TotalIndirectWorkForce = () => {
       indirectSubtotalBreakNumber: breaked,
       indirectSubtotalWorkNumber: workekd,
       indirectSubstotalHHNumber: hours,
+      indirectPreviusAccumulated: totalIndirectWorkForce.indirectPreviusAccumulated || 0,
     }
 
     setTotalIndirectWorkForce(data)
   }, [indirectWorkForceListContext])
 
   useEffect(() => {
-    console.log('registro', totalIndirectWorkForce)
     storeTotalIndirectWorkForce(totalIndirectWorkForce)
   }, [totalIndirectWorkForce])
 
