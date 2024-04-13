@@ -17,7 +17,7 @@ const fetchContracts = async (contractId) => {
 }
 
 const fetchBasicData = async (contractId) => {
-  const res = await axios.get('https://07a397da689a439a8a9f86b1df79836e.api.mockbin.io/')
+  const res = await axios.get('https://718315ab127e4e42b8904f896c5ce712.api.mockbin.io/')
   return res.data.data
 }
 
