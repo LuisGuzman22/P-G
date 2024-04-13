@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -32,6 +34,7 @@ const DirectWorkForce = () => {
 
   const [directWorkForce, setDirectWorkForce] = useState(initialStatee)
   const [directWorkForceList, setDirectWorkForceList] = useState([])
+  const [error, setError] = useState(false)
 
   const {
     storeDirectWorkForce,
@@ -40,6 +43,8 @@ const DirectWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
+
     if (e.target.id === 'directWorkForce') {
       setDirectWorkForce(initialStatee) // Clear the object
       setDirectWorkForce({ [e.target.id]: e.target.value })
@@ -50,20 +55,22 @@ const DirectWorkForce = () => {
   }
 
   const registerDirectWorkForce = () => {
-    const directWorkForceInitialState = {
-      id: uuidv4(),
-      directWorkForce: directWorkForce.directWorkForce,
-      actions: {
+    if (!directWorkForce.directWorkForce) {
+      setError(true)
+    } else {
+      const directWorkForceInitialState = {
+        id: uuidv4(),
+        directWorkForce: directWorkForce.directWorkForce,
         offeredNumber: directWorkForce.directWorkForceOfferedNumber,
         contractedNumber: directWorkForce.directWorkForceContractedNumber,
         certified: directWorkForce.directWorkForceCertifiedNumber,
         breakNumber: directWorkForce.directWorkForceBreakNumber,
         workNumber: directWorkForce.directWorkForceWorkNumber,
         hh: directWorkForce.directWorkForceHHNumber,
-      },
+      }
+      setDirectWorkForce(initialStatee) // Clear the object
+      setDirectWorkForceList([...directWorkForceList, directWorkForceInitialState])
     }
-    setDirectWorkForce(initialStatee) // Clear the object
-    setDirectWorkForceList([...directWorkForceList, directWorkForceInitialState])
   }
 
   const deleteDirectWorkForce = (id) => {
@@ -79,10 +86,26 @@ const DirectWorkForce = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>Debe seleccionar el cargo para generar el registro</CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
         id="directWorkForce"
         value={directWorkForce.directWorkForce || ''}
+        label="Cargo"
         onChange={(e) => {
           onChangeData(e)
         }}
@@ -205,12 +228,12 @@ const DirectWorkForce = () => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{charge.name}</CTableDataCell>
-                  <CTableDataCell>{item.actions.offeredNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.contractedNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.certified}</CTableDataCell>
-                  <CTableDataCell>{item.actions.breakNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.workNumber}</CTableDataCell>
-                  <CTableDataCell>{item.actions.hh}</CTableDataCell>
+                  <CTableDataCell>{item.offeredNumber}</CTableDataCell>
+                  <CTableDataCell>{item.contractedNumber}</CTableDataCell>
+                  <CTableDataCell>{item.certified}</CTableDataCell>
+                  <CTableDataCell>{item.breakNumber}</CTableDataCell>
+                  <CTableDataCell>{item.workNumber}</CTableDataCell>
+                  <CTableDataCell>{item.hh}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
                       className="btn-project-action"

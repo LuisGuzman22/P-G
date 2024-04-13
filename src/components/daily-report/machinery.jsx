@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -36,6 +38,7 @@ const Machinery = () => {
   const [machinery, setMachinery] = useState(initialState)
   const [machineryList, setMachineryList] = useState([])
   const [machineryTotals, setMachineryTotals] = useState(machineryTotalsInitialState)
+  const [error, setError] = useState(false)
 
   const {
     storeMachinery,
@@ -44,6 +47,8 @@ const Machinery = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
+
     if (e.target.id === 'machinery') {
       setMachinery(initialState) // Clear the object
       setMachinery({ [e.target.id]: e.target.value })
@@ -54,17 +59,21 @@ const Machinery = () => {
   }
 
   const registerMachinery = () => {
-    const machineryInitialState = {
-      id: uuidv4(),
-      machinery: machinery.machinery,
-      actions: {
-        machineryOfferedNumber: machinery.machineryOfferedNumber,
-        machineryCertifiedNumber: machinery.machineryCertifiedNumber,
-        machineryWorkNumber: machinery.machineryWorkNumber,
-      },
+    if (!machinery.machinery) {
+      setError(true)
+    } else {
+      const machineryInitialState = {
+        id: uuidv4(),
+        machinery: machinery.machinery,
+        actions: {
+          machineryOfferedNumber: machinery.machineryOfferedNumber,
+          machineryCertifiedNumber: machinery.machineryCertifiedNumber,
+          machineryWorkNumber: machinery.machineryWorkNumber,
+        },
+      }
+      setMachinery(initialState) // Clear the object
+      setMachineryList([...machineryList, machineryInitialState])
     }
-    setMachinery(initialState) // Clear the object
-    setMachineryList([...machineryList, machineryInitialState])
   }
 
   const deleteMachinery = (id) => {
@@ -103,10 +112,26 @@ const Machinery = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>Debe seleccionar la maquinaria para generar el registro</CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
         id="machinery"
         value={machinery.machinery ?? 0}
+        label="Maquinaria"
         onChange={(e) => {
           onChangeData(e)
         }}

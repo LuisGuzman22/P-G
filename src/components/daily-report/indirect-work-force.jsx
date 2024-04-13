@@ -9,6 +9,8 @@ import {
   CTableDataCell,
   CFormSelect,
   CButton,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -30,6 +32,7 @@ const IndirectWorkForce = () => {
 
   const [indirectWorkForce, setIndirectWorkForce] = useState(initialState)
   const [indirectWorkForceList, setIndirectWorkForceList] = useState([])
+  const [error, setError] = useState(false)
 
   const {
     storeIndirectWorkForceData,
@@ -38,6 +41,8 @@ const IndirectWorkForce = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
+
     if (e.target.id === 'indirectWorkForce') {
       setIndirectWorkForce(initialState) // Clear the object
       setIndirectWorkForce({ [e.target.id]: e.target.value })
@@ -48,20 +53,23 @@ const IndirectWorkForce = () => {
   }
 
   const registerIndirectWorkForce = () => {
-    const indirectWorkForceInitialState = {
-      id: uuidv4(),
-      indirectWorkForce: indirectWorkForce.indirectWorkForce,
-      actions: {
+    if (!indirectWorkForce.indirectWorkForce) {
+      setError(true)
+    } else {
+      const indirectWorkForceInitialState = {
+        id: uuidv4(),
+        indirectWorkForce: indirectWorkForce.indirectWorkForce,
         offeredNumber: indirectWorkForce.contractAdministratorOfferedNumber,
         contractedNumber: indirectWorkForce.contractAdministratorContractedNumber,
         certified: indirectWorkForce.contractAdministratorCertified,
         breakNumber: indirectWorkForce.contractAdministratorBreakNumber,
         workNumber: indirectWorkForce.contractAdministratorWorkNumber,
         hh: indirectWorkForce.contractAdministratorHHNumber,
-      },
+      }
+      console.log('indirectWorkForceInitialState', indirectWorkForceInitialState)
+      setIndirectWorkForce(initialState) // Clear the object
+      setIndirectWorkForceList([...indirectWorkForceList, indirectWorkForceInitialState])
     }
-    setIndirectWorkForce(initialState) // Clear the object
-    setIndirectWorkForceList([...indirectWorkForceList, indirectWorkForceInitialState])
   }
 
   useEffect(() => {
@@ -77,9 +85,25 @@ const IndirectWorkForce = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>Debe seleccionar el cargo para generar el registro</CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
         id="indirectWorkForce"
+        label="Cargo"
         value={indirectWorkForce.indirectWorkForce || ''}
         onChange={(e) => {
           onChangeData(e)
@@ -213,18 +237,19 @@ const IndirectWorkForce = () => {
             </CTableHead>
             <CTableBody>
               {indirectWorkForceListContext.map((item, index) => {
+                console.log('item', item)
                 const charge = basicQuery.indirectPersonal.find((personal) => {
                   return personal.id == item.indirectWorkForce
                 })
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{charge.name}</CTableDataCell>
-                    <CTableDataCell>{item.actions.offeredNumber}</CTableDataCell>
-                    <CTableDataCell>{item.actions.contractedNumber}</CTableDataCell>
-                    <CTableDataCell>{item.actions.certified}</CTableDataCell>
-                    <CTableDataCell>{item.actions.breakNumber}</CTableDataCell>
-                    <CTableDataCell>{item.actions.workNumber}</CTableDataCell>
-                    <CTableDataCell>{item.actions.hh}</CTableDataCell>
+                    <CTableDataCell>{item.offeredNumber}</CTableDataCell>
+                    <CTableDataCell>{item.contractedNumber}</CTableDataCell>
+                    <CTableDataCell>{item.certified}</CTableDataCell>
+                    <CTableDataCell>{item.breakNumber}</CTableDataCell>
+                    <CTableDataCell>{item.workNumber}</CTableDataCell>
+                    <CTableDataCell>{item.hh}</CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         className="btn-project-action"

@@ -53,12 +53,12 @@ const TotalDirectWorkForce = () => {
     let breaked = 0
     let workekd = 0
     for (let directData of directWorkForceListContext) {
-      hours = hours + Number(directData.actions.hh)
-      offered = offered + Number(directData.actions.offeredNumber)
-      contracted = contracted + Number(directData.actions.contractedNumber)
-      certified = certified + Number(directData.actions.certified)
-      breaked = breaked + Number(directData.actions.breakNumber)
-      workekd = workekd + Number(directData.actions.workNumber)
+      hours = hours + Number(directData.hh)
+      offered = offered + Number(directData.offeredNumber)
+      contracted = contracted + Number(directData.contractedNumber)
+      certified = certified + Number(directData.certified)
+      breaked = breaked + Number(directData.breakNumber)
+      workekd = workekd + Number(directData.workNumber)
     }
     setDirectAccumulatedHours(hours)
     setDirectAccumulatedOffered(offered)

@@ -54,12 +54,12 @@ const TotalIndirectWorkForce = () => {
     let breaked = 0
     let workekd = 0
     for (let indirectData of indirectWorkForceListContext) {
-      hours = hours + Number(indirectData.actions.hh)
-      offered = offered + Number(indirectData.actions.offeredNumber)
-      contracted = contracted + Number(indirectData.actions.contractedNumber)
-      certified = certified + Number(indirectData.actions.certified)
-      breaked = breaked + Number(indirectData.actions.breakNumber)
-      workekd = workekd + Number(indirectData.actions.workNumber)
+      hours = hours + Number(indirectData.hh)
+      offered = offered + Number(indirectData.offeredNumber)
+      contracted = contracted + Number(indirectData.contractedNumber)
+      certified = certified + Number(indirectData.certified)
+      breaked = breaked + Number(indirectData.breakNumber)
+      workekd = workekd + Number(indirectData.workNumber)
     }
     setIndirectAccumulatedHours(hours)
     setIndirectAccumulatedOffered(offered)

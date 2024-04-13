@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -51,6 +53,7 @@ const AsarcoMachinery = () => {
     asarcoMachineryTotalsInitialState,
   )
   const [plates, setPlates] = useState()
+  const [error, setError] = useState(false)
 
   const {
     storeAsarcoMachinery,
@@ -59,6 +62,8 @@ const AsarcoMachinery = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
+
     if (e.target.id === 'machinery') {
       setAsarcoMachinery(initialState) // Clear the object
       setAsarcoMachinery({ [e.target.id]: e.target.value })
@@ -73,22 +78,26 @@ const AsarcoMachinery = () => {
   }
 
   const registerAsarcoMachinery = () => {
-    setPlates()
-    const asarcoMachineryInitialState = {
-      id: uuidv4(),
-      machinery: asarcoMachinery.machinery,
-      asarcoMachineryEffectiveTime: asarcoMachinery.asarcoMachineryEffectiveTime,
-      asarcoMachineryUnscheduleMaintenance: asarcoMachinery.asarcoMachineryUnscheduleMaintenance,
-      asarcoMachineryScheduleMaintenance: asarcoMachinery.asarcoMachineryScheduleMaintenance,
-      asarcoMachineryUnscheduleDelay: asarcoMachinery.asarcoMachineryUnscheduleDelay,
-      asarcoMachineryReserves: asarcoMachinery.asarcoMachineryReserves,
-      asarcoMachineryHorometer: asarcoMachinery.asarcoMachineryHorometer,
-      asarcoMachineryOpperationalLoss: asarcoMachinery.asarcoMachineryOpperationalLoss,
-      asarcoMachineryScheduleDelay: asarcoMachinery.asarcoMachineryScheduleDelay,
-      machineryPlate: asarcoMachinery.machineryPlate,
+    if (!asarcoMachinery.machinery || !asarcoMachinery.machineryPlate) {
+      setError(true)
+    } else {
+      setPlates()
+      const asarcoMachineryInitialState = {
+        id: uuidv4(),
+        machinery: asarcoMachinery.machinery,
+        asarcoMachineryEffectiveTime: asarcoMachinery.asarcoMachineryEffectiveTime,
+        asarcoMachineryUnscheduleMaintenance: asarcoMachinery.asarcoMachineryUnscheduleMaintenance,
+        asarcoMachineryScheduleMaintenance: asarcoMachinery.asarcoMachineryScheduleMaintenance,
+        asarcoMachineryUnscheduleDelay: asarcoMachinery.asarcoMachineryUnscheduleDelay,
+        asarcoMachineryReserves: asarcoMachinery.asarcoMachineryReserves,
+        asarcoMachineryHorometer: asarcoMachinery.asarcoMachineryHorometer,
+        asarcoMachineryOpperationalLoss: asarcoMachinery.asarcoMachineryOpperationalLoss,
+        asarcoMachineryScheduleDelay: asarcoMachinery.asarcoMachineryScheduleDelay,
+        machineryPlate: asarcoMachinery.machineryPlate,
+      }
+      setAsarcoMachinery(initialState) // Clear the object
+      setAsarcoMachineryList([...asarcoMachineryList, asarcoMachineryInitialState])
     }
-    setAsarcoMachinery(initialState) // Clear the object
-    setAsarcoMachineryList([...asarcoMachineryList, asarcoMachineryInitialState])
   }
 
   const deleteAsarcoMachinery = (id) => {
@@ -147,6 +156,23 @@ const AsarcoMachinery = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>
+              Debe seleccionar la máquina y su patente para generar el registro
+            </CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
         label="Maquinaria"
