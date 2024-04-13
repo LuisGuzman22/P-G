@@ -27,6 +27,7 @@ const EquipmentPlate = () => {
     equipmentNoOperator: undefined,
     equipmentInitialHorometer: undefined,
     equipmentFinalHorometer: undefined,
+    equipmentPlate: undefined,
   }
 
   const { getData } = useGetCachedQueryData()
@@ -34,6 +35,7 @@ const EquipmentPlate = () => {
 
   const [equipmentPlate, setEquipmentPlate] = useState(initialState)
   const [equipmentPlateList, setEquipmenPlatetList] = useState([])
+  const [plates, setPlates] = useState()
 
   const {
     storeEquipmentPlate,
@@ -45,6 +47,10 @@ const EquipmentPlate = () => {
     if (e.target.id === 'equipment') {
       setEquipmentPlate(initialState) // Clear the object
       setEquipmentPlate({ [e.target.id]: e.target.value })
+      const selectedEquipment = basicQuery.equipment.find((equip) => {
+        return equip.id.toString() === e.target.value.toString()
+      })
+      setPlates(selectedEquipment.plate)
     }
     if (validate(e.target.value)) {
       setEquipmentPlate({ ...equipmentPlate, [e.target.id]: e.target.value })
@@ -55,16 +61,15 @@ const EquipmentPlate = () => {
     const equipmentInitialState = {
       id: uuidv4(),
       equipment: equipmentPlate.equipment,
-      actions: {
-        equipmentEffectiveTime: equipmentPlate.equipmentEffectiveTime,
-        equipmentCorrectiveMaintenance: equipmentPlate.equipmentCorrectiveMaintenance,
-        equipmentPreventiveMaintenance: equipmentPlate.equipmentPreventiveMaintenance,
-        equipmentOutOfService: equipmentPlate.equipmentOutOfService,
-        equipmentWaiting: equipmentPlate.equipmentWaiting,
-        equipmentNoOperator: equipmentPlate.equipmentNoOperator,
-        equipmentInitialHorometer: equipmentPlate.equipmentInitialHorometer,
-        equipmentFinalHorometer: equipmentPlate.equipmentFinalHorometer,
-      },
+      equipmentEffectiveTime: equipmentPlate.equipmentEffectiveTime,
+      equipmentCorrectiveMaintenance: equipmentPlate.equipmentCorrectiveMaintenance,
+      equipmentPreventiveMaintenance: equipmentPlate.equipmentPreventiveMaintenance,
+      equipmentOutOfService: equipmentPlate.equipmentOutOfService,
+      equipmentWaiting: equipmentPlate.equipmentWaiting,
+      equipmentNoOperator: equipmentPlate.equipmentNoOperator,
+      equipmentInitialHorometer: equipmentPlate.equipmentInitialHorometer,
+      equipmentFinalHorometer: equipmentPlate.equipmentFinalHorometer,
+      equipmentPlate: equipmentPlate.equipmentPlate,
     }
     setEquipmentPlate(initialState) // Clear the object
     setEquipmenPlatetList([...equipmentPlateList, equipmentInitialState])
@@ -99,6 +104,30 @@ const EquipmentPlate = () => {
           )
         })}
       </CFormSelect>
+
+      {plates && (
+        <>
+          <br />
+          <CFormSelect
+            aria-label="Default select example"
+            label="Patente"
+            id="equipmentPlate"
+            value={equipmentPlate.equipmentPlate ?? 0}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={0}>Seleccione</option>
+            {plates.map((plate) => {
+              return (
+                <option key={plate.id} value={plate.id}>
+                  {plate.label}
+                </option>
+              )
+            })}
+          </CFormSelect>
+        </>
+      )}
 
       <CTable>
         <CTableHead>
@@ -224,7 +253,8 @@ const EquipmentPlate = () => {
         <CTable className="resume-table">
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell scope="col"></CTableHeaderCell>
+              <CTableHeaderCell scope="col">Equipo</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Patente</CTableHeaderCell>
               <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
@@ -238,20 +268,24 @@ const EquipmentPlate = () => {
           </CTableHead>
           <CTableBody>
             {equipmentPlateListContext.map((item, index) => {
-              const charge = basicQuery.equipment.find((personal) => {
-                return personal.id == item.equipment
+              const equipment = basicQuery.equipment.find((equip) => {
+                return equip.id == item.equipment
+              })
+              const plate = equipment.plate.find((pl) => {
+                return pl.id.toString() === item.equipmentPlate.toString()
               })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{charge.name}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentEffectiveTime}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentCorrectiveMaintenance}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentPreventiveMaintenance}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentOutOfService}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentWaiting}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentNoOperator}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentInitialHorometer}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentFinalHorometer}</CTableDataCell>
+                  <CTableDataCell>{equipment.name}</CTableDataCell>
+                  <CTableDataCell>{plate.label}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentEffectiveTime}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentCorrectiveMaintenance}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentPreventiveMaintenance}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentOutOfService}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentWaiting}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentNoOperator}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentInitialHorometer}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentFinalHorometer}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
                       className="btn-project-action"
