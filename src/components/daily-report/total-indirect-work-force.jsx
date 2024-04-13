@@ -22,15 +22,29 @@ const TotalIndirectWorkForce = () => {
     indirectPreviusAccumulated: undefined,
     indirectCurrentAccumulated: undefined,
   }
-  const { storeTotalIndirectWorkForce } = useRegisterDailyReportCompany()
+  const { storeTotalIndirectWorkForce, indirectWorkForceList: indirectWorkForceListContext } =
+    useRegisterDailyReportCompany()
 
   const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState(initialState)
+  const [indirectAccumulatedHours, setIndirectAccumulatedHours] = useState(0)
 
   const onChangeData = (e) => {
     if (validate(e.target.value)) {
       setTotalIndirectWorkForce({ ...totalIndirectWorkForce, [e.target.id]: e.target.value })
     }
   }
+
+  useEffect(() => {
+    let hours = 0
+    for (let indirectData of indirectWorkForceListContext) {
+      hours = hours + Number(indirectData.actions.hh)
+    }
+    setIndirectAccumulatedHours(hours)
+    setTotalIndirectWorkForce({
+      ...totalIndirectWorkForce,
+      indirectCurrentAccumulated: hours,
+    })
+  }, [indirectWorkForceListContext])
 
   useEffect(() => {
     storeTotalIndirectWorkForce(totalIndirectWorkForce)
@@ -147,8 +161,9 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectCurrentAccumulated"
-                value={totalIndirectWorkForce.indirectCurrentAccumulated || ''}
+                value={indirectAccumulatedHours || ''}
                 placeholder="Total"
+                disabled
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
