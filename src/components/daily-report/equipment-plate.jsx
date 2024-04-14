@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -36,6 +38,7 @@ const EquipmentPlate = () => {
   const [equipmentPlate, setEquipmentPlate] = useState(initialState)
   const [equipmentPlateList, setEquipmenPlatetList] = useState([])
   const [plates, setPlates] = useState()
+  const [error, setError] = useState(false)
 
   const {
     storeEquipmentPlate,
@@ -44,36 +47,59 @@ const EquipmentPlate = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
     if (e.target.id === 'equipment') {
+      console.log('aca')
       setEquipmentPlate(initialState) // Clear the object
       setEquipmentPlate({ [e.target.id]: e.target.value })
-      const selectedEquipment = basicQuery.equipment.find((equip) => {
-        return equip.id.toString() === e.target.value.toString()
-      })
-      setPlates(selectedEquipment.plate)
-    }
-    if (validate(e.target.value)) {
+      if (e.target.value !== '0') {
+        console.log('2')
+        const selectedEquipment = basicQuery.equipment.find((equip) => {
+          return equip.id.toString() === e.target.value.toString()
+        })
+        setPlates(selectedEquipment.plate)
+      } else {
+        setPlates()
+      }
+    } else if (e.target.id === 'equipmentPlate') {
       setEquipmentPlate({ ...equipmentPlate, [e.target.id]: e.target.value })
+    } else {
+      if (validate(e.target.value)) {
+        setEquipmentPlate({ ...equipmentPlate, [e.target.id]: e.target.value })
+      }
     }
   }
 
+  useEffect(() => {
+    console.log('equipmentPlate', equipmentPlate)
+  }, [equipmentPlate])
+
   const registerEquipment = () => {
-    setPlates()
-    const equipmentInitialState = {
-      id: uuidv4(),
-      equipment: equipmentPlate.equipment,
-      equipmentEffectiveTime: equipmentPlate.equipmentEffectiveTime,
-      equipmentCorrectiveMaintenance: equipmentPlate.equipmentCorrectiveMaintenance,
-      equipmentPreventiveMaintenance: equipmentPlate.equipmentPreventiveMaintenance,
-      equipmentOutOfService: equipmentPlate.equipmentOutOfService,
-      equipmentWaiting: equipmentPlate.equipmentWaiting,
-      equipmentNoOperator: equipmentPlate.equipmentNoOperator,
-      equipmentInitialHorometer: equipmentPlate.equipmentInitialHorometer,
-      equipmentFinalHorometer: equipmentPlate.equipmentFinalHorometer,
-      equipmentPlate: equipmentPlate.equipmentPlate,
+    if (
+      !equipmentPlate.equipment ||
+      equipmentPlate.equipment === '0' ||
+      !equipmentPlate.equipmentPlate ||
+      equipmentPlate.equipmentPlate === '0'
+    ) {
+      setError(true)
+    } else {
+      setPlates()
+      const equipmentInitialState = {
+        id: uuidv4(),
+        equipment: equipmentPlate.equipment,
+        equipmentEffectiveTime: equipmentPlate.equipmentEffectiveTime,
+        equipmentCorrectiveMaintenance: equipmentPlate.equipmentCorrectiveMaintenance,
+        equipmentPreventiveMaintenance: equipmentPlate.equipmentPreventiveMaintenance,
+        equipmentOutOfService: equipmentPlate.equipmentOutOfService,
+        equipmentWaiting: equipmentPlate.equipmentWaiting,
+        equipmentNoOperator: equipmentPlate.equipmentNoOperator,
+        equipmentInitialHorometer: equipmentPlate.equipmentInitialHorometer,
+        equipmentFinalHorometer: equipmentPlate.equipmentFinalHorometer,
+        equipmentPlate: equipmentPlate.equipmentPlate,
+      }
+      setEquipmentPlate(initialState) // Clear the object
+      setEquipmenPlatetList([...equipmentPlateList, equipmentInitialState])
     }
-    setEquipmentPlate(initialState) // Clear the object
-    setEquipmenPlatetList([...equipmentPlateList, equipmentInitialState])
   }
 
   const deleteEquipment = (id) => {
@@ -88,6 +114,23 @@ const EquipmentPlate = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>
+              Debe seleccionar el equipo y su patente para generar el registro
+            </CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
         id="equipment"
@@ -96,7 +139,7 @@ const EquipmentPlate = () => {
           onChangeData(e)
         }}
       >
-        <option>Seleccione</option>
+        <option value={'0'}>Seleccione</option>
         {basicQuery.equipment.map((equipmentCached) => {
           return (
             <option key={equipmentCached.id} value={equipmentCached.id}>

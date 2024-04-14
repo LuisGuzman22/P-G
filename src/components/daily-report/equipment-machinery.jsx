@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -36,6 +38,7 @@ const EquipmentMachinery = () => {
   const [equipment, setEquipment] = useState(initialState)
   const [equipmentList, setEquipmentList] = useState([])
   const [equipmentTotals, setEquipmentTotals] = useState(equipmentTotalsInitialState)
+  const [error, setError] = useState(false)
 
   const {
     storeEquipment,
@@ -44,6 +47,8 @@ const EquipmentMachinery = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
+
     if (e.target.id === 'equipment') {
       setEquipment(initialState) // Clear the object
       setEquipment({ [e.target.id]: e.target.value })
@@ -54,17 +59,21 @@ const EquipmentMachinery = () => {
   }
 
   const registerEquipment = () => {
-    const equipmentInitialState = {
-      id: uuidv4(),
-      equipment: equipment.equipment,
-      actions: {
-        equipmentOfferedNumber: equipment.equipmentOfferedNumber,
-        equipmentCertifiedNumber: equipment.equipmentCertifiedNumber,
-        equipmentWorkNumber: equipment.equipmentWorkNumber,
-      },
+    if (!equipment.equipment || equipment.equipment === '0') {
+      setError(true)
+    } else {
+      const equipmentInitialState = {
+        id: uuidv4(),
+        equipment: equipment.equipment,
+        actions: {
+          equipmentOfferedNumber: equipment.equipmentOfferedNumber,
+          equipmentCertifiedNumber: equipment.equipmentCertifiedNumber,
+          equipmentWorkNumber: equipment.equipmentWorkNumber,
+        },
+      }
+      setEquipment(initialState) // Clear the object
+      setEquipmentList([...equipmentList, equipmentInitialState])
     }
-    setEquipment(initialState) // Clear the object
-    setEquipmentList([...equipmentList, equipmentInitialState])
   }
 
   const deleteEquipment = (id) => {
@@ -102,6 +111,21 @@ const EquipmentMachinery = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>Debe seleccionar el equipo para generar el registro</CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
         id="equipment"
@@ -110,7 +134,7 @@ const EquipmentMachinery = () => {
           onChangeData(e)
         }}
       >
-        <option>Seleccione</option>
+        <option value="0">Seleccione</option>
         {basicQuery.equipment.map((equipmentCached) => {
           return (
             <option key={equipmentCached.id} value={equipmentCached.id}>
