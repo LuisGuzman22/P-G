@@ -46,10 +46,7 @@ export const DailyReportProvider = ({ children }) => {
   const [equipmentWorkForceList, setEquipmentWorkForceList] = useState([])
   const [vehicleWorkForceList, setVehicletWorkForceList] = useState([])
   const [comments, setComments] = useState('')
-  const [incident, setIncident] = useState({
-    incident: '',
-    nonConformity: '',
-  })
+  const [incident, setIncident] = useState([])
   const [machineryList, setMachineryList] = useState([])
   const [equipmentList, setEquipmentList] = useState([])
   const [vehicleList, setVehicleList] = useState([])
@@ -203,6 +200,11 @@ export const DailyReportProvider = ({ children }) => {
     setIncident(data)
   }
 
+  const removeIncident = async (id) => {
+    const newData = incident.filter((item) => item.id !== id)
+    setIncident(newData)
+  }
+
   const storeMachinery = async (data) => {
     setMachineryList(data)
   }
@@ -310,6 +312,7 @@ export const DailyReportProvider = ({ children }) => {
         vehicleWorkForceList,
         storeComment,
         storeIncident,
+        removeIncident,
         incident,
         comments,
         storeMachinery,

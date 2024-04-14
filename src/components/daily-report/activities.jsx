@@ -145,7 +145,7 @@ const Activities = () => {
                 id="activityName"
                 value={activity.activityName || ''}
                 text=""
-                disabled
+                // disabled
                 onChange={(e) => {
                   onChangeData(e)
                 }}
