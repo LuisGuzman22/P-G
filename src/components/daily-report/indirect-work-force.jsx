@@ -66,7 +66,6 @@ const IndirectWorkForce = () => {
         workNumber: indirectWorkForce.contractAdministratorWorkNumber,
         hh: indirectWorkForce.contractAdministratorHHNumber,
       }
-      console.log('indirectWorkForceInitialState', indirectWorkForceInitialState)
       setIndirectWorkForce(initialState) // Clear the object
       setIndirectWorkForceList([...indirectWorkForceList, indirectWorkForceInitialState])
     }
@@ -237,7 +236,6 @@ const IndirectWorkForce = () => {
             </CTableHead>
             <CTableBody>
               {indirectWorkForceListContext.map((item, index) => {
-                console.log('item', item)
                 const charge = basicQuery.indirectPersonal.find((personal) => {
                   return personal.id == item.indirectWorkForce
                 })

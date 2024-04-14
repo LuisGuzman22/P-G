@@ -46,6 +46,13 @@ const TotalDirectWorkForce = () => {
   }
 
   useEffect(() => {
+    setTotalDirectWorkForce({
+      ...totalDirectWorkForce,
+      directCurrentAccumulated: directAccumulatedActual,
+    })
+  }, [directAccumulatedActual])
+
+  useEffect(() => {
     let hours = 0
     let offered = 0
     let contracted = 0
@@ -77,6 +84,8 @@ const TotalDirectWorkForce = () => {
       directSubtotalWorkNumber: workekd,
       directSubstotalHHNumber: hours,
       directPreviusAccumulated: totalDirectWorkForce.directPreviusAccumulated || 0,
+      directCurrentAccumulated:
+        Number(totalDirectWorkForce.directPreviusAccumulated) + Number(hours),
     }
 
     setTotalDirectWorkForce(data)

@@ -15,18 +15,19 @@ const useRegisterDailyReport = () => {
     directWorkForceList,
     totalIndirectWorkForce,
     totalDirectWorkForce,
-    indirectDotationWorkForceList,
     directDotationWorkForceList,
     machineryWorkForceList,
     equipmentWorkForceList,
     vehicleWorkForceList,
     incident,
-    workforceDotation,
     comments,
     machineryList,
     equipmentList,
     vehicleList,
     activityList,
+    asarcoMachineryList,
+    equipmentPlateList,
+    aljibeList,
   } = useContext(DailyReportContext)
 
   const mutation = useMutation({
@@ -44,9 +45,7 @@ const useRegisterDailyReport = () => {
       totalIndirectWorkForce, // 3
       directWorkForceList, // 4
       totalDirectWorkForce, // 5
-      indirectDotationWorkForceList, // 6
       directDotationWorkForceList, // 7
-      workforceDotation, // 8
       machineryList, // 9
       machineryWorkForceList, // 10
       equipmentList, // 11
@@ -57,6 +56,9 @@ const useRegisterDailyReport = () => {
       comments, // 16
       // 17 (graficos)
       incident, // 18 //
+      asarcoMachineryList, // 9
+      equipmentPlateList, // 11
+      aljibeList, // 16
     })
   }
 

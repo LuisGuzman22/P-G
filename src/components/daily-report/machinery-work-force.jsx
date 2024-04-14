@@ -245,7 +245,6 @@ const MachineryWorkForce = () => {
               </CTableHead>
               <CTableBody>
                 {machineryWorkForceListContext.map((item, index) => {
-                  console.log('item', item)
                   const selectedWorkFront = basicQuery.workFront.find((workF) => {
                     return workF.id == item.machineryWorkForce
                   })

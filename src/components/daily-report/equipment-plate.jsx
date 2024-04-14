@@ -49,11 +49,9 @@ const EquipmentPlate = () => {
   const onChangeData = (e) => {
     setError(false)
     if (e.target.id === 'equipment') {
-      console.log('aca')
       setEquipmentPlate(initialState) // Clear the object
       setEquipmentPlate({ [e.target.id]: e.target.value })
       if (e.target.value !== '0') {
-        console.log('2')
         const selectedEquipment = basicQuery.equipment.find((equip) => {
           return equip.id.toString() === e.target.value.toString()
         })
@@ -69,10 +67,6 @@ const EquipmentPlate = () => {
       }
     }
   }
-
-  useEffect(() => {
-    console.log('equipmentPlate', equipmentPlate)
-  }, [equipmentPlate])
 
   const registerEquipment = () => {
     if (

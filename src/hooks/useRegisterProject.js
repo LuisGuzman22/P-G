@@ -53,7 +53,6 @@ const useRegisterProject = () => {
       return await axios
         .put(`https://pyg-production.up.railway.app/api/v1/projects/${newTodo.id}`, newTodo)
         .then((res) => {
-          console.log('res', res.data.data)
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
             return res.ok
