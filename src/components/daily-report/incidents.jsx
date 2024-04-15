@@ -16,6 +16,9 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
 
+const INCIDENT_LIMIT = 200
+const NON_CONFORMITY_LIMIT = 200
+
 const Incidents = () => {
   const initialState = {
     incident: '',
@@ -36,10 +39,12 @@ const Incidents = () => {
     setError(false)
     switch (e.target.id) {
       case 'incident':
-        setIncident({ ...incident, incident: e.target.value })
+        if (e.target.value.length <= INCIDENT_LIMIT)
+          setIncident({ ...incident, incident: e.target.value })
         break
       case 'nonConformity':
-        setIncident({ ...incident, nonConformity: e.target.value })
+        if (e.target.value.length <= NON_CONFORMITY_LIMIT)
+          setIncident({ ...incident, nonConformity: e.target.value })
         break
       default:
         break
@@ -47,15 +52,6 @@ const Incidents = () => {
   }
 
   const registerIncident = () => {
-    // /FALTA
-    // console.log('incident.incident', incident.incident)
-    // console.log('incident.nonConformity', incident.nonConformity)
-    // if (
-    //   (!incident.incident || incident.incident === '') &&
-    //   (!incident.nonConformity || incident.nonConformity)
-    // ) {
-    //   setError(true)
-    // } else {
     const incidentInitialState = {
       id: uuidv4(),
       incident: incident.incident,
@@ -63,7 +59,6 @@ const Incidents = () => {
     }
     setIncident(initialState)
     setIncidentList([...incidentList, incidentInitialState])
-    // }
   }
 
   const deleteIncident = (id) => {
@@ -100,7 +95,7 @@ const Incidents = () => {
         label="Incidentes lesiones y eventos"
         rows={3}
         value={incident.incident}
-        text=""
+        text={`${incident.incident.length} de ${INCIDENT_LIMIT} caracteres`}
         onChange={(e) => {
           onChangeData(e)
         }}
@@ -110,7 +105,7 @@ const Incidents = () => {
         id="nonConformity"
         label="No conformidades o interferencias"
         rows={3}
-        text=""
+        text={`${incident.nonConformity.length} de ${NON_CONFORMITY_LIMIT} caracteres`}
         value={incident.nonConformity}
         onChange={(e) => {
           onChangeData(e)
