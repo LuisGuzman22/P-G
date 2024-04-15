@@ -109,7 +109,7 @@ const Graphs = () => {
           plugins: {
             title: {
               display: true,
-              text: (ctx) => 'Tooltip position mode: ' + ctx.chart.options.plugins.tooltip.position,
+              // text: (ctx) => 'Tooltip position mode: ' + ctx.chart.options.plugins.tooltip.position,
             },
           },
 
