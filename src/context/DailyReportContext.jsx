@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import { createContext } from 'react'
+import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 export const DailyReportContext = createContext({
   dailyReportContractManagerName: undefined,
@@ -19,14 +20,19 @@ export const DailyReportContext = createContext({
 
 // eslint-disable-next-line react/prop-types
 export const DailyReportProvider = ({ children }) => {
+  const { getProject, getContract } = useRegisterGeneralData()
+
+  const projectLS = JSON.parse(getProject())
+  const contractLS = JSON.parse(getContract())
+
   const [company, setCompany] = useState({
     dailyReportContractManagerName: undefined,
     dailyReportDate: undefined,
     dailyReportNumber: undefined,
     dailyReportContratistName: undefined,
     dailyReportWeather: undefined,
-    dailyReportContratistNumber: undefined,
-    dailyReportContractName: undefined,
+    dailyReportContratistNumber: contractLS.id,
+    dailyReportContractName: contractLS.name,
     dailyReportDirectPersonalShift: undefined,
     dailyReportDirectPersonalHours: undefined,
     dailyReportDirectPersonalJourney: undefined,

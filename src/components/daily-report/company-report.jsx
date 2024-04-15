@@ -2,10 +2,15 @@ import React, { useEffect, useState, useContext } from 'react'
 import { CForm, CFormInput, CRow, CCol, CFormSelect } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
+import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 const CompanyReport = () => {
   const { storeCompanyData } = useRegisterDailyReportCompany()
   const { registerData } = useRegisterDailyReport()
+  const { getProject, getContract } = useRegisterGeneralData()
+
+  const projectLS = JSON.parse(getProject())
+  const contractLS = JSON.parse(getContract())
 
   const onChangeData = (e) => {
     storeCompanyData(e)
@@ -59,6 +64,8 @@ const CompanyReport = () => {
               id="dailyReportContratistNumber"
               label="N° de contrato"
               placeholder="N° de contrato"
+              disabled
+              value={contractLS.id}
               text=""
               onChange={(e) => {
                 onChangeData(e)
@@ -71,6 +78,8 @@ const CompanyReport = () => {
               id="dailyReportContractName"
               label="Nombre de contrato"
               placeholder="Nombre de contrato"
+              value={contractLS.name}
+              disabled
               text=""
               onChange={(e) => {
                 onChangeData(e)
