@@ -70,6 +70,45 @@ const Activities = () => {
     }
   }
 
+  useEffect(() => {
+    const realHpurs = activity.activityHoursSpendShift
+      ? Number(activity.activityHoursSpendShift)
+      : 0
+    const prevHours = activity.activityHoursSpendPrevius
+      ? Number(activity.activityHoursSpendPrevius)
+      : 0
+    setActivity({
+      ...activity,
+      activityHoursAccumulated: prevHours + realHpurs,
+    })
+  }, [activity.activityHoursSpendShift, activity.activityHoursSpendPrevius])
+
+  useEffect(() => {
+    if (
+      activity.activityPreviousAcumulatedAmount &&
+      activity.activityActualShiftQuantity &&
+      activity.activityTotalAmount
+    ) {
+      const previousHh = activity.activityPreviousAcumulatedAmount
+        ? Number(activity.activityPreviousAcumulatedAmount)
+        : 0
+
+      const actualHours = activity.activityActualShiftQuantity
+        ? Number(activity.activityActualShiftQuantity)
+        : 0
+
+      const totalHours = activity.activityTotalAmount ? Number(activity.activityTotalAmount) : 0
+
+      const calc = (actualHours + previousHh) / totalHours
+
+      setActivity({ ...activity, activityAccumulatedAcvancePercent: calc.toFixed(2) })
+    }
+  }, [
+    activity.activityPreviousAcumulatedAmount,
+    activity.activityActualShiftQuantity,
+    activity.activityTotalAmount,
+  ])
+
   const registerActivity = () => {
     if (!activity.activityFrontWork || activity.activityFrontWork === '0') {
       setError(true)
@@ -137,7 +176,7 @@ const Activities = () => {
               {workFrontCached.name}
             </option>
           )
-        })}{' '}
+        })}
       </CFormSelect>
 
       <CTable>
@@ -236,6 +275,7 @@ const Activities = () => {
                 type="text"
                 id="activityAccumulatedAcvancePercent"
                 value={activity.activityAccumulatedAcvancePercent || ''}
+                disabled
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
@@ -285,6 +325,7 @@ const Activities = () => {
                 type="text"
                 id="activityHoursAccumulated"
                 value={activity.activityHoursAccumulated || ''}
+                disabled
                 text=""
                 onChange={(e) => {
                   onChangeData(e)
