@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -45,6 +47,7 @@ const IndustrialWaterControl = () => {
   const [aljibeList, setAlgibeList] = useState([])
   const [aljibeTotals, setAlgibeTotals] = useState(aljibeTotalsInitialState)
   const [plates, setPlates] = useState()
+  const [error, setError] = useState(false)
 
   const {
     storealjibe,
@@ -53,37 +56,58 @@ const IndustrialWaterControl = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
     if (e.target.id === 'aljibe') {
       setAlgibe(initialState) // Clear the object
       setAlgibe({ [e.target.id]: e.target.value })
-      const selectedAljibe = basicQuery.aljibe.find((alj) => {
-        return alj.id.toString() === e.target.value.toString()
-      })
-      setPlates(selectedAljibe.plate)
-    }
-    if (e.target.id === 'aljibeCachimbaName') {
-      setAlgibe({ ...aljibe, aljibeCachimbaName: e.target.value })
-    }
-    if (validate(e.target.value)) {
-      setAlgibe({ ...aljibe, [e.target.id]: e.target.value })
+      if (e.target.value !== '0') {
+        const selectedAljibe = basicQuery.aljibe.find((alj) => {
+          return alj.id.toString() === e.target.value.toString()
+        })
+        setPlates(selectedAljibe.plate)
+      } else {
+        setPlates()
+      }
+    } else if (e.target.id === 'aljibePlate') {
+      if (e.target.value !== '0') {
+        setAlgibe({ ...aljibe, [e.target.id]: e.target.value })
+      } else {
+        setAlgibe({ ...aljibe, [e.target.id]: '0' })
+      }
+    } else {
+      if (e.target.id === 'aljibeCachimbaName') {
+        setAlgibe({ ...aljibe, aljibeCachimbaName: e.target.value })
+      }
+      if (validate(e.target.value)) {
+        setAlgibe({ ...aljibe, [e.target.id]: e.target.value })
+      }
     }
   }
 
   const registeraljibe = () => {
-    setPlates()
-    const aljibeInitialState = {
-      id: uuidv4(),
-      aljibe: aljibe.aljibe,
-      aljibeCachimbaName: aljibe.aljibeCachimbaName,
-      aljibeQuantityTurns: aljibe.aljibeQuantityTurns,
-      aljibeM3: aljibe.aljibeM3,
-      aljibePlate: aljibe.aljibePlate,
-      aljibeOfferedNumber: aljibe.aljibeOfferedNumber,
-      aljibeCertifiedNumber: aljibe.aljibeCertifiedNumber,
-      aljibeWorkNumber: aljibe.aljibeWorkNumber,
+    if (
+      !aljibe.aljibe ||
+      aljibe.aljibe === '0' ||
+      !aljibe.aljibePlate ||
+      aljibe.aljibePlate === '0'
+    ) {
+      setError(true)
+    } else {
+      setPlates()
+      const aljibeInitialState = {
+        id: uuidv4(),
+        aljibe: aljibe.aljibe,
+        aljibeCachimbaName: aljibe.aljibeCachimbaName,
+        aljibeQuantityTurns: aljibe.aljibeQuantityTurns,
+        aljibeM3: aljibe.aljibeM3,
+        aljibePlate: aljibe.aljibePlate,
+        aljibeOfferedNumber: aljibe.aljibeOfferedNumber,
+        aljibeCertifiedNumber: aljibe.aljibeCertifiedNumber,
+        aljibeWorkNumber: aljibe.aljibeWorkNumber,
+      }
+      setAlgibe(initialState) // Clear the object
+      setAlgibeList([...aljibeList, aljibeInitialState])
     }
-    setAlgibe(initialState) // Clear the object
-    setAlgibeList([...aljibeList, aljibeInitialState])
   }
 
   const deletealjibe = (id) => {
@@ -124,8 +148,26 @@ const IndustrialWaterControl = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>
+              Debe seleccionar el aljibe y su patente para generar el registro
+            </CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
+        label="Aljibe"
         id="aljibe"
         value={aljibe.aljibe || ''}
         onChange={(e) => {

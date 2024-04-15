@@ -8,7 +8,7 @@ const useLogin = () => {
   const login = (data) => {
     const { user, password } = data
 
-    if (user === 'asd@asd.cl' && password === '12345') {
+    if (user === 'prueba@gmail.com' && password === 'prueba#12345') {
       setError()
       navigate(`/project_selector`)
       localStorage.setItem('USER_TYPE', 'basic')

@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -36,6 +38,7 @@ const VehiclePlate = () => {
   const [vehiclePlate, setVehiclePlate] = useState(initialState)
   const [vehiclePlateList, setVehiclePlateList] = useState([])
   const [plates, setPlates] = useState()
+  const [error, setError] = useState(false)
 
   const {
     storeVehiclePlate,
@@ -44,36 +47,57 @@ const VehiclePlate = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
     if (e.target.id === 'vehicle') {
       setVehiclePlate(initialState) // Clear the object
       setVehiclePlate({ [e.target.id]: e.target.value })
-      const selectedVehicle = basicQuery.vehicles.find((vehic) => {
-        return vehic.id.toString() === e.target.value.toString()
-      })
-      setPlates(selectedVehicle.plate)
-    }
-    if (validate(e.target.value)) {
-      setVehiclePlate({ ...vehiclePlate, [e.target.id]: e.target.value })
+      if (e.target.value !== '0') {
+        const selectedVehicle = basicQuery.vehicles.find((vehic) => {
+          return vehic.id.toString() === e.target.value.toString()
+        })
+        setPlates(selectedVehicle.plate)
+      } else {
+        setPlates()
+      }
+    } else if (e.target.id === 'vehiclePlate') {
+      if (e.target.value !== '0') {
+        setVehiclePlate({ ...vehiclePlate, [e.target.id]: e.target.value })
+      } else {
+        setVehiclePlate({ ...vehiclePlate, [e.target.id]: '0' })
+      }
+    } else {
+      if (validate(e.target.value)) {
+        setVehiclePlate({ ...vehiclePlate, [e.target.id]: e.target.value })
+      }
     }
   }
 
   const registerVehiclePlate = () => {
-    setPlates()
-    const vehiclePlateInitialState = {
-      id: uuidv4(),
-      vehicle: vehiclePlate.vehicle,
-      vehicleEffectiveTime: vehiclePlate.vehicleEffectiveTime,
-      vehicleCorrectiveMaintenance: vehiclePlate.vehicleCorrectiveMaintenance,
-      vehiclePreventiveMaintenance: vehiclePlate.vehiclePreventiveMaintenance,
-      vehicleOutOfService: vehiclePlate.vehicleOutOfService,
-      vehicleWaiting: vehiclePlate.vehicleWaiting,
-      vehicleNoOperator: vehiclePlate.vehicleNoOperator,
-      vehicleInitialHorometer: vehiclePlate.vehicleInitialHorometer,
-      vehicleFinalHorometer: vehiclePlate.vehicleFinalHorometer,
-      vehiclePlate: vehiclePlate.vehiclePlate,
+    if (
+      !vehiclePlate.vehicle ||
+      vehiclePlate.vehicle === '0' ||
+      !vehiclePlate.vehiclePlate ||
+      vehiclePlate.vehiclePlate === '0'
+    ) {
+      setError(true)
+    } else {
+      setPlates()
+      const vehiclePlateInitialState = {
+        id: uuidv4(),
+        vehicle: vehiclePlate.vehicle,
+        vehicleEffectiveTime: vehiclePlate.vehicleEffectiveTime,
+        vehicleCorrectiveMaintenance: vehiclePlate.vehicleCorrectiveMaintenance,
+        vehiclePreventiveMaintenance: vehiclePlate.vehiclePreventiveMaintenance,
+        vehicleOutOfService: vehiclePlate.vehicleOutOfService,
+        vehicleWaiting: vehiclePlate.vehicleWaiting,
+        vehicleNoOperator: vehiclePlate.vehicleNoOperator,
+        vehicleInitialHorometer: vehiclePlate.vehicleInitialHorometer,
+        vehicleFinalHorometer: vehiclePlate.vehicleFinalHorometer,
+        vehiclePlate: vehiclePlate.vehiclePlate,
+      }
+      setVehiclePlate(initialState) // Clear the object
+      setVehiclePlateList([...vehiclePlateList, vehiclePlateInitialState])
     }
-    setVehiclePlate(initialState) // Clear the object
-    setVehiclePlateList([...vehiclePlateList, vehiclePlateInitialState])
   }
 
   const deletevehiclePlate = (id) => {
@@ -88,10 +112,28 @@ const VehiclePlate = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>
+              Debe seleccionar el equipo y la patente para generar el registro
+            </CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
         id="vehicle"
         value={vehiclePlate.vehicle || 0}
+        label="Vehículo"
         onChange={(e) => {
           onChangeData(e)
         }}

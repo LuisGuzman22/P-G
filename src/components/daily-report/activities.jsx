@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -37,6 +39,7 @@ const Activities = () => {
 
   const [activity, setActivity] = useState(initialState)
   const [activityList, setActivityList] = useState([])
+  const [error, setError] = useState(false)
 
   const {
     storeActivity,
@@ -45,6 +48,7 @@ const Activities = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
     if (e.target.id === 'activityFrontWork') {
       setActivity(initialState) // Clear the object
       setActivity({ [e.target.id]: e.target.value })
@@ -67,23 +71,27 @@ const Activities = () => {
   }
 
   const registerActivity = () => {
-    const activityInitialState = {
-      id: uuidv4(),
-      activityFrontWork: activity.activityFrontWork,
-      primaveraId: activity.primaveraId,
-      activityName: activity.activityName,
-      activityDiscipline: activity.activityDiscipline,
-      activityTotalAmount: activity.activityTotalAmount,
-      activityPreviousAcumulatedAmount: activity.activityPreviousAcumulatedAmount,
-      activityActualShiftQuantity: activity.activityActualShiftQuantity,
-      activityAccumulatedAcvancePercent: activity.activityAccumulatedAcvancePercent,
-      activityUnit: activity.activityUnit,
-      activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
-      activityHoursSpendShift: activity.activityHoursSpendShift,
-      activityHoursAccumulated: activity.activityHoursAccumulated,
+    if (!activity.activityFrontWork || activity.activityFrontWork === '0') {
+      setError(true)
+    } else {
+      const activityInitialState = {
+        id: uuidv4(),
+        activityFrontWork: activity.activityFrontWork,
+        primaveraId: activity.primaveraId,
+        activityName: activity.activityName,
+        activityDiscipline: activity.activityDiscipline,
+        activityTotalAmount: activity.activityTotalAmount,
+        activityPreviousAcumulatedAmount: activity.activityPreviousAcumulatedAmount,
+        activityActualShiftQuantity: activity.activityActualShiftQuantity,
+        activityAccumulatedAcvancePercent: activity.activityAccumulatedAcvancePercent,
+        activityUnit: activity.activityUnit,
+        activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
+        activityHoursSpendShift: activity.activityHoursSpendShift,
+        activityHoursAccumulated: activity.activityHoursAccumulated,
+      }
+      setActivity(initialState) // Clear the object
+      setActivityList([...activityList, activityInitialState])
     }
-    setActivity(initialState) // Clear the object
-    setActivityList([...activityList, activityInitialState])
   }
 
   const deleteActivity = (id) => {
@@ -98,15 +106,31 @@ const Activities = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>Debe seleccionar el frente de trabajo para generar el registro</CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
         id="activityFrontWork"
-        value={activity.activityFrontWork}
+        label="Frente de trabajo"
+        value={activity.activityFrontWork ?? 0}
         onChange={(e) => {
           onChangeData(e)
         }}
       >
-        <option>Seleccione</option>
+        <option value={0}>Seleccione</option>
         {basicQuery.workFront.map((workFrontCached) => {
           return (
             <option key={workFrontCached.id} value={workFrontCached.id}>
@@ -155,11 +179,12 @@ const Activities = () => {
               <CFormSelect
                 aria-label="Default select example"
                 id="activityDiscipline"
+                value={activity.activityDiscipline ?? '0'}
                 onChange={(e) => {
                   onChangeData(e)
                 }}
               >
-                <option>Seleccione</option>
+                <option value={'0'}>Seleccione</option>
                 <option value="Obras_civiles">Obras Civiles</option>
                 <option value="Movimiento_de_tierra">Movimiento de tierra</option>
               </CFormSelect>

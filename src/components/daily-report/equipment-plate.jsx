@@ -60,7 +60,11 @@ const EquipmentPlate = () => {
         setPlates()
       }
     } else if (e.target.id === 'equipmentPlate') {
-      setEquipmentPlate({ ...equipmentPlate, [e.target.id]: e.target.value })
+      if (e.target.value !== '0') {
+        setEquipmentPlate({ ...equipmentPlate, [e.target.id]: e.target.value })
+      } else {
+        setEquipmentPlate({ ...equipmentPlate, [e.target.id]: '0' })
+      }
     } else {
       if (validate(e.target.value)) {
         setEquipmentPlate({ ...equipmentPlate, [e.target.id]: e.target.value })

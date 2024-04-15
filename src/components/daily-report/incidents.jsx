@@ -24,6 +24,7 @@ const Incidents = () => {
 
   const [incident, setIncident] = useState(initialState)
   const [incidentList, setIncidentList] = useState([])
+  const [error, setError] = useState(false)
 
   const {
     storeIncident,
@@ -32,6 +33,7 @@ const Incidents = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
     switch (e.target.id) {
       case 'incident':
         setIncident({ ...incident, incident: e.target.value })
@@ -45,6 +47,15 @@ const Incidents = () => {
   }
 
   const registerIncident = () => {
+    // /FALTA
+    // console.log('incident.incident', incident.incident)
+    // console.log('incident.nonConformity', incident.nonConformity)
+    // if (
+    //   (!incident.incident || incident.incident === '') &&
+    //   (!incident.nonConformity || incident.nonConformity)
+    // ) {
+    //   setError(true)
+    // } else {
     const incidentInitialState = {
       id: uuidv4(),
       incident: incident.incident,
@@ -52,6 +63,7 @@ const Incidents = () => {
     }
     setIncident(initialState)
     setIncidentList([...incidentList, incidentInitialState])
+    // }
   }
 
   const deleteIncident = (id) => {
@@ -66,6 +78,23 @@ const Incidents = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>
+              Debe ingresar un incidente o una no conformidad para generar el registro
+            </CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormTextarea
         id="incident"
         label="Incidentes lesiones y eventos"

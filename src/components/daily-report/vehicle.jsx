@@ -10,6 +10,8 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -36,6 +38,8 @@ const Vehicle = () => {
   const [vehicle, setVehicle] = useState(initialState)
   const [vehicleList, setVehicleList] = useState([])
   const [vehicleTotals, setVehicleTotals] = useState(vehicleTotalsInitialState)
+  const [error, setError] = useState(false)
+
   const {
     storeVehicle,
     removeVehicle,
@@ -43,6 +47,7 @@ const Vehicle = () => {
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
+    setError(false)
     if (e.target.id === 'vehicle') {
       setVehicle(initialState) // Clear the object
       setVehicle({ [e.target.id]: e.target.value })
@@ -53,17 +58,21 @@ const Vehicle = () => {
   }
 
   const registerVehicle = () => {
-    const vehicleInitialState = {
-      id: uuidv4(),
-      vehicle: vehicle.vehicle,
-      actions: {
-        vehicleOfferedNumber: vehicle.vehicleOfferedNumber,
-        vehicleCertifiedNumber: vehicle.vehicleCertifiedNumber,
-        vehicleWorkNumber: vehicle.vehicleWorkNumber,
-      },
+    if (!vehicle.vehicle || vehicle.vehicle === '0') {
+      setError(true)
+    } else {
+      const vehicleInitialState = {
+        id: uuidv4(),
+        vehicle: vehicle.vehicle,
+        actions: {
+          vehicleOfferedNumber: vehicle.vehicleOfferedNumber,
+          vehicleCertifiedNumber: vehicle.vehicleCertifiedNumber,
+          vehicleWorkNumber: vehicle.vehicleWorkNumber,
+        },
+      }
+      setVehicle(initialState) // Clear the object
+      setVehicleList([...vehicleList, vehicleInitialState])
     }
-    setVehicle(initialState) // Clear the object
-    setVehicleList([...vehicleList, vehicleInitialState])
   }
 
   const deletevehicle = (id) => {
@@ -82,7 +91,6 @@ const Vehicle = () => {
       vehicleCertifiedNumber: 0,
       vehicleWorkNumber: 0,
     }
-
     for (let data of vehicleListContext) {
       vehicleTotalsCounter = {
         vehicleOfferedNumber:
@@ -101,15 +109,31 @@ const Vehicle = () => {
 
   return (
     <div className="work-force-report">
+      {error && (
+        <CToast
+          autohide={true}
+          visible={error}
+          color="danger"
+          onClose={() => {
+            setError(false)
+          }}
+          className="text-white align-items-center"
+        >
+          <div className="d-flex">
+            <CToastBody>Debe seleccionar el equipo para generar el registro</CToastBody>
+          </div>
+        </CToast>
+      )}
       <CFormSelect
         aria-label="Default select example"
         id="vehicle"
+        label="Vehículo"
         value={vehicle.vehicle || ''}
         onChange={(e) => {
           onChangeData(e)
         }}
       >
-        <option>Seleccione</option>
+        <option value={0}>Seleccione</option>
         {basicQuery.vehicles.map((vehicleCached) => {
           return (
             <option key={vehicleCached.id} value={vehicleCached.id}>
