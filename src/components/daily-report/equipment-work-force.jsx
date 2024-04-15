@@ -153,7 +153,7 @@ const EquipmentWorkForce = () => {
         >
           <div className="d-flex">
             <CToastBody>
-              Debe completar los datos de frente de trabajo, maquinaria y cantidad para registrar el
+              Debe completar los datos de frente de trabajo, equipo y cantidad para registrar el
               personal
             </CToastBody>
           </div>
