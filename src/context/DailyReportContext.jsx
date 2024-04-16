@@ -31,8 +31,8 @@ export const DailyReportProvider = ({ children }) => {
     dailyReportNumber: undefined,
     dailyReportContratistName: undefined,
     dailyReportWeather: undefined,
-    dailyReportContratistNumber: contractLS.id,
-    dailyReportContractName: contractLS.name,
+    dailyReportContratistNumber: undefined,
+    dailyReportContractName: undefined,
     dailyReportDirectPersonalShift: undefined,
     dailyReportDirectPersonalHours: undefined,
     dailyReportDirectPersonalJourney: undefined,
@@ -74,6 +74,14 @@ export const DailyReportProvider = ({ children }) => {
   })
 
   const storeCompanyData = async (data) => {
+    // dailyReportContratistNumber: contractLS.id,
+    // dailyReportContractName: contractLS.name,
+    setCompany({
+      ...company,
+      dailyReportContratistNumber: contractLS.id,
+      dailyReportContractName: contractLS.name,
+    })
+
     switch (data.target.id) {
       case 'dailyReportDate':
         setCompany({ ...company, dailyReportDate: data.target.value })
