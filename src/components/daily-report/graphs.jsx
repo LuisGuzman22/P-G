@@ -12,7 +12,6 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 import { CChart } from '@coreui/react-chartjs'
-import { getStyle } from '@coreui/utils'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 
 const Graphs = () => {
@@ -100,27 +99,27 @@ const Graphs = () => {
             },
           ],
         }}
-        options={{
-          showAllTooltips: true,
-          interaction: {
-            intersect: false,
-            mode: 'index',
-          },
-          plugins: {
-            title: {
-              display: true,
-              // text: (ctx) => 'Tooltip position mode: ' + ctx.chart.options.plugins.tooltip.position,
-            },
-          },
+        // options={{
+        //   showAllTooltips: true,
+        //   interaction: {
+        //     intersect: false,
+        //     mode: 'index',
+        //   },
+        //   plugins: {
+        //     title: {
+        //       display: true,
+        //       // text: (ctx) => 'Tooltip position mode: ' + ctx.chart.options.plugins.tooltip.position,
+        //     },
+        //   },
 
-          //   plugins: {
-          //     legend: {
-          //       labels: {
-          //         color: getStyle('--cui-body-color'),
-          //       },
-          //     },
-          //   },
-        }}
+        //   //   plugins: {
+        //   //     legend: {
+        //   //       labels: {
+        //   //         color: getStyle('--cui-body-color'),
+        //   //       },
+        //   //     },
+        //   //   },
+        // }}
       />
     </div>
   )
