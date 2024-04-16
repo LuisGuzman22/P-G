@@ -11,7 +11,7 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import { CChart } from '@coreui/react-chartjs'
+// import { CChart } from '@coreui/react-chartjs'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 
 const Graphs = () => {
@@ -53,7 +53,7 @@ const Graphs = () => {
 
   return (
     <div className="work-force-report">
-      <CChart
+      {/* <CChart
         type="pie"
         data={{
           labels: [
@@ -120,7 +120,7 @@ const Graphs = () => {
         //   //     },
         //   //   },
         // }}
-      />
+      /> */}
     </div>
   )
 }
