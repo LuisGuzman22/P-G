@@ -4,25 +4,25 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 
 const Comments = () => {
   const initialState = {
-    comments: '',
+    comment: '',
   }
 
-  const [comments, setComments] = useState(initialState)
+  const [comment, setComment] = useState(initialState)
 
   const onChangeData = (e) => {
-    setComments({ ...comments, [e.target.id]: e.target.value })
+    setComment({ ...comment, [e.target.id]: e.target.value })
   }
 
   const { storeComment } = useRegisterDailyReportCompany()
 
   useEffect(() => {
-    storeComment(comments)
-  }, [comments])
+    storeComment(comment)
+  }, [comment])
 
   return (
     <div className="work-force-report">
       <CFormTextarea
-        id="comments"
+        id="comment"
         label="Comentarios y alertas en genenral"
         onChange={(e) => {
           onChangeData(e)

@@ -36,6 +36,33 @@ const useRegisterDailyReport = () => {
     },
   })
 
+  let equipList = []
+  let equip = {}
+  for (let eq of equipmentList) {
+    equip = {}
+    equip.equipment = eq.equipment
+    equip.actions = JSON.stringify(eq.actions)
+    equipList.push(equip)
+  }
+
+  let machinList = []
+  let machin = {}
+  for (let ma of machineryList) {
+    machin = {}
+    machin.machinery = ma.machinery
+    machin.actions = JSON.stringify(ma.actions)
+    machinList.push(machin)
+  }
+
+  let vehicList = []
+  let vehic = {}
+  for (let ve of vehicleList) {
+    vehic = {}
+    vehic.vehicle = ve.vehicle
+    vehic.actions = JSON.stringify(ve.actions)
+    vehicList.push(vehic)
+  }
+
   const registerData = async () => {
     mutation.mutate({
       projectId: projectLS.id,
@@ -46,14 +73,14 @@ const useRegisterDailyReport = () => {
       directWorkForceList, // 4
       totalDirectWorkForce, // 5
       directDotationWorkForceList, // 7
-      machineryList, // 9
+      machineryList: machinList, // 9
       machineryWorkForceList, // 10
-      equipmentList, // 11
+      equipmentList: equipList, // 11
       equipmentWorkForceList, // 12
-      vehicleList, // 13
+      vehicleList: vehicList, // 13
       vehicleWorkForceList, // 14
       activityList, // 15
-      comments, // 16
+      comment: comments, // 16
       // 17 (graficos)
       incident, // 18 //
       asarcoMachineryList, // 9

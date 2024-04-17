@@ -95,7 +95,7 @@ const Incidents = () => {
         label="Incidentes lesiones y eventos"
         rows={3}
         value={incident.incident}
-        text={`${incident.incident.length} de ${INCIDENT_LIMIT} caracteres`}
+        text={`${incident?.incident?.length ?? 0} de ${INCIDENT_LIMIT} caracteres`}
         onChange={(e) => {
           onChangeData(e)
         }}
@@ -105,7 +105,7 @@ const Incidents = () => {
         id="nonConformity"
         label="No conformidades o interferencias"
         rows={3}
-        text={`${incident.nonConformity.length} de ${NON_CONFORMITY_LIMIT} caracteres`}
+        text={`${incident?.nonConformity?.length ?? 0} de ${NON_CONFORMITY_LIMIT} caracteres`}
         value={incident.nonConformity}
         onChange={(e) => {
           onChangeData(e)

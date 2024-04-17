@@ -51,7 +51,7 @@ export const DailyReportProvider = ({ children }) => {
   const [machineryWorkForceList, setMachineryWorkForceList] = useState([])
   const [equipmentWorkForceList, setEquipmentWorkForceList] = useState([])
   const [vehicleWorkForceList, setVehicletWorkForceList] = useState([])
-  const [comments, setComments] = useState('')
+  const [comment, setComment] = useState('')
   const [incident, setIncident] = useState([])
   const [machineryList, setMachineryList] = useState([])
   const [equipmentList, setEquipmentList] = useState([])
@@ -76,15 +76,20 @@ export const DailyReportProvider = ({ children }) => {
   const storeCompanyData = async (data) => {
     // dailyReportContratistNumber: contractLS.id,
     // dailyReportContractName: contractLS.name,
-    setCompany({
-      ...company,
-      dailyReportContratistNumber: contractLS.id,
-      dailyReportContractName: contractLS.name,
-    })
+    // setCompany({
+    //   ...company,
+    //   dailyReportContratistNumber: contractLS.id,
+    //   dailyReportContractName: contractLS.name,
+    // })
 
     switch (data.target.id) {
       case 'dailyReportDate':
-        setCompany({ ...company, dailyReportDate: data.target.value })
+        setCompany({
+          ...company,
+          dailyReportDate: data.target.value,
+          dailyReportContratistNumber: contractLS.id,
+          dailyReportContractName: contractLS.name,
+        })
         break
       case 'dailyReportNumber':
         setCompany({ ...company, dailyReportNumber: data.target.value })
@@ -203,7 +208,7 @@ export const DailyReportProvider = ({ children }) => {
   }
 
   const storeComment = async (data) => {
-    setComments(data)
+    setComment(data)
   }
 
   const storeIncident = async (data) => {
@@ -324,7 +329,7 @@ export const DailyReportProvider = ({ children }) => {
         storeIncident,
         removeIncident,
         incident,
-        comments,
+        comment,
         storeMachinery,
         removeMachinery,
         machineryList,
