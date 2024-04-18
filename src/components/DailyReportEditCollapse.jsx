@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   CAccordion,
   CAccordionBody,
@@ -33,9 +33,6 @@ import PhotoRecord from './daily-report/photo-record'
 
 const DailyReportCollapse = () => {
   const { registerData } = useRegisterDailyReport()
-  useEffect(() => {
-    localStorage.removeItem('daily_report')
-  }, [])
 
   return (
     <div className="dailyReport">

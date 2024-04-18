@@ -2,6 +2,7 @@ import React from 'react'
 
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 const DailyReport = React.lazy(() => import('./pages/DailyReportPage'))
+const DailyReportEdit = React.lazy(() => import('./pages/DailyReportEditPage'))
 const Detail = React.lazy(() => import('./pages/DetailPage'))
 const Gantt = React.lazy(() => import('./pages/GanttPage'))
 const Project = React.lazy(() => import('./pages/ProjectPage'))
@@ -70,6 +71,7 @@ const routes = [
   { path: '/panel-informativo', name: 'Panel Informativo', element: InformativePanel },
   { path: '/proyecto', name: 'Proyecto', element: Project },
   { path: '/informe-diario', name: 'Informe Diario', element: DailyReport },
+  { path: '/informe-diario/edit', name: 'Informe Diario', element: DailyReportEdit },
   { path: '/trisemanal', name: 'Actividades Trisemanal', element: Trisemanal },
   { path: '/carta-gantt', name: 'Carta Gantt', element: Gantt },
   { path: '/avance', name: 'Detalles de avance', element: Detail },

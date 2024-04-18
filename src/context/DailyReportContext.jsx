@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import { createContext } from 'react'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 export const DailyReportContext = createContext({
@@ -25,9 +26,29 @@ export const DailyReportProvider = ({ children }) => {
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
+  const { getData } = useGetCachedQueryData()
+
+  const reportsQuery = getData('reports')
+  const reportId = localStorage.getItem('daily_report')
+
+  let selectedReport
+
+  if (reportId) {
+    selectedReport = reportsQuery?.find((report) => {
+      return report.id.toString() === reportId.toString()
+    })
+  }
+
+  // console.log('selectedReport', selectedReport)
+
+  const selectedCompany = selectedReport?.company
+  console.log('selectedCompany', selectedCompany)
+
   const [company, setCompany] = useState({
-    dailyReportContractManagerName: undefined,
-    dailyReportDate: undefined,
+    dailyReportContractManagerName: selectedCompany
+      ? selectedCompany.dailyReportContractManagerName
+      : undefined,
+    dailyReportDate: selectedCompany ? selectedCompany.dailyReportDate : undefined,
     dailyReportNumber: undefined,
     dailyReportContratistName: undefined,
     dailyReportWeather: undefined,
@@ -40,6 +61,44 @@ export const DailyReportProvider = ({ children }) => {
     dailyReportIndirectPersonalHours: undefined,
     dailyReportIndirectPersonalJourney: undefined,
   })
+
+  useEffect(() => {
+    setCompany({
+      dailyReportContractManagerName: selectedCompany
+        ? selectedCompany.dailyReportContractManagerName
+        : undefined,
+      dailyReportDate: selectedCompany ? selectedCompany.dailyReportDate : undefined,
+      dailyReportNumber: selectedCompany ? selectedCompany.dailyReportNumber : undefined,
+      dailyReportContratistName: selectedCompany
+        ? selectedCompany.dailyReportContratistName
+        : undefined,
+      dailyReportWeather: selectedCompany ? selectedCompany.dailyReportWeather : undefined,
+      dailyReportContratistNumber: selectedCompany
+        ? selectedCompany.dailyReportContratistNumber
+        : undefined,
+      dailyReportContractName: selectedCompany
+        ? selectedCompany.dailyReportContractName
+        : undefined,
+      dailyReportDirectPersonalShift: selectedCompany
+        ? selectedCompany.dailyReportDirectPersonalShift
+        : undefined,
+      dailyReportDirectPersonalHours: selectedCompany
+        ? selectedCompany.dailyReportDirectPersonalHours
+        : undefined,
+      dailyReportDirectPersonalJourney: selectedCompany
+        ? selectedCompany.dailyReportDirectPersonalJourney
+        : undefined,
+      dailyReportIndirectPersonalShift: selectedCompany
+        ? selectedCompany.dailyReportIndirectPersonalShift
+        : undefined,
+      dailyReportIndirectPersonalHours: selectedCompany
+        ? selectedCompany.dailyReportIndirectPersonalHours
+        : undefined,
+      dailyReportIndirectPersonalJourney: selectedCompany
+        ? selectedCompany.dailyReportIndirectPersonalJourney
+        : undefined,
+    })
+  }, [selectedCompany])
 
   const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState()
   const [totalDirectWorkForce, setTotalDirectWorkForce] = useState()

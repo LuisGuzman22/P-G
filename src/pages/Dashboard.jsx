@@ -24,8 +24,6 @@ const Dashboard = () => {
   useFetchReportsData()
   const reportsQuery = getData('reports')
 
-  console.log('reportsQuery', reportsQuery)
-
   useEffect(() => {
     if (!projectLS || !contractLS) {
       navigate(`/project_selector`)
@@ -45,7 +43,7 @@ const Dashboard = () => {
           </CCardText>
         </CCardBody>
       </CCard>
-      {reportsQuery.length > 0 && (
+      {reportsQuery && reportsQuery.length > 0 && (
         <>
           <br />
           <CCard>
@@ -54,7 +52,21 @@ const Dashboard = () => {
                 <>
                   <span>Tienes {reportsQuery.length} informes diarios por firmar.</span>
                   {reportsQuery.map((report) => {
-                    return <>{report.id}</>
+                    return (
+                      <>
+                        <CRow>
+                          <CButton
+                            className="dashboard-button"
+                            onClick={() => {
+                              localStorage.setItem('daily_report', report.id)
+                              redirectTo('/informe-diario/edit')
+                            }}
+                          >
+                            {report.id}
+                          </CButton>
+                        </CRow>
+                      </>
+                    )
                   })}
                 </>
               </CCardText>

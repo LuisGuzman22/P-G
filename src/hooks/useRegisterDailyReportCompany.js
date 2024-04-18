@@ -3,6 +3,7 @@ import { DailyReportContext } from 'src/context/DailyReportContext'
 
 const useRegisterDailyReportCompany = () => {
   const {
+    company,
     storeCompanyData,
     storeIndirectWorkForceData,
     storeDirectWorkForce,
@@ -61,6 +62,7 @@ const useRegisterDailyReportCompany = () => {
   } = useContext(DailyReportContext)
 
   return {
+    company,
     storeCompanyData,
     storeIndirectWorkForceData,
     storeDirectWorkForce,

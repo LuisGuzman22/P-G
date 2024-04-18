@@ -5,9 +5,13 @@ import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 const CompanyReport = () => {
-  const { storeCompanyData } = useRegisterDailyReportCompany()
+  const { storeCompanyData, company } = useRegisterDailyReportCompany()
   const { registerData } = useRegisterDailyReport()
   const { getProject, getContract } = useRegisterGeneralData()
+
+  useEffect(() => {
+    console.log('company', company)
+  }, [company])
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
@@ -25,6 +29,7 @@ const CompanyReport = () => {
               type="date"
               id="dailyReportDate"
               label="Fecha"
+              value={company.dailyReportDate || ''}
               placeholder="Fecha"
               text=""
               onChange={(e) => {
@@ -39,6 +44,7 @@ const CompanyReport = () => {
               label="Informe diario N°"
               placeholder="Informe diario N°"
               text=""
+              value={company.dailyReportNumber || ''}
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -50,6 +56,7 @@ const CompanyReport = () => {
               id="dailyReportContratistName"
               label="Nombre de contratista"
               placeholder="Detalle"
+              value={company.dailyReportContratistName || ''}
               text=""
               onChange={(e) => {
                 onChangeData(e)
@@ -65,7 +72,7 @@ const CompanyReport = () => {
               label="N° de contrato"
               placeholder="N° de contrato"
               disabled
-              value={contractLS.id}
+              value={company.dailyReportContratistNumber || contractLS.id}
               text=""
               onChange={(e) => {
                 onChangeData(e)
@@ -78,7 +85,7 @@ const CompanyReport = () => {
               id="dailyReportContractName"
               label="Nombre de contrato"
               placeholder="Nombre de contrato"
-              value={contractLS.name}
+              value={company.dailyReportContractName || contractLS.name}
               disabled
               text=""
               onChange={(e) => {
@@ -92,6 +99,7 @@ const CompanyReport = () => {
               id="dailyReportContractManagerName"
               label="Administrador de contrato"
               placeholder="Administrador de contrato"
+              value={company.dailyReportContractManagerName || ''}
               text=""
               onChange={(e) => {
                 onChangeData(e)
@@ -104,12 +112,13 @@ const CompanyReport = () => {
             <CFormSelect
               aria-label="Clima"
               id="dailyReportWeather"
+              value={company.dailyReportWeather || '0'}
               label="Clima"
               onChange={(e) => {
                 onChangeData(e)
               }}
             >
-              <option>Seleccione</option>
+              <option value={'0'}>Seleccione</option>
               <option value="1">Calor moderado</option>
               <option value="2">Calor intenso</option>
               <option value="3">Frío moderado</option>
@@ -129,11 +138,12 @@ const CompanyReport = () => {
               aria-label="Turno (Personal directo)"
               id="dailyReportDirectPersonalShift"
               label="Turno (Personal directo)"
+              value={company.dailyReportDirectPersonalShift || '0'}
               onChange={(e) => {
                 onChangeData(e)
               }}
             >
-              <option>Seleccione</option>
+              <option value={'0'}>Seleccione</option>
               <option value="14x14">14x14</option>
               <option value="7x7">7x7</option>
             </CFormSelect>
@@ -144,6 +154,7 @@ const CompanyReport = () => {
               id="dailyReportDirectPersonalHours"
               label="Horas turno (Personal directo)"
               placeholder="Horas turno (Personal directo)"
+              value={company.dailyReportDirectPersonalHours || ''}
               text=""
               onChange={(e) => {
                 onChangeData(e)
@@ -155,11 +166,12 @@ const CompanyReport = () => {
               aria-label="Jornada (Personal directo)"
               id="dailyReportDirectPersonalJourney"
               label="Jornada (Personal directo)"
+              value={company.dailyReportDirectPersonalJourney || '0'}
               onChange={(e) => {
                 onChangeData(e)
               }}
             >
-              <option>Seleccione</option>
+              <option value={'0'}>Seleccione</option>
               <option value="dia">Día</option>
               <option value="noche">Noche</option>
             </CFormSelect>
@@ -171,11 +183,12 @@ const CompanyReport = () => {
               aria-label="Turno (Personal indirecto)"
               id="dailyReportIndirectPersonalShift"
               label="Turno (Personal indirecto)"
+              value={company.dailyReportIndirectPersonalShift || '0'}
               onChange={(e) => {
                 onChangeData(e)
               }}
             >
-              <option>Seleccione</option>
+              <option value={'0'}>Seleccione</option>
               <option value="4x3">4x3</option>
               <option value="5x2">5x2</option>
             </CFormSelect>
@@ -186,6 +199,7 @@ const CompanyReport = () => {
               id="dailyReportIndirectPersonalHours"
               label="Horas turno (Personal indirecto)"
               placeholder="Horas turno (Personal indirecto)"
+              value={company.dailyReportIndirectPersonalHours || ''}
               text=""
               onChange={(e) => {
                 onChangeData(e)
@@ -197,11 +211,12 @@ const CompanyReport = () => {
               aria-label="Jornada (Personal indirecto)"
               id="dailyReportIndirectPersonalJourney"
               label="Jornada (Personal indirecto)"
+              value={company.dailyReportIndirectPersonalJourney || '0'}
               onChange={(e) => {
                 onChangeData(e)
               }}
             >
-              <option>Seleccione</option>
+              <option value={'0'}>Seleccione</option>
               <option value="dia">Día</option>
               <option value="noche">Noche</option>
             </CFormSelect>
