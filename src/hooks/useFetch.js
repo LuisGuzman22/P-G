@@ -21,6 +21,13 @@ const fetchBasicData = async (contractId) => {
   return res.data.data
 }
 
+export const fetchReportsData = async () => {
+  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/reports')
+  return res.data.data
+}
+
+const userType = localStorage.getItem('USER_TYPE')
+
 export const useFetchProyects = (projectId) => {
   return useQuery({
     queryKey: ['projects'],
@@ -61,6 +68,19 @@ export const useFetchUserList = () => {
     refetchType: 'all',
     queryFn: async () => {
       return fetchUsers()
+    },
+  })
+}
+
+export const useFetchReportsData = () => {
+  console.log('userType', userType)
+  return useQuery({
+    queryKey: ['reports'],
+    staleTime: 0,
+    gcTime: 2147483647,
+    refetchType: 'all',
+    queryFn: async () => {
+      return fetchReportsData()
     },
   })
 }
