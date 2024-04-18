@@ -3,8 +3,11 @@ import { CForm, CFormInput, CRow, CCol, CFormSelect } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
+import { useLocation } from 'react-router-dom'
 
 const CompanyReport = () => {
+  const currentLocation = useLocation().pathname
+  console.log('currentLocation', currentLocation)
   const { storeCompanyData, company } = useRegisterDailyReportCompany()
   const { registerData } = useRegisterDailyReport()
   const { getProject, getContract } = useRegisterGeneralData()
@@ -30,6 +33,7 @@ const CompanyReport = () => {
               id="dailyReportDate"
               label="Fecha"
               value={company.dailyReportDate || ''}
+              disabled={currentLocation.includes('/edit')}
               placeholder="Fecha"
               text=""
               onChange={(e) => {
@@ -44,6 +48,7 @@ const CompanyReport = () => {
               label="Informe diario N°"
               placeholder="Informe diario N°"
               text=""
+              disabled={currentLocation.includes('/edit')}
               value={company.dailyReportNumber || ''}
               onChange={(e) => {
                 onChangeData(e)
@@ -58,6 +63,7 @@ const CompanyReport = () => {
               placeholder="Detalle"
               value={company.dailyReportContratistName || ''}
               text=""
+              disabled={currentLocation.includes('/edit')}
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -101,6 +107,7 @@ const CompanyReport = () => {
               placeholder="Administrador de contrato"
               value={company.dailyReportContractManagerName || ''}
               text=""
+              disabled={currentLocation.includes('/edit')}
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -114,6 +121,7 @@ const CompanyReport = () => {
               id="dailyReportWeather"
               value={company.dailyReportWeather || '0'}
               label="Clima"
+              disabled={currentLocation.includes('/edit')}
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -139,6 +147,7 @@ const CompanyReport = () => {
               id="dailyReportDirectPersonalShift"
               label="Turno (Personal directo)"
               value={company.dailyReportDirectPersonalShift || '0'}
+              disabled={currentLocation.includes('/edit')}
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -156,6 +165,7 @@ const CompanyReport = () => {
               placeholder="Horas turno (Personal directo)"
               value={company.dailyReportDirectPersonalHours || ''}
               text=""
+              disabled={currentLocation.includes('/edit')}
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -167,6 +177,7 @@ const CompanyReport = () => {
               id="dailyReportDirectPersonalJourney"
               label="Jornada (Personal directo)"
               value={company.dailyReportDirectPersonalJourney || '0'}
+              disabled={currentLocation.includes('/edit')}
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -184,6 +195,7 @@ const CompanyReport = () => {
               id="dailyReportIndirectPersonalShift"
               label="Turno (Personal indirecto)"
               value={company.dailyReportIndirectPersonalShift || '0'}
+              disabled={currentLocation.includes('/edit')}
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -201,6 +213,7 @@ const CompanyReport = () => {
               placeholder="Horas turno (Personal indirecto)"
               value={company.dailyReportIndirectPersonalHours || ''}
               text=""
+              disabled={currentLocation.includes('/edit')}
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -212,6 +225,7 @@ const CompanyReport = () => {
               id="dailyReportIndirectPersonalJourney"
               label="Jornada (Personal indirecto)"
               value={company.dailyReportIndirectPersonalJourney || '0'}
+              disabled={currentLocation.includes('/edit')}
               onChange={(e) => {
                 onChangeData(e)
               }}

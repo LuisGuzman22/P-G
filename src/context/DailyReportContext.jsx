@@ -39,10 +39,7 @@ export const DailyReportProvider = ({ children }) => {
     })
   }
 
-  // console.log('selectedReport', selectedReport)
-
   const selectedCompany = selectedReport?.company
-  console.log('selectedCompany', selectedCompany)
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany

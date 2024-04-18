@@ -36,6 +36,34 @@ const useRegisterDailyReport = () => {
     },
   })
 
+  // let iwfList = []
+  // let iwf = {}
+  // for (let indi of indirectWorkForceList) {
+  //   iwf = {}
+  //   iwf.indirectWorkForce = indi.indirectWorkForce
+  //   iwf.offeredNumber = indi.offeredNumber
+  //   iwf.contractedNumber = indi.contractedNumber
+  //   iwf.certified = indi.certified
+  //   iwf.breakNumber = indi.breakNumber
+  //   iwf.workNumber = indi.workNumber
+  //   iwf.hh = indi.indirectWorkForhhce
+  //   iwfList.push(iwf)
+  // }
+
+  // let dwfList = []
+  // let dwf = {}
+  // for (let direct of directWorkForceList) {
+  //   dwf = {}
+  //   dwf.indirectWorkForce = direct.indirectWorkForce
+  //   dwf.offeredNumber = direct.offeredNumber
+  //   dwf.contractedNumber = direct.contractedNumber
+  //   dwf.certified = direct.certified
+  //   dwf.breakNumber = direct.breakNumber
+  //   dwf.workNumber = direct.workNumber
+  //   dwf.hh = direct.indirectWorkForhhce
+  //   dwfList.push(dwf)
+  // }
+
   let equipList = []
   let equip = {}
   for (let eq of equipmentList) {
@@ -62,6 +90,42 @@ const useRegisterDailyReport = () => {
     vehic.actions = JSON.stringify(ve.actions)
     vehicList.push(vehic)
   }
+
+  // let ddwfList = []
+  // let ddwf = {}
+  // for (let directDotation of directDotationWorkForceList) {
+  //   ddwf = {}
+  //   ddwf.directDotationWorkForceObservation = directDotation.directDotationWorkForceObservation
+  //   ddwf.directWorkFront = directDotation.directWorkFront
+  //   ddwf.directSubWorkFront = directDotation.directSubWorkFront
+  //   ddwf.directWorkFrontCharge = directDotation.directWorkFrontCharge
+  //   ddwf.directWorkFrontQuantity = directDotation.directWorkFrontQuantity
+  //   ddwfList.push(ddwf)
+  // }
+
+  // let mwfList = []
+  // let mwf = {}
+  // for (let machineryWF of machineryWorkForceList) {
+  //   mwf = {}
+  //   mwf.machineryWorkForcebservation = machineryWF.machineryWorkForcebservation
+  //   mwf.machineryWorkForce = machineryWF.machineryWorkForce
+  //   mwf.machinerySubWorkFront = machineryWF.machinerySubWorkFront
+  //   mwf.machineryWorkFrontCharge = machineryWF.machineryWorkFrontCharge
+  //   mwf.machineryWorkFrontQuantity = machineryWF.machineryWorkFrontQuantity
+  //   mwfList.push(mwf)
+  // }
+
+  // let ewfList = []
+  // let ewf = {}
+  // for (let equipmentWF of equipmentWorkForceList) {
+  //   ewf = {}
+  //   ewf.equipmentWorkForce = equipmentWF.equipmentWorkForce
+  //   ewf.equipmentWorkForceObservation = equipmentWF.equipmentWorkForceObservation
+  //   ewf.equipmentSubWorkFront = equipmentWF.equipmentSubWorkFront
+  //   ewf.equipmentWorkFrontCharge = equipmentWF.equipmentWorkFrontCharge
+  //   ewf.equipmentWorkFrontQuantity = equipmentWF.equipmentWorkFrontQuantity
+  //   ewfList.push(ewf)
+  // }
 
   const registerData = async () => {
     mutation.mutate({

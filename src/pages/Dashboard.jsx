@@ -43,7 +43,7 @@ const Dashboard = () => {
           </CCardText>
         </CCardBody>
       </CCard>
-      {reportsQuery && reportsQuery.length > 0 && (
+      {localStorage.getItem('USER_TYPE') === 'admin' && reportsQuery && reportsQuery.length > 0 && (
         <>
           <br />
           <CCard>
