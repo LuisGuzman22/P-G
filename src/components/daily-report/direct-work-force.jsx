@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const DirectWorkForce = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialStatee = {
     directWorkForce: undefined,
     directWorkForceOfferedNumber: undefined,
@@ -81,130 +85,138 @@ const DirectWorkForce = () => {
   }
 
   useEffect(() => {
-    storeDirectWorkForce(directWorkForceList)
+    console.log('directWorkForceListContext', directWorkForceListContext)
+  }, [directWorkForceListContext])
+
+  useEffect(() => {
+    if (!isEditMode) storeDirectWorkForce(directWorkForceList)
   }, [directWorkForceList])
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>Debe seleccionar el cargo para generar el registro</CToastBody>
-          </div>
-        </CToast>
+      {!isEditMode && (
+        <>
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>Debe seleccionar el cargo para generar el registro</CToastBody>
+              </div>
+            </CToast>
+          )}
+          <CFormSelect
+            aria-label="Default select example"
+            id="directWorkForce"
+            value={directWorkForce.directWorkForce || ''}
+            label="Cargo"
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={0}>Seleccione</option>
+            {basicQuery.directPersonal.map((directPersonalCached) => {
+              return (
+                <option key={directPersonalCached.id} value={directPersonalCached.id}>
+                  {directPersonalCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
+          <CTable>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">N° Ofertado</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Contratados</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Acreditados</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="directWorkForceOfferedNumber"
+                    placeholder="N° Ofertado"
+                    value={directWorkForce.directWorkForceOfferedNumber || ''}
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="directWorkForceContractedNumber"
+                    placeholder="N° Contratados"
+                    value={directWorkForce.directWorkForceContractedNumber || ''}
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="directWorkForceCertifiedNumber"
+                    placeholder="N° Acreditados"
+                    value={directWorkForce.directWorkForceCertifiedNumber || ''}
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableHeaderCell scope="col">N° Descanso</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="directWorkForceBreakNumber"
+                    placeholder="N° Descanso"
+                    value={directWorkForce.directWorkForceBreakNumber || ''}
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="directWorkForceWorkNumber"
+                    placeholder="N° Obra"
+                    value={directWorkForce.directWorkForceWorkNumber || ''}
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="directWorkForceHHNumber"
+                    placeholder="HH (Turno)"
+                    value={directWorkForce.directWorkForceHHNumber || ''}
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+        </>
       )}
-      <CFormSelect
-        aria-label="Default select example"
-        id="directWorkForce"
-        value={directWorkForce.directWorkForce || ''}
-        label="Cargo"
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={0}>Seleccione</option>
-        {basicQuery.directPersonal.map((directPersonalCached) => {
-          return (
-            <option key={directPersonalCached.id} value={directPersonalCached.id}>
-              {directPersonalCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">N° Ofertado</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Contratados</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Acreditados</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceOfferedNumber"
-                placeholder="N° Ofertado"
-                value={directWorkForce.directWorkForceOfferedNumber || ''}
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceContractedNumber"
-                placeholder="N° Contratados"
-                value={directWorkForce.directWorkForceContractedNumber || ''}
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceCertifiedNumber"
-                placeholder="N° Acreditados"
-                value={directWorkForce.directWorkForceCertifiedNumber || ''}
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">N° Descanso</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
-            <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceBreakNumber"
-                placeholder="N° Descanso"
-                value={directWorkForce.directWorkForceBreakNumber || ''}
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceWorkNumber"
-                placeholder="N° Obra"
-                value={directWorkForce.directWorkForceWorkNumber || ''}
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="directWorkForceHHNumber"
-                placeholder="HH (Turno)"
-                value={directWorkForce.directWorkForceHHNumber || ''}
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
 
       {directWorkForceListContext.length > 0 && directWorkForceListContext[0].directWorkForce && (
         <CTable className="resume-table">
@@ -250,7 +262,6 @@ const DirectWorkForce = () => {
           </CTableBody>
         </CTable>
       )}
-
       <CButton
         className="btn-project-action"
         onClick={() => {

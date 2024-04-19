@@ -42,6 +42,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedCompany = selectedReport?.company
   const selectedIndirectWorkForceList = selectedReport?.indirectWorkForceList
   const selectedTotalIndirectWorkForce = selectedReport?.totalIndirectWorkForce
+  const selectedDirectWorkForceList = selectedReport?.directWorkForceList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -118,8 +119,8 @@ export const DailyReportProvider = ({ children }) => {
 
   const [totalDirectWorkForce, setTotalDirectWorkForce] = useState()
 
-  const [directWorkForceList, setDirectWorkForceList] = useState([])
-  const [indirectWorkForceList, setIndirectWorkForceList] = useState()
+  const [directWorkForceList, setDirectWorkForceList] = useState() // ANTES ERA UN ARRAY
+  const [indirectWorkForceList, setIndirectWorkForceList] = useState() // ANTES ERA UN ARRAY
   const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([])
   const [directDotationWorkForceList, setDirectDotationWorkForceList] = useState([])
   const [machineryWorkForceList, setMachineryWorkForceList] = useState([])
@@ -152,6 +153,13 @@ export const DailyReportProvider = ({ children }) => {
       setIndirectWorkForceList(selectedIndirectWorkForceList)
     }
   }, [selectedIndirectWorkForceList])
+
+  useEffect(() => {
+    if (selectedDirectWorkForceList) {
+      console.log('selectedDirectWorkForceList', selectedDirectWorkForceList)
+      setDirectWorkForceList(selectedDirectWorkForceList)
+    }
+  }, [selectedDirectWorkForceList])
 
   const storeCompanyData = async (data) => {
     switch (data.target.id) {
