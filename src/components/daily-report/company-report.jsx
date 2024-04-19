@@ -7,14 +7,9 @@ import { useLocation } from 'react-router-dom'
 
 const CompanyReport = () => {
   const currentLocation = useLocation().pathname
-  console.log('currentLocation', currentLocation)
   const { storeCompanyData, company } = useRegisterDailyReportCompany()
   const { registerData } = useRegisterDailyReport()
   const { getProject, getContract } = useRegisterGeneralData()
-
-  useEffect(() => {
-    console.log('company', company)
-  }, [company])
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())

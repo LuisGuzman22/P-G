@@ -16,8 +16,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const IndirectWorkForce = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     indirectWorkForce: undefined,
     indirectWorkForceOfferedNumber: undefined,
@@ -72,7 +76,7 @@ const IndirectWorkForce = () => {
   }
 
   useEffect(() => {
-    storeIndirectWorkForceData(indirectWorkForceList)
+    if (!isEditMode) storeIndirectWorkForceData(indirectWorkForceList)
   }, [indirectWorkForceList])
 
   const deleteIndirectWorkForce = (id) => {
@@ -84,141 +88,143 @@ const IndirectWorkForce = () => {
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>Debe seleccionar el cargo para generar el registro</CToastBody>
-          </div>
-        </CToast>
+      {!isEditMode && (
+        <>
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>Debe seleccionar el cargo para generar el registro</CToastBody>
+              </div>
+            </CToast>
+          )}
+          <CFormSelect
+            aria-label="Default select example"
+            id="indirectWorkForce"
+            label="Cargo"
+            value={indirectWorkForce.indirectWorkForce || ''}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={0}>Seleccione</option>
+            {basicQuery.indirectPersonal.map((indirectPersonalCached) => {
+              return (
+                <option key={indirectPersonalCached.id} value={indirectPersonalCached.id}>
+                  {indirectPersonalCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
+          <CTable>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">N° Ofertado</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Contratados</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Acreditados</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="contractAdministratorOfferedNumber"
+                    placeholder="N° Ofertado"
+                    value={indirectWorkForce.contractAdministratorOfferedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="contractAdministratorContractedNumber"
+                    placeholder="N° Contratados"
+                    value={indirectWorkForce.contractAdministratorContractedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="contractAdministratorCertified"
+                    placeholder="Acreditados"
+                    value={indirectWorkForce.contractAdministratorCertified || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableHeaderCell scope="col">N° Descanso</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="contractAdministratorBreakNumber"
+                    placeholder="N° Descanso"
+                    value={indirectWorkForce.contractAdministratorBreakNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="contractAdministratorWorkNumber"
+                    placeholder="N° Obra"
+                    value={indirectWorkForce.contractAdministratorWorkNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="contractAdministratorHHNumber"
+                    placeholder="HH (Turno)"
+                    value={indirectWorkForce.contractAdministratorHHNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerIndirectWorkForce()
+            }}
+          >
+            Registrar
+          </CButton>
+        </>
       )}
-      <CFormSelect
-        aria-label="Default select example"
-        id="indirectWorkForce"
-        label="Cargo"
-        value={indirectWorkForce.indirectWorkForce || ''}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={0}>Seleccione</option>
-        {basicQuery.indirectPersonal.map((indirectPersonalCached) => {
-          return (
-            <option key={indirectPersonalCached.id} value={indirectPersonalCached.id}>
-              {indirectPersonalCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">N° Ofertado</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Contratados</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Acreditados</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractAdministratorOfferedNumber"
-                placeholder="N° Ofertado"
-                value={indirectWorkForce.contractAdministratorOfferedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractAdministratorContractedNumber"
-                placeholder="N° Contratados"
-                value={indirectWorkForce.contractAdministratorContractedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractAdministratorCertified"
-                placeholder="Acreditados"
-                value={indirectWorkForce.contractAdministratorCertified || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">N° Descanso</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
-            <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractAdministratorBreakNumber"
-                placeholder="N° Descanso"
-                value={indirectWorkForce.contractAdministratorBreakNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractAdministratorWorkNumber"
-                placeholder="N° Obra"
-                value={indirectWorkForce.contractAdministratorWorkNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="contractAdministratorHHNumber"
-                placeholder="HH (Turno)"
-                value={indirectWorkForce.contractAdministratorHHNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerIndirectWorkForce()
-        }}
-      >
-        Registrar
-      </CButton>
-
       {indirectWorkForceListContext.length > 0 &&
         indirectWorkForceListContext[0].indirectWorkForce && (
           <CTable className="resume-table">

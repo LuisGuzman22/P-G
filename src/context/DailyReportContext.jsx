@@ -40,6 +40,8 @@ export const DailyReportProvider = ({ children }) => {
   }
 
   const selectedCompany = selectedReport?.company
+  const selectedIndirectWorkForceList = selectedReport?.indirectWorkForceList
+  const selectedTotalIndirectWorkForce = selectedReport?.totalIndirectWorkForce
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -98,10 +100,26 @@ export const DailyReportProvider = ({ children }) => {
   }, [selectedCompany])
 
   const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState()
+
+  useEffect(() => {
+    setTotalIndirectWorkForce({
+      indirectCurrentAccumulated: selectedTotalIndirectWorkForce?.indirectCurrentAccumulated,
+      indirectPreviusAccumulated: selectedTotalIndirectWorkForce?.indirectPreviusAccumulated,
+      indirectSubstotalHHNumber: selectedTotalIndirectWorkForce?.indirectSubstotalHHNumber,
+      indirectSubtotalBreakNumber: selectedTotalIndirectWorkForce?.indirectSubtotalBreakNumber,
+      indirectSubtotalCertifiedNumber:
+        selectedTotalIndirectWorkForce?.indirectSubtotalCertifiedNumber,
+      indirectSubtotalContractedNumber:
+        selectedTotalIndirectWorkForce?.indirectSubtotalContractedNumber,
+      indirectSubtotalOfferedNumber: selectedTotalIndirectWorkForce?.indirectSubtotalOfferedNumber,
+      indirectSubtotalWorkNumber: selectedTotalIndirectWorkForce?.indirectSubtotalWorkNumber,
+    })
+  }, [selectedTotalIndirectWorkForce])
+
   const [totalDirectWorkForce, setTotalDirectWorkForce] = useState()
 
   const [directWorkForceList, setDirectWorkForceList] = useState([])
-  const [indirectWorkForceList, setIndirectWorkForceList] = useState([])
+  const [indirectWorkForceList, setIndirectWorkForceList] = useState()
   const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([])
   const [directDotationWorkForceList, setDirectDotationWorkForceList] = useState([])
   const [machineryWorkForceList, setMachineryWorkForceList] = useState([])
@@ -129,15 +147,13 @@ export const DailyReportProvider = ({ children }) => {
     workforceDotationObservation: undefined,
   })
 
-  const storeCompanyData = async (data) => {
-    // dailyReportContratistNumber: contractLS.id,
-    // dailyReportContractName: contractLS.name,
-    // setCompany({
-    //   ...company,
-    //   dailyReportContratistNumber: contractLS.id,
-    //   dailyReportContractName: contractLS.name,
-    // })
+  useEffect(() => {
+    if (selectedIndirectWorkForceList) {
+      setIndirectWorkForceList(selectedIndirectWorkForceList)
+    }
+  }, [selectedIndirectWorkForceList])
 
+  const storeCompanyData = async (data) => {
     switch (data.target.id) {
       case 'dailyReportDate':
         setCompany({

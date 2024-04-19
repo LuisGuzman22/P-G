@@ -10,8 +10,11 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { validate } from 'src/utils/validate'
+import { useLocation } from 'react-router-dom'
 
 const TotalIndirectWorkForce = () => {
+  const currentLocation = useLocation().pathname
+
   const initialState = {
     indirectSubtotalOfferedNumber: undefined,
     indirectSubtotalContractedNumber: undefined,
@@ -22,8 +25,11 @@ const TotalIndirectWorkForce = () => {
     indirectPreviusAccumulated: undefined,
     indirectCurrentAccumulated: undefined,
   }
-  const { storeTotalIndirectWorkForce, indirectWorkForceList: indirectWorkForceListContext } =
-    useRegisterDailyReportCompany()
+  const {
+    storeTotalIndirectWorkForce,
+    indirectWorkForceList: indirectWorkForceListContext,
+    totalIndirectWorkForce: totalIndirectWorkForceContext,
+  } = useRegisterDailyReportCompany()
 
   const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState(initialState)
   const [indirectAccumulatedHours, setIndirectAccumulatedHours] = useState(0)
@@ -34,7 +40,6 @@ const TotalIndirectWorkForce = () => {
   const [indirectAccumulatedWorked, setIndirectAccumulatedWorked] = useState(0)
   const [indirectAccumulatedPrevious, setIndirectAccumulatedPrevious] = useState(0)
   const [indirectAccumulatedActual, setIndirectAccumulatedActual] = useState(0)
-
   const onChangeData = (e) => {
     if (validate(e.target.value)) {
       setTotalIndirectWorkForce({
@@ -54,47 +59,63 @@ const TotalIndirectWorkForce = () => {
   }, [indirectAccumulatedActual])
 
   useEffect(() => {
-    let hours = 0
-    let offered = 0
-    let contracted = 0
-    let certified = 0
-    let breaked = 0
-    let workekd = 0
-    for (let indirectData of indirectWorkForceListContext) {
-      hours = hours + Number(indirectData.hh)
-      offered = offered + Number(indirectData.offeredNumber)
-      contracted = contracted + Number(indirectData.contractedNumber)
-      certified = certified + Number(indirectData.certified)
-      breaked = breaked + Number(indirectData.breakNumber)
-      workekd = workekd + Number(indirectData.workNumber)
-    }
-    setIndirectAccumulatedHours(hours)
-    setIndirectAccumulatedOffered(offered)
-    setIndirectAccumulatedContracted(contracted)
-    setIndirectAccumulatedCertified(certified)
-    setIndirectAccumulatedBreaked(breaked)
-    setIndirectAccumulatedWorked(workekd)
-    setIndirectAccumulatedActual(
-      Number(totalIndirectWorkForce.indirectPreviusAccumulated) + Number(hours),
-    )
-
-    const data = {
-      indirectSubtotalOfferedNumber: offered,
-      indirectSubtotalContractedNumber: contracted,
-      indirectSubtotalCertifiedNumber: certified,
-      indirectSubtotalBreakNumber: breaked,
-      indirectSubtotalWorkNumber: workekd,
-      indirectSubstotalHHNumber: hours,
-      indirectPreviusAccumulated: totalIndirectWorkForce.indirectPreviusAccumulated || 0,
-      indirectCurrentAccumulated:
+    if (!currentLocation.includes('/edit')) {
+      let hours = 0
+      let offered = 0
+      let contracted = 0
+      let certified = 0
+      let breaked = 0
+      let workekd = 0
+      for (let indirectData of indirectWorkForceListContext) {
+        hours = hours + Number(indirectData.hh)
+        offered = offered + Number(indirectData.offeredNumber)
+        contracted = contracted + Number(indirectData.contractedNumber)
+        certified = certified + Number(indirectData.certified)
+        breaked = breaked + Number(indirectData.breakNumber)
+        workekd = workekd + Number(indirectData.workNumber)
+      }
+      setIndirectAccumulatedHours(hours)
+      setIndirectAccumulatedOffered(offered)
+      setIndirectAccumulatedContracted(contracted)
+      setIndirectAccumulatedCertified(certified)
+      setIndirectAccumulatedBreaked(breaked)
+      setIndirectAccumulatedWorked(workekd)
+      setIndirectAccumulatedActual(
         Number(totalIndirectWorkForce.indirectPreviusAccumulated) + Number(hours),
-    }
+      )
 
-    setTotalIndirectWorkForce(data)
-  }, [indirectWorkForceListContext])
+      const data = {
+        indirectSubtotalOfferedNumber: offered,
+        indirectSubtotalContractedNumber: contracted,
+        indirectSubtotalCertifiedNumber: certified,
+        indirectSubtotalBreakNumber: breaked,
+        indirectSubtotalWorkNumber: workekd,
+        indirectSubstotalHHNumber: hours,
+        indirectPreviusAccumulated: totalIndirectWorkForce.indirectPreviusAccumulated || 0,
+        indirectCurrentAccumulated:
+          Number(totalIndirectWorkForce.indirectPreviusAccumulated) + Number(hours),
+      }
+
+      setTotalIndirectWorkForce(data)
+    } else {
+      setIndirectAccumulatedHours(totalIndirectWorkForceContext.indirectSubstotalHHNumber)
+      setIndirectAccumulatedOffered(totalIndirectWorkForceContext.indirectSubtotalOfferedNumber)
+      setIndirectAccumulatedContracted(
+        totalIndirectWorkForceContext.indirectSubtotalContractedNumber,
+      )
+      setIndirectAccumulatedCertified(totalIndirectWorkForceContext.indirectSubtotalCertifiedNumber)
+      setIndirectAccumulatedBreaked(totalIndirectWorkForceContext.indirectSubtotalBreakNumber)
+      setIndirectAccumulatedWorked(totalIndirectWorkForceContext.indirectSubtotalWorkNumber)
+      setIndirectAccumulatedActual(totalIndirectWorkForceContext.indirectCurrentAccumulated)
+
+      setIndirectAccumulatedPrevious(totalIndirectWorkForceContext.indirectPreviusAccumulated)
+    }
+  }, [totalIndirectWorkForceContext])
 
   useEffect(() => {
-    storeTotalIndirectWorkForce(totalIndirectWorkForce)
+    if (!currentLocation.includes('/edit')) {
+      storeTotalIndirectWorkForce(totalIndirectWorkForce)
+    }
   }, [totalIndirectWorkForce])
 
   return (
@@ -181,8 +202,13 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectPreviusAccumulated"
-                value={totalIndirectWorkForce.indirectPreviusAccumulated || ''}
-                placeholder="Total"
+                value={
+                  !currentLocation.includes('/edit')
+                    ? totalIndirectWorkForce.indirectPreviusAccumulated || ''
+                    : indirectAccumulatedPrevious
+                }
+                // indirectAccumulatedPrevious
+                disabled={currentLocation.includes('/edit')}
                 onChange={(e) => {
                   onChangeData(e)
                 }}
