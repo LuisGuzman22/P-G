@@ -13,8 +13,12 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { validate } from 'src/utils/validate'
+import { useLocation } from 'react-router-dom'
 
 const TotalDirectWorkForce = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     directSubtotalOfferedNumber: undefined,
     directSubtotalContractedNumber: undefined,
@@ -25,8 +29,11 @@ const TotalDirectWorkForce = () => {
     directPreviusAccumulated: undefined,
     directCurrentAccumulated: undefined,
   }
-  const { storeTotalDirectWorkForce, directWorkForceList: directWorkForceListContext } =
-    useRegisterDailyReportCompany()
+  const {
+    storeTotalDirectWorkForce,
+    directWorkForceList: directWorkForceListContext,
+    totalDirectWorkForce: totalDirectWorkForceContext,
+  } = useRegisterDailyReportCompany()
 
   const [totalDirectWorkForce, setTotalDirectWorkForce] = useState(initialState)
   const [directAccumulatedHours, setDirectAccumulatedHours] = useState(0)
@@ -53,46 +60,58 @@ const TotalDirectWorkForce = () => {
   }, [directAccumulatedActual])
 
   useEffect(() => {
-    let hours = 0
-    let offered = 0
-    let contracted = 0
-    let certified = 0
-    let breaked = 0
-    let workekd = 0
-    for (let directData of directWorkForceListContext) {
-      hours = hours + Number(directData.hh)
-      offered = offered + Number(directData.offeredNumber)
-      contracted = contracted + Number(directData.contractedNumber)
-      certified = certified + Number(directData.certified)
-      breaked = breaked + Number(directData.breakNumber)
-      workekd = workekd + Number(directData.workNumber)
-    }
-    setDirectAccumulatedHours(hours)
-    setDirectAccumulatedOffered(offered)
-    setDirectAccumulatedContracted(contracted)
-    setDirectAccumulatedCertified(certified)
-    setDirectAccumulatedBreaked(breaked)
-    setDirectAccumulatedWorked(workekd)
-    setDirectAccumulatedActual(
-      Number(totalDirectWorkForce.directPreviusAccumulated) + Number(hours),
-    )
-    const data = {
-      directSubtotalOfferedNumber: offered,
-      directSubtotalContractedNumber: contracted,
-      directSubtotalCertifiedNumber: certified,
-      directSubtotalBreakNumber: breaked,
-      directSubtotalWorkNumber: workekd,
-      directSubstotalHHNumber: hours,
-      directPreviusAccumulated: totalDirectWorkForce.directPreviusAccumulated || 0,
-      directCurrentAccumulated:
+    if (!isEditMode) {
+      let hours = 0
+      let offered = 0
+      let contracted = 0
+      let certified = 0
+      let breaked = 0
+      let workekd = 0
+      for (let directData of directWorkForceListContext) {
+        hours = hours + Number(directData.hh)
+        offered = offered + Number(directData.offeredNumber)
+        contracted = contracted + Number(directData.contractedNumber)
+        certified = certified + Number(directData.certified)
+        breaked = breaked + Number(directData.breakNumber)
+        workekd = workekd + Number(directData.workNumber)
+      }
+      setDirectAccumulatedHours(hours)
+      setDirectAccumulatedOffered(offered)
+      setDirectAccumulatedContracted(contracted)
+      setDirectAccumulatedCertified(certified)
+      setDirectAccumulatedBreaked(breaked)
+      setDirectAccumulatedWorked(workekd)
+      setDirectAccumulatedActual(
         Number(totalDirectWorkForce.directPreviusAccumulated) + Number(hours),
-    }
+      )
+      const data = {
+        directSubtotalOfferedNumber: offered,
+        directSubtotalContractedNumber: contracted,
+        directSubtotalCertifiedNumber: certified,
+        directSubtotalBreakNumber: breaked,
+        directSubtotalWorkNumber: workekd,
+        directSubstotalHHNumber: hours,
+        directPreviusAccumulated: totalDirectWorkForce.directPreviusAccumulated || 0,
+        directCurrentAccumulated:
+          Number(totalDirectWorkForce.directPreviusAccumulated) + Number(hours),
+      }
 
-    setTotalDirectWorkForce(data)
-  }, [directWorkForceListContext])
+      setTotalDirectWorkForce(data)
+    } else {
+      console.log('totalDirectWorkForceContext', totalDirectWorkForceContext)
+      setDirectAccumulatedHours(totalDirectWorkForceContext.directSubstotalHHNumber)
+      setDirectAccumulatedOffered(totalDirectWorkForceContext.directSubtotalOfferedNumber)
+      setDirectAccumulatedContracted(totalDirectWorkForceContext.directSubtotalContractedNumber)
+      setDirectAccumulatedCertified(totalDirectWorkForceContext.directSubtotalCertifiedNumber)
+      setDirectAccumulatedBreaked(totalDirectWorkForceContext.directSubtotalBreakNumber)
+      setDirectAccumulatedWorked(totalDirectWorkForceContext.directSubtotalWorkNumber)
+      setDirectAccumulatedActual(totalDirectWorkForceContext.directCurrentAccumulated)
+      setDirectAccumulatedPrevious(totalDirectWorkForceContext.directPreviusAccumulated)
+    }
+  }, [totalDirectWorkForceContext])
 
   useEffect(() => {
-    storeTotalDirectWorkForce(totalDirectWorkForce)
+    if (!isEditMode) storeTotalDirectWorkForce(totalDirectWorkForce)
   }, [totalDirectWorkForce])
 
   return (
@@ -179,7 +198,14 @@ const TotalDirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="directPreviusAccumulated"
-                value={totalDirectWorkForce.directPreviusAccumulated || ''}
+                // value={totalDirectWorkForce.directPreviusAccumulated || ''}
+                value={
+                  !isEditMode
+                    ? totalDirectWorkForce.directPreviusAccumulated || ''
+                    : directAccumulatedPrevious
+                }
+                // indirectAccumulatedPrevious
+                disabled={isEditMode}
                 placeholder="Total"
                 text=""
                 onChange={(e) => {

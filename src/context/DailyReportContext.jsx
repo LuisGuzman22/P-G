@@ -43,6 +43,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedIndirectWorkForceList = selectedReport?.indirectWorkForceList
   const selectedTotalIndirectWorkForce = selectedReport?.totalIndirectWorkForce
   const selectedDirectWorkForceList = selectedReport?.directWorkForceList
+  const selectedTotalDirectWorkForce = selectedReport?.totalDirectWorkForce
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -119,6 +120,23 @@ export const DailyReportProvider = ({ children }) => {
 
   const [totalDirectWorkForce, setTotalDirectWorkForce] = useState()
 
+  useEffect(() => {
+    setTotalDirectWorkForce({
+      directCurrentAccumulated: selectedTotalDirectWorkForce?.directCurrentAccumulated,
+      directPreviusAccumulated: selectedTotalDirectWorkForce?.directPreviusAccumulated,
+      directSubstotalHHNumber: selectedTotalDirectWorkForce?.directSubstotalHHNumber,
+      directSubtotalBreakNumber: selectedTotalDirectWorkForce?.directSubtotalBreakNumber,
+      directSubtotalCertifiedNumber: selectedTotalDirectWorkForce?.directSubtotalCertifiedNumber,
+      directSubtotalContractedNumber: selectedTotalDirectWorkForce?.directSubtotalContractedNumber,
+      directSubtotalOfferedNumber: selectedTotalDirectWorkForce?.directSubtotalOfferedNumber,
+      directSubtotalWorkNumber: selectedTotalDirectWorkForce?.directSubtotalWorkNumber,
+    })
+  }, [selectedTotalDirectWorkForce])
+
+  useEffect(() => {
+    console.log('totalDirectWorkForce', totalDirectWorkForce)
+  }, [totalDirectWorkForce])
+
   const [directWorkForceList, setDirectWorkForceList] = useState() // ANTES ERA UN ARRAY
   const [indirectWorkForceList, setIndirectWorkForceList] = useState() // ANTES ERA UN ARRAY
   const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([])
@@ -156,7 +174,6 @@ export const DailyReportProvider = ({ children }) => {
 
   useEffect(() => {
     if (selectedDirectWorkForceList) {
-      console.log('selectedDirectWorkForceList', selectedDirectWorkForceList)
       setDirectWorkForceList(selectedDirectWorkForceList)
     }
   }, [selectedDirectWorkForceList])

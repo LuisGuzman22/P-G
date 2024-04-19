@@ -85,10 +85,6 @@ const DirectWorkForce = () => {
   }
 
   useEffect(() => {
-    console.log('directWorkForceListContext', directWorkForceListContext)
-  }, [directWorkForceListContext])
-
-  useEffect(() => {
     if (!isEditMode) storeDirectWorkForce(directWorkForceList)
   }, [directWorkForceList])
 
@@ -217,7 +213,6 @@ const DirectWorkForce = () => {
           </CTable>
         </>
       )}
-
       {directWorkForceListContext.length > 0 && directWorkForceListContext[0].directWorkForce && (
         <CTable className="resume-table">
           <CTableHead>
