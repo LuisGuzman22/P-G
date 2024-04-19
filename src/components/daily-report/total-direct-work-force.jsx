@@ -98,7 +98,6 @@ const TotalDirectWorkForce = () => {
 
       setTotalDirectWorkForce(data)
     } else {
-      console.log('totalDirectWorkForceContext', totalDirectWorkForceContext)
       setDirectAccumulatedHours(totalDirectWorkForceContext.directSubstotalHHNumber)
       setDirectAccumulatedOffered(totalDirectWorkForceContext.directSubtotalOfferedNumber)
       setDirectAccumulatedContracted(totalDirectWorkForceContext.directSubtotalContractedNumber)

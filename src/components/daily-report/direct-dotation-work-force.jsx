@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const DirectDotationWorkForce = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     directWorkFront: undefined,
     directDotationWorkForceObservation: undefined,
@@ -94,119 +98,125 @@ const DirectDotationWorkForce = () => {
   const deletedirectDotationWorkForce = (id) => {
     const newData = directDotationWorkForceList.filter((item) => item.id !== id)
     setDirectDotationWorkForceList(newData)
-
     removeDirectDotationWorkForce(id)
   }
 
   useEffect(() => {
-    storeDirectDotationWorkForceData(directDotationWorkForceList)
+    console.log('directDotationWorkForceListContext', directDotationWorkForceListContext)
+  }, [directDotationWorkForceListContext])
+
+  useEffect(() => {
+    if (!isEditMode) storeDirectDotationWorkForceData(directDotationWorkForceList)
   }, [directDotationWorkForceList])
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>
-              Debe completar los datos de frente de trabajo, cargo y cantidad para registrar el
-              personal
-            </CToastBody>
-          </div>
-        </CToast>
-      )}
-      <CFormSelect
-        aria-label="Default select example"
-        id="directWorkFront"
-        label="Frente de trabajo"
-        value={directDotationWorkForce.directWorkFront || ''}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={'0'}>Seleccione</option>
-        {basicQuery.workFront.map((workfrontCached) => {
-          return (
-            <option key={workfrontCached.id} value={workfrontCached.id}>
-              {workfrontCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-      {enableSubFrontWork && (
+      {!isEditMode && (
         <>
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>
+                  Debe completar los datos de frente de trabajo, cargo y cantidad para registrar el
+                  personal
+                </CToastBody>
+              </div>
+            </CToast>
+          )}
+          <CFormSelect
+            aria-label="Default select example"
+            id="directWorkFront"
+            label="Frente de trabajo"
+            value={directDotationWorkForce.directWorkFront || ''}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={'0'}>Seleccione</option>
+            {basicQuery.workFront.map((workfrontCached) => {
+              return (
+                <option key={workfrontCached.id} value={workfrontCached.id}>
+                  {workfrontCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
+          {enableSubFrontWork && (
+            <>
+              <br />
+              <CFormInput
+                type="text"
+                id="directSubWorkFront"
+                label="SubFrente de trabajo"
+                value={directDotationWorkForce.directSubWorkFront || ''}
+                text=""
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </>
+          )}
+
+          <br />
+
+          <CFormSelect
+            aria-label="Default select example"
+            id="directWorkFrontCharge"
+            value={directDotationWorkForce.directWorkFrontCharge || ''}
+            label="Cargo"
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={'0'}>Seleccione</option>
+            {basicQuery.directPersonal.map((directPersonalCached) => {
+              return (
+                <option key={directPersonalCached.id} value={directPersonalCached.id}>
+                  {directPersonalCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
           <br />
           <CFormInput
             type="text"
-            id="directSubWorkFront"
-            label="SubFrente de trabajo"
-            value={directDotationWorkForce.directSubWorkFront || ''}
+            id="directWorkFrontQuantity"
+            label="Cantidad"
+            value={directDotationWorkForce.directWorkFrontQuantity || ''}
             text=""
             onChange={(e) => {
               onChangeData(e)
             }}
           />
+          <br />
+          <CFormTextarea
+            id="directDotationWorkForceObservation"
+            placeholder="Deja un comentario / observación"
+            value={directDotationWorkForce.directDotationWorkForceObservation || ''}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          ></CFormTextarea>
+          <br />
+
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerDirectDotationWorkForce()
+            }}
+          >
+            Registrar
+          </CButton>
         </>
       )}
-
-      <br />
-
-      <CFormSelect
-        aria-label="Default select example"
-        id="directWorkFrontCharge"
-        value={directDotationWorkForce.directWorkFrontCharge || ''}
-        label="Cargo"
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={'0'}>Seleccione</option>
-        {basicQuery.directPersonal.map((directPersonalCached) => {
-          return (
-            <option key={directPersonalCached.id} value={directPersonalCached.id}>
-              {directPersonalCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-      <br />
-      <CFormInput
-        type="text"
-        id="directWorkFrontQuantity"
-        label="Cantidad"
-        value={directDotationWorkForce.directWorkFrontQuantity || ''}
-        text=""
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      />
-      <br />
-      <CFormTextarea
-        id="directDotationWorkForceObservation"
-        placeholder="Deja un comentario / observación"
-        value={directDotationWorkForce.directDotationWorkForceObservation || ''}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      ></CFormTextarea>
-      <br />
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerDirectDotationWorkForce()
-        }}
-      >
-        Registrar
-      </CButton>
-
       {directDotationWorkForceListContext.length > 0 &&
         directDotationWorkForceListContext[0].id && (
           <>

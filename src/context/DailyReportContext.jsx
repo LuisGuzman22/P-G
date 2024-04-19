@@ -44,6 +44,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedTotalIndirectWorkForce = selectedReport?.totalIndirectWorkForce
   const selectedDirectWorkForceList = selectedReport?.directWorkForceList
   const selectedTotalDirectWorkForce = selectedReport?.totalDirectWorkForce
+  const selectedDirectDotationWorkForceList = selectedReport?.directDotationWorkForceList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -133,14 +134,11 @@ export const DailyReportProvider = ({ children }) => {
     })
   }, [selectedTotalDirectWorkForce])
 
-  useEffect(() => {
-    console.log('totalDirectWorkForce', totalDirectWorkForce)
-  }, [totalDirectWorkForce])
-
-  const [directWorkForceList, setDirectWorkForceList] = useState() // ANTES ERA UN ARRAY
-  const [indirectWorkForceList, setIndirectWorkForceList] = useState() // ANTES ERA UN ARRAY
-  const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([])
-  const [directDotationWorkForceList, setDirectDotationWorkForceList] = useState([])
+  const [directWorkForceList, setDirectWorkForceList] = useState([]) // ANTES ERA UN ARRAY
+  console.log('directWorkForceList', typeof directWorkForceList)
+  const [indirectWorkForceList, setIndirectWorkForceList] = useState([]) // ANTES ERA UN ARRAY
+  const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([]) // ANTES ERA UN ARRAY
+  const [directDotationWorkForceList, setDirectDotationWorkForceList] = useState([]) // ANTES ERA UN ARRAY
   const [machineryWorkForceList, setMachineryWorkForceList] = useState([])
   const [equipmentWorkForceList, setEquipmentWorkForceList] = useState([])
   const [vehicleWorkForceList, setVehicletWorkForceList] = useState([])
@@ -177,6 +175,11 @@ export const DailyReportProvider = ({ children }) => {
       setDirectWorkForceList(selectedDirectWorkForceList)
     }
   }, [selectedDirectWorkForceList])
+
+  useEffect(() => {
+    if (selectedDirectDotationWorkForceList)
+      setDirectDotationWorkForceList(selectedDirectDotationWorkForceList)
+  }, [selectedDirectDotationWorkForceList])
 
   const storeCompanyData = async (data) => {
     switch (data.target.id) {
