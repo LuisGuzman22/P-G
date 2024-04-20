@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const EquipmentWorkForce = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     equipmentWorkForce: undefined,
     equipmentWorkForceObservation: undefined,
@@ -49,9 +53,6 @@ const EquipmentWorkForce = () => {
         return workFront.id.toString() === e.target.value.toString()
       })
       setEnableSubFrontWork(selectedWorkFront.hasSubFront)
-
-      // setEquipmentWorkForce(initialState) // Clear the object
-      // setEquipmentWorkForce({ ...equipmentWorkForce, equipmentWorkForce: e.target.value })
     }
     if (e.target.id === 'equipmentSubWorkFront' || e.target.id === 'equipmentWorkFrontQuantity') {
       if (validate(e.target.value)) {
@@ -97,155 +98,115 @@ const EquipmentWorkForce = () => {
   }
 
   useEffect(() => {
-    storeEquipmentWorkForce(equipmentWorkForceList)
+    if (!isEditMode) storeEquipmentWorkForce(equipmentWorkForceList)
   }, [equipmentWorkForceList])
-
-  // useEffect(() => {
-  //   let equipmentWorkForceTotalsCounter = {
-  //     equipmentWorkForceFront1: 0,
-  //     equipmentWorkForceFront2: 0,
-  //     equipmentWorkForceFront3: 0,
-  //     equipmentWorkForceFront4: 0,
-  //     equipmentWorkForceFront5: 0,
-  //     equipmentWorkForceFront6: 0,
-  //     equipmentWorkForceFront7: 0,
-  //   }
-
-  //   for (let data of equipmentWorkForceListContext) {
-  //     equipmentWorkForceTotalsCounter = {
-  //       equipmentWorkForceFront1:
-  //         Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront1) +
-  //         Number(data.equipmentWorkForceFront1 ?? 0),
-  //       equipmentWorkForceFront2:
-  //         Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront2) +
-  //         Number(data.equipmentWorkForceFront2 ?? 0),
-  //       equipmentWorkForceFront3:
-  //         Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront3) +
-  //         Number(data.equipmentWorkForceFront3 ?? 0),
-  //       equipmentWorkForceFront4:
-  //         Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront4) +
-  //         Number(data.equipmentWorkForceFront4 ?? 0),
-  //       equipmentWorkForceFront5:
-  //         Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront5) +
-  //         Number(data.equipmentWorkForceFront5 ?? 0),
-  //       equipmentWorkForceFront6:
-  //         Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront6) +
-  //         Number(data.equipmentWorkForceFront6 ?? 0),
-  //       equipmentWorkForceFront7:
-  //         Number(equipmentWorkForceTotalsCounter.equipmentWorkForceFront7) +
-  //         Number(data.equipmentWorkForceFront7 ?? 0),
-  //     }
-  //   }
-  //   setEquipmentWorkForceTotals(equipmentWorkForceTotalsCounter)
-  // }, [equipmentWorkForceListContext])
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>
-              Debe completar los datos de frente de trabajo, equipo y cantidad para registrar el
-              personal
-            </CToastBody>
-          </div>
-        </CToast>
-      )}
-      <CFormSelect
-        aria-label="Default select example"
-        label="Frente de trabajo"
-        id="equipmentWorkForce"
-        value={equipmentWorkForce.equipmentWorkForce || ''}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option>Seleccione</option>
-        {basicQuery.workFront.map((equipmentCached) => {
-          return (
-            <option key={equipmentCached.id} value={equipmentCached.id}>
-              {equipmentCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-
-      {enableSubFrontWork && (
+      {!isEditMode && (
         <>
+          {' '}
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>
+                  Debe completar los datos de frente de trabajo, equipo y cantidad para registrar el
+                  personal
+                </CToastBody>
+              </div>
+            </CToast>
+          )}
+          <CFormSelect
+            aria-label="Default select example"
+            label="Frente de trabajo"
+            id="equipmentWorkForce"
+            value={equipmentWorkForce.equipmentWorkForce || ''}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option>Seleccione</option>
+            {basicQuery.workFront.map((equipmentCached) => {
+              return (
+                <option key={equipmentCached.id} value={equipmentCached.id}>
+                  {equipmentCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
+          {enableSubFrontWork && (
+            <>
+              <br />
+              <CFormInput
+                type="text"
+                id="equipmentSubWorkFront"
+                label="SubFrente de trabajo"
+                value={equipmentWorkForce.equipmentSubWorkFront || ''}
+                text=""
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </>
+          )}
+          <br />
+          <CFormSelect
+            aria-label="Default select example"
+            id="equipmentWorkFrontCharge"
+            value={equipmentWorkForce.equipmentWorkFrontCharge || ''}
+            label="Equipo"
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={'0'}>Seleccione</option>
+            {basicQuery.equipment.map((equipmentCached) => {
+              return (
+                <option key={equipmentCached.id} value={equipmentCached.id}>
+                  {equipmentCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
           <br />
           <CFormInput
             type="text"
-            id="equipmentSubWorkFront"
-            label="SubFrente de trabajo"
-            value={equipmentWorkForce.equipmentSubWorkFront || ''}
+            id="equipmentWorkFrontQuantity"
+            label="Cantidad"
+            value={equipmentWorkForce.equipmentWorkFrontQuantity || ''}
             text=""
             onChange={(e) => {
               onChangeData(e)
             }}
           />
+          <br />
+          <CFormTextarea
+            id="equipmentWorkForceObservation"
+            placeholder="Deja un comentario / observación"
+            value={equipmentWorkForce.equipmentWorkForceObservation || ''}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          ></CFormTextarea>
+          <br />
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerEquipmentnWorkForce()
+            }}
+          >
+            Registrar
+          </CButton>
         </>
       )}
-
-      <br />
-
-      <CFormSelect
-        aria-label="Default select example"
-        id="equipmentWorkFrontCharge"
-        value={equipmentWorkForce.equipmentWorkFrontCharge || ''}
-        label="Equipo"
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={'0'}>Seleccione</option>
-        {basicQuery.equipment.map((equipmentCached) => {
-          return (
-            <option key={equipmentCached.id} value={equipmentCached.id}>
-              {equipmentCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-      <br />
-
-      <CFormInput
-        type="text"
-        id="equipmentWorkFrontQuantity"
-        label="Cantidad"
-        value={equipmentWorkForce.equipmentWorkFrontQuantity || ''}
-        text=""
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      />
-      <br />
-
-      <CFormTextarea
-        id="equipmentWorkForceObservation"
-        placeholder="Deja un comentario / observación"
-        value={equipmentWorkForce.equipmentWorkForceObservation || ''}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      ></CFormTextarea>
-      <br />
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerEquipmentnWorkForce()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {equipmentWorkForceListContext.length > 0 &&
         equipmentWorkForceListContext[0].equipmentWorkForce && (
