@@ -73,7 +73,6 @@ export const useFetchUserList = () => {
 }
 
 export const useFetchReportsData = () => {
-  console.log('userType', userType)
   return useQuery({
     queryKey: ['reports'],
     staleTime: 0,

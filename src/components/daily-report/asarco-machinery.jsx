@@ -65,10 +65,6 @@ const AsarcoMachinery = () => {
     asarcoMachineryList: asarcoMachineryListContext,
   } = useRegisterDailyReportCompany()
 
-  useEffect(() => {
-    console.log('asarcoMachineryListContext', asarcoMachineryListContext)
-  }, [asarcoMachineryListContext])
-
   const onChangeData = (e) => {
     setError(false)
 

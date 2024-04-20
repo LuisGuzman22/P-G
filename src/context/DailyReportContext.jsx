@@ -177,7 +177,6 @@ export const DailyReportProvider = ({ children }) => {
   const [asarcoMachineryList, setAsarcoMachineryList] = useState([])
 
   useEffect(() => {
-    console.log('selectedAsarcoMachineryList', selectedAsarcoMachineryList)
     setAsarcoMachineryList(selectedAsarcoMachineryList || [])
   }, [selectedAsarcoMachineryList])
 

@@ -20,7 +20,7 @@ const useRegisterDailyReport = () => {
     equipmentWorkForceList,
     vehicleWorkForceList,
     incident,
-    comments,
+    comment,
     machineryList,
     equipmentList,
     vehicleList,
@@ -144,7 +144,7 @@ const useRegisterDailyReport = () => {
       vehicleList: vehicList, // 13
       vehicleWorkForceList, // 14
       activityList, // 15
-      comment: comments, // 16
+      comment, // 16
       // 17 (graficos)
       incident, // 18 //
       asarcoMachineryList, // 9
