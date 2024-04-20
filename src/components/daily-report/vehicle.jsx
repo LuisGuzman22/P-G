@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const Vehicle = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     vehicle: undefined,
     vehicleOfferedNumber: undefined,
@@ -82,7 +86,7 @@ const Vehicle = () => {
   }
 
   useEffect(() => {
-    storeVehicle(vehicleList)
+    if (!isEditMode) storeVehicle(vehicleList)
   }, [vehicleList])
 
   useEffect(() => {
@@ -109,95 +113,97 @@ const Vehicle = () => {
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>Debe seleccionar el equipo para generar el registro</CToastBody>
-          </div>
-        </CToast>
+      {!isEditMode && (
+        <>
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>Debe seleccionar el equipo para generar el registro</CToastBody>
+              </div>
+            </CToast>
+          )}
+          <CFormSelect
+            aria-label="Default select example"
+            id="vehicle"
+            label="Vehículo"
+            value={vehicle.vehicle || ''}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={0}>Seleccione</option>
+            {basicQuery.vehicles.map((vehicleCached) => {
+              return (
+                <option key={vehicleCached.id} value={vehicleCached.id}>
+                  {vehicleCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
+          <CTable>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">N° Vehículo oferta</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Vehículo Acreditado</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Vehículo en Obra</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleOfferedNumber"
+                    value={vehicle.vehicleOfferedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleCertifiedNumber"
+                    value={vehicle.vehicleCertifiedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleWorkNumber"
+                    value={vehicle.vehicleWorkNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerVehicle()
+            }}
+          >
+            Registrar
+          </CButton>
+        </>
       )}
-      <CFormSelect
-        aria-label="Default select example"
-        id="vehicle"
-        label="Vehículo"
-        value={vehicle.vehicle || ''}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={0}>Seleccione</option>
-        {basicQuery.vehicles.map((vehicleCached) => {
-          return (
-            <option key={vehicleCached.id} value={vehicleCached.id}>
-              {vehicleCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">N° Vehículo oferta</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Vehículo Acreditado</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Vehículo en Obra</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleOfferedNumber"
-                value={vehicle.vehicleOfferedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleCertifiedNumber"
-                value={vehicle.vehicleCertifiedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleWorkNumber"
-                value={vehicle.vehicleWorkNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerVehicle()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {vehicleListContext.length > 0 && vehicleListContext[0].vehicle && (
         <CTable className="resume-table">
