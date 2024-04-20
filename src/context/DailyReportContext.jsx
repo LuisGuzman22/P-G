@@ -45,6 +45,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedDirectWorkForceList = selectedReport?.directWorkForceList
   const selectedTotalDirectWorkForce = selectedReport?.totalDirectWorkForce
   const selectedDirectDotationWorkForceList = selectedReport?.directDotationWorkForceList
+  const selectedMachineryList = selectedReport?.machineryList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -135,7 +136,6 @@ export const DailyReportProvider = ({ children }) => {
   }, [selectedTotalDirectWorkForce])
 
   const [directWorkForceList, setDirectWorkForceList] = useState([]) // ANTES ERA UN ARRAY
-  console.log('directWorkForceList', typeof directWorkForceList)
   const [indirectWorkForceList, setIndirectWorkForceList] = useState([]) // ANTES ERA UN ARRAY
   const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([]) // ANTES ERA UN ARRAY
   const [directDotationWorkForceList, setDirectDotationWorkForceList] = useState([]) // ANTES ERA UN ARRAY
@@ -144,7 +144,6 @@ export const DailyReportProvider = ({ children }) => {
   const [vehicleWorkForceList, setVehicletWorkForceList] = useState([])
   const [comment, setComment] = useState('')
   const [incident, setIncident] = useState([])
-  const [machineryList, setMachineryList] = useState([])
   const [equipmentList, setEquipmentList] = useState([])
   const [vehicleList, setVehicleList] = useState([])
   const [vehiclePlateList, setVehiclePlateList] = useState([])
@@ -152,6 +151,22 @@ export const DailyReportProvider = ({ children }) => {
   const [asarcoMachineryList, setAsarcoMachineryList] = useState([])
   const [equipmentPlateList, setEquipmentPlateList] = useState([])
   const [aljibeList, setAljibeList] = useState([])
+
+  const [machineryList, setMachineryList] = useState([])
+
+  useEffect(() => {
+    const maList = []
+    if (selectedMachineryList)
+      for (let mach of selectedMachineryList) {
+        const machMachinery = mach.machinery
+        const actions = JSON.parse(mach.actions)
+        maList.push({
+          machinery: machMachinery,
+          actions,
+        })
+      }
+    setMachineryList(maList)
+  }, [selectedMachineryList])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,

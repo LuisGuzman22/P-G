@@ -102,10 +102,6 @@ const DirectDotationWorkForce = () => {
   }
 
   useEffect(() => {
-    console.log('directDotationWorkForceListContext', directDotationWorkForceListContext)
-  }, [directDotationWorkForceListContext])
-
-  useEffect(() => {
     if (!isEditMode) storeDirectDotationWorkForceData(directDotationWorkForceList)
   }, [directDotationWorkForceList])
 

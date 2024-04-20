@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const Machinery = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     machinery: undefined,
     machineryOfferedNumber: undefined,
@@ -84,7 +88,7 @@ const Machinery = () => {
   }
 
   useEffect(() => {
-    storeMachinery(machineryList)
+    if (!isEditMode) storeMachinery(machineryList)
   }, [machineryList])
 
   useEffect(() => {
@@ -112,95 +116,98 @@ const Machinery = () => {
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>Debe seleccionar la maquinaria para generar el registro</CToastBody>
-          </div>
-        </CToast>
+      {!isEditMode && (
+        <>
+          {' '}
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>Debe seleccionar la maquinaria para generar el registro</CToastBody>
+              </div>
+            </CToast>
+          )}
+          <CFormSelect
+            aria-label="Default select example"
+            id="machinery"
+            value={machinery.machinery ?? 0}
+            label="Maquinaria"
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={0}>Seleccione</option>
+            {basicQuery.machinery.map((machineryCached) => {
+              return (
+                <option key={machineryCached.id} value={machineryCached.id}>
+                  {machineryCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
+          <CTable>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">N° maq oferta</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° maq Acreditado</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° maq en Obra</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="machineryOfferedNumber"
+                    value={machinery.machineryOfferedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="machineryCertifiedNumber"
+                    value={machinery.machineryCertifiedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="machineryWorkNumber"
+                    value={machinery.machineryWorkNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerMachinery()
+            }}
+          >
+            Registrar
+          </CButton>
+        </>
       )}
-      <CFormSelect
-        aria-label="Default select example"
-        id="machinery"
-        value={machinery.machinery ?? 0}
-        label="Maquinaria"
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={0}>Seleccione</option>
-        {basicQuery.machinery.map((machineryCached) => {
-          return (
-            <option key={machineryCached.id} value={machineryCached.id}>
-              {machineryCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">N° maq oferta</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° maq Acreditado</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° maq en Obra</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryOfferedNumber"
-                value={machinery.machineryOfferedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryCertifiedNumber"
-                value={machinery.machineryCertifiedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="machineryWorkNumber"
-                value={machinery.machineryWorkNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerMachinery()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {machineryListContext.length > 0 && machineryListContext[0].machinery && (
         <CTable className="resume-table">
