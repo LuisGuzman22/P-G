@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const EquipmentMachinery = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     equipment: undefined,
     equipmentOfferedNumber: undefined,
@@ -83,7 +87,7 @@ const EquipmentMachinery = () => {
   }
 
   useEffect(() => {
-    storeEquipment(equipmentList)
+    if (!isEditMode) storeEquipment(equipmentList)
   }, [equipmentList])
 
   useEffect(() => {
@@ -111,94 +115,97 @@ const EquipmentMachinery = () => {
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>Debe seleccionar el equipo para generar el registro</CToastBody>
-          </div>
-        </CToast>
+      {!isEditMode && (
+        <>
+          {' '}
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>Debe seleccionar el equipo para generar el registro</CToastBody>
+              </div>
+            </CToast>
+          )}
+          <CFormSelect
+            aria-label="Default select example"
+            id="equipment"
+            value={equipment.equipment ?? 0}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value="0">Seleccione</option>
+            {basicQuery.equipment.map((equipmentCached) => {
+              return (
+                <option key={equipmentCached.id} value={equipmentCached.id}>
+                  {equipmentCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
+          <CTable>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">N° Equipos oferta</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Equipos Acreditado</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Equipos en Obra</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentOfferedNumber"
+                    value={equipment.equipmentOfferedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentCertifiedNumber"
+                    value={equipment.equipmentCertifiedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentWorkNumber"
+                    value={equipment.equipmentWorkNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerEquipment()
+            }}
+          >
+            Registrar
+          </CButton>
+        </>
       )}
-      <CFormSelect
-        aria-label="Default select example"
-        id="equipment"
-        value={equipment.equipment ?? 0}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value="0">Seleccione</option>
-        {basicQuery.equipment.map((equipmentCached) => {
-          return (
-            <option key={equipmentCached.id} value={equipmentCached.id}>
-              {equipmentCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">N° Equipos oferta</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Equipos Acreditado</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Equipos en Obra</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentOfferedNumber"
-                value={equipment.equipmentOfferedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentCertifiedNumber"
-                value={equipment.equipmentCertifiedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentWorkNumber"
-                value={equipment.equipmentWorkNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerEquipment()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {equipmentListContext.length > 0 && equipmentListContext[0].equipment && (
         <CTable className="resume-table">

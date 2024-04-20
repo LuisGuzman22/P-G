@@ -48,6 +48,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedMachineryList = selectedReport?.machineryList
   const selectedMachineryWorkForceList = selectedReport?.machineryWorkForceList
   const selectedAsarcoMachineryList = selectedReport?.asarcoMachineryList
+  const selectedEquipmentList = selectedReport?.equipmentList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -145,7 +146,6 @@ export const DailyReportProvider = ({ children }) => {
   const [vehicleWorkForceList, setVehicletWorkForceList] = useState([])
   const [comment, setComment] = useState('')
   const [incident, setIncident] = useState([])
-  const [equipmentList, setEquipmentList] = useState([])
   const [vehicleList, setVehicleList] = useState([])
   const [vehiclePlateList, setVehiclePlateList] = useState([])
   const [activityList, setActivityList] = useState([])
@@ -179,6 +179,23 @@ export const DailyReportProvider = ({ children }) => {
   useEffect(() => {
     setAsarcoMachineryList(selectedAsarcoMachineryList || [])
   }, [selectedAsarcoMachineryList])
+
+  const [equipmentList, setEquipmentList] = useState([])
+
+  useEffect(() => {
+    const equipList = []
+    if (selectedEquipmentList) {
+      for (let equi of selectedEquipmentList) {
+        const equipEquip = equi.equipment
+        const actions = JSON.parse(equi.actions)
+        equipList.push({
+          equipment: equipEquip,
+          actions,
+        })
+      }
+    }
+    setEquipmentList(equipList)
+  }, [selectedEquipmentList])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,
