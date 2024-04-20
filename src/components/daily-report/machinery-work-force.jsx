@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const MachineryWorkForce = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     machineryWorkForce: undefined,
     machineryWorkForceObservation: undefined,
@@ -62,14 +66,6 @@ const MachineryWorkForce = () => {
         [e.target.id]: e.target.value,
       })
     }
-
-    // if (e.target.id === 'machineryWorkForce') {
-    //   setMachineryWorkForce(initialState) // Clear the object
-    //   setMachineryWorkForce({ ...machineryWorkForce, machineryWorkForce: e.target.value })
-    // }
-    // if (validate(e.target.value)) {
-    //   setMachineryWorkForce({ ...machineryWorkForce, [e.target.id]: e.target.value })
-    // }
   }
 
   const registerMachinerynWorkForce = () => {
@@ -92,23 +88,6 @@ const MachineryWorkForce = () => {
       setMachineryWorkForce(initialState) // Clear the object
       setMachineryWorkForceList([...machineryWorkForceList, machineryWorkForceInitialState])
     }
-
-    // const machineryWorkForceInitialState = {
-    //   id: uuidv4(),
-    //   machineryWorkForce: machineryWorkForce.machineryWorkForce,
-    //   machineryWorkForcebservation: machineryWorkForce.machineryWorkForceObservation,
-    //   actions: {
-    //     machineryWorkForceFront1: machineryWorkForce.machineryWorkForceFront1,
-    //     machineryWorkForceFront2: machineryWorkForce.machineryWorkForceFront2,
-    //     machineryWorkForceFront3: machineryWorkForce.machineryWorkForceFront3,
-    //     machineryWorkForceFront4: machineryWorkForce.machineryWorkForceFront4,
-    //     machineryWorkForceFront5: machineryWorkForce.machineryWorkForceFront5,
-    //     machineryWorkForceFront6: machineryWorkForce.machineryWorkForceFront6,
-    //     machineryWorkForceFront7: machineryWorkForce.machineryWorkForceFront7,
-    //   },
-    // }
-    // setMachineryWorkForce(initialState) // Clear the object
-    // setMachineryWorkForceList([...machineryWorkForceList, machineryWorkForceInitialState])
   }
 
   const deleteMachineryWorkForce = (id) => {
@@ -119,115 +98,115 @@ const MachineryWorkForce = () => {
   }
 
   useEffect(() => {
-    storeMachineryWorkForce(machineryWorkForceList)
+    if (!isEditMode) storeMachineryWorkForce(machineryWorkForceList)
   }, [machineryWorkForceList])
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>
-              Debe completar los datos de frente de trabajo, maquinaria y cantidad para registrar el
-              personal
-            </CToastBody>
-          </div>
-        </CToast>
-      )}
-      <CFormSelect
-        aria-label="Default select example"
-        label="Frente de trabajo"
-        id="machineryWorkForce"
-        value={machineryWorkForce.machineryWorkForce || ''}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option>Seleccione</option>
-        {basicQuery.workFront.map((workfrontCached) => {
-          return (
-            <option key={workfrontCached.id} value={workfrontCached.id}>
-              {workfrontCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-      {enableSubFrontWork && (
+      {!isEditMode && (
         <>
+          {' '}
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>
+                  Debe completar los datos de frente de trabajo, maquinaria y cantidad para
+                  registrar el personal
+                </CToastBody>
+              </div>
+            </CToast>
+          )}
+          <CFormSelect
+            aria-label="Default select example"
+            label="Frente de trabajo"
+            id="machineryWorkForce"
+            value={machineryWorkForce.machineryWorkForce || ''}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option>Seleccione</option>
+            {basicQuery.workFront.map((workfrontCached) => {
+              return (
+                <option key={workfrontCached.id} value={workfrontCached.id}>
+                  {workfrontCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
+          {enableSubFrontWork && (
+            <>
+              <br />
+              <CFormInput
+                type="text"
+                id="machinerySubWorkFront"
+                label="SubFrente de trabajo"
+                value={machineryWorkForce.machinerySubWorkFront || ''}
+                text=""
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </>
+          )}
+          <br />
+          <CFormSelect
+            aria-label="Default select example"
+            id="machineryWorkFrontCharge"
+            value={machineryWorkForce.machineryWorkFrontCharge || ''}
+            label="Maquinaria"
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={'0'}>Seleccione</option>
+            {basicQuery.machinery.map((machineryCached) => {
+              return (
+                <option key={machineryCached.id} value={machineryCached.id}>
+                  {machineryCached.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
           <br />
           <CFormInput
             type="text"
-            id="machinerySubWorkFront"
-            label="SubFrente de trabajo"
-            value={machineryWorkForce.machinerySubWorkFront || ''}
+            id="machineryWorkFrontQuantity"
+            label="Cantidad"
+            value={machineryWorkForce.machineryWorkFrontQuantity || ''}
             text=""
             onChange={(e) => {
               onChangeData(e)
             }}
           />
+          <br />
+          <CFormTextarea
+            id="machineryWorkForceObservation"
+            placeholder="Deja un comentario / observación"
+            value={machineryWorkForce.machineryWorkForceObservation || ''}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          ></CFormTextarea>
+          <br />
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerMachinerynWorkForce()
+            }}
+          >
+            Registrar
+          </CButton>
         </>
       )}
-
-      <br />
-
-      <CFormSelect
-        aria-label="Default select example"
-        id="machineryWorkFrontCharge"
-        value={machineryWorkForce.machineryWorkFrontCharge || ''}
-        label="Maquinaria"
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={'0'}>Seleccione</option>
-        {basicQuery.machinery.map((machineryCached) => {
-          return (
-            <option key={machineryCached.id} value={machineryCached.id}>
-              {machineryCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-      <br />
-
-      <CFormInput
-        type="text"
-        id="machineryWorkFrontQuantity"
-        label="Cantidad"
-        value={machineryWorkForce.machineryWorkFrontQuantity || ''}
-        text=""
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      />
-      <br />
-
-      <CFormTextarea
-        id="machineryWorkForceObservation"
-        placeholder="Deja un comentario / observación"
-        value={machineryWorkForce.machineryWorkForceObservation || ''}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      ></CFormTextarea>
-      <br />
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerMachinerynWorkForce()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {machineryWorkForceListContext.length > 0 &&
         machineryWorkForceListContext[0].machineryWorkForce && (

@@ -46,6 +46,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedTotalDirectWorkForce = selectedReport?.totalDirectWorkForce
   const selectedDirectDotationWorkForceList = selectedReport?.directDotationWorkForceList
   const selectedMachineryList = selectedReport?.machineryList
+  const selectedMachineryWorkForceList = selectedReport?.machineryWorkForceList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -103,8 +104,6 @@ export const DailyReportProvider = ({ children }) => {
     })
   }, [selectedCompany])
 
-  const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState()
-
   useEffect(() => {
     setTotalIndirectWorkForce({
       indirectCurrentAccumulated: selectedTotalIndirectWorkForce?.indirectCurrentAccumulated,
@@ -135,11 +134,12 @@ export const DailyReportProvider = ({ children }) => {
     })
   }, [selectedTotalDirectWorkForce])
 
+  const [machineryWorkForceList, setMachineryWorkForceList] = useState([])
+
   const [directWorkForceList, setDirectWorkForceList] = useState([]) // ANTES ERA UN ARRAY
   const [indirectWorkForceList, setIndirectWorkForceList] = useState([]) // ANTES ERA UN ARRAY
   const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([]) // ANTES ERA UN ARRAY
   const [directDotationWorkForceList, setDirectDotationWorkForceList] = useState([]) // ANTES ERA UN ARRAY
-  const [machineryWorkForceList, setMachineryWorkForceList] = useState([])
   const [equipmentWorkForceList, setEquipmentWorkForceList] = useState([])
   const [vehicleWorkForceList, setVehicletWorkForceList] = useState([])
   const [comment, setComment] = useState('')
@@ -167,6 +167,12 @@ export const DailyReportProvider = ({ children }) => {
       }
     setMachineryList(maList)
   }, [selectedMachineryList])
+
+  const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState()
+
+  useEffect(() => {
+    setMachineryWorkForceList(selectedMachineryWorkForceList)
+  }, [selectedMachineryWorkForceList])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,
