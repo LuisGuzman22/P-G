@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const AsarcoMachinery = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     machinery: undefined,
     asarcoMachineryEffectiveTime: undefined,
@@ -60,6 +64,10 @@ const AsarcoMachinery = () => {
     removeAsarcoMachinery,
     asarcoMachineryList: asarcoMachineryListContext,
   } = useRegisterDailyReportCompany()
+
+  useEffect(() => {
+    console.log('asarcoMachineryListContext', asarcoMachineryListContext)
+  }, [asarcoMachineryListContext])
 
   const onChangeData = (e) => {
     setError(false)
@@ -119,7 +127,7 @@ const AsarcoMachinery = () => {
   }
 
   useEffect(() => {
-    storeAsarcoMachinery(asarcoMachineryList)
+    if (!isEditMode) storeAsarcoMachinery(asarcoMachineryList)
   }, [asarcoMachineryList])
 
   useEffect(() => {
@@ -167,195 +175,197 @@ const AsarcoMachinery = () => {
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>
-              Debe seleccionar la máquina y su patente para generar el registro
-            </CToastBody>
-          </div>
-        </CToast>
-      )}
-      <CFormSelect
-        aria-label="Default select example"
-        label="Maquinaria"
-        id="machinery"
-        value={asarcoMachinery.machinery ?? 0}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={0}>Seleccione</option>
-        {basicQuery.machinery.map((machineryCached) => {
-          return (
-            <option key={machineryCached.id} value={machineryCached.id}>
-              {machineryCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-
-      {plates && (
+      {!isEditMode && (
         <>
-          <br />
+          {' '}
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>
+                  Debe seleccionar la máquina y su patente para generar el registro
+                </CToastBody>
+              </div>
+            </CToast>
+          )}
           <CFormSelect
             aria-label="Default select example"
-            label="Patente"
-            id="machineryPlate"
-            value={asarcoMachinery.machineryPlate ?? 0}
+            label="Maquinaria"
+            id="machinery"
+            value={asarcoMachinery.machinery ?? 0}
             onChange={(e) => {
               onChangeData(e)
             }}
           >
             <option value={0}>Seleccione</option>
-            {plates.map((plate) => {
+            {basicQuery.machinery.map((machineryCached) => {
               return (
-                <option key={plate.id} value={plate.id}>
-                  {plate.label}
+                <option key={machineryCached.id} value={machineryCached.id}>
+                  {machineryCached.name}
                 </option>
               )
             })}
           </CFormSelect>
+          {plates && (
+            <>
+              <br />
+              <CFormSelect
+                aria-label="Default select example"
+                label="Patente"
+                id="machineryPlate"
+                value={asarcoMachinery.machineryPlate ?? 0}
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              >
+                <option value={0}>Seleccione</option>
+                {plates.map((plate) => {
+                  return (
+                    <option key={plate.id} value={plate.id}>
+                      {plate.label}
+                    </option>
+                  )
+                })}
+              </CFormSelect>
+            </>
+          )}
+          <CTable>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Tiempo Efectivo (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  Mantenimiento No Programado (Hrs) (Por alguna falla o alerta)
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  Demora No Programada (Hrs) (Interrupción al ciclo de trabajo)
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  Reservas (Hrs) (Sin operador, factores externos)
+                </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="asarcoMachineryEffectiveTime"
+                    value={asarcoMachinery.asarcoMachineryEffectiveTime || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="asarcoMachineryUnscheduleMaintenance"
+                    value={asarcoMachinery.asarcoMachineryUnscheduleMaintenance || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="asarcoMachineryScheduleMaintenance"
+                    value={asarcoMachinery.asarcoMachineryScheduleMaintenance || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="asarcoMachineryUnscheduleDelay"
+                    value={asarcoMachinery.asarcoMachineryUnscheduleDelay || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="asarcoMachineryReserves"
+                    value={asarcoMachinery.asarcoMachineryReserves || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Horometro (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  Pérdida Operacional (Hrs) (depende de otro equipo)
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  Demoras Programadas (Hrs) (Colación y cambio de turno)
+                </CTableHeaderCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="asarcoMachineryHorometer"
+                    value={asarcoMachinery.asarcoMachineryHorometer || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="asarcoMachineryOpperationalLoss"
+                    value={asarcoMachinery.asarcoMachineryOpperationalLoss || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="asarcoMachineryScheduleDelay"
+                    value={asarcoMachinery.asarcoMachineryScheduleDelay || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerAsarcoMachinery()
+            }}
+          >
+            Registrar
+          </CButton>
         </>
       )}
-
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Tiempo Efectivo (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">
-              Mantenimiento No Programado (Hrs) (Por alguna falla o alerta)
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">
-              Demora No Programada (Hrs) (Interrupción al ciclo de trabajo)
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col">
-              Reservas (Hrs) (Sin operador, factores externos)
-            </CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="asarcoMachineryEffectiveTime"
-                value={asarcoMachinery.asarcoMachineryEffectiveTime || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="asarcoMachineryUnscheduleMaintenance"
-                value={asarcoMachinery.asarcoMachineryUnscheduleMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="asarcoMachineryScheduleMaintenance"
-                value={asarcoMachinery.asarcoMachineryScheduleMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="asarcoMachineryUnscheduleDelay"
-                value={asarcoMachinery.asarcoMachineryUnscheduleDelay || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="asarcoMachineryReserves"
-                value={asarcoMachinery.asarcoMachineryReserves || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Horometro (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">
-              Pérdida Operacional (Hrs) (depende de otro equipo)
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col">
-              Demoras Programadas (Hrs) (Colación y cambio de turno)
-            </CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="asarcoMachineryHorometer"
-                value={asarcoMachinery.asarcoMachineryHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="asarcoMachineryOpperationalLoss"
-                value={asarcoMachinery.asarcoMachineryOpperationalLoss || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="asarcoMachineryScheduleDelay"
-                value={asarcoMachinery.asarcoMachineryScheduleDelay || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerAsarcoMachinery()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {asarcoMachineryListContext.length > 0 && asarcoMachineryListContext[0].machinery && (
         <CTable className="resume-table">

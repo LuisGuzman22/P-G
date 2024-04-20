@@ -47,6 +47,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedDirectDotationWorkForceList = selectedReport?.directDotationWorkForceList
   const selectedMachineryList = selectedReport?.machineryList
   const selectedMachineryWorkForceList = selectedReport?.machineryWorkForceList
+  const selectedAsarcoMachineryList = selectedReport?.asarcoMachineryList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -148,7 +149,6 @@ export const DailyReportProvider = ({ children }) => {
   const [vehicleList, setVehicleList] = useState([])
   const [vehiclePlateList, setVehiclePlateList] = useState([])
   const [activityList, setActivityList] = useState([])
-  const [asarcoMachineryList, setAsarcoMachineryList] = useState([])
   const [equipmentPlateList, setEquipmentPlateList] = useState([])
   const [aljibeList, setAljibeList] = useState([])
 
@@ -171,8 +171,15 @@ export const DailyReportProvider = ({ children }) => {
   const [totalIndirectWorkForce, setTotalIndirectWorkForce] = useState()
 
   useEffect(() => {
-    setMachineryWorkForceList(selectedMachineryWorkForceList)
+    setMachineryWorkForceList(selectedMachineryWorkForceList || [])
   }, [selectedMachineryWorkForceList])
+
+  const [asarcoMachineryList, setAsarcoMachineryList] = useState([])
+
+  useEffect(() => {
+    console.log('selectedAsarcoMachineryList', selectedAsarcoMachineryList)
+    setAsarcoMachineryList(selectedAsarcoMachineryList || [])
+  }, [selectedAsarcoMachineryList])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,
