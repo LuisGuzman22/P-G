@@ -21,7 +21,7 @@ export const DailyReportContext = createContext({
 
 // eslint-disable-next-line react/prop-types
 export const DailyReportProvider = ({ children }) => {
-  const { getProject, getContract } = useRegisterGeneralData()
+  const { getContract } = useRegisterGeneralData()
 
   const contractLS = JSON.parse(getContract())
 
@@ -50,6 +50,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedEquipmentList = selectedReport?.equipmentList
   const selectedEquipmentWorkForceList = selectedReport?.equipmentWorkForceList
   const selectedVehicleList = selectedReport?.vehicleList
+  const selectedActivityList = selectedReport?.activityList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -147,7 +148,6 @@ export const DailyReportProvider = ({ children }) => {
   const [comment, setComment] = useState('')
   const [incident, setIncident] = useState([])
   const [vehiclePlateList, setVehiclePlateList] = useState([])
-  const [activityList, setActivityList] = useState([])
   const [equipmentPlateList, setEquipmentPlateList] = useState([])
   const [aljibeList, setAljibeList] = useState([])
 
@@ -218,6 +218,12 @@ export const DailyReportProvider = ({ children }) => {
     }
     setVehicleList(vehList)
   }, [selectedVehicleList])
+
+  const [activityList, setActivityList] = useState([])
+
+  useEffect(() => {
+    setActivityList(selectedActivityList || [])
+  }, [selectedActivityList])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,

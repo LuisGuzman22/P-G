@@ -6,6 +6,7 @@ import ProjectCollapse from 'src/components/ProjectCollapse'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import { useFetchReportsData } from 'src/hooks/useFetch'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import useGetBasicData from 'src/hooks/useGetBasicData'
 
 const Dashboard = () => {
   let navigate = useNavigate()
@@ -14,6 +15,7 @@ const Dashboard = () => {
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
+  const { data, isLoading, error } = useGetBasicData(contractLS.id)
   const { getData } = useGetCachedQueryData()
 
   useFetchReportsData()
