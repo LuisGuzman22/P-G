@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CAccordion,
   CAccordionBody,
   CAccordionHeader,
   CAccordionItem,
   CButton,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import CompanyReport from './daily-report/company-report'
 import IndirectWorkForce from './daily-report/indirect-work-force'
@@ -30,12 +32,25 @@ import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
+import { useNavigate } from 'react-router-dom'
+import Loading from './loading'
 
 const DailyReportCollapse = () => {
-  const { registerData } = useRegisterDailyReport()
+  const { registerData, loading, error, success } = useRegisterDailyReport()
+  const navigate = useNavigate()
+
   useEffect(() => {
     localStorage.removeItem('daily_report')
   }, [])
+
+  const [showError, setShowError] = useState(false)
+  useEffect(() => {
+    if (error) setShowError(true)
+  }, [error])
+
+  useEffect(() => {
+    if (success) navigate(`/dashboard`)
+  }, [success])
 
   return (
     <div className="dailyReport">
@@ -167,8 +182,23 @@ const DailyReportCollapse = () => {
           </CAccordionBody>
         </CAccordionItem>
       </CAccordion>
+      <CToast
+        autohide={true}
+        visible={showError}
+        color="danger"
+        onClose={() => {
+          setShowError(false)
+        }}
+        className="text-white align-items-center"
+      >
+        <div className="d-flex">
+          <CToastBody>{error}</CToastBody>
+        </div>
+      </CToast>
+      {loading && <Loading />}
       <CButton
         className="btn-project-action"
+        disabled={loading}
         onClick={() => {
           registerData()
         }}
