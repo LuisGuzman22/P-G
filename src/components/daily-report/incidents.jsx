@@ -15,11 +15,15 @@ import {
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
+import { useLocation } from 'react-router-dom'
 
 const INCIDENT_LIMIT = 200
 const NON_CONFORMITY_LIMIT = 200
 
 const Incidents = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     incident: '',
     nonConformity: '',
@@ -68,58 +72,62 @@ const Incidents = () => {
   }
 
   useEffect(() => {
-    storeIncident(incidentList)
+    if (!isEditMode) storeIncident(incidentList)
   }, [incidentList])
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>
-              Debe ingresar un incidente o una no conformidad para generar el registro
-            </CToastBody>
-          </div>
-        </CToast>
+      {!isEditMode && (
+        <>
+          {' '}
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>
+                  Debe ingresar un incidente o una no conformidad para generar el registro
+                </CToastBody>
+              </div>
+            </CToast>
+          )}
+          <CFormTextarea
+            id="incident"
+            label="Incidentes lesiones y eventos"
+            rows={3}
+            value={incident.incident}
+            text={`${incident?.incident?.length ?? 0} de ${INCIDENT_LIMIT} caracteres`}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          ></CFormTextarea>
+          <CFormTextarea
+            id="nonConformity"
+            label="No conformidades o interferencias"
+            rows={3}
+            text={`${incident?.nonConformity?.length ?? 0} de ${NON_CONFORMITY_LIMIT} caracteres`}
+            value={incident.nonConformity}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          ></CFormTextarea>
+          <br />
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerIncident()
+            }}
+          >
+            Registrar
+          </CButton>
+        </>
       )}
-      <CFormTextarea
-        id="incident"
-        label="Incidentes lesiones y eventos"
-        rows={3}
-        value={incident.incident}
-        text={`${incident?.incident?.length ?? 0} de ${INCIDENT_LIMIT} caracteres`}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      ></CFormTextarea>
-
-      <CFormTextarea
-        id="nonConformity"
-        label="No conformidades o interferencias"
-        rows={3}
-        text={`${incident?.nonConformity?.length ?? 0} de ${NON_CONFORMITY_LIMIT} caracteres`}
-        value={incident.nonConformity}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      ></CFormTextarea>
-      <br />
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerIncident()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {incidentContext.length > 0 && incidentContext[0].id && (
         <>
