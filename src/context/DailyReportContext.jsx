@@ -53,6 +53,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedActivityList = selectedReport?.activityList
   const selectedIncident = selectedReport?.incident
   const selectedEquipmentPlateList = selectedReport?.equipmentPlateList
+  const selectedAljibeList = selectedReport?.aljibeList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -149,7 +150,6 @@ export const DailyReportProvider = ({ children }) => {
   const [vehicleWorkForceList, setVehicletWorkForceList] = useState([])
   const [comment, setComment] = useState('')
   const [vehiclePlateList, setVehiclePlateList] = useState([])
-  const [aljibeList, setAljibeList] = useState([])
 
   const [machineryList, setMachineryList] = useState([])
 
@@ -264,6 +264,12 @@ export const DailyReportProvider = ({ children }) => {
     if (selectedDirectDotationWorkForceList)
       setDirectDotationWorkForceList(selectedDirectDotationWorkForceList)
   }, [selectedDirectDotationWorkForceList])
+
+  const [aljibeList, setAljibeList] = useState([])
+
+  useEffect(() => {
+    setAljibeList(selectedAljibeList || [])
+  }, [selectedAljibeList])
 
   const storeCompanyData = async (data) => {
     switch (data.target.id) {

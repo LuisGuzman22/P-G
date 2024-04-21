@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const IndustrialWaterControl = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     aljibe: undefined,
     aljibeCachimbaName: undefined,
@@ -117,7 +121,7 @@ const IndustrialWaterControl = () => {
   }
 
   useEffect(() => {
-    storealjibe(aljibeList)
+    if (!isEditMode) storealjibe(aljibeList)
   }, [aljibeList])
 
   useEffect(() => {
@@ -148,161 +152,163 @@ const IndustrialWaterControl = () => {
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>
-              Debe seleccionar el aljibe y su patente para generar el registro
-            </CToastBody>
-          </div>
-        </CToast>
-      )}
-      <CFormSelect
-        aria-label="Default select example"
-        label="Aljibe"
-        id="aljibe"
-        value={aljibe.aljibe || ''}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={0}>Seleccione</option>
-        {basicQuery.aljibe.map((aljibeCached) => {
-          return (
-            <option key={aljibeCached.id} value={aljibeCached.id}>
-              {aljibeCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-
-      {plates && (
+      {!isEditMode && (
         <>
-          <br />
+          {' '}
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>
+                  Debe seleccionar el aljibe y su patente para generar el registro
+                </CToastBody>
+              </div>
+            </CToast>
+          )}
           <CFormSelect
             aria-label="Default select example"
-            label="Patente"
-            id="aljibePlate"
-            value={aljibe.aljibePlate ?? 0}
+            label="Aljibe"
+            id="aljibe"
+            value={aljibe.aljibe || ''}
             onChange={(e) => {
               onChangeData(e)
             }}
           >
             <option value={0}>Seleccione</option>
-            {plates.map((plate) => {
+            {basicQuery.aljibe.map((aljibeCached) => {
               return (
-                <option key={plate.id} value={plate.id}>
-                  {plate.label}
+                <option key={aljibeCached.id} value={aljibeCached.id}>
+                  {aljibeCached.name}
                 </option>
               )
             })}
           </CFormSelect>
+          {plates && (
+            <>
+              <br />
+              <CFormSelect
+                aria-label="Default select example"
+                label="Patente"
+                id="aljibePlate"
+                value={aljibe.aljibePlate ?? 0}
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              >
+                <option value={0}>Seleccione</option>
+                {plates.map((plate) => {
+                  return (
+                    <option key={plate.id} value={plate.id}>
+                      {plate.label}
+                    </option>
+                  )
+                })}
+              </CFormSelect>
+            </>
+          )}
+          <CTable>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">N° Vehículo oferta</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Vehículo Acreditado</CTableHeaderCell>
+                <CTableHeaderCell scope="col">N° Vehículo en Obra</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="aljibeOfferedNumber"
+                    value={aljibe.aljibeOfferedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="aljibeCertifiedNumber"
+                    value={aljibe.aljibeCertifiedNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="aljibeWorkNumber"
+                    value={aljibe.aljibeWorkNumber || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Nombre Cachimba</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Cantidad de vueltas</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Cantidad de m3</CTableHeaderCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="aljibeCachimbaName"
+                    value={aljibe.aljibeCachimbaName || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="aljibeQuantityTurns"
+                    value={aljibe.aljibeQuantityTurns || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="aljibeM3"
+                    value={aljibe.aljibeM3 || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registeraljibe()
+            }}
+          >
+            Registrar
+          </CButton>
         </>
       )}
-
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">N° Vehículo oferta</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Vehículo Acreditado</CTableHeaderCell>
-            <CTableHeaderCell scope="col">N° Vehículo en Obra</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="aljibeOfferedNumber"
-                value={aljibe.aljibeOfferedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="aljibeCertifiedNumber"
-                value={aljibe.aljibeCertifiedNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="aljibeWorkNumber"
-                value={aljibe.aljibeWorkNumber || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Nombre Cachimba</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Cantidad de vueltas</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Cantidad de m3</CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="aljibeCachimbaName"
-                value={aljibe.aljibeCachimbaName || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="aljibeQuantityTurns"
-                value={aljibe.aljibeQuantityTurns || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="aljibeM3"
-                value={aljibe.aljibeM3 || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registeraljibe()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {aljibeListContext.length > 0 && aljibeListContext[0].aljibe && (
         <CTable className="resume-table">
