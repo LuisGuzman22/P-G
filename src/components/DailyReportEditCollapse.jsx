@@ -30,8 +30,12 @@ import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
+import { useLocation } from 'react-router-dom'
 
 const DailyReportCollapse = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const { registerData } = useRegisterDailyReport()
 
   return (
@@ -163,6 +167,16 @@ const DailyReportCollapse = () => {
             <></>
           </CAccordionBody>
         </CAccordionItem>
+        {isEditMode && (
+          <>
+            <CAccordionItem itemKey={23}>
+              <CAccordionHeader>23) Comentarios en revisión</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <></>
+              </CAccordionBody>
+            </CAccordionItem>
+          </>
+        )}
       </CAccordion>
       <CButton
         className="btn-project-action"
