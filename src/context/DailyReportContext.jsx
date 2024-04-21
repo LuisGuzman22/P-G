@@ -54,6 +54,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedIncident = selectedReport?.incident
   const selectedEquipmentPlateList = selectedReport?.equipmentPlateList
   const selectedAljibeList = selectedReport?.aljibeList
+  const selectedComment = selectedReport?.comment
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -148,7 +149,6 @@ export const DailyReportProvider = ({ children }) => {
   const [indirectDotationWorkForceList, setIndirectDotationWorkForceList] = useState([]) // ANTES ERA UN ARRAY
   const [directDotationWorkForceList, setDirectDotationWorkForceList] = useState([]) // ANTES ERA UN ARRAY
   const [vehicleWorkForceList, setVehicletWorkForceList] = useState([])
-  const [comment, setComment] = useState('')
   const [vehiclePlateList, setVehiclePlateList] = useState([])
 
   const [machineryList, setMachineryList] = useState([])
@@ -270,6 +270,16 @@ export const DailyReportProvider = ({ children }) => {
   useEffect(() => {
     setAljibeList(selectedAljibeList || [])
   }, [selectedAljibeList])
+
+  const [comment, setComment] = useState('')
+
+  useEffect(() => {
+    setComment({ comment: selectedComment?.comment || '' })
+  }, [selectedComment])
+
+  useEffect(() => {
+    console.log('comment', comment)
+  }, [comment])
 
   const storeCompanyData = async (data) => {
     switch (data.target.id) {
