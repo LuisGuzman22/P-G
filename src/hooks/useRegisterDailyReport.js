@@ -29,6 +29,7 @@ const useRegisterDailyReport = () => {
     activityList,
     asarcoMachineryList,
     equipmentPlateList,
+    vehiclePlateList,
     aljibeList,
   } = useContext(DailyReportContext)
 
@@ -92,6 +93,7 @@ const useRegisterDailyReport = () => {
       equipmentWorkForceList, // 12
       vehicleList: vehicList, // 13
       vehicleWorkForceList, // 14
+      vehiclePlateList,
       activityList, // 15
       comment: comment.comment, // 16
       // 17 (graficos)

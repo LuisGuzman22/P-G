@@ -20,6 +20,7 @@ const Comments = () => {
   const { storeComment, comment: commentContext } = useRegisterDailyReportCompany()
 
   useEffect(() => {
+    console.log('comment', comment)
     if (!isEditMode) storeComment(comment)
   }, [comment])
 
@@ -29,7 +30,7 @@ const Comments = () => {
         id="comment"
         label="Comentarios y alertas en genenral"
         disabled={isEditMode}
-        value={isEditMode ? commentContext.comment : comment}
+        value={isEditMode ? commentContext.comment : comment.comment}
         onChange={(e) => {
           onChangeData(e)
         }}
