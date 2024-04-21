@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const EquipmentPlate = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     equipment: undefined,
     equipmentEffectiveTime: undefined,
@@ -107,189 +111,191 @@ const EquipmentPlate = () => {
   }
 
   useEffect(() => {
-    storeEquipmentPlate(equipmentPlateList)
+    if (!isEditMode) storeEquipmentPlate(equipmentPlateList)
   }, [equipmentPlateList])
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>
-              Debe seleccionar el equipo y su patente para generar el registro
-            </CToastBody>
-          </div>
-        </CToast>
-      )}
-      <CFormSelect
-        aria-label="Default select example"
-        id="equipment"
-        value={equipmentPlate.equipment ?? 0}
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={'0'}>Seleccione</option>
-        {basicQuery.equipment.map((equipmentCached) => {
-          return (
-            <option key={equipmentCached.id} value={equipmentCached.id}>
-              {equipmentCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-
-      {plates && (
+      {!isEditMode && (
         <>
-          <br />
+          {' '}
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>
+                  Debe seleccionar el equipo y su patente para generar el registro
+                </CToastBody>
+              </div>
+            </CToast>
+          )}
           <CFormSelect
             aria-label="Default select example"
-            label="Patente"
-            id="equipmentPlate"
-            value={equipmentPlate.equipmentPlate ?? 0}
+            id="equipment"
+            value={equipmentPlate.equipment ?? 0}
             onChange={(e) => {
               onChangeData(e)
             }}
           >
-            <option value={0}>Seleccione</option>
-            {plates.map((plate) => {
+            <option value={'0'}>Seleccione</option>
+            {basicQuery.equipment.map((equipmentCached) => {
               return (
-                <option key={plate.id} value={plate.id}>
-                  {plate.label}
+                <option key={equipmentCached.id} value={equipmentCached.id}>
+                  {equipmentCached.name}
                 </option>
               )
             })}
           </CFormSelect>
+          {plates && (
+            <>
+              <br />
+              <CFormSelect
+                aria-label="Default select example"
+                label="Patente"
+                id="equipmentPlate"
+                value={equipmentPlate.equipmentPlate ?? 0}
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              >
+                <option value={0}>Seleccione</option>
+                {plates.map((plate) => {
+                  return (
+                    <option key={plate.id} value={plate.id}>
+                      {plate.label}
+                    </option>
+                  )
+                })}
+              </CFormSelect>
+            </>
+          )}
+          <CTable>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentEffectiveTime"
+                    value={equipmentPlate.equipmentEffectiveTime || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentCorrectiveMaintenance"
+                    value={equipmentPlate.equipmentCorrectiveMaintenance || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentPreventiveMaintenance"
+                    value={equipmentPlate.equipmentPreventiveMaintenance || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentOutOfService"
+                    value={equipmentPlate.equipmentOutOfService || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentWaiting"
+                    value={equipmentPlate.equipmentWaiting || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Sin Operador (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Horometro Inicial </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Horometro Final </CTableHeaderCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentNoOperator"
+                    value={equipmentPlate.equipmentNoOperator || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentInitialHorometer"
+                    value={equipmentPlate.equipmentInitialHorometer || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="equipmentFinalHorometer"
+                    value={equipmentPlate.equipmentFinalHorometer || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerEquipment()
+            }}
+          >
+            Registrar
+          </CButton>
         </>
       )}
-
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentEffectiveTime"
-                value={equipmentPlate.equipmentEffectiveTime || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentCorrectiveMaintenance"
-                value={equipmentPlate.equipmentCorrectiveMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentPreventiveMaintenance"
-                value={equipmentPlate.equipmentPreventiveMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentOutOfService"
-                value={equipmentPlate.equipmentOutOfService || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentWaiting"
-                value={equipmentPlate.equipmentWaiting || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Sin Operador (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Horometro Inicial </CTableHeaderCell>
-            <CTableHeaderCell scope="col">Horometro Final </CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentNoOperator"
-                value={equipmentPlate.equipmentNoOperator || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentInitialHorometer"
-                value={equipmentPlate.equipmentInitialHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="equipmentFinalHorometer"
-                value={equipmentPlate.equipmentFinalHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerEquipment()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {equipmentPlateListContext.length > 0 && equipmentPlateListContext[0].equipment && (
         <CTable className="resume-table">

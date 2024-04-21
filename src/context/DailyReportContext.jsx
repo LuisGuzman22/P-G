@@ -52,6 +52,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedVehicleList = selectedReport?.vehicleList
   const selectedActivityList = selectedReport?.activityList
   const selectedIncident = selectedReport?.incident
+  const selectedEquipmentPlateList = selectedReport?.equipmentPlateList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -148,7 +149,6 @@ export const DailyReportProvider = ({ children }) => {
   const [vehicleWorkForceList, setVehicletWorkForceList] = useState([])
   const [comment, setComment] = useState('')
   const [vehiclePlateList, setVehiclePlateList] = useState([])
-  const [equipmentPlateList, setEquipmentPlateList] = useState([])
   const [aljibeList, setAljibeList] = useState([])
 
   const [machineryList, setMachineryList] = useState([])
@@ -230,6 +230,12 @@ export const DailyReportProvider = ({ children }) => {
   useEffect(() => {
     setIncident(selectedIncident || [])
   }, [selectedIncident])
+
+  const [equipmentPlateList, setEquipmentPlateList] = useState([])
+
+  useEffect(() => {
+    setEquipmentPlateList(selectedEquipmentPlateList || [])
+  }, [selectedEquipmentPlateList])
 
   const [workforceDotation, setWorkforceDotation] = useState({
     workforceDotationPersonalFront1: undefined,
