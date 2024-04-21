@@ -1,5 +1,4 @@
 import { React, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -20,7 +19,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import { regex } from 'src/utils/regex'
 
 const Login = () => {
-  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [errorUser, setErrorUser] = useState(false)
   const [user, setUser] = useState('')

@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import axios from 'axios'
 import { DailyReportContext } from 'src/context/DailyReportContext'
 import useRegisterGeneralData from './useRegisterGeneralData'
@@ -32,11 +32,10 @@ const useRegisterDailyReport = () => {
     aljibeList,
   } = useContext(DailyReportContext)
 
-  const { mutate, isLoading, isError } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async (newTodo) =>
       axios.post('https://pyg-production.up.railway.app/api/v1/reports', newTodo),
     onSuccess: () => {
-      console.log('ok')
       setLoading(false)
       setSuccess(true)
     },

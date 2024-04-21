@@ -1,6 +1,6 @@
 import React from 'react'
 import ProjectCollapse from 'src/components/ProjectCollapse'
-import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@coreui/react'
+import { CCard, CCardHeader, CCardBody, CCardText } from '@coreui/react'
 
 const ProjectPage = () => {
   return (

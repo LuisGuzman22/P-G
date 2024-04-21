@@ -1,5 +1,5 @@
 import React from 'react'
-import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@coreui/react'
+import { CCard, CCardHeader, CCardBody, CCardText, CRow, CCol } from '@coreui/react'
 
 const TrisemanalPage = () => {
   return (

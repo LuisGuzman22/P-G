@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   CWidgetStatsD,
   CRow,
@@ -24,12 +24,11 @@ const ProjectSelector = () => {
   const { getData } = useGetCachedQueryData()
 
   const contractsQuery = getData('contracts')
-  const { getContract, saveProject, saveContract } = useRegisterGeneralData()
+  const { getContract, saveProject } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
-  const { data: projectData, isLoading, error } = useGetProjects(1)
+  const { data: projectData, isLoading } = useGetProjects(1)
 
-  const [selectedContract, setSelectedContract] = useState()
   const [projectList, setProjectList] = useState()
 
   const [visibleProject, setVisibleProject] = useState(false)
@@ -66,7 +65,6 @@ const ProjectSelector = () => {
       const contractFinded = contractsQuery.contract.find((contractData) => {
         return contractData.id === contractLS.id
       })
-      setSelectedContract(contractFinded)
       setProjectList(contractFinded.project)
     }
   }, [contractsQuery, contractLS])

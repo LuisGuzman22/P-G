@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import InformativePanel from 'src/components/InformativePanel'
 import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
 import ProjectCollapse from 'src/components/ProjectCollapse'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useGetBasicData from 'src/hooks/useGetBasicData'
-import useGetReportsData from 'src/hooks/useGetReportsData'
-import axios from 'axios'
-import { useQuery } from '@tanstack/react-query'
-import { fetchReportsData, useFetchReportsData, useFetchUserList } from 'src/hooks/useFetch'
+import { useFetchReportsData } from 'src/hooks/useFetch'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const Dashboard = () => {
@@ -18,7 +14,6 @@ const Dashboard = () => {
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
-  const { data, isLoading, error } = useGetBasicData(contractLS.id)
   const { getData } = useGetCachedQueryData()
 
   useFetchReportsData()

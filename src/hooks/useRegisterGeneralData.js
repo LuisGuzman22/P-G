@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 const useRegisterGeneralData = () => {
   const saveProject = (data) => {
     localStorage.setItem('project', JSON.stringify(data))

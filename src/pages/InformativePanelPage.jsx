@@ -1,6 +1,6 @@
 import React from 'react'
 import InformativePanel from 'src/components/InformativePanel'
-import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@coreui/react'
+import { CCard, CCardHeader, CCardBody, CCardText } from '@coreui/react'
 
 const InformativePanelPage = () => {
   return (

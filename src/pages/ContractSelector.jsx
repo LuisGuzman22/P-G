@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   CWidgetStatsD,
   CRow,
@@ -14,20 +14,18 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 import CIcon from '@coreui/icons-react'
 import useGetContracts from 'src/hooks/useGetContracts'
-import Loading from 'src/components/loading'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import ModalAddContract from 'src/components/ModalAddContract'
 
 const ContractSelector = () => {
   const navigate = useNavigate()
   const { getProject, saveContract } = useRegisterGeneralData()
-  const [selectedProject, setSelectedProject] = useState()
   const [contractList, setContractList] = useState()
   const { getData } = useGetCachedQueryData()
 
   const projectsQuery = getData('projects')
   const userType = localStorage.getItem('USER_TYPE')
-  const { data: contractData, isLoading, error } = useGetContracts(1)
+  const { data: contractData } = useGetContracts(1)
   const projectLS = JSON.parse(getProject())
 
   const [visibleContract, setVisibleContract] = useState(false)
@@ -60,7 +58,6 @@ const ContractSelector = () => {
         const projectFinded = projectsQuery.find((projectData) => {
           return projectData.id === projectLS.id
         })
-        setSelectedProject(projectFinded)
         setContractList(projectFinded.contracts)
       } else {
         navigate(`/project_selector`)

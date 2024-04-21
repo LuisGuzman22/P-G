@@ -23,7 +23,6 @@ export const DailyReportContext = createContext({
 export const DailyReportProvider = ({ children }) => {
   const { getProject, getContract } = useRegisterGeneralData()
 
-  const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
   const { getData } = useGetCachedQueryData()
