@@ -334,8 +334,8 @@ const IndustrialWaterControl = () => {
               })
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{aljibe.name}</CTableDataCell>
-                  <CTableDataCell>{plate.label}</CTableDataCell>
+                  <CTableDataCell>{aljibe.name ?? ''}</CTableDataCell>
+                  <CTableDataCell>{plate.label ?? ''}</CTableDataCell>
                   <CTableDataCell>{item.aljibeCachimbaName ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.aljibeQuantityTurns ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.aljibeM3 ?? 0}</CTableDataCell>

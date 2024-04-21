@@ -277,9 +277,7 @@ export const DailyReportProvider = ({ children }) => {
     setComment({ comment: selectedComment?.comment || '' })
   }, [selectedComment])
 
-  useEffect(() => {
-    console.log('comment', comment)
-  }, [comment])
+  useEffect(() => {}, [comment])
 
   const storeCompanyData = async (data) => {
     switch (data.target.id) {

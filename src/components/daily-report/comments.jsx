@@ -20,7 +20,6 @@ const Comments = () => {
   const { storeComment, comment: commentContext } = useRegisterDailyReportCompany()
 
   useEffect(() => {
-    console.log('comment', comment)
     if (!isEditMode) storeComment(comment)
   }, [comment])
 
