@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CAccordion,
   CAccordionBody,
@@ -31,15 +31,33 @@ import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
 import { useLocation } from 'react-router-dom'
+import ModalSendDailyReport from './ModalSendDailyReport'
 
 const DailyReportCollapse = () => {
   const currentLocation = useLocation().pathname
   const isEditMode = currentLocation.includes('/edit')
+  const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
 
   const { registerData } = useRegisterDailyReport()
 
+  const registerDailyReport = () => {
+    if (isEditMode) {
+      setVisibleSendDailyReportModal(!visibleSendDailyReportModal)
+    } else {
+      registerData()
+    }
+  }
+
   return (
     <div className="dailyReport">
+      {visibleSendDailyReportModal && (
+        <ModalSendDailyReport
+          visible={true}
+          sendDataToParent={async (data) => {
+            setVisibleSendDailyReportModal(data)
+          }}
+        />
+      )}
       <CAccordion className="dailyReport-accordion" activeItemKey={1}>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>1) Empresa</CAccordionHeader>
@@ -167,21 +185,12 @@ const DailyReportCollapse = () => {
             <></>
           </CAccordionBody>
         </CAccordionItem>
-        {isEditMode && (
-          <>
-            <CAccordionItem itemKey={23}>
-              <CAccordionHeader>23) Comentarios en revisión</CAccordionHeader>
-              <CAccordionBody className="dailyReport-accordion">
-                <></>
-              </CAccordionBody>
-            </CAccordionItem>
-          </>
-        )}
       </CAccordion>
       <CButton
         className="btn-project-action"
         onClick={() => {
-          registerData()
+          // registerData()
+          registerDailyReport()
         }}
       >
         Registrar informe diario
