@@ -46,7 +46,6 @@ const Graphs = () => {
   }, [asarcoMachineryListContext])
 
   useEffect(() => {
-    console.log('totalDirectWorkForceContext', totalDirectWorkForceContext)
     setTotalPlanedDotation(totalDirectWorkForceContext.directSubtotalOfferedNumber)
     setTotalWorkDotation(totalDirectWorkForceContext.directSubtotalWorkNumber)
   }, [totalDirectWorkForceContext])
@@ -125,48 +124,52 @@ const Graphs = () => {
           />
         </>
       )}
-      <CChart
-        type="bar"
-        data={{
-          labels: ['Dotación Planeada Directos Total', 'Dotación Directos Obra Total'],
-          datasets: [
-            {
-              label: 'Dotación Directa Total',
-              backgroundColor: ['rgba(0,103,102,255)', 'rgba(239,132,60,255)'],
-              borderColor: 'rgb(255, 99, 132)',
-              data: [totalPlanedDotation, totalWorkDotation],
-            },
-          ],
-        }}
-        labels="Dotación Directa Total"
-        options={{
-          plugins: {
-            legend: {
-              labels: {
-                color: getStyle('--cui-body-color'),
+      {totalDirectWorkForceContext && (
+        <>
+          <CChart
+            type="bar"
+            data={{
+              labels: ['Dotación Planeada Directos Total', 'Dotación Directos Obra Total'],
+              datasets: [
+                {
+                  label: 'Dotación Directa Total',
+                  backgroundColor: ['rgba(0,103,102,255)', 'rgba(239,132,60,255)'],
+                  borderColor: 'rgb(255, 99, 132)',
+                  data: [totalPlanedDotation, totalWorkDotation],
+                },
+              ],
+            }}
+            labels="Dotación Directa Total"
+            options={{
+              plugins: {
+                legend: {
+                  labels: {
+                    color: getStyle('--cui-body-color'),
+                  },
+                },
               },
-            },
-          },
-          scales: {
-            x: {
-              grid: {
-                color: getStyle('--cui-border-color-translucent'),
+              scales: {
+                x: {
+                  grid: {
+                    color: getStyle('--cui-border-color-translucent'),
+                  },
+                  ticks: {
+                    color: getStyle('--cui-body-color'),
+                  },
+                },
+                y: {
+                  grid: {
+                    color: getStyle('--cui-border-color-translucent'),
+                  },
+                  ticks: {
+                    color: getStyle('--cui-body-color'),
+                  },
+                },
               },
-              ticks: {
-                color: getStyle('--cui-body-color'),
-              },
-            },
-            y: {
-              grid: {
-                color: getStyle('--cui-border-color-translucent'),
-              },
-              ticks: {
-                color: getStyle('--cui-body-color'),
-              },
-            },
-          },
-        }}
-      />
+            }}
+          />
+        </>
+      )}
     </div>
   )
 }
