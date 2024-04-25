@@ -44,6 +44,7 @@ const TotalDirectWorkForce = () => {
   const [directAccumulatedWorked, setDirectAccumulatedWorked] = useState(0)
   const [directAccumulatedPrevious, setDirectAccumulatedPrevious] = useState(0)
   const [directAccumulatedActual, setDirectAccumulatedActual] = useState(0)
+  const [total, setTotal] = useState(0)
 
   const onChangeData = (e) => {
     if (validate(e.target.value)) {
@@ -67,7 +68,10 @@ const TotalDirectWorkForce = () => {
       let certified = 0
       let breaked = 0
       let workekd = 0
+      let index = 0
       for (let directData of directWorkForceListContext) {
+        index++
+        setTotal(index)
         hours = hours + Number(directData.hh)
         offered = offered + Number(directData.offeredNumber)
         contracted = contracted + Number(directData.contractedNumber)
@@ -107,10 +111,10 @@ const TotalDirectWorkForce = () => {
       setDirectAccumulatedActual(totalDirectWorkForceContext.directCurrentAccumulated)
       setDirectAccumulatedPrevious(totalDirectWorkForceContext.directPreviusAccumulated)
     }
-  }, [totalDirectWorkForceContext])
+  }, [directWorkForceListContext])
 
   useEffect(() => {
-    if (!isEditMode) storeTotalDirectWorkForce(totalDirectWorkForce)
+    if (!isEditMode && total > 0) storeTotalDirectWorkForce(totalDirectWorkForce)
   }, [totalDirectWorkForce])
 
   return (
