@@ -32,11 +32,20 @@ import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
 import { useLocation } from 'react-router-dom'
 import ModalSendDailyReport from './ModalSendDailyReport'
+import { PDFDownloadLink } from '@react-pdf/renderer'
+import Pdf from './Pdf'
+import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
+// )
 const DailyReportCollapse = () => {
   const currentLocation = useLocation().pathname
   const isEditMode = currentLocation.includes('/edit')
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
+  const { company, indirectWorkForceList } = useRegisterDailyReportCompany()
+
+  const { getData } = useGetCachedQueryData()
+  const basicQuery = getData('basics')
 
   const { registerData } = useRegisterDailyReport()
 
@@ -58,6 +67,20 @@ const DailyReportCollapse = () => {
           }}
         />
       )}
+      <div>
+        <PDFDownloadLink
+          document={
+            <Pdf
+              company={company}
+              indirectWorkForceList={indirectWorkForceList}
+              basicQuery={basicQuery}
+            />
+          }
+          fileName="Reporte 1.pdf"
+        >
+          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Descargar PDF!')}
+        </PDFDownloadLink>
+      </div>
       <CAccordion className="dailyReport-accordion" activeItemKey={1}>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>1) Empresa</CAccordionHeader>

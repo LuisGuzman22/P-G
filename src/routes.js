@@ -14,6 +14,7 @@ const Trisemanal = React.lazy(() => import('./pages/TrisemanalPage'))
 const ProjectAdministration = React.lazy(() => import('./pages/ProjectAdministration'))
 const ContractAdministration = React.lazy(() => import('./pages/ContractAdministration'))
 const User = React.lazy(() => import('./pages/User'))
+const Pdf = React.lazy(() => import('./components/Pdf'))
 // const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -72,6 +73,8 @@ const routes = [
   { path: '/proyecto', name: 'Proyecto', element: Project },
   { path: '/informe-diario', name: 'Informe Diario', element: DailyReport },
   { path: '/informe-diario/edit', name: 'Informe Diario', element: DailyReportEdit },
+  { path: '/informe-diario/pdf', name: 'Informe Diario', element: Pdf },
+
   { path: '/trisemanal', name: 'Actividades Trisemanal', element: Trisemanal },
   { path: '/carta-gantt', name: 'Carta Gantt', element: Gantt },
   { path: '/avance', name: 'Detalles de avance', element: Detail },
