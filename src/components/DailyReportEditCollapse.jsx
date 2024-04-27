@@ -42,7 +42,7 @@ const DailyReportCollapse = () => {
   const currentLocation = useLocation().pathname
   const isEditMode = currentLocation.includes('/edit')
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
-  const { company, indirectWorkForceList } = useRegisterDailyReportCompany()
+  const { company, indirectWorkForceList, totalIndirectWorkForce } = useRegisterDailyReportCompany()
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
@@ -74,6 +74,7 @@ const DailyReportCollapse = () => {
               company={company}
               indirectWorkForceList={indirectWorkForceList}
               basicQuery={basicQuery}
+              totalIndirectWorkForce={totalIndirectWorkForce}
             />
           }
           fileName="Reporte 1.pdf"
