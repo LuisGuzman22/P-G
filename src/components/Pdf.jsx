@@ -284,46 +284,49 @@ const Pdf = (props) => {
                 <Text style={styles.laboralWorkerSection.tableCell}>HH (turno) </Text>
               </View>
             </View>
-            {/* <View style={styles.tableRow}>
-              <View style={styles.tableColPrimary}>
-                <Text style={styles.tableCell}>Nombre de contratista</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{company?.dailyReportContratistName}</Text>
-              </View>
-              <View style={styles.tableColPrimary}>
-                <Text style={styles.tableCell}>Personal Directo</Text>
-              </View>
-              <View style={styles.tableColPrimary}>
-                <Text style={styles.tableCell}></Text>
-              </View>
-              <View style={styles.tableColPrimary}>
-                <Text style={styles.tableCell}>Personal Indirecto</Text>
-              </View>
-              <View style={styles.tableColPrimary}>
-                <Text style={styles.tableCell}></Text>
-              </View>
-            </View>
-            <View style={styles.tableRow}>
-              <View style={styles.tableColPrimary}>
-                <Text style={styles.tableCell}>N° de Contrato</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{contractLS.id}</Text>
-              </View>
-              <View style={styles.tableColPrimary}>
-                <Text style={styles.tableCell}>Turno</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{company?.dailyReportDirectPersonalShift}</Text>
-              </View>
-              <View style={styles.tableColPrimary}>
-                <Text style={styles.tableCell}>Turno</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{company?.dailyReportIndirectPersonalShift}</Text>
-              </View>
-            </View> */}
+            {indirectWorkForceList.length > 0 && (
+              <>
+                {indirectWorkForceList.map((data) => {
+                  return (
+                    <>
+                      <View style={styles.laboralWorkerSection.tableRow}>
+                        <View style={styles.laboralWorkerSection.tableColPrimary}>
+                          <Text style={styles.laboralWorkerSection.tableCell}>{data.id}</Text>
+                        </View>
+                        <View style={styles.laboralWorkerSection.tableCol}>
+                          <Text style={styles.laboralWorkerSection.tableCell}>
+                            {data.offeredNumber}
+                          </Text>
+                        </View>
+                        <View style={styles.laboralWorkerSection.tableCol}>
+                          <Text style={styles.laboralWorkerSection.tableCell}>
+                            {data.contractedNumber}
+                          </Text>
+                        </View>
+                        <View style={styles.laboralWorkerSection.tableCol}>
+                          <Text style={styles.laboralWorkerSection.tableCell}>
+                            {data.certified}
+                          </Text>
+                        </View>
+                        <View style={styles.laboralWorkerSection.tableCol}>
+                          <Text style={styles.laboralWorkerSection.tableCell}>
+                            {data.breakNumber}
+                          </Text>
+                        </View>
+                        <View style={styles.laboralWorkerSection.tableCol}>
+                          <Text style={styles.laboralWorkerSection.tableCell}>
+                            {data.workNumber}
+                          </Text>
+                        </View>
+                        <View style={styles.laboralWorkerSection.tableCol}>
+                          <Text style={styles.laboralWorkerSection.tableCell}>{data.hh}</Text>
+                        </View>
+                      </View>
+                    </>
+                  )
+                })}
+              </>
+            )}
           </View>
         </View>
       </Page>
