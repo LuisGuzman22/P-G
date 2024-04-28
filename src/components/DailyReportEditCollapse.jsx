@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CAccordion,
   CAccordionBody,
@@ -30,7 +30,7 @@ import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import ModalSendDailyReport from './ModalSendDailyReport'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import Pdf from './Pdf'
@@ -41,6 +41,8 @@ import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 const DailyReportCollapse = () => {
   const currentLocation = useLocation().pathname
   const isEditMode = currentLocation.includes('/edit')
+  const navigate = useNavigate()
+
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
   const {
     company,
@@ -62,6 +64,11 @@ const DailyReportCollapse = () => {
     machineryWorkForceList,
     equipmentWorkForceList,
   } = useRegisterDailyReportCompany()
+  console.log('company', company)
+
+  // useEffect(() => {
+  //   if (!company.dailyReportDate) navigate(`/dashboard`)
+  // }, [company])
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
