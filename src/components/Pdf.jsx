@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
@@ -41,7 +41,190 @@ const Pdf = (props) => {
     incident,
   } = props
   const { indirectPersonal, directPersonal, machinery, equipment, vehicles, aljibe } = basicQuery
-  console.log('props', props)
+  // console.log('props', props)
+
+  const [totalMacOffered, setTotalMacOffered] = useState(0)
+  const [totalMacCertified, setTotalMacCertified] = useState(0)
+  const [totalMacWork, setTotalMacWork] = useState(0)
+  const [totalMacEffectiveTime, setTotalMacEffectiveTime] = useState(0)
+  const [totalMacUnscheduleMaintenance, setTotalMacUnscheduleMaintenance] = useState(0)
+  const [totalMacScheduleMaintenance, setTotalMacScheduleMaintenance] = useState(0)
+  const [totalMacUnscheduleDelay, setTotalMacUnscheduleDelay] = useState(0)
+  const [totalMacScheduleDelay, setTotalMacScheduleDelay] = useState(0)
+  const [totalMacReserves, setTotalMacReserves] = useState(0)
+  const [totalMacOpperationalLoss, setTotalMacOpperationalLoss] = useState(0)
+  const [totalMacHorometer, setTotalMacHorometer] = useState(0)
+
+  useEffect(() => {
+    let macOffered = 0
+    let macCertified = 0
+    let macWork = 0
+    let macEffectiveTime = 0
+    let macUnscheduleMaintenance = 0
+    let macScheduleMaintenance = 0
+    let macUnscheduleDelay = 0
+    let macScheduleDelay = 0
+    let macReserves = 0
+    let macOperationalLoss = 0
+    let macHorometer = 0
+    machineryList.map((mac) => {
+      macOffered = macOffered + Number(mac.actions.machineryOfferedNumber)
+      macCertified = macCertified + Number(mac.actions.machineryCertifiedNumber)
+      macWork = macWork + Number(mac.actions.machineryWorkNumber)
+
+      const selectedAsarco = asarcoMachineryList.find((asarco) => {
+        return asarco.machinery === mac.machinery
+      })
+
+      macEffectiveTime = macEffectiveTime + Number(selectedAsarco.asarcoMachineryEffectiveTime)
+      macUnscheduleMaintenance =
+        macUnscheduleMaintenance + Number(selectedAsarco.asarcoMachineryUnscheduleMaintenance)
+      macScheduleMaintenance =
+        macScheduleMaintenance + Number(selectedAsarco.asarcoMachineryScheduleMaintenance)
+      macUnscheduleDelay =
+        macUnscheduleDelay + Number(selectedAsarco.asarcoMachineryUnscheduleDelay)
+      macScheduleDelay = macScheduleDelay + Number(selectedAsarco.asarcoMachineryScheduleDelay)
+      macReserves = macReserves + Number(selectedAsarco.asarcoMachineryReserves)
+      macOperationalLoss =
+        macOperationalLoss + Number(selectedAsarco.asarcoMachineryOpperationalLoss)
+      macHorometer = macHorometer + Number(selectedAsarco.asarcoMachineryHorometer)
+    })
+
+    setTotalMacOffered(macOffered)
+    setTotalMacCertified(macCertified)
+    setTotalMacWork(macWork)
+    setTotalMacEffectiveTime(macEffectiveTime)
+    setTotalMacUnscheduleMaintenance(macUnscheduleMaintenance)
+    setTotalMacScheduleMaintenance(macScheduleMaintenance)
+    setTotalMacUnscheduleDelay(macUnscheduleDelay)
+    setTotalMacScheduleDelay(macScheduleDelay)
+    setTotalMacReserves(macReserves)
+    setTotalMacOpperationalLoss(macOperationalLoss)
+    setTotalMacHorometer(macHorometer)
+  }, [machineryList])
+
+  const [totalEquipOffered, setTotalEquipOffered] = useState(0)
+  const [totalEquipCertified, setTotalEquipCertified] = useState(0)
+  const [totalEquipWork, setTotalEquipWork] = useState(0)
+  const [totalEquipEffectiveTime, setTotalEquipEffectiveTime] = useState(0)
+  const [totalEquipCorrectiveMaintenance, setTotalEquipCorrectiveMaintenance] = useState(0)
+  const [totalEquipPreventiveMaintenance, setTotalEquipPreventiveMaintenance] = useState(0)
+  const [totalEquipOutOfService, setTotalEquipOutOfService] = useState(0)
+  const [totalEquipWaiting, setTotalEquipWaiting] = useState(0)
+  const [totalEquipNoOperator, setTotalEquipNoOperator] = useState(0)
+  const [totalEquipInitialHorometer, setTotalEquipInitialHorometer] = useState(0)
+  const [totalEquipFinalHorometer, setTotalEquipFinalHorometer] = useState(0)
+
+  useEffect(() => {
+    let equipOffered = 0
+    let equipCertified = 0
+    let equipWork = 0
+    let equipEffectiveTime = 0
+    let equipCorrectiveMaintenance = 0
+    let equipPreventiveMaintenance = 0
+    let equipOutOfService = 0
+    let equipWaiting = 0
+    let equipNoOperator = 0
+    let equipInitialHorometer = 0
+    let equipFinalHorometer = 0
+
+    equipmentList.map((equi) => {
+      equipOffered = equipOffered + Number(equi.actions.equipmentOfferedNumber)
+      equipCertified = equipCertified + Number(equi.actions.equipmentCertifiedNumber)
+      equipWork = equipWork + Number(equi.actions.equipmentWorkNumber)
+
+      const selectedEquipmentPlate = equipmentPlateList.find((equipPlate) => {
+        return equipPlate.equipment === equi.equipment
+      })
+      equipEffectiveTime =
+        equipEffectiveTime + Number(selectedEquipmentPlate.equipmentEffectiveTime)
+      equipCorrectiveMaintenance =
+        equipCorrectiveMaintenance + Number(selectedEquipmentPlate.equipmentCorrectiveMaintenance)
+      equipPreventiveMaintenance =
+        equipPreventiveMaintenance + Number(selectedEquipmentPlate.equipmentPreventiveMaintenance)
+      equipOutOfService = equipOutOfService + Number(selectedEquipmentPlate.equipmentOutOfService)
+      equipWaiting = equipWaiting + Number(selectedEquipmentPlate.equipmentWaiting)
+      equipNoOperator = equipNoOperator + Number(selectedEquipmentPlate.equipmentNoOperator)
+      equipInitialHorometer =
+        equipInitialHorometer + Number(selectedEquipmentPlate.equipmentInitialHorometer)
+      equipFinalHorometer =
+        equipFinalHorometer + Number(selectedEquipmentPlate.equipmentFinalHorometer)
+    })
+
+    setTotalEquipOffered(equipOffered)
+    setTotalEquipCertified(equipCertified)
+    setTotalEquipWork(equipWork)
+    setTotalEquipEffectiveTime(equipEffectiveTime)
+    setTotalEquipCorrectiveMaintenance(equipCorrectiveMaintenance)
+    setTotalEquipPreventiveMaintenance(equipPreventiveMaintenance)
+    setTotalEquipOutOfService(equipOutOfService)
+    setTotalEquipWaiting(equipWaiting)
+    setTotalEquipNoOperator(equipNoOperator)
+    setTotalEquipInitialHorometer(equipInitialHorometer)
+    setTotalEquipFinalHorometer(equipFinalHorometer)
+  }, [equipmentList])
+
+  const [totalVehicOffered, setTotalVehicOffered] = useState(0)
+  const [totalVehicCertified, setTotalVehicCertified] = useState(0)
+  const [totalVehicWork, setTotalVehicWork] = useState(0)
+  const [totalVehicEffectiveTime, setTotalVehicEffectiveTime] = useState(0)
+  const [totalVehicCorrectiveMaintenance, setTotalVehicCorrectiveMaintenance] = useState(0)
+  const [totalVehicPreventiveMaintenance, setTotalVehicPreventiveMaintenance] = useState(0)
+  const [totalVehicOutOfService, setTotalVehicOutOfService] = useState(0)
+  const [totalVehicWaiting, setTotalVehicWaiting] = useState(0)
+  const [totalVehicNoOperator, setTotalVehicNoOperator] = useState(0)
+  const [totalVehicInitialHorometer, setTotalVehicInitialHorometer] = useState(0)
+  const [totalVehicFinalHorometer, setTotalVehicFinalHorometer] = useState(0)
+
+  useEffect(() => {
+    let vehicOffered = 0
+    let vehicCertified = 0
+    let vehicWork = 0
+    let vehicEffectiveTime = 0
+    let vehicCorrectiveMaintenance = 0
+    let vehicPreventiveMaintenance = 0
+    let vehicOutOfService = 0
+    let vehicWaiting = 0
+    let vehicNoOperator = 0
+    let vehicInitialHorometer = 0
+    let vehicFinalHorometer = 0
+
+    vehicleList.map((veh) => {
+      vehicOffered = vehicOffered + Number(veh.actions.vehicleOfferedNumber)
+      vehicCertified = vehicCertified + Number(veh.actions.vehicleCertifiedNumber)
+      vehicWork = vehicWork + Number(veh.actions.vehicleWorkNumber)
+
+      const selectedVehiclePlate = vehiclePlateList.find((VehicPlate) => {
+        return VehicPlate.vehicle === veh.vehicle
+      })
+
+      console.log('selectedVehiclePlate', selectedVehiclePlate)
+
+      vehicEffectiveTime = vehicEffectiveTime + Number(selectedVehiclePlate.vehicleEffectiveTime)
+      vehicCorrectiveMaintenance =
+        vehicCorrectiveMaintenance + Number(selectedVehiclePlate.vehicleCorrectiveMaintenance)
+      vehicPreventiveMaintenance =
+        vehicPreventiveMaintenance + Number(selectedVehiclePlate.vehiclePreventiveMaintenance)
+      vehicOutOfService = vehicOutOfService + Number(selectedVehiclePlate.vehicleOutOfService)
+      vehicWaiting = vehicWaiting + Number(selectedVehiclePlate.vehicleWaiting)
+      vehicNoOperator = vehicNoOperator + Number(selectedVehiclePlate.vehicleNoOperator)
+      vehicInitialHorometer =
+        vehicInitialHorometer + Number(selectedVehiclePlate.vehicleInitialHorometer)
+      vehicFinalHorometer = vehicFinalHorometer + Number(selectedVehiclePlate.vehicleFinalHorometer)
+    })
+
+    setTotalVehicOffered(vehicOffered)
+    setTotalVehicCertified(vehicCertified)
+    setTotalVehicWork(vehicWork)
+    setTotalVehicEffectiveTime(vehicEffectiveTime)
+    setTotalVehicCorrectiveMaintenance(vehicCorrectiveMaintenance)
+    setTotalVehicPreventiveMaintenance(vehicPreventiveMaintenance)
+    setTotalVehicOutOfService(vehicOutOfService)
+    setTotalVehicWaiting(vehicWaiting)
+    setTotalVehicNoOperator(vehicNoOperator)
+    setTotalVehicInitialHorometer(vehicInitialHorometer)
+    setTotalVehicFinalHorometer(vehicFinalHorometer)
+  }, [vehicleList])
 
   const element = (
     <html>
@@ -74,9 +257,11 @@ const Pdf = (props) => {
           text-align: left;
         }
         .td-green-label {
-          background-color: #3c7d23
-;
+          background-color: #3c7d23;
           color: white;
+        }
+        .td-total-label{
+          background-color: #ffcc66;
         }
         .td-label {
           background-color: #006666;
@@ -321,6 +506,7 @@ const Pdf = (props) => {
                     const selectedPlate = selectedMachinery.plate.find((plate) => {
                       return plate.id === selectedAsarco.machineryPlate
                     })
+
                     return (
                       <tr key={data.id}>
                         <td className="">{selectedMachinery.name ?? ''}</td>
@@ -340,6 +526,21 @@ const Pdf = (props) => {
                     )
                   }
                 })}
+                <tr>
+                  <td className="td-total-label">Total</td>
+                  <td className="td-total-label"></td>
+                  <td className="td-total-label">{totalMacOffered}</td>
+                  <td className="td-total-label">{totalMacCertified}</td>
+                  <td className="td-total-label">{totalMacWork}</td>
+                  <td className="td-total-label">{totalMacEffectiveTime}</td>
+                  <td className="td-total-label">{totalMacUnscheduleMaintenance}</td>
+                  <td className="td-total-label">{totalMacScheduleMaintenance}</td>
+                  <td className="td-total-label">{totalMacUnscheduleDelay}</td>
+                  <td className="td-total-label">{totalMacScheduleDelay}</td>
+                  <td className="td-total-label">{totalMacReserves}</td>
+                  <td className="td-total-label">{totalMacOpperationalLoss}</td>
+                  <td className="td-total-label">{totalMacHorometer}</td>
+                </tr>
               </>
             )}
           </tbody>
@@ -399,6 +600,21 @@ const Pdf = (props) => {
                     )
                   }
                 })}
+                <tr>
+                  <td className="td-total-label">Total</td>
+                  <td className="td-total-label"></td>
+                  <td className="td-total-label">{totalEquipOffered}</td>
+                  <td className="td-total-label">{totalEquipCertified}</td>
+                  <td className="td-total-label">{totalEquipWork}</td>
+                  <td className="td-total-label">{totalEquipEffectiveTime}</td>
+                  <td className="td-total-label">{totalEquipCorrectiveMaintenance}</td>
+                  <td className="td-total-label">{totalEquipPreventiveMaintenance}</td>
+                  <td className="td-total-label">{totalEquipOutOfService}</td>
+                  <td className="td-total-label">{totalEquipWaiting}</td>
+                  <td className="td-total-label">{totalEquipNoOperator}</td>
+                  <td className="td-total-label">{totalEquipInitialHorometer}</td>
+                  <td className="td-total-label">{totalEquipFinalHorometer}</td>
+                </tr>
               </>
             )}
           </tbody>
@@ -454,6 +670,21 @@ const Pdf = (props) => {
                     )
                   }
                 })}
+                <tr>
+                  <td className="td-total-label">Total</td>
+                  <td className="td-total-label"></td>
+                  <td className="td-total-label">{totalVehicOffered}</td>
+                  <td className="td-total-label">{totalVehicCertified}</td>
+                  <td className="td-total-label">{totalVehicWork}</td>
+                  <td className="td-total-label">{totalVehicEffectiveTime}</td>
+                  <td className="td-total-label">{totalVehicCorrectiveMaintenance}</td>
+                  <td className="td-total-label">{totalVehicPreventiveMaintenance}</td>
+                  <td className="td-total-label">{totalVehicOutOfService}</td>
+                  <td className="td-total-label">{totalVehicWaiting}</td>
+                  <td className="td-total-label">{totalVehicNoOperator}</td>
+                  <td className="td-total-label">{totalVehicInitialHorometer}</td>
+                  <td className="td-total-label">{totalVehicFinalHorometer}</td>
+                </tr>
               </>
             )}
           </tbody>
