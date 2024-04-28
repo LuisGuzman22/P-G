@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/235.ee831940.chunk.js","mappings":"gJAEA,MAIA,EAJmBA,KACVC,EAAAA,EAAAA,KAAAC,EAAAA,SAAA,CAAAC,SAAE,iB","sources":["pages/DetailPage.jsx"],"sourcesContent":["import React from 'react'\n\nconst DetailPage = () => {\n  return <>Comming soon </>\n}\n\nexport default DetailPage\n"],"names":["DetailPage","_jsx","_Fragment","children"],"sourceRoot":""}

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkP_G=self.webpackChunkP_G||[]).push([[911],{28911:(e,s,c)=>{c.r(s),c.d(s,{default:()=>j});c(65043);var r=c(322),n=c(80861),d=c(25104),h=c(96105),l=c(23682),i=c(70579);const j=()=>(0,i.jsx)(i.Fragment,{children:(0,i.jsxs)(n.E,{children:[(0,i.jsx)(d.V,{children:"Proyecto"}),(0,i.jsx)(h.W,{children:(0,i.jsx)(l.d,{children:(0,i.jsx)(r.A,{})})})]})})}}]);
+//# sourceMappingURL=911.0dbbcecc.chunk.js.map
