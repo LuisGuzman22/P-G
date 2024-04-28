@@ -42,7 +42,23 @@ const DailyReportCollapse = () => {
   const currentLocation = useLocation().pathname
   const isEditMode = currentLocation.includes('/edit')
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
-  const { company, indirectWorkForceList, totalIndirectWorkForce } = useRegisterDailyReportCompany()
+  const {
+    company,
+    indirectWorkForceList,
+    totalIndirectWorkForce,
+    directWorkForceList,
+    totalDirectWorkForce,
+    asarcoMachineryList,
+    machineryList,
+    equipmentList,
+    equipmentPlateList,
+    vehicleList,
+    vehiclePlateList,
+    activityList,
+    aljibeList,
+    comment,
+    incident,
+  } = useRegisterDailyReportCompany()
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
@@ -75,6 +91,18 @@ const DailyReportCollapse = () => {
               indirectWorkForceList={indirectWorkForceList}
               basicQuery={basicQuery}
               totalIndirectWorkForce={totalIndirectWorkForce}
+              directWorkForceList={directWorkForceList}
+              totalDirectWorkForce={totalDirectWorkForce}
+              asarcoMachineryList={asarcoMachineryList}
+              machineryList={machineryList}
+              equipmentList={equipmentList}
+              equipmentPlateList={equipmentPlateList}
+              vehiclePlateList={vehiclePlateList}
+              vehicleList={vehicleList}
+              activityList={activityList}
+              aljibeList={aljibeList}
+              comment={comment}
+              incident={incident}
             />
           }
           fileName="Reporte 1.pdf"

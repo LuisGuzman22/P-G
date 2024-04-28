@@ -118,7 +118,6 @@ const EquipmentPlate = () => {
     <div className="work-force-report">
       {!isEditMode && (
         <>
-          {' '}
           {error && (
             <CToast
               autohide={true}

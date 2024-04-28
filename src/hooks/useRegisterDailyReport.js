@@ -92,7 +92,6 @@ const useRegisterDailyReport = () => {
       equipmentList: equipList, // 11
       equipmentWorkForceList, // 12
       vehicleList: vehicList, // 13
-      vehicleWorkForceList, // 14
       vehiclePlateList,
       activityList, // 15
       comment: comment.comment, // 16

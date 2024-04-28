@@ -17,8 +17,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router'
 
 const VehiclePlate = () => {
+  const currentLocation = useLocation().pathname
+  const isEditMode = currentLocation.includes('/edit')
+
   const initialState = {
     vehicle: undefined,
     vehicleEffectiveTime: undefined,
@@ -107,190 +111,194 @@ const VehiclePlate = () => {
   }
 
   useEffect(() => {
-    storeVehiclePlate(vehiclePlateList)
+    if (!isEditMode) storeVehiclePlate(vehiclePlateList)
   }, [vehiclePlateList])
 
   return (
     <div className="work-force-report">
-      {error && (
-        <CToast
-          autohide={true}
-          visible={error}
-          color="danger"
-          onClose={() => {
-            setError(false)
-          }}
-          className="text-white align-items-center"
-        >
-          <div className="d-flex">
-            <CToastBody>
-              Debe seleccionar el equipo y la patente para generar el registro
-            </CToastBody>
-          </div>
-        </CToast>
-      )}
-      <CFormSelect
-        aria-label="Default select example"
-        id="vehicle"
-        value={vehiclePlate.vehicle || 0}
-        label="Vehículo"
-        onChange={(e) => {
-          onChangeData(e)
-        }}
-      >
-        <option value={0}>Seleccione</option>
-        {basicQuery.vehicles.map((vehicleCached) => {
-          return (
-            <option key={vehicleCached.id} value={vehicleCached.id}>
-              {vehicleCached.name}
-            </option>
-          )
-        })}
-      </CFormSelect>
-
-      {plates && (
+      {!isEditMode && (
         <>
-          <br />
+          {error && (
+            <CToast
+              autohide={true}
+              visible={error}
+              color="danger"
+              onClose={() => {
+                setError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>
+                  Debe seleccionar el equipo y la patente para generar el registro
+                </CToastBody>
+              </div>
+            </CToast>
+          )}
           <CFormSelect
             aria-label="Default select example"
-            label="Patente"
-            id="vehiclePlate"
-            value={vehiclePlate.vehiclePlate ?? 0}
+            id="vehicle"
+            value={vehiclePlate.vehicle || 0}
+            label="Vehículo"
             onChange={(e) => {
               onChangeData(e)
             }}
           >
             <option value={0}>Seleccione</option>
-            {plates.map((plate) => {
+            {basicQuery.vehicles.map((vehicleCached) => {
               return (
-                <option key={plate.id} value={plate.id}>
-                  {plate.label}
+                <option key={vehicleCached.id} value={vehicleCached.id}>
+                  {vehicleCached.name}
                 </option>
               )
             })}
           </CFormSelect>
+
+          {plates && (
+            <>
+              <br />
+              <CFormSelect
+                aria-label="Default select example"
+                label="Patente"
+                id="vehiclePlate"
+                value={vehiclePlate.vehiclePlate ?? 0}
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              >
+                <option value={0}>Seleccione</option>
+                {plates.map((plate) => {
+                  return (
+                    <option key={plate.id} value={plate.id}>
+                      {plate.label}
+                    </option>
+                  )
+                })}
+              </CFormSelect>
+            </>
+          )}
+
+          <CTable>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleEffectiveTime"
+                    value={vehiclePlate.vehicleEffectiveTime || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleCorrectiveMaintenance"
+                    value={vehiclePlate.vehicleCorrectiveMaintenance || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehiclePreventiveMaintenance"
+                    value={vehiclePlate.vehiclePreventiveMaintenance || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleOutOfService"
+                    value={vehiclePlate.vehicleOutOfService || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleWaiting"
+                    value={vehiclePlate.vehicleWaiting || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Sin Operador (Hrs)</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Horometro Inicial </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Horometro Final </CTableHeaderCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleNoOperator"
+                    value={vehiclePlate.vehicleNoOperator || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleInitialHorometer"
+                    value={vehiclePlate.vehicleInitialHorometer || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
+                    id="vehicleFinalHorometer"
+                    value={vehiclePlate.vehicleFinalHorometer || ''}
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              registerVehiclePlate()
+            }}
+          >
+            Registrar
+          </CButton>
         </>
       )}
-
-      <CTable>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleEffectiveTime"
-                value={vehiclePlate.vehicleEffectiveTime || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleCorrectiveMaintenance"
-                value={vehiclePlate.vehicleCorrectiveMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehiclePreventiveMaintenance"
-                value={vehiclePlate.vehiclePreventiveMaintenance || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleOutOfService"
-                value={vehiclePlate.vehicleOutOfService || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleWaiting"
-                value={vehiclePlate.vehicleWaiting || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="col">Sin Operador (Hrs)</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Horometro Inicial </CTableHeaderCell>
-            <CTableHeaderCell scope="col">Horometro Final </CTableHeaderCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleNoOperator"
-                value={vehiclePlate.vehicleNoOperator || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleInitialHorometer"
-                value={vehiclePlate.vehicleInitialHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-            <CTableDataCell>
-              <CFormInput
-                type="text"
-                id="vehicleFinalHorometer"
-                value={vehiclePlate.vehicleFinalHorometer || ''}
-                text=""
-                onChange={(e) => {
-                  onChangeData(e)
-                }}
-              />
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
-
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerVehiclePlate()
-        }}
-      >
-        Registrar
-      </CButton>
 
       {vehiclePlateListContext.length > 0 && vehiclePlateListContext[0].vehicle && (
         <CTable className="resume-table">
