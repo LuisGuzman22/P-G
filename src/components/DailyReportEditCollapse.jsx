@@ -58,6 +58,9 @@ const DailyReportCollapse = () => {
     aljibeList,
     comment,
     incident,
+    directDotationWorkForceList,
+    machineryWorkForceList,
+    equipmentWorkForceList,
   } = useRegisterDailyReportCompany()
 
   const { getData } = useGetCachedQueryData()
@@ -103,6 +106,9 @@ const DailyReportCollapse = () => {
               aljibeList={aljibeList}
               comment={comment}
               incident={incident}
+              directDotationWorkForceList={directDotationWorkForceList}
+              machineryWorkForceList={machineryWorkForceList}
+              equipmentWorkForceList={equipmentWorkForceList}
             />
           }
           fileName="Reporte 1.pdf"

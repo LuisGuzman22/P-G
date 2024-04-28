@@ -5,6 +5,7 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { Html } from 'react-pdf-html'
 import ReactDOMServer from 'react-dom/server'
+// import ChartJsImage from 'chartjs-to-image'
 
 /**
  * 
@@ -39,8 +40,12 @@ const Pdf = (props) => {
     aljibeList,
     comment,
     incident,
+    directDotationWorkForceList,
+    machineryWorkForceList,
+    equipmentWorkForceList,
   } = props
-  const { indirectPersonal, directPersonal, machinery, equipment, vehicles, aljibe } = basicQuery
+  const { indirectPersonal, directPersonal, machinery, equipment, vehicles, aljibe, workFront } =
+    basicQuery
   // console.log('props', props)
 
   const [totalMacOffered, setTotalMacOffered] = useState(0)
@@ -198,8 +203,6 @@ const Pdf = (props) => {
         return VehicPlate.vehicle === veh.vehicle
       })
 
-      console.log('selectedVehiclePlate', selectedVehiclePlate)
-
       vehicEffectiveTime = vehicEffectiveTime + Number(selectedVehiclePlate.vehicleEffectiveTime)
       vehicCorrectiveMaintenance =
         vehicCorrectiveMaintenance + Number(selectedVehiclePlate.vehicleCorrectiveMaintenance)
@@ -225,6 +228,8 @@ const Pdf = (props) => {
     setTotalVehicInitialHorometer(vehicInitialHorometer)
     setTotalVehicFinalHorometer(vehicFinalHorometer)
   }, [vehicleList])
+
+  useEffect(() => {}, [])
 
   const element = (
     <html>
@@ -406,6 +411,15 @@ const Pdf = (props) => {
               <td className="td-workers-label">N° Descanso</td>
               <td className="td-workers-label">N° Obra</td>
               <td className="td-workers-label">HH (turno)</td>
+              {workFront
+                .sort((a, b) => a.id - b.id)
+                .map((wf) => {
+                  return (
+                    <>
+                      <td className="td-machinery-label">{wf.name}</td>
+                    </>
+                  )
+                })}
             </tr>
             {directWorkForceList.length > 0 && (
               <>
@@ -422,6 +436,21 @@ const Pdf = (props) => {
                       <td className="">{data.breakNumber}</td>
                       <td className="">{data.workNumber}</td>
                       <td className="">{data.hh}</td>
+                      {workFront
+                        .sort((a, b) => a.id - b.id)
+                        .map((wf) => {
+                          const selectedDotation = directDotationWorkForceList.find((dot) => {
+                            return dot.directWorkFront === wf.id
+                          })
+
+                          return (
+                            <>
+                              <td className="">
+                                {selectedDotation?.directWorkFrontQuantity || ''}
+                              </td>
+                            </>
+                          )
+                        })}
                     </tr>
                   )
                 })}
@@ -449,6 +478,15 @@ const Pdf = (props) => {
                   <td className="td-workers-label">
                     {totalDirectWorkForce.directSubstotalHHNumber}
                   </td>
+                  {workFront
+                    .sort((a, b) => a.id - b.id)
+                    .map((wf) => {
+                      return (
+                        <>
+                          <td className=""></td>
+                        </>
+                      )
+                    })}
                 </tr>
                 <tr>
                   <td className="td-workers-label">Total HH Directos Acumulado Anterior</td>
@@ -491,6 +529,15 @@ const Pdf = (props) => {
               <td className="td-machinery-label">Reservas (Hrs)</td>
               <td className="td-machinery-label">Perdida Operacional (Hrs)</td>
               <td className="td-machinery-label">Horometro</td>
+              {workFront
+                .sort((a, b) => a.id - b.id)
+                .map((wf) => {
+                  return (
+                    <>
+                      <td className="td-machinery-label">{wf.name}</td>
+                    </>
+                  )
+                })}
             </tr>
             {machineryList.length > 0 && (
               <>
@@ -522,6 +569,21 @@ const Pdf = (props) => {
                         <td className="">{selectedAsarco.asarcoMachineryReserves}</td>
                         <td className="">{selectedAsarco.asarcoMachineryOpperationalLoss}</td>
                         <td className="">{selectedAsarco.asarcoMachineryHorometer}</td>
+                        {workFront
+                          .sort((a, b) => a.id - b.id)
+                          .map((wf) => {
+                            const selectedDotation = machineryWorkForceList.find((dot) => {
+                              return dot.machineryWorkForce === wf.id
+                            })
+
+                            return (
+                              <>
+                                <td className="">
+                                  {selectedDotation?.machineryWorkFrontQuantity || ''}
+                                </td>
+                              </>
+                            )
+                          })}
                       </tr>
                     )
                   }
@@ -540,6 +602,15 @@ const Pdf = (props) => {
                   <td className="td-total-label">{totalMacReserves}</td>
                   <td className="td-total-label">{totalMacOpperationalLoss}</td>
                   <td className="td-total-label">{totalMacHorometer}</td>
+                  {workFront
+                    .sort((a, b) => a.id - b.id)
+                    .map((wf) => {
+                      return (
+                        <>
+                          <td className="td-total-label"></td>
+                        </>
+                      )
+                    })}
                 </tr>
               </>
             )}
@@ -561,6 +632,15 @@ const Pdf = (props) => {
               <td className="td-machinery-label">Sin Operador (hrs)</td>
               <td className="td-machinery-label">Horometro Inicial</td>
               <td className="td-machinery-label">Horometro Final</td>
+              {workFront
+                .sort((a, b) => a.id - b.id)
+                .map((wf) => {
+                  return (
+                    <>
+                      <td className="td-machinery-label">{wf.name}</td>
+                    </>
+                  )
+                })}
             </tr>
             {equipmentList.length > 0 && (
               <>
@@ -596,6 +676,21 @@ const Pdf = (props) => {
                         <td className="">{selectedEquipmentPlate.equipmentNoOperator}</td>
                         <td className="">{selectedEquipmentPlate.equipmentInitialHorometer}</td>
                         <td className="">{selectedEquipmentPlate.equipmentFinalHorometer}</td>
+                        {workFront
+                          .sort((a, b) => a.id - b.id)
+                          .map((wf) => {
+                            const selectedDotation = equipmentWorkForceList.find((dot) => {
+                              return dot.equipmentWorkForce === wf.id
+                            })
+
+                            return (
+                              <>
+                                <td className="">
+                                  {selectedDotation?.equipmentWorkFrontQuantity || ''}
+                                </td>
+                              </>
+                            )
+                          })}
                       </tr>
                     )
                   }
@@ -614,6 +709,15 @@ const Pdf = (props) => {
                   <td className="td-total-label">{totalEquipNoOperator}</td>
                   <td className="td-total-label">{totalEquipInitialHorometer}</td>
                   <td className="td-total-label">{totalEquipFinalHorometer}</td>
+                  {workFront
+                    .sort((a, b) => a.id - b.id)
+                    .map((wf) => {
+                      return (
+                        <>
+                          <td className="td-total-label"></td>
+                        </>
+                      )
+                    })}
                 </tr>
               </>
             )}
