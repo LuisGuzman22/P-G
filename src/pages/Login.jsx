@@ -44,6 +44,7 @@ const Login = () => {
     localStorage.removeItem('contract')
     localStorage.removeItem('USER_TYPE')
     localStorage.removeItem('REACT_QUERY_OFFLINE_CACHE')
+    localStorage.setItem('color', 'light')
     // localStorage.clear()
     queryClient.clear()
   }, [])
