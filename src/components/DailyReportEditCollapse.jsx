@@ -98,8 +98,32 @@ const DailyReportCollapse = () => {
         />
       )}
       <div>
-        qwe
-        <PDFDownloadLink document={<Pdf />} fileName="Reporte 1.pdf">
+        <PDFDownloadLink
+          document={
+            <Pdf
+              company={company}
+              indirectWorkForceList={indirectWorkForceList}
+              basicQuery={basicQuery}
+              totalIndirectWorkForce={totalIndirectWorkForce}
+              directWorkForceList={directWorkForceList}
+              totalDirectWorkForce={totalDirectWorkForce}
+              asarcoMachineryList={asarcoMachineryList}
+              machineryList={machineryList}
+              equipmentList={equipmentList}
+              equipmentPlateList={equipmentPlateList}
+              vehiclePlateList={vehiclePlateList}
+              vehicleList={vehicleList}
+              activityList={activityList}
+              aljibeList={aljibeList}
+              comment={comment}
+              incident={incident}
+              directDotationWorkForceList={directDotationWorkForceList}
+              machineryWorkForceList={machineryWorkForceList}
+              equipmentWorkForceList={equipmentWorkForceList}
+            />
+          }
+          fileName="Reporte 1.pdf"
+        >
           {({ blob, url, loading, error }) => {
             console.log('blob', blob)
             console.log('url', url)
