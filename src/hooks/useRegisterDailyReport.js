@@ -94,7 +94,7 @@ const useRegisterDailyReport = () => {
       vehicleList: vehicList, // 13
       vehiclePlateList,
       activityList, // 15
-      comment: comment.comment, // 16
+      comment, // 16
       // 17 (graficos)
       incident, // 18 //
       asarcoMachineryList, // 9

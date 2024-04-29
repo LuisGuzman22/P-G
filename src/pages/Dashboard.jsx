@@ -40,37 +40,40 @@ const Dashboard = () => {
           </CCardText>
         </CCardBody>
       </CCard>
-      {localStorage.getItem('USER_TYPE') === 'admin' && reportsQuery && reportsQuery.length > 0 && (
-        <>
-          <br />
-          <CCard>
-            <CCardBody>
-              <CCardText>
-                <>
-                  <span>Tienes {reportsQuery.length} informes diarios por firmar.</span>
-                  {reportsQuery.map((report) => {
-                    return (
-                      <>
-                        <CRow>
-                          <CButton
-                            className="dashboard-button"
-                            onClick={() => {
-                              localStorage.setItem('daily_report', report.id)
-                              redirectTo('/informe-diario/edit')
-                            }}
-                          >
-                            {report.id}
-                          </CButton>
-                        </CRow>
-                      </>
-                    )
-                  })}
-                </>
-              </CCardText>
-            </CCardBody>
-          </CCard>
-        </>
-      )}
+      {
+        /*localStorage.getItem('USER_TYPE') === 'admin' &&*/ reportsQuery &&
+          reportsQuery.length > 0 && (
+            <>
+              <br />
+              <CCard>
+                <CCardBody>
+                  <CCardText>
+                    <>
+                      <span>Tienes {reportsQuery.length} informes diarios por firmar.</span>
+                      {reportsQuery.map((report) => {
+                        return (
+                          <>
+                            <CRow>
+                              <CButton
+                                className="dashboard-button"
+                                onClick={() => {
+                                  localStorage.setItem('daily_report', report.id)
+                                  redirectTo('/informe-diario/edit')
+                                }}
+                              >
+                                {report.id}
+                              </CButton>
+                            </CRow>
+                          </>
+                        )
+                      })}
+                    </>
+                  </CCardText>
+                </CCardBody>
+              </CCard>
+            </>
+          )
+      }
 
       <br />
       <CCard>
