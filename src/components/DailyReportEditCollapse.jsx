@@ -36,6 +36,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import Pdf from './Pdf'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import Loading from './loading'
 
 // )
 const DailyReportCollapse = () => {
@@ -97,7 +98,6 @@ const DailyReportCollapse = () => {
         />
       )}
       <div>
-        dsadsa
         <PDFDownloadLink
           document={
             <Pdf
@@ -125,10 +125,10 @@ const DailyReportCollapse = () => {
           fileName="Reporte 1.pdf"
         >
           {({ blob, url, loading, error }) => {
-            console.log('blob', blob)
-            console.log('url', url)
-            console.log('loading', loading)
-            console.log('error', error)
+            // console.log('blob', blob)
+            // console.log('url', url)
+            // console.log('loading', loading)
+            // console.log('error', error)
             setIsloading(loading)
             setBlobData(blob)
             setUrl(url)
@@ -138,7 +138,7 @@ const DailyReportCollapse = () => {
       </div>
       {!isLoading && url && blobData ? (
         <>
-          {/* <CAccordion className="dailyReport-accordion" activeItemKey={1}>
+          <CAccordion className="dailyReport-accordion" activeItemKey={1}>
             <CAccordionItem itemKey={1}>
               <CAccordionHeader>1) Empresa</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
@@ -276,10 +276,12 @@ const DailyReportCollapse = () => {
             }}
           >
             Registrar informe diario
-          </CButton> */}
+          </CButton>
         </>
       ) : (
-        <>cargando</>
+        <>
+          <Loading />
+        </>
       )}
     </div>
   )
