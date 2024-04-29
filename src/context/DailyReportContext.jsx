@@ -40,8 +40,6 @@ export const DailyReportProvider = ({ children }) => {
     })
   }
 
-  // console.log('con index', reportsQuery[selectedReport2])
-
   console.log('con find', selectedReport)
 
   const selectedCompany = selectedReport?.company

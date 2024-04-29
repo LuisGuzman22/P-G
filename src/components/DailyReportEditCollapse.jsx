@@ -44,27 +44,27 @@ const DailyReportCollapse = () => {
   const navigate = useNavigate()
 
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
-  // const {
-  //   company,
-  //   indirectWorkForceList,
-  //   totalIndirectWorkForce,
-  //   directWorkForceList,
-  //   totalDirectWorkForce,
-  //   asarcoMachineryList,
-  //   machineryList,
-  //   equipmentList,
-  //   equipmentPlateList,
-  //   vehicleList,
-  //   vehiclePlateList,
-  //   activityList,
-  //   aljibeList,
-  //   comment,
-  //   incident,
-  //   directDotationWorkForceList,
-  //   machineryWorkForceList,
-  //   equipmentWorkForceList,
-  // } = useRegisterDailyReportCompany()
-  // console.log('company', company)
+  const {
+    company,
+    indirectWorkForceList,
+    totalIndirectWorkForce,
+    directWorkForceList,
+    totalDirectWorkForce,
+    asarcoMachineryList,
+    machineryList,
+    equipmentList,
+    equipmentPlateList,
+    vehicleList,
+    vehiclePlateList,
+    activityList,
+    aljibeList,
+    comment,
+    incident,
+    directDotationWorkForceList,
+    machineryWorkForceList,
+    equipmentWorkForceList,
+  } = useRegisterDailyReportCompany()
+  console.log('company', company)
 
   // useEffect(() => {
   //   if (!company.dailyReportDate) window.location.reload()
@@ -93,8 +93,8 @@ const DailyReportCollapse = () => {
           }}
         />
       )}
-      {/* <div>
-        <PDFDownloadLink
+      <div>
+        {/* <PDFDownloadLink
           document={
             <Pdf
               company={company}
@@ -121,8 +121,8 @@ const DailyReportCollapse = () => {
           fileName="Reporte 1.pdf"
         >
           {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Descargar PDF!')}
-        </PDFDownloadLink>
-      </div> */}
+        </PDFDownloadLink> */}
+      </div>
       <CAccordion className="dailyReport-accordion" activeItemKey={1}>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>1) Empresa</CAccordionHeader>
