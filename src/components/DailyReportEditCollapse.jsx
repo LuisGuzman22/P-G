@@ -138,7 +138,7 @@ const DailyReportCollapse = () => {
       </div>
       {!isLoading && url && blobData ? (
         <>
-          <CAccordion className="dailyReport-accordion" activeItemKey={1}>
+          {/* <CAccordion className="dailyReport-accordion" activeItemKey={1}>
             <CAccordionItem itemKey={1}>
               <CAccordionHeader>1) Empresa</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
@@ -276,7 +276,7 @@ const DailyReportCollapse = () => {
             }}
           >
             Registrar informe diario
-          </CButton>
+          </CButton> */}
         </>
       ) : (
         <>cargando</>
