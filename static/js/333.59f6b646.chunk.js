@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkP_G=self.webpackChunkP_G||[]).push([[333],{6333:(s,e,a)=>{a.r(e),a.d(e,{default:()=>u});var c=a(65043),r=a(50587),d=a(80861),t=a(96105),l=a(23682),n=a(49634),h=a(73216),i=a(70579);const u=()=>{let s=(0,h.Zp)();const{getData:e}=(0,n.A)(),a=e("basics");return(0,c.useEffect)((()=>{a||s("/dashboard")}),[a]),(0,i.jsx)("div",{className:"daily-report",children:(0,i.jsx)(d.E,{children:(0,i.jsx)(t.W,{children:(0,i.jsx)(l.d,{children:(0,i.jsx)(r.A,{})})})})})}}}]);
-//# sourceMappingURL=333.59f6b646.chunk.js.map
