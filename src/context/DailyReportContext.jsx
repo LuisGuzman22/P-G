@@ -30,7 +30,7 @@ export const DailyReportProvider = ({ children }) => {
 
   const reportsQuery = getData('reports')
   const reportId = localStorage.getItem('daily_report')
-
+  console.log('reportId', reportId)
   let selectedReport
 
   if (reportId) {
@@ -39,9 +39,7 @@ export const DailyReportProvider = ({ children }) => {
     })
   }
 
-  useEffect(() => {
-    console.log('asd')
-  }, [reportsQuery])
+  console.log('selectedReport', selectedReport)
 
   const selectedCompany = selectedReport?.company
   const selectedIndirectWorkForceList = selectedReport?.indirectWorkForceList
