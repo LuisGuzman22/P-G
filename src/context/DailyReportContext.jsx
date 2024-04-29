@@ -25,21 +25,24 @@ export const DailyReportProvider = ({ children }) => {
 
   const contractLS = JSON.parse(getContract())
 
-  console.log('useGetCachedQueryData()', useGetCachedQueryData())
   const { getData } = useGetCachedQueryData()
 
   const reportsQuery = getData('reports')
+  console.log('reportsQuery', reportsQuery)
+
   const reportId = localStorage.getItem('daily_report')
   console.log('reportId', reportId)
   let selectedReport
 
-  if (reportId) {
-    selectedReport = reportsQuery?.find((report) => {
+  if (reportId && reportsQuery) {
+    selectedReport = reportsQuery.find((report) => {
       return report.id.toString() === reportId.toString()
     })
   }
 
-  console.log('selectedReport', selectedReport)
+  // console.log('con index', reportsQuery[selectedReport2])
+
+  console.log('con find', selectedReport)
 
   const selectedCompany = selectedReport?.company
   const selectedIndirectWorkForceList = selectedReport?.indirectWorkForceList

@@ -44,31 +44,31 @@ const DailyReportCollapse = () => {
   const navigate = useNavigate()
 
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
-  const {
-    company,
-    indirectWorkForceList,
-    totalIndirectWorkForce,
-    directWorkForceList,
-    totalDirectWorkForce,
-    asarcoMachineryList,
-    machineryList,
-    equipmentList,
-    equipmentPlateList,
-    vehicleList,
-    vehiclePlateList,
-    activityList,
-    aljibeList,
-    comment,
-    incident,
-    directDotationWorkForceList,
-    machineryWorkForceList,
-    equipmentWorkForceList,
-  } = useRegisterDailyReportCompany()
-  console.log('company', company)
+  // const {
+  //   company,
+  //   indirectWorkForceList,
+  //   totalIndirectWorkForce,
+  //   directWorkForceList,
+  //   totalDirectWorkForce,
+  //   asarcoMachineryList,
+  //   machineryList,
+  //   equipmentList,
+  //   equipmentPlateList,
+  //   vehicleList,
+  //   vehiclePlateList,
+  //   activityList,
+  //   aljibeList,
+  //   comment,
+  //   incident,
+  //   directDotationWorkForceList,
+  //   machineryWorkForceList,
+  //   equipmentWorkForceList,
+  // } = useRegisterDailyReportCompany()
+  // console.log('company', company)
 
-  useEffect(() => {
-    if (!company.dailyReportDate) window.location.reload()
-  }, [company])
+  // useEffect(() => {
+  //   if (!company.dailyReportDate) window.location.reload()
+  // }, [company])
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
@@ -93,7 +93,7 @@ const DailyReportCollapse = () => {
           }}
         />
       )}
-      <div>
+      {/* <div>
         <PDFDownloadLink
           document={
             <Pdf
@@ -122,7 +122,7 @@ const DailyReportCollapse = () => {
         >
           {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Descargar PDF!')}
         </PDFDownloadLink>
-      </div>
+      </div> */}
       <CAccordion className="dailyReport-accordion" activeItemKey={1}>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>1) Empresa</CAccordionHeader>
