@@ -66,9 +66,9 @@ const DailyReportCollapse = () => {
   } = useRegisterDailyReportCompany()
   console.log('company', company)
 
-  // useEffect(() => {
-  //   if (!company.dailyReportDate) navigate(`/dashboard`)
-  // }, [company])
+  useEffect(() => {
+    if (!company.dailyReportDate) window.location.reload()
+  }, [company])
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
