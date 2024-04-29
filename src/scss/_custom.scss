@@ -208,9 +208,9 @@
   }
   .dailyReport-accordion {
     --cui-accordion-btn-color: white;
-    --cui-accordion-btn-bg: #6f0404;
+    --cui-accordion-btn-bg: #019999;
     --cui-accordion-active-color: white;
-    --cui-accordion-active-bg: #6f0404;
+    --cui-accordion-active-bg: #019999;
     background-color: rgba(0, 0, 0, 0.1);
   }
 
@@ -233,7 +233,18 @@
   .row {
     padding: 10px;
     .dashboard-button {
-      background-color: #6f0404;
+      background-color: #019999;
+      width: 200px;
+      height: 200px;
+      color: white;
+      font-weight: 600;
+    }
+  }
+
+  .col {
+    padding: 10px;
+    .dashboard-button {
+      background-color: #019999;
       width: 200px;
       height: 200px;
       color: white;

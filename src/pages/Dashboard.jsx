@@ -50,23 +50,25 @@ const Dashboard = () => {
                   <CCardText>
                     <>
                       <span>Tienes {reportsQuery.length} informes diarios generados.</span>
-                      {reportsQuery.map((report) => {
-                        return (
-                          <>
-                            <CRow>
-                              <CButton
-                                className="dashboard-button"
-                                onClick={() => {
-                                  localStorage.setItem('daily_report', report.id)
-                                  redirectTo('/informe-diario/edit')
-                                }}
-                              >
-                                {report.id}
-                              </CButton>
-                            </CRow>
-                          </>
-                        )
-                      })}
+                      <CRow>
+                        {reportsQuery.map((report) => {
+                          return (
+                            <>
+                              <CCol>
+                                <CButton
+                                  className="dashboard-button"
+                                  onClick={() => {
+                                    localStorage.setItem('daily_report', report.id)
+                                    redirectTo('/informe-diario/edit')
+                                  }}
+                                >
+                                  {report.id}
+                                </CButton>
+                              </CCol>
+                            </>
+                          )
+                        })}
+                      </CRow>
                     </>
                   </CCardText>
                 </CCardBody>
