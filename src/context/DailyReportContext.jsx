@@ -28,10 +28,8 @@ export const DailyReportProvider = ({ children }) => {
   const { getData } = useGetCachedQueryData()
 
   const reportsQuery = getData('reports')
-  console.log('reportsQuery', reportsQuery)
 
   const reportId = localStorage.getItem('daily_report')
-  console.log('reportId', reportId)
   let selectedReport
 
   if (reportId && reportsQuery) {
@@ -39,8 +37,6 @@ export const DailyReportProvider = ({ children }) => {
       return report.id.toString() === reportId.toString()
     })
   }
-
-  console.log('con find', selectedReport)
 
   const selectedCompany = selectedReport?.company
   const selectedIndirectWorkForceList = selectedReport?.indirectWorkForceList

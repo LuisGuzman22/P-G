@@ -32,10 +32,6 @@ const ModalSendDailyReport = (props) => {
     setRejectCommentary(e.target.value)
   }
 
-  useEffect(() => {
-    console.log('error', error)
-  }, [error])
-
   return (
     <CModal
       scrollable

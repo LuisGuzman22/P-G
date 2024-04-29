@@ -66,6 +66,10 @@ const DailyReportCollapse = () => {
   } = useRegisterDailyReportCompany()
   console.log('company', company)
 
+  const [isLoading, setIsloading] = useState(false)
+  const [blobData, setBlobData] = useState()
+  const [url, setUrl] = useState()
+
   // useEffect(() => {
   //   if (!company.dailyReportDate) window.location.reload()
   // }, [company])
@@ -94,7 +98,7 @@ const DailyReportCollapse = () => {
         />
       )}
       <div>
-        {/* <PDFDownloadLink
+        <PDFDownloadLink
           document={
             <Pdf
               company={company}
@@ -120,146 +124,164 @@ const DailyReportCollapse = () => {
           }
           fileName="Reporte 1.pdf"
         >
-          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Descargar PDF!')}
-        </PDFDownloadLink> */}
+          {({ blob, url, loading, error }) => {
+            console.log('blob', blob)
+            console.log('url', url)
+            console.log('loading', loading)
+            console.log('error', error)
+            setIsloading(loading)
+            setBlobData(blob)
+            setUrl(url)
+            return loading ? 'Loading document...' : 'Descargar PDF!'
+          }}
+        </PDFDownloadLink>
       </div>
-      <CAccordion className="dailyReport-accordion" activeItemKey={1}>
-        <CAccordionItem itemKey={1}>
-          <CAccordionHeader>1) Empresa</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <CompanyReport />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={2}>
-          <CAccordionHeader>2) Fuerza de trabajo personal indirecto</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <IndirectWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={3}>
-          <CAccordionHeader>3) Fuerza laboral total personal indirecto</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <TotalIndirectWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={4}>
-          <CAccordionHeader>4) Fuerza laboral contratista personal directo</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <DirectWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={5}>
-          <CAccordionHeader>5) Fuerza laboral total personal directo</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <TotalDirectWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={6}>
-          <CAccordionHeader>6) Dotación por frente de trabajo personal directo</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <DirectDotationWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={7}>
-          <CAccordionHeader>7) Maquinarias contratistas</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Machinery />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={8}>
-          <CAccordionHeader>8) Maquinarias por frente de trabajo</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <MachineryWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={9}>
-          <CAccordionHeader>9) ASARCO Maquinarias</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <AsarcoMachinery />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={10}>
-          <CAccordionHeader>10) Equipos contratistas</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <EquipmentMachinery />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={11}>
-          <CAccordionHeader>11) Equipos con patentes contratistas</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <EquipmentPlate />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={12}>
-          <CAccordionHeader>12) Equipos por frente de trabajo</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <EquipmentWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={13}>
-          <CAccordionHeader>13) Vehículos menores contratistas</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Vehicle />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={14}>
-          <CAccordionHeader>14) Vehículos con patente menores contratistas</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <VehiclePlate />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={15}>
-          <CAccordionHeader>15) Descripción de actividades desarrolladas</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Activities />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={16}>
-          <CAccordionHeader>16) Control de aguas industriales utilizadas</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <IndustrialWaterControl />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={17}>
-          <CAccordionHeader>17) Comentarios y alertas en general</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Comments />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={19}>
-          <CAccordionHeader>19) Registro fotográfico diario</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <PhotoRecord />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={20}>
-          <CAccordionHeader>20) Graficos del día</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Graphs />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={21}>
-          <CAccordionHeader>21) Incidentes, lesiones o eventos</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Incidents />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={22}>
-          <CAccordionHeader>22) Firmas</CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <></>
-          </CAccordionBody>
-        </CAccordionItem>
-      </CAccordion>
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          // registerData()
-          registerDailyReport()
-        }}
-      >
-        Registrar informe diario
-      </CButton>
+      {!isLoading && url && blobData ? (
+        <>
+          {' '}
+          <CAccordion className="dailyReport-accordion" activeItemKey={1}>
+            <CAccordionItem itemKey={1}>
+              <CAccordionHeader>1) Empresa</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <CompanyReport />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={2}>
+              <CAccordionHeader>2) Fuerza de trabajo personal indirecto</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <IndirectWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={3}>
+              <CAccordionHeader>3) Fuerza laboral total personal indirecto</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <TotalIndirectWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={4}>
+              <CAccordionHeader>4) Fuerza laboral contratista personal directo</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <DirectWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={5}>
+              <CAccordionHeader>5) Fuerza laboral total personal directo</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <TotalDirectWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={6}>
+              <CAccordionHeader>
+                6) Dotación por frente de trabajo personal directo
+              </CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <DirectDotationWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={7}>
+              <CAccordionHeader>7) Maquinarias contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Machinery />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={8}>
+              <CAccordionHeader>8) Maquinarias por frente de trabajo</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <MachineryWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={9}>
+              <CAccordionHeader>9) ASARCO Maquinarias</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <AsarcoMachinery />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={10}>
+              <CAccordionHeader>10) Equipos contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <EquipmentMachinery />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={11}>
+              <CAccordionHeader>11) Equipos con patentes contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <EquipmentPlate />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={12}>
+              <CAccordionHeader>12) Equipos por frente de trabajo</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <EquipmentWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={13}>
+              <CAccordionHeader>13) Vehículos menores contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Vehicle />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={14}>
+              <CAccordionHeader>14) Vehículos con patente menores contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <VehiclePlate />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={15}>
+              <CAccordionHeader>15) Descripción de actividades desarrolladas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Activities />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={16}>
+              <CAccordionHeader>16) Control de aguas industriales utilizadas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <IndustrialWaterControl />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={17}>
+              <CAccordionHeader>17) Comentarios y alertas en general</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Comments />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={19}>
+              <CAccordionHeader>19) Registro fotográfico diario</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <PhotoRecord />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={20}>
+              <CAccordionHeader>20) Graficos del día</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Graphs />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={21}>
+              <CAccordionHeader>21) Incidentes, lesiones o eventos</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Incidents />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={22}>
+              <CAccordionHeader>22) Firmas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <></>
+              </CAccordionBody>
+            </CAccordionItem>
+          </CAccordion>
+          <CButton
+            className="btn-project-action"
+            onClick={() => {
+              // registerData()
+              registerDailyReport()
+            }}
+          >
+            Registrar informe diario
+          </CButton>
+        </>
+      ) : (
+        <>cargando</>
+      )}
     </div>
   )
 }
