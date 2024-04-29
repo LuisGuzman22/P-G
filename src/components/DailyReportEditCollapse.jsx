@@ -98,7 +98,7 @@ const DailyReportCollapse = () => {
         />
       )}
       <div>
-        asd
+        qwe
         <PDFDownloadLink document={<Pdf />} fileName="Reporte 1.pdf">
           {({ blob, url, loading, error }) => {
             console.log('blob', blob)
