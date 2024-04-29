@@ -64,15 +64,14 @@ const DailyReportCollapse = () => {
     machineryWorkForceList,
     equipmentWorkForceList,
   } = useRegisterDailyReportCompany()
-  console.log('company', company)
 
   const [isLoading, setIsloading] = useState(false)
   const [blobData, setBlobData] = useState()
   const [url, setUrl] = useState()
 
-  // useEffect(() => {
-  //   if (!company.dailyReportDate) window.location.reload()
-  // }, [company])
+  useEffect(() => {
+    if (!company.dailyReportDate) window.location.reload()
+  }, [company])
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
