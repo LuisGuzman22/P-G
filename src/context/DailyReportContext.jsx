@@ -25,6 +25,7 @@ export const DailyReportProvider = ({ children }) => {
 
   const contractLS = JSON.parse(getContract())
 
+  console.log('useGetCachedQueryData()', useGetCachedQueryData())
   const { getData } = useGetCachedQueryData()
 
   const reportsQuery = getData('reports')
@@ -37,6 +38,10 @@ export const DailyReportProvider = ({ children }) => {
       return report.id.toString() === reportId.toString()
     })
   }
+
+  useEffect(() => {
+    console.log('asd')
+  }, [reportsQuery])
 
   const selectedCompany = selectedReport?.company
   const selectedIndirectWorkForceList = selectedReport?.indirectWorkForceList
