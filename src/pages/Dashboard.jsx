@@ -49,7 +49,7 @@ const Dashboard = () => {
                 <CCardBody>
                   <CCardText>
                     <>
-                      <span>Tienes {reportsQuery.length} informes diarios por firmar.</span>
+                      <span>Tienes {reportsQuery.length} informes diarios generados.</span>
                       {reportsQuery.map((report) => {
                         return (
                           <>
