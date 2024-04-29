@@ -97,6 +97,7 @@ const DailyReportCollapse = () => {
         />
       )}
       <div>
+        dsadsa
         <PDFDownloadLink
           document={
             <Pdf
@@ -137,7 +138,6 @@ const DailyReportCollapse = () => {
       </div>
       {!isLoading && url && blobData ? (
         <>
-          {' '}
           <CAccordion className="dailyReport-accordion" activeItemKey={1}>
             <CAccordionItem itemKey={1}>
               <CAccordionHeader>1) Empresa</CAccordionHeader>
