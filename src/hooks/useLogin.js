@@ -11,12 +11,14 @@ const useLogin = () => {
 
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
+      setError('')
       return await axios
         .post('https://pyg-production.up.railway.app/api/v1/login', newTodo)
         .then((res) => {
           console.log('res', res)
-          if (res.status === HttpStatusCode.Created) {
+          if (res.status === HttpStatusCode.Ok) {
             setIsError(false)
+            navigate(`/project_selector`)
             return res.ok
           } else {
             setError('Usuario / contraseña incorrecto')
