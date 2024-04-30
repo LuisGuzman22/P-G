@@ -35,6 +35,7 @@ const ContractSelector = () => {
       const data = {
         name: contract.name,
         id: contract.id,
+        code: contract.code,
       }
       saveContract(data)
       navigate(`/dashboard`)
@@ -42,6 +43,7 @@ const ContractSelector = () => {
       const data = {
         name: contract.name,
         id: contract.id,
+        code: contract.code,
       }
       saveContract(data)
       navigate(`/project_selector`)

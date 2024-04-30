@@ -5,6 +5,9 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import ReactDOMServer from 'react-dom/server'
 import { Html } from 'react-pdf-html'
+import firma1 from 'src/assets/images/firma1.png'
+import firma2 from 'src/assets/images/firma2.png'
+import firma3 from 'src/assets/images/firma3.png'
 
 /**
  * 
@@ -233,6 +236,8 @@ const Pdf = (props) => {
     setTotalVehicFinalHorometer(vehicFinalHorometer)
   }, [vehicleList])
 
+  const imagen = './firma1.png'
+
   const element = (
     <html>
       <body>
@@ -244,6 +249,10 @@ const Pdf = (props) => {
         pre {
           background-color: #eee;
           padding: 10px;
+        }
+        .img{
+          width: 20px;
+          height: 20px;
         }
         table, th, td {
             border: 1px solid black;
@@ -275,8 +284,7 @@ const Pdf = (props) => {
           color: white;
         }`}
         </style>
-        zxc
-        {/* <img src={imagen} /> */}
+        {/* */}
         <table border={1}>
           <tbody>
             <tr>
@@ -302,7 +310,7 @@ const Pdf = (props) => {
             </tr>
             <tr>
               <td className="td-label">N° de Contrato</td>
-              <td>{contractLS.id}</td>
+              <td>{contractLS.code}</td>
               <td className="td-label">Turno</td>
               <td>{company?.dailyReportDirectPersonalShift}</td>
               <td className="td-label">Turno</td>
@@ -919,6 +927,64 @@ const Pdf = (props) => {
                 })}
               </>
             )}
+          </tbody>
+        </table>
+        <table border={1}>
+          <tbody>
+            <tr>
+              <td className="td-label" style={{ textAlign: 'center' }}>
+                CUADRO FIRMAS
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table border={1}>
+          <tbody>
+            <tr>
+              <td className="td-label" style={{ textAlign: 'center' }}>
+                Encargado de calidad
+              </td>
+              <td className="td-label" style={{ textAlign: 'center' }}>
+                Oficina técnica
+              </td>
+              <td className="td-label" style={{ textAlign: 'center' }}>
+                Administrador de contrato
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table border={1}>
+          <tbody>
+            <tr>
+              <td className="">Nombre</td>
+              <td className="">Marcelo Paniagua</td>
+              <td className="">Nombre</td>
+              <td className="">Alfonso Aguilar</td>
+              <td className="">Nombre</td>
+              <td className="">Alexis Tapia</td>
+            </tr>
+            <tr>
+              <td className="">Firma</td>
+              <td className="">
+                <img src={firma2} style={{ width: 'auto' }} />
+              </td>
+              <td className="">Firma</td>
+              <td className="">
+                <img src={firma3} style={{ width: 'auto' }} />
+              </td>
+              <td className="">Firma</td>
+              <td className="">
+                <img src={firma1} style={{ width: 'auto' }} />
+              </td>
+            </tr>
+            <tr>
+              <td className="">Fecha</td>
+              <td>{company?.dailyReportDate}</td>
+              <td className="">Fecha</td>
+              <td>{company?.dailyReportDate}</td>
+              <td className="">Fecha</td>
+              <td>{company?.dailyReportDate}</td>
+            </tr>
           </tbody>
         </table>
       </body>

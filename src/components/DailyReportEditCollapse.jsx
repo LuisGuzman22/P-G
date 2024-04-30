@@ -37,6 +37,7 @@ import Pdf from './Pdf'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import Loading from './loading'
+
 // import { Chart } from 'react-google-charts'
 // import { toPng } from 'html-to-image'
 

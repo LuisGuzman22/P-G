@@ -73,7 +73,7 @@ const CompanyReport = () => {
               label="N° de contrato"
               placeholder="N° de contrato"
               disabled
-              value={company.dailyReportContratistNumber || contractLS.id}
+              value={company.dailyReportContratistNumber || contractLS.code}
               text=""
               onChange={(e) => {
                 onChangeData(e)

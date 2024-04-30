@@ -277,7 +277,7 @@ export const DailyReportProvider = ({ children }) => {
         setCompany({
           ...company,
           dailyReportDate: data.target.value,
-          dailyReportContratistNumber: contractLS.id,
+          dailyReportContratistNumber: contractLS.code,
           dailyReportContractName: contractLS.name,
         })
         break
