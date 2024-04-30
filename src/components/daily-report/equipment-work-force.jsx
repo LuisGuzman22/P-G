@@ -119,7 +119,7 @@ const EquipmentWorkForce = () => {
               <div className="d-flex">
                 <CToastBody>
                   Debe completar los datos de frente de trabajo, equipo y cantidad para registrar el
-                  personal
+                  equipo
                 </CToastBody>
               </div>
             </CToast>
@@ -217,7 +217,7 @@ const EquipmentWorkForce = () => {
                   <CTableRow>
                     <CTableHeaderCell scope="col">Frente de trabajo</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Sub frente de trabajo</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Personal</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Equipo</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Cantidad</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Comentario</CTableHeaderCell>
                     <CTableHeaderCell scope="col"></CTableHeaderCell>
@@ -228,8 +228,8 @@ const EquipmentWorkForce = () => {
                     const selectedWorkFront = basicQuery.workFront.find((workF) => {
                       return workF.id == item.equipmentWorkForce
                     })
-                    const selectedCharge = basicQuery.directPersonal.find((charge) => {
-                      return charge.id == item.equipmentWorkFrontCharge
+                    const selectedCharge = basicQuery.equipment.find((eq) => {
+                      return eq.id == item.equipmentWorkFrontCharge
                     })
                     return (
                       <CTableRow key={item.id}>
