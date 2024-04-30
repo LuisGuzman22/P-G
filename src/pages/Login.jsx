@@ -23,7 +23,7 @@ const Login = () => {
   const [errorUser, setErrorUser] = useState(false)
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
-  const { login, error } = useLogin()
+  const { login, error, trueLogin } = useLogin()
 
   const onChangeData = (e) => {
     switch (e.target.id) {
@@ -48,8 +48,8 @@ const Login = () => {
     queryClient.clear()
   }, [])
 
-  const onClickHandler = () => {
-    login({ user, password })
+  const onClickHandler = async () => {
+    await trueLogin({ user, password })
   }
 
   return (
