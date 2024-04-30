@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   CAccordion,
   CAccordionBody,
@@ -37,12 +37,14 @@ import Pdf from './Pdf'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import Loading from './loading'
+// import { Chart } from 'react-google-charts'
+// import { toPng } from 'html-to-image'
 
-// )
 const DailyReportCollapse = () => {
   const currentLocation = useLocation().pathname
   const isEditMode = currentLocation.includes('/edit')
   const navigate = useNavigate()
+  // const elementRef = useRef(null)
 
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
   const {
@@ -65,6 +67,7 @@ const DailyReportCollapse = () => {
     machineryWorkForceList,
     equipmentWorkForceList,
   } = useRegisterDailyReportCompany()
+  const [imagen, setImagen] = useState()
 
   const [isLoading, setIsloading] = useState(false)
   const [blobData, setBlobData] = useState()
@@ -87,6 +90,49 @@ const DailyReportCollapse = () => {
     }
   }
 
+  // const data = [
+  //   ['Element', 'Density', { role: 'style' }],
+  //   ['Copper', 8.94, '#b87333'], // RGB value
+  //   ['Silver', 10.49, 'silver'], // English color name
+  //   ['Gold', 19.3, 'gold'],
+  //   ['Platinum', 21.45, 'color: #e5e4e2'], // CSS-style declaration
+  // ]
+
+  // useEffect(() => {
+  //   htmlToImageConvert()
+  // }, [])
+
+  // const htmlToImageConvert = () => {
+  //   setImagen()
+  //   console.log('convirtiendo')
+  //   toPng(elementRef.current, { cacheBust: false })
+  //     .then((dataUrl) => {
+  //       console.log('dataUrl', dataUrl)
+  //       setImagen(dataUrl)
+  //       // const link = document.createElement('a')
+  //       // console.log('link', link)
+  //       // link.download = 'my-image-name.png'
+  //       // link.href = dataUrl
+  //       // link.click()
+  //     })
+  //     .catch((err) => {
+  //       console.log('ERROR', err)
+  //     })
+  // }
+
+  // useEffect(() => {
+  //   if (elementRef.current) {
+  //     htmlToImageConvert()
+  //   }
+  // }, [elementRef])
+
+  // useEffect(() => {
+  //   console.log('imagen', imagen === undefined || imagen.includes('data:,'))
+  //   if (imagen === undefined || imagen.includes('data:,')) {
+  //     htmlToImageConvert()
+  //   }
+  // }, [imagen])
+
   return (
     <div className="dailyReport">
       {visibleSendDailyReportModal && (
@@ -98,6 +144,18 @@ const DailyReportCollapse = () => {
         />
       )}
       <div>
+        {/* <div ref={elementRef}>
+          <Chart
+            chartType="ColumnChart"
+            width="100%"
+            height="400px"
+            data={data}
+            onSuccess={() => {
+              console.log('success')
+            }}
+          />
+        </div> */}
+
         <PDFDownloadLink
           document={
             <Pdf
@@ -120,6 +178,7 @@ const DailyReportCollapse = () => {
               directDotationWorkForceList={directDotationWorkForceList}
               machineryWorkForceList={machineryWorkForceList}
               equipmentWorkForceList={equipmentWorkForceList}
+              image={imagen}
             />
           }
           fileName="Reporte 1.pdf"
@@ -132,7 +191,7 @@ const DailyReportCollapse = () => {
             setIsloading(loading)
             setBlobData(blob)
             setUrl(url)
-            return loading ? 'Loading document...' : 'Descargar PDF!'
+            return loading ? 'Generando documento...' : 'Descargar PDF'
           }}
         </PDFDownloadLink>
       </div>

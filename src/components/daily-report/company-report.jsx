@@ -150,6 +150,7 @@ const CompanyReport = () => {
               <option value={'0'}>Seleccione</option>
               <option value="14x14">14x14</option>
               <option value="7x7">7x7</option>
+              <option value="5x2">5x2</option>
             </CFormSelect>
           </CCol>
           <CCol sm={4}>

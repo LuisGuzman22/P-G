@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import { Html } from 'react-pdf-html'
 import ReactDOMServer from 'react-dom/server'
-// import ChartJsImage from 'chartjs-to-image'
+import { Html } from 'react-pdf-html'
 
 /**
  * 
@@ -43,10 +42,15 @@ const Pdf = (props) => {
     directDotationWorkForceList,
     machineryWorkForceList,
     equipmentWorkForceList,
+    // imagen,
   } = props
   const { indirectPersonal, directPersonal, machinery, equipment, vehicles, aljibe, workFront } =
     basicQuery
   // console.log('props', props)
+
+  // useEffect(() => {
+  //   console.log('imagen', imagen)
+  // }, [imagen])
 
   const [totalMacOffered, setTotalMacOffered] = useState(0)
   const [totalMacCertified, setTotalMacCertified] = useState(0)
@@ -229,8 +233,6 @@ const Pdf = (props) => {
     setTotalVehicFinalHorometer(vehicFinalHorometer)
   }, [vehicleList])
 
-  useEffect(() => {}, [])
-
   const element = (
     <html>
       <body>
@@ -273,6 +275,8 @@ const Pdf = (props) => {
           color: white;
         }`}
         </style>
+        zxc
+        {/* <img src={imagen} /> */}
         <table border={1}>
           <tbody>
             <tr>

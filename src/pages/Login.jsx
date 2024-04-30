@@ -1,5 +1,4 @@
 import { React, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -59,7 +58,6 @@ const Login = () => {
         <CRow className="justify-content-center">
           <CCol md={4}>
             <h1 className="login-title">P&G PROJECT CONTROL ESTRATEGICO</h1>
-
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
@@ -110,6 +108,7 @@ const Login = () => {
                           className="px-4 login-button"
                           onClick={() => {
                             onClickHandler()
+                            // htmlToImageConvert()
                           }}
                         >
                           Ingresar
