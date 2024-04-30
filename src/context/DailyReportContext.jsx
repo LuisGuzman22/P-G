@@ -4,19 +4,7 @@ import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 export const DailyReportContext = createContext({
-  dailyReportContractManagerName: undefined,
-  dailyReportDate: undefined,
-  dailyReportNumber: undefined,
-  dailyReportContratistName: undefined,
-  dailyReportWeather: undefined,
-  dailyReportContratistNumber: undefined,
-  dailyReportContractName: undefined,
-  dailyReportDirectPersonalShift: undefined,
-  dailyReportDirectPersonalHours: undefined,
-  dailyReportDirectPersonalJourney: undefined,
-  dailyReportIndirectPersonalShift: undefined,
-  dailyReportIndirectPersonalHours: undefined,
-  dailyReportIndirectPersonalJourney: undefined,
+  data: null,
 })
 
 // eslint-disable-next-line react/prop-types
@@ -494,6 +482,71 @@ export const DailyReportProvider = ({ children }) => {
     setAljibeList(newData)
   }
 
+  const clearContext = () => {
+    setCompany({
+      dailyReportContractManagerName: undefined,
+      dailyReportDate: undefined,
+      dailyReportNumber: undefined,
+      dailyReportContratistName: undefined,
+      dailyReportWeather: undefined,
+      dailyReportContratistNumber: undefined,
+      dailyReportContractName: undefined,
+      dailyReportDirectPersonalShift: undefined,
+      dailyReportDirectPersonalHours: undefined,
+      dailyReportDirectPersonalJourney: undefined,
+      dailyReportIndirectPersonalShift: undefined,
+      dailyReportIndirectPersonalHours: undefined,
+      dailyReportIndirectPersonalJourney: undefined,
+    })
+    setTotalDirectWorkForce({
+      directCurrentAccumulated: undefined,
+      directPreviusAccumulated: undefined,
+      directSubstotalHHNumber: undefined,
+      directSubtotalBreakNumber: undefined,
+      directSubtotalCertifiedNumber: undefined,
+      directSubtotalContractedNumber: undefined,
+      directSubtotalOfferedNumber: undefined,
+      directSubtotalWorkNumber: undefined,
+    })
+    setMachineryWorkForceList([])
+    setDirectWorkForceList([])
+    setIndirectWorkForceList([])
+    setIndirectDotationWorkForceList([])
+    setDirectDotationWorkForceList([])
+    setVehicletWorkForceList([])
+    setMachineryList([])
+    setTotalIndirectWorkForce({
+      indirectCurrentAccumulated: undefined,
+      indirectPreviusAccumulated: undefined,
+      indirectSubstotalHHNumber: undefined,
+      indirectSubtotalBreakNumber: undefined,
+      indirectSubtotalCertifiedNumber: undefined,
+      indirectSubtotalContractedNumber: undefined,
+      indirectSubtotalOfferedNumber: undefined,
+      indirectSubtotalWorkNumber: undefined,
+    })
+    setAsarcoMachineryList([])
+    setEquipmentList([])
+    setEquipmentWorkForceList([])
+    setVehicleList([])
+    setActivityList([])
+    setIncident([])
+    setEquipmentPlateList([])
+    setWorkforceDotation({
+      workforceDotationPersonalFront1: undefined,
+      workforceDotationPersonalFront2: undefined,
+      workforceDotationPersonalFront3: undefined,
+      workforceDotationPersonalFront4: undefined,
+      workforceDotationPersonalFront5: undefined,
+      workforceDotationPersonalFront6: undefined,
+      workforceDotationPersonalFront7: undefined,
+      workforceDotationObservation: undefined,
+    })
+    setAljibeList([])
+    setComment('')
+    setVehiclePlateList([])
+  }
+
   return (
     <DailyReportContext.Provider
       value={{
@@ -556,6 +609,7 @@ export const DailyReportProvider = ({ children }) => {
         storealjibe,
         removealjibe,
         aljibeList,
+        clearContext,
       }}
     >
       {children}

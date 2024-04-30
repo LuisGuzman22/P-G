@@ -33,11 +33,12 @@ import { useNavigate } from 'react-router-dom'
 import Loading from './loading'
 
 const DailyReportCollapse = () => {
-  const { registerData, loading, error, success } = useRegisterDailyReport()
+  const { registerData, loading, error, success, clearData } = useRegisterDailyReport()
   const navigate = useNavigate()
 
   useEffect(() => {
     localStorage.removeItem('daily_report')
+    clearData()
   }, [])
 
   const [showError, setShowError] = useState(false)

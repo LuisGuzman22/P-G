@@ -31,6 +31,7 @@ const useRegisterDailyReport = () => {
     equipmentPlateList,
     vehiclePlateList,
     aljibeList,
+    clearContext,
   } = useContext(DailyReportContext)
 
   const { mutate } = useMutation({
@@ -39,6 +40,7 @@ const useRegisterDailyReport = () => {
     onSuccess: () => {
       setLoading(false)
       setSuccess(true)
+      clearContext()
     },
     onError: (err) => {
       setLoading(false)
@@ -74,6 +76,10 @@ const useRegisterDailyReport = () => {
     vehicList.push(vehic)
   }
 
+  const clearData = () => {
+    clearContext()
+  }
+
   const registerData = async () => {
     setLoading(true)
     setError()
@@ -104,7 +110,7 @@ const useRegisterDailyReport = () => {
     return data
   }
 
-  return { registerData, loading, error, success }
+  return { registerData, loading, error, success, clearData }
 }
 
 export default useRegisterDailyReport
