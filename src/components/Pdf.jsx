@@ -47,13 +47,51 @@ const Pdf = (props) => {
     equipmentWorkForceList,
     // imagen,
   } = props
-  const { indirectPersonal, directPersonal, machinery, equipment, vehicles, aljibe, workFront } =
-    basicQuery
+  const {
+    indirectPersonal,
+    directPersonal,
+    machinery,
+    equipment,
+    vehicles,
+    aljibe,
+    workFront,
+    weather,
+    direct_staff_shift,
+    indirect_staff_shift,
+    shifts,
+  } = basicQuery
   // console.log('props', props)
 
   // useEffect(() => {
   //   console.log('imagen', imagen)
   // }, [imagen])
+
+  const [selectedWeather, setSelectedWeather] = useState('')
+  const [selectedDirectStaffShift, setSelectedDirectStaffShift] = useState('')
+  const [selectedIndirectStaffShift, setSelectedIndirectStaffShift] = useState('')
+  const [selectedDirectShift, setSelectedDirectShift] = useState('')
+  const [selectedIndirectShift, setSelectedIndirectShift] = useState('')
+
+  useEffect(() => {
+    const weatherSel = weather.find((weath) => weath.id === company?.dailyReportWeather)
+    const directStaffShiftSel = direct_staff_shift.find(
+      (dss) => dss.id.toString() === company?.dailyReportDirectPersonalShift.toString(),
+    )
+    const indirectStaffShiftSel = indirect_staff_shift.find(
+      (iss) => iss.id.toString() === company?.dailyReportIndirectPersonalShift.toString(),
+    )
+    const directShiftSel = shifts.find(
+      (shift) => shift.id.toString() === company?.dailyReportDirectPersonalJourney.toString(),
+    )
+    const indirectShiftSel = shifts.find(
+      (shift) => shift.id.toString() === company?.dailyReportIndirectPersonalJourney.toString(),
+    )
+    setSelectedWeather(weatherSel.name)
+    setSelectedDirectStaffShift(directStaffShiftSel.name)
+    setSelectedIndirectStaffShift(indirectStaffShiftSel.name)
+    setSelectedDirectShift(directShiftSel.name)
+    setSelectedIndirectShift(indirectShiftSel.name)
+  }, [company])
 
   const [totalMacOffered, setTotalMacOffered] = useState(0)
   const [totalMacCertified, setTotalMacCertified] = useState(0)
@@ -291,7 +329,7 @@ const Pdf = (props) => {
               <td className="td-label">Informe diario N°</td>
               <td>{company?.dailyReportNumber}</td>
               <td className="td-label">Clima</td>
-              <td>{company?.dailyReportWeather}</td>
+              <td>{selectedWeather || ''}</td>
               <td className="td-label">Fecha</td>
               <td>{company?.dailyReportDate}</td>
             </tr>
@@ -312,9 +350,9 @@ const Pdf = (props) => {
               <td className="td-label">N° de Contrato</td>
               <td>{contractLS.code}</td>
               <td className="td-label">Turno</td>
-              <td>{company?.dailyReportDirectPersonalShift}</td>
+              <td>{selectedDirectStaffShift}</td>
               <td className="td-label">Turno</td>
-              <td>{company?.dailyReportIndirectPersonalShift}</td>
+              <td>{selectedIndirectStaffShift}</td>
             </tr>
             <tr>
               <td className="td-label">Nombre de Contrato</td>
@@ -328,9 +366,9 @@ const Pdf = (props) => {
               <td className="td-label">Nombre del Administrador de Contrato</td>
               <td>{company?.dailyReportContractManagerName}</td>
               <td className="td-label">Jornada</td>
-              <td>{company?.dailyReportDirectPersonalJourney}</td>
+              <td>{selectedDirectShift}</td>
               <td className="td-label">Jornada</td>
-              <td>{company?.dailyReportIndirectPersonalJourney}</td>
+              <td>{selectedIndirectShift}</td>
             </tr>
           </tbody>
         </table>

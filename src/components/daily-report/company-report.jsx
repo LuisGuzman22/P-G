@@ -4,6 +4,7 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import { useLocation } from 'react-router-dom'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const CompanyReport = () => {
   const currentLocation = useLocation().pathname
@@ -13,6 +14,9 @@ const CompanyReport = () => {
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
+
+  const { getData } = useGetCachedQueryData()
+  const basicQuery = getData('basics')
 
   const onChangeData = (e) => {
     storeCompanyData(e)
@@ -122,16 +126,11 @@ const CompanyReport = () => {
               }}
             >
               <option value={'0'}>Seleccione</option>
-              <option value="1">Calor moderado</option>
-              <option value="2">Calor intenso</option>
-              <option value="3">Frío moderado</option>
-              <option value="4">Frío intenso</option>
-              <option value="5">Lluvia débil</option>
-              <option value="6">Lluvia moderada</option>
-              <option value="7">Lluvia intensa</option>
-              <option value="8">Viento débil</option>
-              <option value="9">Viento moderado</option>
-              <option value="10">Viento intenso</option>
+              {basicQuery?.weather.map((weather) => (
+                <option key={weather.id} value={weather.id}>
+                  {weather.name}
+                </option>
+              ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -148,9 +147,11 @@ const CompanyReport = () => {
               }}
             >
               <option value={'0'}>Seleccione</option>
-              <option value="14x14">14x14</option>
-              <option value="7x7">7x7</option>
-              <option value="5x2">5x2</option>
+              {basicQuery?.direct_staff_shift.map((direct_staf) => (
+                <option key={direct_staf.id} value={direct_staf.id}>
+                  {direct_staf.name}
+                </option>
+              ))}
             </CFormSelect>
           </CCol>
           <CCol sm={4}>
@@ -179,8 +180,11 @@ const CompanyReport = () => {
               }}
             >
               <option value={'0'}>Seleccione</option>
-              <option value="dia">Día</option>
-              <option value="noche">Noche</option>
+              {basicQuery?.shifts.map((shift) => (
+                <option key={shift.id} value={shift.id}>
+                  {shift.name}
+                </option>
+              ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -197,8 +201,11 @@ const CompanyReport = () => {
               }}
             >
               <option value={'0'}>Seleccione</option>
-              <option value="4x3">4x3</option>
-              <option value="5x2">5x2</option>
+              {basicQuery?.indirect_staff_shift.map((indirect_staf) => (
+                <option key={indirect_staf.id} value={indirect_staf.id}>
+                  {indirect_staf.name}
+                </option>
+              ))}
             </CFormSelect>
           </CCol>
           <CCol sm={4}>
@@ -227,8 +234,11 @@ const CompanyReport = () => {
               }}
             >
               <option value={'0'}>Seleccione</option>
-              <option value="dia">Día</option>
-              <option value="noche">Noche</option>
+              {basicQuery?.shifts.map((shift) => (
+                <option key={shift.id} value={shift.id}>
+                  {shift.name}
+                </option>
+              ))}
             </CFormSelect>
           </CCol>
         </CRow>
