@@ -15,10 +15,11 @@ const useLogin = () => {
       return await axios
         .post('https://pyg-production.up.railway.app/api/v1/login', newTodo)
         .then((res) => {
-          console.log('res', res)
           if (res.status === HttpStatusCode.Ok) {
+            console.log('res', res.data.data)
+            localStorage.setItem('token', res.data.data.token)
             setIsError(false)
-            navigate(`/project_selector`)
+            // navigate(`/project_selector`)
             return res.ok
           } else {
             setError('Usuario / contraseña incorrecto')
@@ -27,7 +28,6 @@ const useLogin = () => {
           }
         })
         .catch((err) => {
-          console.log('err', err)
           setError('Usuario / contraseña incorrecto')
           setIsError(true)
           return false
@@ -37,8 +37,6 @@ const useLogin = () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
     },
     onError: (err) => {
-      console.log('2err', err)
-
       setError('Usuario / contraseña incorrecto')
       setIsError(true)
       return false
@@ -53,7 +51,7 @@ const useLogin = () => {
       password,
     }
     const response = await mutation.mutate(loginData)
-    console.log('response', response)
+    return response
   }
 
   const login = (data) => {
