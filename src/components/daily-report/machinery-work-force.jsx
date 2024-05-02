@@ -79,7 +79,7 @@ const MachineryWorkForce = () => {
       setEnableSubFrontWork(false)
       const machineryWorkForceInitialState = {
         id: uuidv4(),
-        machineryWorkForcebservation: machineryWorkForce.machineryWorkForceObservation,
+        machineryWorkForceObservation: machineryWorkForce.machineryWorkForceObservation,
         machineryWorkForce: machineryWorkForce.machineryWorkForce,
         machinerySubWorkFront: machineryWorkForce.machinerySubWorkFront,
         machineryWorkFrontCharge: machineryWorkForce.machineryWorkFrontCharge,
