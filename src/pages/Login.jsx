@@ -17,13 +17,14 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import useLogin from 'src/hooks/useLogin'
 import { useQueryClient } from '@tanstack/react-query'
 import { regex } from 'src/utils/regex'
+import Loading from 'src/components/loading'
 
 const Login = () => {
   const queryClient = useQueryClient()
   const [errorUser, setErrorUser] = useState(false)
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
-  const { login, error, trueLogin } = useLogin()
+  const { login, error, trueLogin, isLoading } = useLogin()
 
   const onChangeData = (e) => {
     switch (e.target.id) {
@@ -103,11 +104,12 @@ const Login = () => {
                       />
                     </CInputGroup>
                     {error && <>{error}</>}
-
+                    {isLoading && <Loading />}
                     <CRow>
                       <CCol xs={12}>
                         <CButton
                           className="px-4 login-button"
+                          disabled={isLoading}
                           onClick={() => {
                             onClickHandler()
                             // htmlToImageConvert()
