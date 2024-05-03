@@ -5,6 +5,8 @@ import {
   CAccordionHeader,
   CAccordionItem,
   CButton,
+  CCol,
+  CRow,
 } from '@coreui/react'
 import CompanyReport from './daily-report/company-report'
 import IndirectWorkForce from './daily-report/indirect-work-force'
@@ -38,14 +40,15 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import Loading from './loading'
 
-// import { Chart } from 'react-google-charts'
-// import { toPng } from 'html-to-image'
+import { Chart } from 'react-google-charts'
+import { toPng } from 'html-to-image'
 
 const DailyReportCollapse = () => {
   const currentLocation = useLocation().pathname
   const isEditMode = currentLocation.includes('/edit')
   const navigate = useNavigate()
-  // const elementRef = useRef(null)
+  const columnChartElement = useRef(null)
+  const pieChartElement = useRef(null)
 
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
   const {
@@ -68,11 +71,54 @@ const DailyReportCollapse = () => {
     machineryWorkForceList,
     equipmentWorkForceList,
   } = useRegisterDailyReportCompany()
-  const [imagen, setImagen] = useState()
+  const [imagenColumnChart, setImagenColumnChart] = useState()
+  const [imagenPieChart, setImagenPieChart] = useState()
 
   const [isLoading, setIsloading] = useState(false)
   const [blobData, setBlobData] = useState()
   const [url, setUrl] = useState()
+
+  const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
+  const [totalWorkDotation, setTotalWorkDotation] = useState(0)
+
+  useEffect(() => {
+    setTotalPlanedDotation(totalDirectWorkForce.directSubtotalOfferedNumber)
+    setTotalWorkDotation(totalDirectWorkForce.directSubtotalWorkNumber)
+  }, [totalDirectWorkForce])
+
+  const [effectiveTime, setEffectiveTime] = useState(0)
+  const [scheduleMaintimeTime, setScheduleMaintimeTime] = useState(0)
+  const [scheduleDelay, setScheduleDelay] = useState(0)
+  const [opperationalLoss, setOpperationalLoss] = useState(0)
+  const [unscheduleMaintimeTime, setUnscheduleMaintimeTime] = useState(0)
+  const [unscheduleDelay, setUnscheduleDelay] = useState(0)
+  const [reserves, setReserves] = useState(0)
+  const [totals, setTotals] = useState(0)
+  useEffect(() => {
+    for (let asarcoData of asarcoMachineryList) {
+      setTotals(
+        totals +
+          Number(asarcoData.asarcoMachineryEffectiveTime) +
+          Number(asarcoData.asarcoMachineryScheduleMaintenance) +
+          Number(asarcoData.asarcoMachineryScheduleDelay) +
+          Number(asarcoData.asarcoMachineryOpperationalLoss) +
+          Number(asarcoData.asarcoMachineryUnscheduleMaintenance) +
+          Number(asarcoData.asarcoMachineryUnscheduleDelay) +
+          Number(asarcoData.asarcoMachineryReserves),
+      )
+      setEffectiveTime(effectiveTime + Number(asarcoData.asarcoMachineryEffectiveTime))
+      setScheduleMaintimeTime(
+        scheduleMaintimeTime + Number(asarcoData.asarcoMachineryScheduleMaintenance),
+      )
+      setScheduleDelay(scheduleDelay + Number(asarcoData.asarcoMachineryScheduleDelay))
+      setOpperationalLoss(opperationalLoss + Number(asarcoData.asarcoMachineryOpperationalLoss))
+      setUnscheduleMaintimeTime(
+        unscheduleMaintimeTime + Number(asarcoData.asarcoMachineryUnscheduleMaintenance),
+      )
+      setUnscheduleDelay(unscheduleDelay + Number(asarcoData.asarcoMachineryUnscheduleDelay))
+      setReserves(reserves + Number(asarcoData.asarcoMachineryReserves))
+    }
+  }, [asarcoMachineryList])
 
   useEffect(() => {
     if (!company.dailyReportDate) window.location.reload()
@@ -91,48 +137,39 @@ const DailyReportCollapse = () => {
     }
   }
 
-  // const data = [
-  //   ['Element', 'Density', { role: 'style' }],
-  //   ['Copper', 8.94, '#b87333'], // RGB value
-  //   ['Silver', 10.49, 'silver'], // English color name
-  //   ['Gold', 19.3, 'gold'],
-  //   ['Platinum', 21.45, 'color: #e5e4e2'], // CSS-style declaration
-  // ]
+  const barGraphData = [
+    ['Dotación', 'Dotación', { role: 'style' }],
+    ['Dotación Planeada Directos Total', totalPlanedDotation, '#b87333'], // RGB value
+    ['Dotación Directos Obra Total', totalWorkDotation, 'silver'], // English color name
+  ]
 
-  // useEffect(() => {
-  //   htmlToImageConvert()
-  // }, [])
+  const piechartData = [
+    ['Task', 'Hours per Day'],
+    ['Tiempo Efectivo (Hrs)', effectiveTime],
+    ['Mantención Programada (Hrs)', scheduleMaintimeTime],
+    ['Demora Programada (Hrs)', scheduleDelay],
+    ['Perdida Operacional (Hrs)', opperationalLoss],
+    ['Mantención No Programada (Hrs)', unscheduleMaintimeTime],
+    ['Demora No Programada (Hrs)', unscheduleDelay],
+    ['Reservas (Hrs)', reserves],
+  ]
 
-  // const htmlToImageConvert = () => {
-  //   setImagen()
-  //   console.log('convirtiendo')
-  //   toPng(elementRef.current, { cacheBust: false })
-  //     .then((dataUrl) => {
-  //       console.log('dataUrl', dataUrl)
-  //       setImagen(dataUrl)
-  //       // const link = document.createElement('a')
-  //       // console.log('link', link)
-  //       // link.download = 'my-image-name.png'
-  //       // link.href = dataUrl
-  //       // link.click()
-  //     })
-  //     .catch((err) => {
-  //       console.log('ERROR', err)
-  //     })
-  // }
-
-  // useEffect(() => {
-  //   if (elementRef.current) {
-  //     htmlToImageConvert()
-  //   }
-  // }, [elementRef])
-
-  // useEffect(() => {
-  //   console.log('imagen', imagen === undefined || imagen.includes('data:,'))
-  //   if (imagen === undefined || imagen.includes('data:,')) {
-  //     htmlToImageConvert()
-  //   }
-  // }, [imagen])
+  const htmlToImageConvert = () => {
+    setImagenColumnChart()
+    setImagenPieChart()
+    toPng(columnChartElement.current, { cacheBust: false })
+      .then((dataUrl) => {
+        setImagenColumnChart(dataUrl)
+      })
+      .catch((err) => {})
+    toPng(pieChartElement.current, { cacheBust: false })
+      .then((dataUrl) => {
+        setImagenPieChart(dataUrl)
+      })
+      .catch((err) => {
+        // console.log('ERROR', err)
+      })
+  }
 
   return (
     <div className="dailyReport">
@@ -145,18 +182,24 @@ const DailyReportCollapse = () => {
         />
       )}
       <div>
-        {/* <div ref={elementRef}>
-          <Chart
-            chartType="ColumnChart"
-            width="100%"
-            height="400px"
-            data={data}
-            onSuccess={() => {
-              console.log('success')
-            }}
-          />
-        </div> */}
-
+        <div>
+          <CRow>
+            <div ref={columnChartElement}>
+              {/* <CRow>
+                <CCol>Dotación Planeada Directos Total</CCol>
+                <CCol>{totalPlanedDotation}</CCol>
+              </CRow>
+              <CRow>
+                <CCol>Dotación Directos Obra Total</CCol>
+                <CCol>{totalWorkDotation}</CCol>
+              </CRow> */}
+              <Chart chartType="ColumnChart" width="100%" height="200px" data={barGraphData} />
+            </div>
+            <div ref={pieChartElement}>
+              <Chart chartType="PieChart" data={piechartData} width={'100%'} height={'300px'} />
+            </div>
+          </CRow>
+        </div>
         <PDFDownloadLink
           document={
             <Pdf
@@ -179,18 +222,23 @@ const DailyReportCollapse = () => {
               directDotationWorkForceList={directDotationWorkForceList}
               machineryWorkForceList={machineryWorkForceList}
               equipmentWorkForceList={equipmentWorkForceList}
-              image={imagen}
+              imagenColumnChart={imagenColumnChart}
+              imagenPieChart={imagenPieChart}
             />
           }
           fileName="Reporte 1.pdf"
         >
           {({ blob, url, loading, error }) => {
-            // console.log('blob', blob)
-            // console.log('url', url)
-            // console.log('loading', loading)
-            // console.log('error', error)
             setIsloading(loading)
             setBlobData(blob)
+            if (
+              !imagenColumnChart ||
+              imagenColumnChart === 'data:,' ||
+              !imagenPieChart ||
+              imagenPieChart === 'data:,'
+            ) {
+              htmlToImageConvert()
+            }
             setUrl(url)
             return loading ? 'Generando documento...' : 'Descargar PDF'
           }}
@@ -309,12 +357,14 @@ const DailyReportCollapse = () => {
                 <PhotoRecord />
               </CAccordionBody>
             </CAccordionItem>
-            <CAccordionItem itemKey={20}>
+            {/* <CAccordionItem itemKey={20}>
               <CAccordionHeader>20) Graficos del día</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
-                <Graphs />
+                <div ref={columnChartElement}>
+                  <Chart chartType="ColumnChart" width="100%" height="200px" data={barGraphData} />
+                </div>
               </CAccordionBody>
-            </CAccordionItem>
+            </CAccordionItem> */}
             <CAccordionItem itemKey={21}>
               <CAccordionHeader>21) Incidentes, lesiones o eventos</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">

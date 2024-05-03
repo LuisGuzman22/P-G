@@ -8,6 +8,7 @@ import { Html } from 'react-pdf-html'
 import firma1 from 'src/assets/images/firma1.png'
 import firma2 from 'src/assets/images/firma2.png'
 import firma3 from 'src/assets/images/firma3.png'
+import not_found from 'src/assets/images/not_found.jpeg'
 
 /**
  * 
@@ -22,8 +23,6 @@ const Pdf = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
-
-  // MAPPEAR CLIMA
 
   const {
     company,
@@ -45,7 +44,8 @@ const Pdf = (props) => {
     directDotationWorkForceList,
     machineryWorkForceList,
     equipmentWorkForceList,
-    // imagen,
+    imagenColumnChart,
+    imagenPieChart,
   } = props
   const {
     indirectPersonal,
@@ -61,10 +61,6 @@ const Pdf = (props) => {
     shifts,
   } = basicQuery
   // console.log('props', props)
-
-  // useEffect(() => {
-  //   console.log('imagen', imagen)
-  // }, [imagen])
 
   const [selectedWeather, setSelectedWeather] = useState('')
   const [selectedDirectStaffShift, setSelectedDirectStaffShift] = useState('')
@@ -274,8 +270,6 @@ const Pdf = (props) => {
     setTotalVehicFinalHorometer(vehicFinalHorometer)
   }, [vehicleList])
 
-  const imagen = './firma1.png'
-
   const element = (
     <html>
       <body>
@@ -322,7 +316,7 @@ const Pdf = (props) => {
           color: white;
         }`}
         </style>
-        {/* */}
+
         <table border={1}>
           <tbody>
             <tr>
@@ -971,6 +965,33 @@ const Pdf = (props) => {
           <tbody>
             <tr>
               <td className="td-label" style={{ textAlign: 'center' }}>
+                GRÁFICOS DEL DÍA
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table border={1}>
+          <tbody>
+            <tr>
+              <td className="" style={{ textAlign: 'center' }}>
+                <img
+                  src={imagenColumnChart !== 'ERROR' ? imagenColumnChart : not_found}
+                  style={{ width: '50%', textAlign: 'center' }}
+                />
+              </td>
+              <td className="" style={{ textAlign: 'center' }}>
+                <img
+                  src={imagenPieChart !== 'ERROR' ? imagenPieChart : not_found}
+                  style={{ width: '50%', textAlign: 'center' }}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table border={1}>
+          <tbody>
+            <tr>
+              <td className="td-label" style={{ textAlign: 'center' }}>
                 CUADRO FIRMAS
               </td>
             </tr>
@@ -1033,7 +1054,7 @@ const Pdf = (props) => {
 
   return (
     <Document>
-      <Page size="A1" orientation="landscape">
+      <Page size="2A0" orientation="landscape">
         <Html>{html}</Html>
       </Page>
     </Document>
