@@ -351,28 +351,20 @@ const DailyReportCollapse = () => {
                 <Comments />
               </CAccordionBody>
             </CAccordionItem>
-            <CAccordionItem itemKey={19}>
-              <CAccordionHeader>19) Registro fotográfico diario</CAccordionHeader>
+            <CAccordionItem itemKey={18}>
+              <CAccordionHeader>18) Registro fotográfico diario</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <PhotoRecord />
               </CAccordionBody>
             </CAccordionItem>
-            {/* <CAccordionItem itemKey={20}>
-              <CAccordionHeader>20) Graficos del día</CAccordionHeader>
-              <CAccordionBody className="dailyReport-accordion">
-                <div ref={columnChartElement}>
-                  <Chart chartType="ColumnChart" width="100%" height="200px" data={barGraphData} />
-                </div>
-              </CAccordionBody>
-            </CAccordionItem> */}
-            <CAccordionItem itemKey={21}>
-              <CAccordionHeader>21) Incidentes, lesiones o eventos</CAccordionHeader>
+            <CAccordionItem itemKey={19}>
+              <CAccordionHeader>19) Incidentes, lesiones o eventos</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <Incidents />
               </CAccordionBody>
             </CAccordionItem>
-            <CAccordionItem itemKey={22}>
-              <CAccordionHeader>22) Firmas</CAccordionHeader>
+            <CAccordionItem itemKey={20}>
+              <CAccordionHeader>20) Firmas</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <></>
               </CAccordionBody>
