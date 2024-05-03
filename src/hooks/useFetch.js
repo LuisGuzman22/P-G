@@ -2,7 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
 const fetchProducts = async (projectId) => {
-  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/projects')
+  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/projects', {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
   return res.data.data
 }
 
@@ -17,12 +21,29 @@ const fetchContracts = async (contractId) => {
 }
 
 const fetchBasicData = async (contractId) => {
-  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/basicData')
+  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/basicData', {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
+const testToken = async () => {
+  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/test', {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
   return res.data.data
 }
 
 export const fetchReportsData = async () => {
-  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/reports')
+  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/reports', {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
   return res.data.data
 }
 
