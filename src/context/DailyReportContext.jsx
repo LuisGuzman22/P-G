@@ -11,6 +11,10 @@ export const DailyReportContext = createContext({
 export const DailyReportProvider = ({ children }) => {
   const { getContract } = useRegisterGeneralData()
 
+  useEffect(() => {
+    console.log('cambio report id', reportId)
+  }, [localStorage.getItem('daily_report')])
+
   const contractLS = JSON.parse(getContract())
 
   const { getData } = useGetCachedQueryData()
@@ -18,12 +22,14 @@ export const DailyReportProvider = ({ children }) => {
   const reportsQuery = getData('reports')
 
   const reportId = localStorage.getItem('daily_report')
+  console.log('reportId', reportId)
   let selectedReport
 
   if (reportId && reportsQuery) {
     selectedReport = reportsQuery.find((report) => {
       return report.id.toString() === reportId.toString()
     })
+    console.log('selectedReport', selectedReport)
   }
 
   const selectedCompany = selectedReport?.company
@@ -483,6 +489,7 @@ export const DailyReportProvider = ({ children }) => {
   }
 
   const clearContext = () => {
+    console.log('se limpia el context')
     setCompany({
       dailyReportContractManagerName: undefined,
       dailyReportDate: undefined,

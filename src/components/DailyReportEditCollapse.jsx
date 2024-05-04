@@ -80,8 +80,15 @@ const DailyReportCollapse = () => {
 
   const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
   const [totalWorkDotation, setTotalWorkDotation] = useState(0)
+  const [showDotationChart, setShowDotationChart] = useState(false)
 
   useEffect(() => {
+    if (
+      totalDirectWorkForce.directSubtotalOfferedNumber &&
+      totalDirectWorkForce.directSubtotalWorkNumber
+    ) {
+      setShowDotationChart(true)
+    }
     setTotalPlanedDotation(totalDirectWorkForce.directSubtotalOfferedNumber)
     setTotalWorkDotation(totalDirectWorkForce.directSubtotalWorkNumber)
   }, [totalDirectWorkForce])
@@ -94,8 +101,10 @@ const DailyReportCollapse = () => {
   const [unscheduleDelay, setUnscheduleDelay] = useState(0)
   const [reserves, setReserves] = useState(0)
   const [totals, setTotals] = useState(0)
+  const [showAsarcoChart, setShowAsarcoChart] = useState(false)
   useEffect(() => {
     for (let asarcoData of asarcoMachineryList) {
+      setShowAsarcoChart(true)
       setTotals(
         totals +
           Number(asarcoData.asarcoMachineryEffectiveTime) +
@@ -154,14 +163,8 @@ const DailyReportCollapse = () => {
     ['Reservas (Hrs)', reserves],
   ]
 
-  const htmlToImageConvert = () => {
-    setImagenColumnChart()
+  const convertAsarcoChart = () => {
     setImagenPieChart()
-    toPng(columnChartElement.current, { cacheBust: false })
-      .then((dataUrl) => {
-        setImagenColumnChart(dataUrl)
-      })
-      .catch((err) => {})
     toPng(pieChartElement.current, { cacheBust: false })
       .then((dataUrl) => {
         setImagenPieChart(dataUrl)
@@ -169,6 +172,15 @@ const DailyReportCollapse = () => {
       .catch((err) => {
         // console.log('ERROR', err)
       })
+  }
+
+  const convertDotationChart = () => {
+    setImagenColumnChart()
+    toPng(columnChartElement.current, { cacheBust: false })
+      .then((dataUrl) => {
+        setImagenColumnChart(dataUrl)
+      })
+      .catch((err) => {})
   }
 
   return (
@@ -193,10 +205,14 @@ const DailyReportCollapse = () => {
                 <CCol>Dotación Directos Obra Total</CCol>
                 <CCol>{totalWorkDotation}</CCol>
               </CRow> */}
-              <Chart chartType="ColumnChart" width="100%" height="200px" data={barGraphData} />
+              {showDotationChart && (
+                <Chart chartType="ColumnChart" width="100%" height="200px" data={barGraphData} />
+              )}
             </div>
             <div ref={pieChartElement}>
-              <Chart chartType="PieChart" data={piechartData} width={'100%'} height={'300px'} />
+              {showAsarcoChart && (
+                <Chart chartType="PieChart" data={piechartData} width={'100%'} height={'300px'} />
+              )}
             </div>
           </CRow>
         </div>
@@ -231,13 +247,14 @@ const DailyReportCollapse = () => {
           {({ blob, url, loading, error }) => {
             setIsloading(loading)
             setBlobData(blob)
-            if (
-              !imagenColumnChart ||
-              imagenColumnChart === 'data:,' ||
-              !imagenPieChart ||
-              imagenPieChart === 'data:,'
-            ) {
-              htmlToImageConvert()
+            if (showAsarcoChart)
+              if (!imagenPieChart || imagenPieChart === 'data:,') {
+                convertAsarcoChart()
+              }
+            if (showDotationChart) {
+              if (!imagenColumnChart || imagenColumnChart === 'data:,') {
+                convertDotationChart()
+              }
             }
             setUrl(url)
             return loading ? 'Generando documento...' : 'Descargar PDF'

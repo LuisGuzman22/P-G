@@ -7,10 +7,12 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import { useFetchReportsData } from 'src/hooks/useFetch'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useGetBasicData from 'src/hooks/useGetBasicData'
+import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 
 const Dashboard = () => {
   let navigate = useNavigate()
   const { getProject, getContract } = useRegisterGeneralData()
+  const { clearData } = useRegisterDailyReport()
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
@@ -20,6 +22,11 @@ const Dashboard = () => {
 
   useFetchReportsData()
   const reportsQuery = getData('reports')
+
+  useEffect(() => {
+    localStorage.removeItem('daily_report')
+    clearData()
+  }, [])
 
   useEffect(() => {
     if (!projectLS || !contractLS) {
