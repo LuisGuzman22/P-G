@@ -393,11 +393,11 @@ const Pdf = (props) => {
               <>
                 {indirectWorkForceList.map((data) => {
                   const selectedIndirectPersonal = indirectPersonal.find((personal) => {
-                    return personal.id === data.id
+                    return personal.id === data.indirectWorkForce
                   })
                   return (
                     <tr key={data.id}>
-                      <td className="td-workers-name">{selectedIndirectPersonal.name}</td>
+                      <td className="td-workers-name">{selectedIndirectPersonal?.name || ''}</td>
                       <td className="td-green-label">{data.offeredNumber}</td>
                       <td className="">{data.contractedNumber}</td>
                       <td className="">{data.certified}</td>
@@ -472,11 +472,11 @@ const Pdf = (props) => {
               <>
                 {directWorkForceList.map((data) => {
                   const selectedDirectPersonal = directPersonal.find((personal) => {
-                    return personal.id === data.id
+                    return personal.id === data.directWorkForce
                   })
                   return (
                     <tr key={data.id}>
-                      <td className="td-workers-name">{selectedDirectPersonal.name}</td>
+                      <td className="td-workers-name">{selectedDirectPersonal?.name || ''}</td>
                       <td className="td-green-label">{data.offeredNumber}</td>
                       <td className="">{data.contractedNumber}</td>
                       <td className="">{data.certified}</td>

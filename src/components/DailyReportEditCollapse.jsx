@@ -103,8 +103,6 @@ const DailyReportCollapse = () => {
   const [totals, setTotals] = useState(0)
   const [showAsarcoChart, setShowAsarcoChart] = useState(false)
   useEffect(() => {
-    console.log('asarcoMachineryList', asarcoMachineryList.length)
-
     for (let asarcoData of asarcoMachineryList) {
       setShowAsarcoChart(true)
       setTotals(
