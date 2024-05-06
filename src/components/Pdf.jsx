@@ -122,18 +122,19 @@ const Pdf = (props) => {
         return asarco.machinery === mac.machinery
       })
 
-      macEffectiveTime = macEffectiveTime + Number(selectedAsarco.asarcoMachineryEffectiveTime)
+      macEffectiveTime =
+        macEffectiveTime + Number(selectedAsarco?.asarcoMachineryEffectiveTime || 0)
       macUnscheduleMaintenance =
-        macUnscheduleMaintenance + Number(selectedAsarco.asarcoMachineryUnscheduleMaintenance)
+        macUnscheduleMaintenance + Number(selectedAsarco?.asarcoMachineryUnscheduleMaintenance)
       macScheduleMaintenance =
-        macScheduleMaintenance + Number(selectedAsarco.asarcoMachineryScheduleMaintenance)
+        macScheduleMaintenance + Number(selectedAsarco?.asarcoMachineryScheduleMaintenance)
       macUnscheduleDelay =
-        macUnscheduleDelay + Number(selectedAsarco.asarcoMachineryUnscheduleDelay)
-      macScheduleDelay = macScheduleDelay + Number(selectedAsarco.asarcoMachineryScheduleDelay)
-      macReserves = macReserves + Number(selectedAsarco.asarcoMachineryReserves)
+        macUnscheduleDelay + Number(selectedAsarco?.asarcoMachineryUnscheduleDelay)
+      macScheduleDelay = macScheduleDelay + Number(selectedAsarco?.asarcoMachineryScheduleDelay)
+      macReserves = macReserves + Number(selectedAsarco?.asarcoMachineryReserves)
       macOperationalLoss =
-        macOperationalLoss + Number(selectedAsarco.asarcoMachineryOpperationalLoss)
-      macHorometer = macHorometer + Number(selectedAsarco.asarcoMachineryHorometer)
+        macOperationalLoss + Number(selectedAsarco?.asarcoMachineryOpperationalLoss)
+      macHorometer = macHorometer + Number(selectedAsarco?.asarcoMachineryHorometer)
     })
 
     setTotalMacOffered(macOffered)
@@ -183,18 +184,18 @@ const Pdf = (props) => {
         return equipPlate.equipment === equi.equipment
       })
       equipEffectiveTime =
-        equipEffectiveTime + Number(selectedEquipmentPlate.equipmentEffectiveTime)
+        equipEffectiveTime + Number(selectedEquipmentPlate?.equipmentEffectiveTime || 0)
       equipCorrectiveMaintenance =
-        equipCorrectiveMaintenance + Number(selectedEquipmentPlate.equipmentCorrectiveMaintenance)
+        equipCorrectiveMaintenance + Number(selectedEquipmentPlate?.equipmentCorrectiveMaintenance)
       equipPreventiveMaintenance =
-        equipPreventiveMaintenance + Number(selectedEquipmentPlate.equipmentPreventiveMaintenance)
-      equipOutOfService = equipOutOfService + Number(selectedEquipmentPlate.equipmentOutOfService)
-      equipWaiting = equipWaiting + Number(selectedEquipmentPlate.equipmentWaiting)
-      equipNoOperator = equipNoOperator + Number(selectedEquipmentPlate.equipmentNoOperator)
+        equipPreventiveMaintenance + Number(selectedEquipmentPlate?.equipmentPreventiveMaintenance)
+      equipOutOfService = equipOutOfService + Number(selectedEquipmentPlate?.equipmentOutOfService)
+      equipWaiting = equipWaiting + Number(selectedEquipmentPlate?.equipmentWaiting)
+      equipNoOperator = equipNoOperator + Number(selectedEquipmentPlate?.equipmentNoOperator)
       equipInitialHorometer =
-        equipInitialHorometer + Number(selectedEquipmentPlate.equipmentInitialHorometer)
+        equipInitialHorometer + Number(selectedEquipmentPlate?.equipmentInitialHorometer)
       equipFinalHorometer =
-        equipFinalHorometer + Number(selectedEquipmentPlate.equipmentFinalHorometer)
+        equipFinalHorometer + Number(selectedEquipmentPlate?.equipmentFinalHorometer)
     })
 
     setTotalEquipOffered(equipOffered)
@@ -244,17 +245,19 @@ const Pdf = (props) => {
         return VehicPlate.vehicle === veh.vehicle
       })
 
-      vehicEffectiveTime = vehicEffectiveTime + Number(selectedVehiclePlate.vehicleEffectiveTime)
+      vehicEffectiveTime =
+        vehicEffectiveTime + Number(selectedVehiclePlate?.vehicleEffectiveTime || 0)
       vehicCorrectiveMaintenance =
-        vehicCorrectiveMaintenance + Number(selectedVehiclePlate.vehicleCorrectiveMaintenance)
+        vehicCorrectiveMaintenance + Number(selectedVehiclePlate?.vehicleCorrectiveMaintenance)
       vehicPreventiveMaintenance =
-        vehicPreventiveMaintenance + Number(selectedVehiclePlate.vehiclePreventiveMaintenance)
-      vehicOutOfService = vehicOutOfService + Number(selectedVehiclePlate.vehicleOutOfService)
-      vehicWaiting = vehicWaiting + Number(selectedVehiclePlate.vehicleWaiting)
-      vehicNoOperator = vehicNoOperator + Number(selectedVehiclePlate.vehicleNoOperator)
+        vehicPreventiveMaintenance + Number(selectedVehiclePlate?.vehiclePreventiveMaintenance)
+      vehicOutOfService = vehicOutOfService + Number(selectedVehiclePlate?.vehicleOutOfService)
+      vehicWaiting = vehicWaiting + Number(selectedVehiclePlate?.vehicleWaiting)
+      vehicNoOperator = vehicNoOperator + Number(selectedVehiclePlate?.vehicleNoOperator)
       vehicInitialHorometer =
-        vehicInitialHorometer + Number(selectedVehiclePlate.vehicleInitialHorometer)
-      vehicFinalHorometer = vehicFinalHorometer + Number(selectedVehiclePlate.vehicleFinalHorometer)
+        vehicInitialHorometer + Number(selectedVehiclePlate?.vehicleInitialHorometer)
+      vehicFinalHorometer =
+        vehicFinalHorometer + Number(selectedVehiclePlate?.vehicleFinalHorometer)
     })
 
     setTotalVehicOffered(vehicOffered)
@@ -605,7 +608,7 @@ const Pdf = (props) => {
                         <td className="">{data.actions.machineryOfferedNumber}</td>
                         <td className="">{data.actions.machineryCertifiedNumber}</td>
                         <td className="">{data.actions.machineryWorkNumber}</td>
-                        <td className="">{selectedAsarco.asarcoMachineryEffectiveTime}</td>
+                        <td className="">{selectedAsarco.asarcoMachineryEffectiveTime || 0}</td>
                         <td className="">{selectedAsarco.asarcoMachineryUnscheduleMaintenance}</td>
                         <td className="">{selectedAsarco.asarcoMachineryScheduleMaintenance}</td>
                         <td className="">{selectedAsarco.asarcoMachineryUnscheduleDelay}</td>
@@ -708,7 +711,7 @@ const Pdf = (props) => {
                         <td className="">{data.actions.equipmentOfferedNumber}</td>
                         <td className="">{data.actions.equipmentCertifiedNumber}</td>
                         <td className="">{data.actions.equipmentWorkNumber}</td>
-                        <td className="">{selectedEquipmentPlate.equipmentEffectiveTime}</td>
+                        <td className="">{selectedEquipmentPlate.equipmentEffectiveTime || 0}</td>
                         <td className="">
                           {selectedEquipmentPlate.equipmentCorrectiveMaintenance}
                         </td>
@@ -806,7 +809,7 @@ const Pdf = (props) => {
                         <td className="">{data.actions.vehicleOfferedNumber}</td>
                         <td className="">{data.actions.vehicleCertifiedNumber}</td>
                         <td className="">{data.actions.vehicleWorkNumber}</td>
-                        <td className="">{selectedVehiclePlate.vehicleEffectiveTime}</td>
+                        <td className="">{selectedVehiclePlate.vehicleEffectiveTime || 0}</td>
                         <td className="">{selectedVehiclePlate.vehicleCorrectiveMaintenance}</td>
                         <td className="">{selectedVehiclePlate.vehiclePreventiveMaintenance}</td>
                         <td className="">{selectedVehiclePlate.vehicleOutOfService}</td>
