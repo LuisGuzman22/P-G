@@ -18,7 +18,7 @@ const useLogin = () => {
         .post('https://pyg-production.up.railway.app/api/v1/login', newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Ok) {
-            console.log('res', res.data.data)
+            // console.log('res', res.data.data)
             localStorage.setItem('token', res.data.data.token)
             setIsLoading(false)
             setIsError(false)

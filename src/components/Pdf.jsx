@@ -560,286 +560,310 @@ const Pdf = (props) => {
             </tr>
           </tbody>
         </table>
-        <table border={1}>
-          <tbody>
-            <tr>
-              <td className="td-machinery-label">MAQUINARIA (NOMBRE)</td>
-              <td className="td-machinery-label">PATENTE</td>
-              <td className="td-machinery-label">N° Maq oferta</td>
-              <td className="td-machinery-label">N° Maq Acreditados</td>
-              <td className="td-machinery-label">N° Maq en Obra</td>
-              <td className="td-machinery-label">Tiempo Efectivo (Hrs)</td>
-              <td className="td-machinery-label">Mantención No Programada (Hrs)</td>
-              <td className="td-machinery-label">Mantención Programada (Hrs)</td>
-              <td className="td-machinery-label">Demora No Programada (Hrs)</td>
-              <td className="td-machinery-label">Demora Programada (Hrs)</td>
-              <td className="td-machinery-label">Reservas (Hrs)</td>
-              <td className="td-machinery-label">Perdida Operacional (Hrs)</td>
-              <td className="td-machinery-label">Horometro</td>
-              {workFront
-                .sort((a, b) => a.id - b.id)
-                .map((wf) => {
-                  return (
-                    <>
-                      <td className="td-machinery-label">{wf.name}</td>
-                    </>
-                  )
-                })}
-            </tr>
-            {machineryList.length > 0 && (
-              <>
-                {machineryList.map((data) => {
-                  const selectedAsarco = asarcoMachineryList.find((asarco) => {
-                    return asarco.machinery === data.machinery
-                  })
-                  if (selectedAsarco) {
-                    const selectedMachinery = machinery.find((mac) => {
-                      return mac.id === selectedAsarco.machinery
-                    })
-
-                    const selectedPlate = selectedMachinery.plate.find((plate) => {
-                      return plate.id === selectedAsarco.machineryPlate
-                    })
-
-                    return (
-                      <tr key={data.id}>
-                        <td className="">{selectedMachinery.name ?? ''}</td>
-                        <td className="">{selectedPlate.label ?? ''}</td>
-                        <td className="">{data.actions.machineryOfferedNumber}</td>
-                        <td className="">{data.actions.machineryCertifiedNumber}</td>
-                        <td className="">{data.actions.machineryWorkNumber}</td>
-                        <td className="">{selectedAsarco.asarcoMachineryEffectiveTime || 0}</td>
-                        <td className="">{selectedAsarco.asarcoMachineryUnscheduleMaintenance}</td>
-                        <td className="">{selectedAsarco.asarcoMachineryScheduleMaintenance}</td>
-                        <td className="">{selectedAsarco.asarcoMachineryUnscheduleDelay}</td>
-                        <td className="">{selectedAsarco.asarcoMachineryScheduleDelay}</td>
-                        <td className="">{selectedAsarco.asarcoMachineryReserves}</td>
-                        <td className="">{selectedAsarco.asarcoMachineryOpperationalLoss}</td>
-                        <td className="">{selectedAsarco.asarcoMachineryHorometer}</td>
-                        {workFront
-                          .sort((a, b) => a.id - b.id)
-                          .map((wf) => {
-                            const selectedDotation = machineryWorkForceList.find((dot) => {
-                              return dot.machineryWorkForce === wf.id
-                            })
-
-                            return (
-                              <>
-                                <td className="">
-                                  {selectedDotation?.machineryWorkFrontQuantity || ''}
-                                </td>
-                              </>
-                            )
-                          })}
-                      </tr>
-                    )
-                  }
-                })}
+        {asarcoMachineryList.length > 0 && (
+          <>
+            <table border={1}>
+              <tbody>
                 <tr>
-                  <td className="td-total-label">Total</td>
-                  <td className="td-total-label"></td>
-                  <td className="td-total-label">{totalMacOffered}</td>
-                  <td className="td-total-label">{totalMacCertified}</td>
-                  <td className="td-total-label">{totalMacWork}</td>
-                  <td className="td-total-label">{totalMacEffectiveTime}</td>
-                  <td className="td-total-label">{totalMacUnscheduleMaintenance}</td>
-                  <td className="td-total-label">{totalMacScheduleMaintenance}</td>
-                  <td className="td-total-label">{totalMacUnscheduleDelay}</td>
-                  <td className="td-total-label">{totalMacScheduleDelay}</td>
-                  <td className="td-total-label">{totalMacReserves}</td>
-                  <td className="td-total-label">{totalMacOpperationalLoss}</td>
-                  <td className="td-total-label">{totalMacHorometer}</td>
+                  <td className="td-machinery-label">MAQUINARIA (NOMBRE)</td>
+                  <td className="td-machinery-label">PATENTE</td>
+                  <td className="td-machinery-label">N° Maq oferta</td>
+                  <td className="td-machinery-label">N° Maq Acreditados</td>
+                  <td className="td-machinery-label">N° Maq en Obra</td>
+                  <td className="td-machinery-label">Tiempo Efectivo (Hrs)</td>
+                  <td className="td-machinery-label">Mantención No Programada (Hrs)</td>
+                  <td className="td-machinery-label">Mantención Programada (Hrs)</td>
+                  <td className="td-machinery-label">Demora No Programada (Hrs)</td>
+                  <td className="td-machinery-label">Demora Programada (Hrs)</td>
+                  <td className="td-machinery-label">Reservas (Hrs)</td>
+                  <td className="td-machinery-label">Perdida Operacional (Hrs)</td>
+                  <td className="td-machinery-label">Horometro</td>
                   {workFront
                     .sort((a, b) => a.id - b.id)
                     .map((wf) => {
                       return (
                         <>
-                          <td className="td-total-label"></td>
+                          <td className="td-machinery-label">{wf.name}</td>
                         </>
                       )
                     })}
                 </tr>
-              </>
-            )}
-          </tbody>
-        </table>
-        <table border={1}>
-          <tbody>
-            <tr>
-              <td className="td-machinery-label">EQUIPO (NOMBRE)</td>
-              <td className="td-machinery-label">PATENTE</td>
-              <td className="td-machinery-label">N° Equipos oferta</td>
-              <td className="td-machinery-label">N° Equipos Acreditados</td>
-              <td className="td-machinery-label">N° Equipos en Obra</td>
-              <td className="td-machinery-label">Operativos (Hrs)</td>
-              <td className="td-machinery-label">Mantención Correctiva (Hrs)</td>
-              <td className="td-machinery-label">Mantención Preventiva (Hrs)</td>
-              <td className="td-machinery-label">Fuera de Servicio (Hrs)</td>
-              <td className="td-machinery-label">En espera (Hrs)</td>
-              <td className="td-machinery-label">Sin Operador (hrs)</td>
-              <td className="td-machinery-label">Horometro Inicial</td>
-              <td className="td-machinery-label">Horometro Final</td>
-              {workFront
-                .sort((a, b) => a.id - b.id)
-                .map((wf) => {
-                  return (
-                    <>
-                      <td className="td-machinery-label">{wf.name}</td>
-                    </>
-                  )
-                })}
-            </tr>
-            {equipmentList.length > 0 && (
-              <>
-                {equipmentList.map((data) => {
-                  const selectedEquipmentPlate = equipmentPlateList.find((equipPlate) => {
-                    return equipPlate.equipment === data.equipment
-                  })
-                  if (selectedEquipmentPlate) {
-                    const selectedEquipment = equipment.find((eq) => {
-                      return eq.id === selectedEquipmentPlate.equipment
-                    })
+                {machineryList.length > 0 && (
+                  <>
+                    {machineryList.map((data) => {
+                      const selectedAsarco = asarcoMachineryList.find((asarco) => {
+                        return asarco.machinery === data.machinery
+                      })
+                      if (selectedAsarco) {
+                        const selectedMachinery = machinery.find((mac) => {
+                          return mac.id === selectedAsarco.machinery
+                        })
 
-                    const selectedPlate = selectedEquipment.plate.find((plate) => {
-                      return plate.id === selectedEquipmentPlate.equipmentPlate
-                    })
+                        const selectedPlate = selectedMachinery.plate.find((plate) => {
+                          return plate.id === selectedAsarco.machineryPlate
+                        })
 
-                    return (
-                      <tr key={data.id}>
-                        <td className="">{selectedEquipment.name ?? ''}</td>
-                        <td className="">{selectedPlate.label ?? ''}</td>
-                        <td className="">{data.actions.equipmentOfferedNumber}</td>
-                        <td className="">{data.actions.equipmentCertifiedNumber}</td>
-                        <td className="">{data.actions.equipmentWorkNumber}</td>
-                        <td className="">{selectedEquipmentPlate.equipmentEffectiveTime || 0}</td>
-                        <td className="">
-                          {selectedEquipmentPlate.equipmentCorrectiveMaintenance}
-                        </td>
-                        <td className="">
-                          {selectedEquipmentPlate.equipmentPreventiveMaintenance}
-                        </td>
-                        <td className="">{selectedEquipmentPlate.equipmentOutOfService}</td>
-                        <td className="">{selectedEquipmentPlate.equipmentWaiting}</td>
-                        <td className="">{selectedEquipmentPlate.equipmentNoOperator}</td>
-                        <td className="">{selectedEquipmentPlate.equipmentInitialHorometer}</td>
-                        <td className="">{selectedEquipmentPlate.equipmentFinalHorometer}</td>
-                        {workFront
-                          .sort((a, b) => a.id - b.id)
-                          .map((wf) => {
-                            const selectedDotation = equipmentWorkForceList.find((dot) => {
-                              return dot.equipmentWorkForce === wf.id
-                            })
+                        return (
+                          <tr key={data.id}>
+                            <td className="">{selectedMachinery.name ?? ''}</td>
+                            <td className="">{selectedPlate.label ?? ''}</td>
+                            <td className="">{data.actions.machineryOfferedNumber}</td>
+                            <td className="">{data.actions.machineryCertifiedNumber}</td>
+                            <td className="">{data.actions.machineryWorkNumber}</td>
+                            <td className="">{selectedAsarco.asarcoMachineryEffectiveTime || 0}</td>
+                            <td className="">
+                              {selectedAsarco.asarcoMachineryUnscheduleMaintenance}
+                            </td>
+                            <td className="">
+                              {selectedAsarco.asarcoMachineryScheduleMaintenance}
+                            </td>
+                            <td className="">{selectedAsarco.asarcoMachineryUnscheduleDelay}</td>
+                            <td className="">{selectedAsarco.asarcoMachineryScheduleDelay}</td>
+                            <td className="">{selectedAsarco.asarcoMachineryReserves}</td>
+                            <td className="">{selectedAsarco.asarcoMachineryOpperationalLoss}</td>
+                            <td className="">{selectedAsarco.asarcoMachineryHorometer}</td>
+                            {workFront
+                              .sort((a, b) => a.id - b.id)
+                              .map((wf) => {
+                                const selectedDotation = machineryWorkForceList.find((dot) => {
+                                  return dot.machineryWorkForce === wf.id
+                                })
 
-                            return (
-                              <>
-                                <td className="">
-                                  {selectedDotation?.equipmentWorkFrontQuantity || ''}
-                                </td>
-                              </>
-                            )
-                          })}
-                      </tr>
-                    )
-                  }
-                })}
+                                return (
+                                  <>
+                                    <td className="">
+                                      {selectedDotation?.machineryWorkFrontQuantity || ''}
+                                    </td>
+                                  </>
+                                )
+                              })}
+                          </tr>
+                        )
+                      }
+                    })}
+                    <tr>
+                      <td className="td-total-label">Total</td>
+                      <td className="td-total-label"></td>
+                      <td className="td-total-label">{totalMacOffered}</td>
+                      <td className="td-total-label">{totalMacCertified}</td>
+                      <td className="td-total-label">{totalMacWork}</td>
+                      <td className="td-total-label">{totalMacEffectiveTime}</td>
+                      <td className="td-total-label">{totalMacUnscheduleMaintenance}</td>
+                      <td className="td-total-label">{totalMacScheduleMaintenance}</td>
+                      <td className="td-total-label">{totalMacUnscheduleDelay}</td>
+                      <td className="td-total-label">{totalMacScheduleDelay}</td>
+                      <td className="td-total-label">{totalMacReserves}</td>
+                      <td className="td-total-label">{totalMacOpperationalLoss}</td>
+                      <td className="td-total-label">{totalMacHorometer}</td>
+                      {workFront
+                        .sort((a, b) => a.id - b.id)
+                        .map((wf) => {
+                          return (
+                            <>
+                              <td className="td-total-label"></td>
+                            </>
+                          )
+                        })}
+                    </tr>
+                  </>
+                )}
+              </tbody>
+            </table>
+          </>
+        )}
+        {equipmentPlateList.length > 0 && (
+          <>
+            <table border={1}>
+              <tbody>
                 <tr>
-                  <td className="td-total-label">Total</td>
-                  <td className="td-total-label"></td>
-                  <td className="td-total-label">{totalEquipOffered}</td>
-                  <td className="td-total-label">{totalEquipCertified}</td>
-                  <td className="td-total-label">{totalEquipWork}</td>
-                  <td className="td-total-label">{totalEquipEffectiveTime}</td>
-                  <td className="td-total-label">{totalEquipCorrectiveMaintenance}</td>
-                  <td className="td-total-label">{totalEquipPreventiveMaintenance}</td>
-                  <td className="td-total-label">{totalEquipOutOfService}</td>
-                  <td className="td-total-label">{totalEquipWaiting}</td>
-                  <td className="td-total-label">{totalEquipNoOperator}</td>
-                  <td className="td-total-label">{totalEquipInitialHorometer}</td>
-                  <td className="td-total-label">{totalEquipFinalHorometer}</td>
+                  <td className="td-machinery-label">EQUIPO (NOMBRE)</td>
+                  <td className="td-machinery-label">PATENTE</td>
+                  <td className="td-machinery-label">N° Equipos oferta</td>
+                  <td className="td-machinery-label">N° Equipos Acreditados</td>
+                  <td className="td-machinery-label">N° Equipos en Obra</td>
+                  <td className="td-machinery-label">Operativos (Hrs)</td>
+                  <td className="td-machinery-label">Mantención Correctiva (Hrs)</td>
+                  <td className="td-machinery-label">Mantención Preventiva (Hrs)</td>
+                  <td className="td-machinery-label">Fuera de Servicio (Hrs)</td>
+                  <td className="td-machinery-label">En espera (Hrs)</td>
+                  <td className="td-machinery-label">Sin Operador (hrs)</td>
+                  <td className="td-machinery-label">Horometro Inicial</td>
+                  <td className="td-machinery-label">Horometro Final</td>
                   {workFront
                     .sort((a, b) => a.id - b.id)
                     .map((wf) => {
                       return (
                         <>
-                          <td className="td-total-label"></td>
+                          <td className="td-machinery-label">{wf.name}</td>
                         </>
                       )
                     })}
                 </tr>
-              </>
-            )}
-          </tbody>
-        </table>
-        <table border={1}>
-          <tbody>
-            <tr>
-              <td className="td-machinery-label">VEHICULOS MENORES (NOMBRE)</td>
-              <td className="td-machinery-label">PATENTE</td>
-              <td className="td-machinery-label">N° Vehículos oferta</td>
-              <td className="td-machinery-label">N° Vehículos Acreditados</td>
-              <td className="td-machinery-label">N° Vehículos en Obra</td>
-              <td className="td-machinery-label">Operativos (Hrs)</td>
-              <td className="td-machinery-label">Mantención Correctiva (Hrs)</td>
-              <td className="td-machinery-label">Mantención Preventiva (Hrs)</td>
-              <td className="td-machinery-label">Fuera de Servicio (Hrs)</td>
-              <td className="td-machinery-label">En espera (Hrs)</td>
-              <td className="td-machinery-label">Sin Operador (hrs)</td>
-              <td className="td-machinery-label">Horometro Inicial</td>
-              <td className="td-machinery-label">Horometro Final</td>
-            </tr>
-            {vehicleList.length > 0 && (
-              <>
-                {vehicleList.map((data) => {
-                  const selectedVehiclePlate = vehiclePlateList.find((vehPlate) => {
-                    return vehPlate.vehicle === data.vehicle
-                  })
-                  if (selectedVehiclePlate) {
-                    const selectedVehicle = vehicles.find((veh) => {
-                      return veh.id === selectedVehiclePlate.vehicle
-                    })
+                {equipmentList.length > 0 && (
+                  <>
+                    {equipmentList.map((data) => {
+                      const selectedEquipmentPlate = equipmentPlateList.find((equipPlate) => {
+                        return equipPlate.equipment === data.equipment
+                      })
+                      if (selectedEquipmentPlate) {
+                        const selectedEquipment = equipment.find((eq) => {
+                          return eq.id === selectedEquipmentPlate.equipment
+                        })
 
-                    const selectedPlate = selectedVehicle.plate.find((plate) => {
-                      return plate.id === selectedVehiclePlate.vehiclePlate
-                    })
+                        const selectedPlate = selectedEquipment.plate.find((plate) => {
+                          return plate.id === selectedEquipmentPlate.equipmentPlate
+                        })
 
-                    return (
-                      <tr key={data.id}>
-                        <td className="">{selectedVehicle.name ?? ''}</td>
-                        <td className="">{selectedPlate.label ?? ''}</td>
-                        <td className="">{data.actions.vehicleOfferedNumber}</td>
-                        <td className="">{data.actions.vehicleCertifiedNumber}</td>
-                        <td className="">{data.actions.vehicleWorkNumber}</td>
-                        <td className="">{selectedVehiclePlate.vehicleEffectiveTime || 0}</td>
-                        <td className="">{selectedVehiclePlate.vehicleCorrectiveMaintenance}</td>
-                        <td className="">{selectedVehiclePlate.vehiclePreventiveMaintenance}</td>
-                        <td className="">{selectedVehiclePlate.vehicleOutOfService}</td>
-                        <td className="">{selectedVehiclePlate.vehicleWaiting}</td>
-                        <td className="">{selectedVehiclePlate.vehicleNoOperator}</td>
-                        <td className="">{selectedVehiclePlate.vehicleInitialHorometer}</td>
-                        <td className="">{selectedVehiclePlate.vehicleFinalHorometer}</td>
-                      </tr>
-                    )
-                  }
-                })}
+                        return (
+                          <tr key={data.id}>
+                            <td className="">{selectedEquipment.name ?? ''}</td>
+                            <td className="">{selectedPlate.label ?? ''}</td>
+                            <td className="">{data.actions.equipmentOfferedNumber}</td>
+                            <td className="">{data.actions.equipmentCertifiedNumber}</td>
+                            <td className="">{data.actions.equipmentWorkNumber}</td>
+                            <td className="">
+                              {selectedEquipmentPlate.equipmentEffectiveTime || 0}
+                            </td>
+                            <td className="">
+                              {selectedEquipmentPlate.equipmentCorrectiveMaintenance}
+                            </td>
+                            <td className="">
+                              {selectedEquipmentPlate.equipmentPreventiveMaintenance}
+                            </td>
+                            <td className="">{selectedEquipmentPlate.equipmentOutOfService}</td>
+                            <td className="">{selectedEquipmentPlate.equipmentWaiting}</td>
+                            <td className="">{selectedEquipmentPlate.equipmentNoOperator}</td>
+                            <td className="">{selectedEquipmentPlate.equipmentInitialHorometer}</td>
+                            <td className="">{selectedEquipmentPlate.equipmentFinalHorometer}</td>
+                            {workFront
+                              .sort((a, b) => a.id - b.id)
+                              .map((wf) => {
+                                const selectedDotation = equipmentWorkForceList.find((dot) => {
+                                  return dot.equipmentWorkForce === wf.id
+                                })
+
+                                return (
+                                  <>
+                                    <td className="">
+                                      {selectedDotation?.equipmentWorkFrontQuantity || ''}
+                                    </td>
+                                  </>
+                                )
+                              })}
+                          </tr>
+                        )
+                      }
+                    })}
+                    <tr>
+                      <td className="td-total-label">Total</td>
+                      <td className="td-total-label"></td>
+                      <td className="td-total-label">{totalEquipOffered}</td>
+                      <td className="td-total-label">{totalEquipCertified}</td>
+                      <td className="td-total-label">{totalEquipWork}</td>
+                      <td className="td-total-label">{totalEquipEffectiveTime}</td>
+                      <td className="td-total-label">{totalEquipCorrectiveMaintenance}</td>
+                      <td className="td-total-label">{totalEquipPreventiveMaintenance}</td>
+                      <td className="td-total-label">{totalEquipOutOfService}</td>
+                      <td className="td-total-label">{totalEquipWaiting}</td>
+                      <td className="td-total-label">{totalEquipNoOperator}</td>
+                      <td className="td-total-label">{totalEquipInitialHorometer}</td>
+                      <td className="td-total-label">{totalEquipFinalHorometer}</td>
+                      {workFront
+                        .sort((a, b) => a.id - b.id)
+                        .map((wf) => {
+                          return (
+                            <>
+                              <td className="td-total-label"></td>
+                            </>
+                          )
+                        })}
+                    </tr>
+                  </>
+                )}
+              </tbody>
+            </table>
+          </>
+        )}
+
+        {vehiclePlateList.length > 0 && (
+          <>
+            <table border={1}>
+              <tbody>
                 <tr>
-                  <td className="td-total-label">Total</td>
-                  <td className="td-total-label"></td>
-                  <td className="td-total-label">{totalVehicOffered}</td>
-                  <td className="td-total-label">{totalVehicCertified}</td>
-                  <td className="td-total-label">{totalVehicWork}</td>
-                  <td className="td-total-label">{totalVehicEffectiveTime}</td>
-                  <td className="td-total-label">{totalVehicCorrectiveMaintenance}</td>
-                  <td className="td-total-label">{totalVehicPreventiveMaintenance}</td>
-                  <td className="td-total-label">{totalVehicOutOfService}</td>
-                  <td className="td-total-label">{totalVehicWaiting}</td>
-                  <td className="td-total-label">{totalVehicNoOperator}</td>
-                  <td className="td-total-label">{totalVehicInitialHorometer}</td>
-                  <td className="td-total-label">{totalVehicFinalHorometer}</td>
+                  <td className="td-machinery-label">VEHICULOS MENORES (NOMBRE)</td>
+                  <td className="td-machinery-label">PATENTE</td>
+                  <td className="td-machinery-label">N° Vehículos oferta</td>
+                  <td className="td-machinery-label">N° Vehículos Acreditados</td>
+                  <td className="td-machinery-label">N° Vehículos en Obra</td>
+                  <td className="td-machinery-label">Operativos (Hrs)</td>
+                  <td className="td-machinery-label">Mantención Correctiva (Hrs)</td>
+                  <td className="td-machinery-label">Mantención Preventiva (Hrs)</td>
+                  <td className="td-machinery-label">Fuera de Servicio (Hrs)</td>
+                  <td className="td-machinery-label">En espera (Hrs)</td>
+                  <td className="td-machinery-label">Sin Operador (hrs)</td>
+                  <td className="td-machinery-label">Horometro Inicial</td>
+                  <td className="td-machinery-label">Horometro Final</td>
                 </tr>
-              </>
-            )}
-          </tbody>
-        </table>
+                {vehicleList.length > 0 && (
+                  <>
+                    {vehicleList.map((data) => {
+                      const selectedVehiclePlate = vehiclePlateList.find((vehPlate) => {
+                        return vehPlate.vehicle === data.vehicle
+                      })
+                      if (selectedVehiclePlate) {
+                        const selectedVehicle = vehicles.find((veh) => {
+                          return veh.id === selectedVehiclePlate.vehicle
+                        })
+
+                        const selectedPlate = selectedVehicle.plate.find((plate) => {
+                          return plate.id === selectedVehiclePlate.vehiclePlate
+                        })
+
+                        return (
+                          <tr key={data.id}>
+                            <td className="">{selectedVehicle.name ?? ''}</td>
+                            <td className="">{selectedPlate.label ?? ''}</td>
+                            <td className="">{data.actions.vehicleOfferedNumber}</td>
+                            <td className="">{data.actions.vehicleCertifiedNumber}</td>
+                            <td className="">{data.actions.vehicleWorkNumber}</td>
+                            <td className="">{selectedVehiclePlate.vehicleEffectiveTime || 0}</td>
+                            <td className="">
+                              {selectedVehiclePlate.vehicleCorrectiveMaintenance}
+                            </td>
+                            <td className="">
+                              {selectedVehiclePlate.vehiclePreventiveMaintenance}
+                            </td>
+                            <td className="">{selectedVehiclePlate.vehicleOutOfService}</td>
+                            <td className="">{selectedVehiclePlate.vehicleWaiting}</td>
+                            <td className="">{selectedVehiclePlate.vehicleNoOperator}</td>
+                            <td className="">{selectedVehiclePlate.vehicleInitialHorometer}</td>
+                            <td className="">{selectedVehiclePlate.vehicleFinalHorometer}</td>
+                          </tr>
+                        )
+                      }
+                    })}
+                    <tr>
+                      <td className="td-total-label">Total</td>
+                      <td className="td-total-label"></td>
+                      <td className="td-total-label">{totalVehicOffered}</td>
+                      <td className="td-total-label">{totalVehicCertified}</td>
+                      <td className="td-total-label">{totalVehicWork}</td>
+                      <td className="td-total-label">{totalVehicEffectiveTime}</td>
+                      <td className="td-total-label">{totalVehicCorrectiveMaintenance}</td>
+                      <td className="td-total-label">{totalVehicPreventiveMaintenance}</td>
+                      <td className="td-total-label">{totalVehicOutOfService}</td>
+                      <td className="td-total-label">{totalVehicWaiting}</td>
+                      <td className="td-total-label">{totalVehicNoOperator}</td>
+                      <td className="td-total-label">{totalVehicInitialHorometer}</td>
+                      <td className="td-total-label">{totalVehicFinalHorometer}</td>
+                    </tr>
+                  </>
+                )}
+              </tbody>
+            </table>
+          </>
+        )}
+
         <table border={1}>
           <tbody>
             <tr>
@@ -887,47 +911,52 @@ const Pdf = (props) => {
             )}
           </tbody>
         </table>
-        <table border={1}>
-          <tbody>
-            <tr>
-              <td className="td-label" style={{ textAlign: 'center' }}>
-                CONTROL DE AGUAS INDUSTRIALES UTILIZAD
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table border={1}>
-          <tbody>
-            <tr>
-              <td className="td-machinery-label">VEHICULOS MENORES (NOMBRE)</td>
-              <td className="td-machinery-label">PATENTE</td>
-              <td className="td-machinery-label">Nombre Cachimba</td>
-              <td className="td-machinery-label">m3</td>
-            </tr>
-            {aljibeList.length > 0 && (
-              <>
-                {aljibeList.map((al) => {
-                  const selectedAljibe = aljibe.find((alji) => {
-                    return alji.aljibe === aljibe.id
-                  })
+        {aljibeList.length > 0 && (
+          <>
+            <table border={1}>
+              <tbody>
+                <tr>
+                  <td className="td-label" style={{ textAlign: 'center' }}>
+                    CONTROL DE AGUAS INDUSTRIALES UTILIZAD
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table border={1}>
+              <tbody>
+                <tr>
+                  <td className="td-machinery-label">VEHICULOS MENORES (NOMBRE)</td>
+                  <td className="td-machinery-label">PATENTE</td>
+                  <td className="td-machinery-label">Nombre Cachimba</td>
+                  <td className="td-machinery-label">m3</td>
+                </tr>
+                {aljibeList.length > 0 && (
+                  <>
+                    {aljibeList.map((al) => {
+                      const selectedAljibe = aljibe.find((alji) => {
+                        return alji.aljibe === aljibe.id
+                      })
 
-                  const selectedPlate = selectedAljibe.plate.find((plate) => {
-                    return plate.id.toString() == al.aljibePlate.toString()
-                  })
+                      const selectedPlate = selectedAljibe.plate.find((plate) => {
+                        return plate.id.toString() == al.aljibePlate.toString()
+                      })
 
-                  return (
-                    <tr key={al.id}>
-                      <td className="">{selectedAljibe?.name}</td>
-                      <td className="">{selectedPlate?.label}</td>
-                      <td className="">{al.aljibeCachimbaName}</td>
-                      <td className="">{al.aljibeM3}</td>
-                    </tr>
-                  )
-                })}
-              </>
-            )}
-          </tbody>
-        </table>
+                      return (
+                        <tr key={al.id}>
+                          <td className="">{selectedAljibe?.name}</td>
+                          <td className="">{selectedPlate?.label}</td>
+                          <td className="">{al.aljibeCachimbaName}</td>
+                          <td className="">{al.aljibeM3}</td>
+                        </tr>
+                      )
+                    })}
+                  </>
+                )}
+              </tbody>
+            </table>
+          </>
+        )}
+
         <table border={1}>
           <tbody>
             <tr>
