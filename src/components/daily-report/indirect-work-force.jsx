@@ -20,7 +20,7 @@ import { useLocation } from 'react-router-dom'
 
 const IndirectWorkForce = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     indirectWorkForce: undefined,
@@ -76,7 +76,7 @@ const IndirectWorkForce = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeIndirectWorkForceData(indirectWorkForceList)
+    if (!isViewMode) storeIndirectWorkForceData(indirectWorkForceList)
   }, [indirectWorkForceList])
 
   const deleteIndirectWorkForce = (id) => {
@@ -88,7 +88,7 @@ const IndirectWorkForce = () => {
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
           {error && (
             <CToast
@@ -255,14 +255,16 @@ const IndirectWorkForce = () => {
                     <CTableDataCell>{item.workNumber}</CTableDataCell>
                     <CTableDataCell>{item.hh}</CTableDataCell>
                     <CTableDataCell>
-                      <CButton
-                        className="btn-project-action"
-                        onClick={() => {
-                          deleteIndirectWorkForce(item.id)
-                        }}
-                      >
-                        eliminar
-                      </CButton>
+                      {!isViewMode && (
+                        <CButton
+                          className="btn-project-action"
+                          onClick={() => {
+                            deleteIndirectWorkForce(item.id)
+                          }}
+                        >
+                          eliminar
+                        </CButton>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )

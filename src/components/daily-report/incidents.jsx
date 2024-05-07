@@ -22,7 +22,7 @@ const NON_CONFORMITY_LIMIT = 200
 
 const Incidents = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     incident: '',
@@ -72,12 +72,12 @@ const Incidents = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeIncident(incidentList)
+    if (!isViewMode) storeIncident(incidentList)
   }, [incidentList])
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
           {' '}
           {error && (
@@ -145,14 +145,16 @@ const Incidents = () => {
                     <CTableDataCell>{item.incident}</CTableDataCell>
                     <CTableDataCell>{item.nonConformity}</CTableDataCell>
                     <CTableDataCell>
-                      <CButton
-                        className="btn-project-action"
-                        onClick={() => {
-                          deleteIncident(item.id)
-                        }}
-                      >
-                        eliminar
-                      </CButton>
+                      {!isViewMode && (
+                        <CButton
+                          className="btn-project-action"
+                          onClick={() => {
+                            deleteIncident(item.id)
+                          }}
+                        >
+                          eliminar
+                        </CButton>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )

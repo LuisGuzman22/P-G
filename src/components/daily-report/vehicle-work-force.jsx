@@ -15,8 +15,12 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const VehicleWorkForce = () => {
+  const currentLocation = useLocation().pathname
+  const isViewMode = currentLocation.includes('/view')
+
   const initialState = {
     vehicleWorkForce: undefined,
     vehicleWorkForceFront1: undefined,
@@ -233,14 +237,16 @@ const VehicleWorkForce = () => {
                     <CTableDataCell>{item.actions.vehicleWorkForceFront6}</CTableDataCell>
                     <CTableDataCell>{item.actions.vehicleWorkForceFront7}</CTableDataCell>
                     <CTableDataCell>
-                      <CButton
-                        className="btn-project-action"
-                        onClick={() => {
-                          deleteVehicleWorkForce(item.id)
-                        }}
-                      >
-                        eliminar
-                      </CButton>
+                      {!isViewMode && (
+                        <CButton
+                          className="btn-project-action"
+                          onClick={() => {
+                            deleteVehicleWorkForce(item.id)
+                          }}
+                        >
+                          eliminar
+                        </CButton>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )

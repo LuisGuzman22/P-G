@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom'
 
 const Machinery = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     machinery: undefined,
@@ -88,7 +88,7 @@ const Machinery = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeMachinery(machineryList)
+    if (!isViewMode) storeMachinery(machineryList)
   }, [machineryList])
 
   useEffect(() => {
@@ -116,7 +116,7 @@ const Machinery = () => {
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
           {' '}
           {error && (
@@ -231,14 +231,16 @@ const Machinery = () => {
                   <CTableDataCell>{item.actions.machineryCertifiedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.machineryWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      className="btn-project-action"
-                      onClick={() => {
-                        deleteMachinery(item.id)
-                      }}
-                    >
-                      eliminar
-                    </CButton>
+                    {!isViewMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          deleteMachinery(item.id)
+                        }}
+                      >
+                        eliminar
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )

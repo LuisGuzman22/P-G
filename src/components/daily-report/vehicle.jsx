@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom'
 
 const Vehicle = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     vehicle: undefined,
@@ -86,7 +86,7 @@ const Vehicle = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeVehicle(vehicleList)
+    if (!isViewMode) storeVehicle(vehicleList)
   }, [vehicleList])
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const Vehicle = () => {
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
           {error && (
             <CToast
@@ -227,14 +227,16 @@ const Vehicle = () => {
                   <CTableDataCell>{item.actions.vehicleCertifiedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.vehicleWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      className="btn-project-action"
-                      onClick={() => {
-                        deletevehicle(item.id)
-                      }}
-                    >
-                      eliminar
-                    </CButton>
+                    {!isViewMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          deletevehicle(item.id)
+                        }}
+                      >
+                        eliminar
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )

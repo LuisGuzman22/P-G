@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom'
 
 const MachineryWorkForce = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     machineryWorkForce: undefined,
@@ -98,12 +98,12 @@ const MachineryWorkForce = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeMachineryWorkForce(machineryWorkForceList)
+    if (!isViewMode) storeMachineryWorkForce(machineryWorkForceList)
   }, [machineryWorkForceList])
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
           {' '}
           {error && (
@@ -248,14 +248,16 @@ const MachineryWorkForce = () => {
                         <span key={item.id}>{item.machineryWorkForceObservation}</span>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <CButton
-                          className="btn-project-action"
-                          onClick={() => {
-                            deleteMachineryWorkForce(item.id)
-                          }}
-                        >
-                          eliminar
-                        </CButton>
+                        {!isViewMode && (
+                          <CButton
+                            className="btn-project-action"
+                            onClick={() => {
+                              deleteMachineryWorkForce(item.id)
+                            }}
+                          >
+                            eliminar
+                          </CButton>
+                        )}
                       </CTableDataCell>
                     </CTableRow>
                   )

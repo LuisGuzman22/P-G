@@ -43,9 +43,9 @@ import Loading from './loading'
 import { Chart } from 'react-google-charts'
 import { toPng } from 'html-to-image'
 
-const DailyReportCollapse = () => {
+const DailyReportViewCollapse = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
   const navigate = useNavigate()
   const columnChartElement = useRef(null)
   const pieChartElement = useRef(null)
@@ -139,7 +139,7 @@ const DailyReportCollapse = () => {
   const { registerData } = useRegisterDailyReport()
 
   const registerDailyReport = () => {
-    if (isEditMode) {
+    if (isViewMode) {
       setVisibleSendDailyReportModal(!visibleSendDailyReportModal)
     } else {
       registerData()
@@ -406,4 +406,4 @@ const DailyReportCollapse = () => {
   )
 }
 
-export default DailyReportCollapse
+export default DailyReportViewCollapse

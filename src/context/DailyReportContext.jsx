@@ -322,6 +322,8 @@ export const DailyReportProvider = ({ children }) => {
     }
   }
 
+  const [graphList, setGraphList] = useState()
+
   const storeTotalIndirectWorkForce = async (data) => {
     setTotalIndirectWorkForce(data)
   }
@@ -482,6 +484,10 @@ export const DailyReportProvider = ({ children }) => {
     setAljibeList(newData)
   }
 
+  const storeGraphs = async (data) => {
+    setGraphList(data)
+  }
+
   const clearContext = () => {
     setCompany({
       dailyReportContractManagerName: undefined,
@@ -545,6 +551,7 @@ export const DailyReportProvider = ({ children }) => {
     setAljibeList([])
     setComment('')
     setVehiclePlateList([])
+    setGraphList(undefined)
   }
 
   return (
@@ -610,6 +617,8 @@ export const DailyReportProvider = ({ children }) => {
         removealjibe,
         aljibeList,
         clearContext,
+        storeGraphs,
+        graphList,
       }}
     >
       {children}

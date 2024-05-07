@@ -16,8 +16,12 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useLocation } from 'react-router-dom'
 
 const IndirectDotationWorkForce = () => {
+  const currentLocation = useLocation().pathname
+  const isViewMode = currentLocation.includes('/view')
+
   const initialState = {
     indirectWorkForce: undefined,
     indirectDotationWorkForceObservation: undefined,
@@ -340,14 +344,16 @@ const IndirectDotationWorkForce = () => {
                     <CTableDataCell>{item.actions.indirectWorkForceFront6 ?? 0}</CTableDataCell>
                     <CTableDataCell>{item.actions.indirectWorkForceFront7 ?? 0}</CTableDataCell>
                     <CTableDataCell>
-                      <CButton
-                        className="btn-project-action"
-                        onClick={() => {
-                          deleteIndirectDotationWorkForce(item.id)
-                        }}
-                      >
-                        eliminar
-                      </CButton>
+                      {!isViewMode && (
+                        <CButton
+                          className="btn-project-action"
+                          onClick={() => {
+                            deleteIndirectDotationWorkForce(item.id)
+                          }}
+                        >
+                          eliminar
+                        </CButton>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )

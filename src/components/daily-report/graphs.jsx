@@ -1,13 +1,25 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react/prop-types */
+import React, { useEffect, useRef, useState } from 'react'
 import { CChart } from '@coreui/react-chartjs'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { getStyle } from '@coreui/utils'
+import { Chart } from 'react-google-charts'
+import { toPng } from 'html-to-image'
 
-const Graphs = () => {
+const Graphs = (props) => {
+  const columnChartElement = useRef(null)
+  const pieChartElement = useRef(null)
+
+  const { isOpen } = props
+
   const {
     asarcoMachineryList: asarcoMachineryListContext,
     totalDirectWorkForce: totalDirectWorkForceContext,
+    storeGraphs,
   } = useRegisterDailyReportCompany()
+
+  const [imagenColumnChart, setImagenColumnChart] = useState()
+  const [imagenPieChart, setImagenPieChart] = useState()
 
   const [effectiveTime, setEffectiveTime] = useState(0)
   const [scheduleMaintimeTime, setScheduleMaintimeTime] = useState(0)
@@ -50,125 +62,82 @@ const Graphs = () => {
     setTotalWorkDotation(totalDirectWorkForceContext.directSubtotalWorkNumber)
   }, [totalDirectWorkForceContext])
 
+  useEffect(() => {
+    if (isOpen) {
+      setImagenColumnChart()
+      setImagenPieChart()
+    }
+  }, [isOpen])
+
+  const convertAsarcoChart = () => {
+    setImagenPieChart()
+    toPng(pieChartElement.current, { cacheBust: false })
+      .then((dataUrl) => {
+        setImagenPieChart(dataUrl)
+        // storeGraphs({ asarcoChart: dataUrl })
+      })
+      .catch((err) => {
+        // console.log('ERROR', err)
+      })
+  }
+
+  const convertDotationChart = () => {
+    setImagenColumnChart()
+    toPng(columnChartElement.current, { cacheBust: false })
+      .then((dataUrl) => {
+        setImagenColumnChart(dataUrl)
+        // storeGraphs({ dotationChart: dataUrl })
+      })
+      .catch((err) => {})
+  }
+
+  useEffect(() => {
+    storeGraphs({ dotationChart: imagenColumnChart, asarcoChart: imagenPieChart })
+  }, [imagenColumnChart, imagenPieChart])
+  useEffect(() => {
+    if (isOpen) {
+      if (imagenColumnChart === 'data:,' || imagenColumnChart === undefined) {
+        // VALIDAR EL CAMBIO DE DATOS DEL GRAFICO POST CREACION
+        convertDotationChart()
+      }
+    }
+  }, [isOpen, imagenColumnChart])
+
+  useEffect(() => {
+    if (isOpen) {
+      if (imagenPieChart === 'data:,' || imagenPieChart === undefined) {
+        convertAsarcoChart()
+      }
+    }
+  }, [isOpen, imagenPieChart])
+
+  const barGraphData = [
+    ['Dotación', 'Dotación', { role: 'style' }],
+    ['Dotación Planeada Directos Total', totalPlanedDotation, '#b87333'], // RGB value
+    ['Dotación Directos Obra Total', totalWorkDotation, 'silver'], // English color name
+  ]
+  const piechartData = [
+    ['Task', 'Hours per Day'],
+    ['Tiempo Efectivo (Hrs)', effectiveTime],
+    ['Mantención Programada (Hrs)', scheduleMaintimeTime],
+    ['Demora Programada (Hrs)', scheduleDelay],
+    ['Perdida Operacional (Hrs)', opperationalLoss],
+    ['Mantención No Programada (Hrs)', unscheduleMaintimeTime],
+    ['Demora No Programada (Hrs)', unscheduleDelay],
+    ['Reservas (Hrs)', reserves],
+  ]
+
   return (
     <div className="work-force-report">
       {asarcoMachineryListContext && asarcoMachineryListContext.length > 0 && (
-        <>
-          <CChart
-            type="pie"
-            data={{
-              labels: [
-                'Tiempo Efectivo (Hrs)',
-                'Mantención Programada (Hrs)',
-                'Demora Programada (Hrs)',
-                'Perdida Operacional (Hrs)',
-                'Mantención No Programada (Hrs)',
-                'Demora No Programada (Hrs)',
-                'Reservas (Hrs)',
-              ],
-              datasets: [
-                {
-                  labels: [
-                    'Tiempo Efectivo (Hrs)',
-                    'Mantención Programada (Hrs)',
-                    'Demora Programada (Hrs)',
-                    'Perdida Operacional (Hrs)',
-                    'Mantención No Programada (Hrs)',
-                    'Demora No Programada (Hrs)',
-                    'Reservas (Hrs)',
-                  ],
-                  hoverOffset: 4,
-                  backgroundColor: [
-                    '#41B883',
-                    '#E46651',
-                    '#00D8FF',
-                    '#DD1B16',
-                    '#F41203',
-                    '#002312',
-                    '#A12942',
-                  ],
-                  data: [
-                    // 1, 2, 3, 4, 5, 6, 7,
-                    ((effectiveTime / totals) * 100).toFixed(2),
-                    ((scheduleMaintimeTime / totals) * 100).toFixed(2),
-                    ((scheduleDelay / totals) * 100).toFixed(2),
-                    ((opperationalLoss / totals) * 100).toFixed(2),
-                    ((unscheduleMaintimeTime / totals) * 100).toFixed(2),
-                    ((unscheduleDelay / totals) * 100).toFixed(2),
-                    ((reserves / totals) * 100).toFixed(2),
-                  ],
-                },
-              ],
-            }}
-            options={{
-              showAllTooltips: true,
-              interaction: {
-                intersect: false,
-                mode: 'index',
-              },
-              plugins: {
-                title: {
-                  display: true,
-                  // text: (ctx) => 'Tooltip position mode: ' + ctx.chart.options.plugins.tooltip.position,
-                },
-              },
-
-              //   plugins: {
-              //     legend: {
-              //       labels: {
-              //         color: getStyle('--cui-body-color'),
-              //       },
-              //     },
-              //   },
-            }}
-          />
-        </>
+        <div ref={pieChartElement}>
+          <Chart chartType="PieChart" data={piechartData} width={'100%'} height={'300px'} />
+        </div>
       )}
-      {totalDirectWorkForceContext && (
-        <>
-          <CChart
-            type="bar"
-            data={{
-              labels: ['Dotación Planeada Directos Total', 'Dotación Directos Obra Total'],
-              datasets: [
-                {
-                  label: 'Dotación Directa Total',
-                  backgroundColor: ['rgba(0,103,102,255)', 'rgba(239,132,60,255)'],
-                  borderColor: 'rgb(255, 99, 132)',
-                  data: [totalPlanedDotation, totalWorkDotation],
-                },
-              ],
-            }}
-            labels="Dotación Directa Total"
-            options={{
-              plugins: {
-                legend: {
-                  labels: {
-                    color: getStyle('--cui-body-color'),
-                  },
-                },
-              },
-              scales: {
-                x: {
-                  grid: {
-                    color: getStyle('--cui-border-color-translucent'),
-                  },
-                  ticks: {
-                    color: getStyle('--cui-body-color'),
-                  },
-                },
-                y: {
-                  grid: {
-                    color: getStyle('--cui-border-color-translucent'),
-                  },
-                  ticks: {
-                    color: getStyle('--cui-body-color'),
-                  },
-                },
-              },
-            }}
-          />
-        </>
+      {totalDirectWorkForceContext.directSubtotalOfferedNumber && (
+        <div ref={columnChartElement}>
+          <Chart chartType="ColumnChart" width="100%" height="300px" data={barGraphData} />
+        </div>
       )}
     </div>
   )

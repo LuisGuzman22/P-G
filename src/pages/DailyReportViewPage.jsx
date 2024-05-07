@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import DailyReportEditCollapse from 'src/components/DailyReportEditCollapse'
+import DailyReportViewCollapse from 'src/components/DailyReportViewCollapse'
 import { CCard, CCardBody, CCardText } from '@coreui/react'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useNavigate } from 'react-router-dom'
@@ -21,7 +21,7 @@ const DailyReportPage = () => {
       <CCard>
         <CCardBody>
           <CCardText>
-            <DailyReportEditCollapse />
+            <DailyReportViewCollapse />
           </CCardText>
         </CCardBody>
       </CCard>

@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom'
 
 const DirectWorkForce = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialStatee = {
     directWorkForce: undefined,
@@ -85,12 +85,12 @@ const DirectWorkForce = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeDirectWorkForce(directWorkForceList)
+    if (!isViewMode) storeDirectWorkForce(directWorkForceList)
   }, [directWorkForceList])
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
           {error && (
             <CToast
@@ -242,14 +242,16 @@ const DirectWorkForce = () => {
                   <CTableDataCell>{item.workNumber}</CTableDataCell>
                   <CTableDataCell>{item.hh}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      className="btn-project-action"
-                      onClick={() => {
-                        deleteDirectWorkForce(item.id)
-                      }}
-                    >
-                      eliminar
-                    </CButton>
+                    {!isViewMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          deleteDirectWorkForce(item.id)
+                        }}
+                      >
+                        eliminar
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -257,14 +259,16 @@ const DirectWorkForce = () => {
           </CTableBody>
         </CTable>
       )}
-      <CButton
-        className="btn-project-action"
-        onClick={() => {
-          registerDirectWorkForce()
-        }}
-      >
-        Registrar
-      </CButton>
+      {!isViewMode && (
+        <CButton
+          className="btn-project-action"
+          onClick={() => {
+            registerDirectWorkForce()
+          }}
+        >
+          Registrar
+        </CButton>
+      )}
     </div>
   )
 }

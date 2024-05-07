@@ -66,7 +66,7 @@ const Dashboard = () => {
                                   className="dashboard-button"
                                   onClick={() => {
                                     localStorage.setItem('daily_report', report.id)
-                                    redirectTo('/informe-diario/edit')
+                                    redirectTo('/informe-diario/view')
                                   }}
                                 >
                                   {report.id}

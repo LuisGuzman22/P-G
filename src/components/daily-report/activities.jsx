@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom'
 // FALTA VALIDAR
 const Activities = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     activityFrontWork: undefined,
@@ -144,14 +144,13 @@ const Activities = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeActivity(activityList)
+    if (!isViewMode) storeActivity(activityList)
   }, [activityList])
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
-          {' '}
           {error && (
             <CToast
               autohide={true}
@@ -393,14 +392,16 @@ const Activities = () => {
                   <CTableDataCell>{item.activityHoursSpendShift}</CTableDataCell>
                   <CTableDataCell>{item.activityHoursAccumulated}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      className="btn-project-action"
-                      onClick={() => {
-                        deleteActivity(item.id)
-                      }}
-                    >
-                      eliminar
-                    </CButton>
+                    {!isViewMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          deleteActivity(item.id)
+                        }}
+                      >
+                        eliminar
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )

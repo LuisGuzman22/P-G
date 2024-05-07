@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom'
 
 const IndustrialWaterControl = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     aljibe: undefined,
@@ -121,7 +121,7 @@ const IndustrialWaterControl = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storealjibe(aljibeList)
+    if (!isViewMode) storealjibe(aljibeList)
   }, [aljibeList])
 
   useEffect(() => {
@@ -152,7 +152,7 @@ const IndustrialWaterControl = () => {
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
           {' '}
           {error && (
@@ -343,14 +343,16 @@ const IndustrialWaterControl = () => {
                   <CTableDataCell>{item.aljibeCertifiedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.aljibeWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      className="btn-project-action"
-                      onClick={() => {
-                        deletealjibe(item.id)
-                      }}
-                    >
-                      eliminar
-                    </CButton>
+                    {!isViewMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          deletealjibe(item.id)
+                        }}
+                      >
+                        eliminar
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )

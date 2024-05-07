@@ -61,6 +61,7 @@ const useRegisterDailyReportCompany = () => {
     removealjibe,
     aljibeList,
     clearContext,
+    storeGraphs,
   } = useContext(DailyReportContext)
 
   return {
@@ -122,6 +123,7 @@ const useRegisterDailyReportCompany = () => {
     removealjibe,
     aljibeList,
     clearContext,
+    storeGraphs,
   }
 }
 

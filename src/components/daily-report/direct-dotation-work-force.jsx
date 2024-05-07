@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom'
 
 const DirectDotationWorkForce = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     directWorkFront: undefined,
@@ -102,12 +102,12 @@ const DirectDotationWorkForce = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeDirectDotationWorkForceData(directDotationWorkForceList)
+    if (!isViewMode) storeDirectDotationWorkForceData(directDotationWorkForceList)
   }, [directDotationWorkForceList])
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
           {error && (
             <CToast
@@ -253,14 +253,16 @@ const DirectDotationWorkForce = () => {
                         <span key={item.id}>{item.directDotationWorkForceObservation}</span>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <CButton
-                          className="btn-project-action"
-                          onClick={() => {
-                            deletedirectDotationWorkForce(item.id)
-                          }}
-                        >
-                          eliminar
-                        </CButton>
+                        {!isViewMode && (
+                          <CButton
+                            className="btn-project-action"
+                            onClick={() => {
+                              deletedirectDotationWorkForce(item.id)
+                            }}
+                          >
+                            eliminar
+                          </CButton>
+                        )}
                       </CTableDataCell>
                     </CTableRow>
                   )

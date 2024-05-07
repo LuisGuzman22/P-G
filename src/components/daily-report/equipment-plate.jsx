@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom'
 
 const EquipmentPlate = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     equipment: undefined,
@@ -111,12 +111,12 @@ const EquipmentPlate = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeEquipmentPlate(equipmentPlateList)
+    if (!isViewMode) storeEquipmentPlate(equipmentPlateList)
   }, [equipmentPlateList])
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
           {error && (
             <CToast
@@ -334,14 +334,16 @@ const EquipmentPlate = () => {
                   <CTableDataCell>{item.equipmentInitialHorometer}</CTableDataCell>
                   <CTableDataCell>{item.equipmentFinalHorometer}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      className="btn-project-action"
-                      onClick={() => {
-                        deleteEquipment(item.id)
-                      }}
-                    >
-                      eliminar
-                    </CButton>
+                    {!isViewMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          deleteEquipment(item.id)
+                        }}
+                      >
+                        eliminar
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )

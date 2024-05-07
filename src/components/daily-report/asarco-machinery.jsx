@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom'
 
 const AsarcoMachinery = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     machinery: undefined,
@@ -123,7 +123,7 @@ const AsarcoMachinery = () => {
   }
 
   useEffect(() => {
-    if (!isEditMode) storeAsarcoMachinery(asarcoMachineryList)
+    if (!isViewMode) storeAsarcoMachinery(asarcoMachineryList)
   }, [asarcoMachineryList])
 
   useEffect(() => {
@@ -171,9 +171,8 @@ const AsarcoMachinery = () => {
 
   return (
     <div className="work-force-report">
-      {!isEditMode && (
+      {!isViewMode && (
         <>
-          {' '}
           {error && (
             <CToast
               autohide={true}
@@ -410,14 +409,16 @@ const AsarcoMachinery = () => {
                   <CTableDataCell>{item.asarcoMachineryOpperationalLoss}</CTableDataCell>
                   <CTableDataCell>{item.asarcoMachineryScheduleDelay}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      className="btn-project-action"
-                      onClick={() => {
-                        deleteAsarcoMachinery(item.id)
-                      }}
-                    >
-                      eliminar
-                    </CButton>
+                    {!isViewMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          deleteAsarcoMachinery(item.id)
+                        }}
+                      >
+                        eliminar
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )

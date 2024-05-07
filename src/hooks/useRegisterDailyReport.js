@@ -32,6 +32,7 @@ const useRegisterDailyReport = () => {
     vehiclePlateList,
     aljibeList,
     clearContext,
+    graphList,
   } = useContext(DailyReportContext)
 
   const { mutate } = useMutation({
@@ -106,6 +107,7 @@ const useRegisterDailyReport = () => {
       asarcoMachineryList, // 9
       equipmentPlateList, // 11
       aljibeList, // 16
+      graphList,
     })
     return data
   }

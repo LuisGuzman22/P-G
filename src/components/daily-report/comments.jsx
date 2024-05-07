@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 
 const Comments = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     comment: '',
@@ -20,7 +20,7 @@ const Comments = () => {
   const { storeComment, comment: commentContext } = useRegisterDailyReportCompany()
 
   useEffect(() => {
-    if (!isEditMode) storeComment(comment)
+    if (!isViewMode) storeComment(comment)
   }, [comment])
 
   return (
@@ -28,8 +28,8 @@ const Comments = () => {
       <CFormTextarea
         id="comment"
         label="Comentarios y alertas en genenral"
-        disabled={isEditMode}
-        value={isEditMode ? commentContext.comment : comment.comment}
+        disabled={isViewMode}
+        value={isViewMode ? commentContext.comment : comment.comment}
         onChange={(e) => {
           onChangeData(e)
         }}

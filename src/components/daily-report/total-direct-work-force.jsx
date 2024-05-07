@@ -17,7 +17,7 @@ import { useLocation } from 'react-router-dom'
 
 const TotalDirectWorkForce = () => {
   const currentLocation = useLocation().pathname
-  const isEditMode = currentLocation.includes('/edit')
+  const isViewMode = currentLocation.includes('/view')
 
   const initialState = {
     directSubtotalOfferedNumber: undefined,
@@ -61,7 +61,7 @@ const TotalDirectWorkForce = () => {
   }, [directAccumulatedActual])
 
   useEffect(() => {
-    if (!isEditMode) {
+    if (!isViewMode) {
       let hours = 0
       let offered = 0
       let contracted = 0
@@ -114,7 +114,7 @@ const TotalDirectWorkForce = () => {
   }, [directWorkForceListContext])
 
   useEffect(() => {
-    if (!isEditMode && total > 0) storeTotalDirectWorkForce(totalDirectWorkForce)
+    if (!isViewMode && total > 0) storeTotalDirectWorkForce(totalDirectWorkForce)
   }, [totalDirectWorkForce])
 
   return (
@@ -203,12 +203,12 @@ const TotalDirectWorkForce = () => {
                 id="directPreviusAccumulated"
                 // value={totalDirectWorkForce.directPreviusAccumulated || ''}
                 value={
-                  !isEditMode
+                  !isViewMode
                     ? totalDirectWorkForce.directPreviusAccumulated || ''
                     : directAccumulatedPrevious
                 }
                 // indirectAccumulatedPrevious
-                disabled={isEditMode}
+                disabled={isViewMode}
                 placeholder="Total"
                 text=""
                 onChange={(e) => {
