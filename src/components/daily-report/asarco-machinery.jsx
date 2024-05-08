@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react'
+import { React, useEffect, useRef, useState } from 'react'
 import {
   CButton,
   CFormInput,
@@ -18,10 +18,13 @@ import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useLocation } from 'react-router-dom'
+import { Chart } from 'react-google-charts'
+import { toPng } from 'html-to-image'
 
 const AsarcoMachinery = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const pieChartElement = useRef(null)
 
   const initialState = {
     machinery: undefined,
@@ -59,10 +62,23 @@ const AsarcoMachinery = () => {
   const [plates, setPlates] = useState()
   const [error, setError] = useState(false)
 
+  const [imagenPieChart, setImagenPieChart] = useState()
+  const [pieChartData, setPieChartData] = useState([
+    ['Task', 'Hours per Day'],
+    ['Tiempo Efectivo (Hrs)', 0],
+    ['Mantención Programada (Hrs)', 0],
+    ['Demora Programada (Hrs)', 0],
+    ['Perdida Operacional (Hrs)', 0],
+    ['Mantención No Programada (Hrs)', 0],
+    ['Demora No Programada (Hrs)', 0],
+    ['Reservas (Hrs)', 0],
+  ])
+
   const {
     storeAsarcoMachinery,
     removeAsarcoMachinery,
     asarcoMachineryList: asarcoMachineryListContext,
+    storeGraphs,
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
@@ -168,6 +184,43 @@ const AsarcoMachinery = () => {
     }
     setAsarcoMachineryTotals(asarcoMachineryTotalsCounter)
   }, [asarcoMachineryListContext])
+
+  const convertAsarcoChart = () => {
+    toPng(pieChartElement.current, { cacheBust: false })
+      .then((dataUrl) => {
+        if (dataUrl !== 'data:,') {
+          setImagenPieChart(dataUrl)
+        }
+        // storeGraphs({ asarcoChart: dataUrl })
+      })
+      .catch((err) => {
+        // console.log('ERROR', err)
+      })
+  }
+
+  useEffect(() => {
+    setPieChartData([
+      ['Task', 'Hours per Day'],
+      ['Tiempo Efectivo (Hrs)', asarcoMachineryTotals.asarcoMachineryEffectiveTime],
+      ['Mantención Programada (Hrs)', asarcoMachineryTotals.asarcoMachineryScheduleMaintenance],
+      ['Demora Programada (Hrs)', asarcoMachineryTotals.asarcoMachineryScheduleDelay],
+      ['Perdida Operacional (Hrs)', asarcoMachineryTotals.asarcoMachineryOpperationalLoss],
+      [
+        'Mantención No Programada (Hrs)',
+        asarcoMachineryTotals.asarcoMachineryUnscheduleMaintenance,
+      ],
+      ['Demora No Programada (Hrs)', asarcoMachineryTotals.asarcoMachineryUnscheduleDelay],
+      ['Reservas (Hrs)', asarcoMachineryTotals.asarcoMachineryReserves],
+    ])
+  }, [asarcoMachineryTotals])
+
+  useEffect(() => {
+    convertAsarcoChart()
+  }, [pieChartData])
+
+  useEffect(() => {
+    storeGraphs({ name: 'asarcoChart', value: imagenPieChart })
+  }, [imagenPieChart])
 
   return (
     <div className="work-force-report">
@@ -446,6 +499,10 @@ const AsarcoMachinery = () => {
           </CTableBody>
         </CTable>
       )}
+
+      <div ref={pieChartElement}>
+        <Chart chartType="PieChart" data={pieChartData} width={'100%'} height={'300px'} />
+      </div>
     </div>
   )
 }

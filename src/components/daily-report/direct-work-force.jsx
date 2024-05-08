@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   CForm,
   CFormInput,
@@ -18,10 +18,13 @@ import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useLocation } from 'react-router-dom'
+import { Chart } from 'react-google-charts'
+import { toPng } from 'html-to-image'
 
 const DirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const columnChartElement = useRef(null)
 
   const initialStatee = {
     directWorkForce: undefined,
@@ -39,11 +42,20 @@ const DirectWorkForce = () => {
   const [directWorkForce, setDirectWorkForce] = useState(initialStatee)
   const [directWorkForceList, setDirectWorkForceList] = useState([])
   const [error, setError] = useState(false)
+  const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
+  const [totalWorkDotation, setTotalWorkDotation] = useState(0)
+  const [imagenColumnChart, setImagenColumnChart] = useState()
+  const [barGraphData, setBarGraphData] = useState([
+    ['Dotación', 'Dotación', { role: 'style' }],
+    ['Dotación Planeada Directos Total', 0, '#b87333'], // RGB value
+    ['Dotación Directos Obra Total', 0, 'silver'], // English color name
+  ])
 
   const {
     storeDirectWorkForce,
     removeDirectWorkForce,
     directWorkForceList: directWorkForceListContext,
+    storeGraphs,
   } = useRegisterDailyReportCompany()
 
   const onChangeData = (e) => {
@@ -87,6 +99,45 @@ const DirectWorkForce = () => {
   useEffect(() => {
     if (!isViewMode) storeDirectWorkForce(directWorkForceList)
   }, [directWorkForceList])
+
+  useEffect(() => {
+    let offered = 0
+    let worked = 0
+    directWorkForceListContext.map((data) => {
+      offered = offered + Number(data.offeredNumber)
+      worked = worked + Number(data.workNumber)
+    })
+    setTotalPlanedDotation(offered)
+    setTotalWorkDotation(worked)
+    // convertDotationChart()
+  }, [directWorkForceListContext])
+
+  const convertDotationChart = () => {
+    toPng(columnChartElement.current, { cacheBust: false })
+      .then((dataUrl) => {
+        if (dataUrl !== 'data:,') {
+          setImagenColumnChart(dataUrl)
+        }
+        // storeGraphs({ dotationChart: dataUrl })
+      })
+      .catch((err) => {})
+  }
+
+  useEffect(() => {
+    setBarGraphData([
+      ['Dotación', 'Dotación', { role: 'style' }],
+      ['Dotación Planeada Directos Total', totalPlanedDotation, '#b87333'], // RGB value
+      ['Dotación Directos Obra Total', totalWorkDotation, 'silver'], // English color name
+    ])
+  }, [totalPlanedDotation, totalWorkDotation])
+
+  useEffect(() => {
+    convertDotationChart()
+  }, [barGraphData])
+
+  useEffect(() => {
+    storeGraphs({ name: 'dotationChart', value: imagenColumnChart })
+  }, [imagenColumnChart])
 
   return (
     <div className="work-force-report">
@@ -213,6 +264,16 @@ const DirectWorkForce = () => {
           </CTable>
         </>
       )}
+      {!isViewMode && (
+        <CButton
+          className="btn-project-action"
+          onClick={() => {
+            registerDirectWorkForce()
+          }}
+        >
+          Registrar
+        </CButton>
+      )}
       {directWorkForceListContext.length > 0 && directWorkForceListContext[0].directWorkForce && (
         <CTable className="resume-table">
           <CTableHead>
@@ -259,16 +320,10 @@ const DirectWorkForce = () => {
           </CTableBody>
         </CTable>
       )}
-      {!isViewMode && (
-        <CButton
-          className="btn-project-action"
-          onClick={() => {
-            registerDirectWorkForce()
-          }}
-        >
-          Registrar
-        </CButton>
-      )}
+
+      <div ref={columnChartElement}>
+        <Chart chartType="ColumnChart" width="100%" height="400px" data={barGraphData} />
+      </div>
     </div>
   )
 }
