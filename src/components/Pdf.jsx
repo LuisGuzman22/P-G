@@ -44,8 +44,9 @@ const Pdf = (props) => {
     directDotationWorkForceList,
     machineryWorkForceList,
     equipmentWorkForceList,
-    imagenColumnChart,
-    imagenPieChart,
+    // imagenColumnChart,
+    // imagenPieChart,
+    graphList,
   } = props
   const {
     indirectPersonal,
@@ -60,7 +61,7 @@ const Pdf = (props) => {
     indirect_staff_shift,
     shifts,
   } = basicQuery
-  // console.log('props', props)
+  // console.log('props', props.graphList)
 
   const [selectedWeather, setSelectedWeather] = useState('')
   const [selectedDirectStaffShift, setSelectedDirectStaffShift] = useState('')
@@ -272,6 +273,16 @@ const Pdf = (props) => {
     setTotalVehicInitialHorometer(vehicInitialHorometer)
     setTotalVehicFinalHorometer(vehicFinalHorometer)
   }, [vehicleList])
+
+  const [imagenColumnChart, setImagenColumnChart] = useState('')
+  const [imagenPieChart, setImagenPieChart] = useState('')
+
+  useEffect(() => {
+    const dotationChart = graphList.find((graph) => graph.name === 'dotationChart')
+    const asarcoChart = graphList.find((graph) => graph.name === 'asarcoChart')
+    setImagenColumnChart(dotationChart.value)
+    setImagenPieChart(asarcoChart.value)
+  }, [graphList])
 
   const element = (
     <html>
@@ -1006,16 +1017,10 @@ const Pdf = (props) => {
           <tbody>
             <tr>
               <td className="" style={{ textAlign: 'center' }}>
-                <img
-                  src={imagenColumnChart !== 'ERROR' ? imagenColumnChart : not_found}
-                  style={{ width: '50%', textAlign: 'center' }}
-                />
+                <img src={imagenColumnChart} style={{ width: '100%', textAlign: 'center' }} />
               </td>
               <td className="" style={{ textAlign: 'center' }}>
-                <img
-                  src={imagenPieChart !== 'ERROR' ? imagenPieChart : not_found}
-                  style={{ width: '50%', textAlign: 'center' }}
-                />
+                <img src={imagenPieChart} style={{ width: '100%', textAlign: 'center' }} />
               </td>
             </tr>
           </tbody>

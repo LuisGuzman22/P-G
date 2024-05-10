@@ -219,7 +219,7 @@ const AsarcoMachinery = () => {
   }, [pieChartData])
 
   useEffect(() => {
-    storeGraphs({ name: 'asarcoChart', value: imagenPieChart })
+    if (!isViewMode) storeGraphs({ name: 'asarcoChart', value: imagenPieChart })
   }, [imagenPieChart])
 
   return (

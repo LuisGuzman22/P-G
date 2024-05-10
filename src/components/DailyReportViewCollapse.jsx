@@ -70,6 +70,7 @@ const DailyReportViewCollapse = () => {
     directDotationWorkForceList,
     machineryWorkForceList,
     equipmentWorkForceList,
+    graphList,
   } = useRegisterDailyReportCompany()
   const [imagenColumnChart, setImagenColumnChart] = useState()
   const [imagenPieChart, setImagenPieChart] = useState()
@@ -195,9 +196,9 @@ const DailyReportViewCollapse = () => {
       )}
       <div>
         <div>
-          <CRow>
-            <div ref={columnChartElement}>
-              {/* <CRow>
+          {/* <CRow> */}
+          {/* <div ref={columnChartElement}> */}
+          {/* <CRow>
                 <CCol>Dotación Planeada Directos Total</CCol>
                 <CCol>{totalPlanedDotation}</CCol>
               </CRow>
@@ -205,16 +206,16 @@ const DailyReportViewCollapse = () => {
                 <CCol>Dotación Directos Obra Total</CCol>
                 <CCol>{totalWorkDotation}</CCol>
               </CRow> */}
-              {showDotationChart && (
-                <Chart chartType="ColumnChart" width="100%" height="200px" data={barGraphData} />
-              )}
-            </div>
-            <div ref={pieChartElement}>
-              {showAsarcoChart && (
-                <Chart chartType="PieChart" data={piechartData} width={'100%'} height={'300px'} />
-              )}
-            </div>
-          </CRow>
+          {/* {showDotationChart && ( */}
+          {/* <Chart chartType="ColumnChart" width="100%" height="200px" data={barGraphData} /> */}
+          {/* )} */}
+          {/* </div> */}
+          {/* <div ref={pieChartElement}> */}
+          {/* {showAsarcoChart && ( */}
+          {/* <Chart chartType="PieChart" data={piechartData} width={'100%'} height={'300px'} /> */}
+          {/* )} */}
+          {/* </div> */}
+          {/* </CRow> */}
         </div>
         <PDFDownloadLink
           document={
@@ -240,6 +241,7 @@ const DailyReportViewCollapse = () => {
               equipmentWorkForceList={equipmentWorkForceList}
               imagenColumnChart={imagenColumnChart}
               imagenPieChart={imagenPieChart}
+              graphList={graphList}
             />
           }
           fileName="Reporte 1.pdf"

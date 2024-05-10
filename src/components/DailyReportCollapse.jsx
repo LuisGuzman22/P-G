@@ -56,9 +56,9 @@ const DailyReportCollapse = () => {
       <CAccordion className="dailyReport-accordion" activeItemKey={1}>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             1) Empresa
           </CAccordionHeader>
@@ -68,9 +68,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={2}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             2) Fuerza de trabajo personal indirecto
           </CAccordionHeader>
@@ -80,9 +80,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={3}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             3) Fuerza laboral total personal indirecto
           </CAccordionHeader>
@@ -92,9 +92,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={4}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             4) Fuerza laboral contratista personal directo
           </CAccordionHeader>
@@ -104,9 +104,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={5}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             5) Fuerza laboral total personal directo
           </CAccordionHeader>
@@ -116,9 +116,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={6}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             6) Dotación por frente de trabajo personal directo
           </CAccordionHeader>
@@ -128,9 +128,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={7}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             7) Maquinarias contratistas
           </CAccordionHeader>
@@ -140,9 +140,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={8}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             8) Maquinarias por frente de trabajo
           </CAccordionHeader>
@@ -152,9 +152,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={9}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             9) ASARCO Maquinarias
           </CAccordionHeader>
@@ -164,9 +164,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={10}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             10) Equipos contratistas
           </CAccordionHeader>
@@ -176,9 +176,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={11}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             11) Equipos con patentes contratistas
           </CAccordionHeader>
@@ -188,9 +188,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={12}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             12) Equipos por frente de trabajo
           </CAccordionHeader>
@@ -200,9 +200,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={13}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             13) Vehículos menores contratistas
           </CAccordionHeader>
@@ -212,9 +212,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={14}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             14) Vehículos con patente menores contratistas
           </CAccordionHeader>
@@ -224,9 +224,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={15}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             15) Descripción de actividades desarrolladas
           </CAccordionHeader>
@@ -236,9 +236,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={16}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             16) Control de aguas industriales utilizadas
           </CAccordionHeader>
@@ -248,9 +248,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={17}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             17) Comentarios y alertas en general
           </CAccordionHeader>
@@ -260,9 +260,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={18}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             18) Registro fotográfico diario
           </CAccordionHeader>
@@ -270,7 +270,7 @@ const DailyReportCollapse = () => {
             <PhotoRecord />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={19}>
+        {/* <CAccordionItem itemKey={19}>
           <CAccordionHeader
             onClick={() => {
               setChartOpen(!chartOpen)
@@ -281,12 +281,12 @@ const DailyReportCollapse = () => {
           <CAccordionBody className="dailyReport-accordion">
             <Graphs isOpen={chartOpen} />
           </CAccordionBody>
-        </CAccordionItem>
+        </CAccordionItem> */}
         <CAccordionItem itemKey={20}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             20) Incidentes, lesiones o eventos
           </CAccordionHeader>
@@ -296,9 +296,9 @@ const DailyReportCollapse = () => {
         </CAccordionItem>
         <CAccordionItem itemKey={21}>
           <CAccordionHeader
-            onClick={() => {
-              setChartOpen(false)
-            }}
+          // onClick={() => {
+          //              setChartOpen(false)
+          //            }}
           >
             21) Firmas
           </CAccordionHeader>

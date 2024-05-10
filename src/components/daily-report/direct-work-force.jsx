@@ -136,7 +136,7 @@ const DirectWorkForce = () => {
   }, [barGraphData])
 
   useEffect(() => {
-    storeGraphs({ name: 'dotationChart', value: imagenColumnChart })
+    if (!isViewMode) storeGraphs({ name: 'dotationChart', value: imagenColumnChart })
   }, [imagenColumnChart])
 
   return (
@@ -321,7 +321,7 @@ const DirectWorkForce = () => {
         </CTable>
       )}
 
-      <div ref={columnChartElement}>
+      <div ref={columnChartElement} style={{ width: '100%' }}>
         <Chart chartType="ColumnChart" width="100%" height="400px" data={barGraphData} />
       </div>
     </div>

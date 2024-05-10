@@ -44,6 +44,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedAljibeList = selectedReport?.aljibeList
   const selectedComment = selectedReport?.comment
   const selectedVehiclePlateList = selectedReport?.vehiclePlateList
+  const selectedGraphList = selectedReport?.graphList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -324,6 +325,10 @@ export const DailyReportProvider = ({ children }) => {
 
   const [graphList, setGraphList] = useState([])
 
+  useEffect(() => {
+    setGraphList(selectedGraphList || [])
+  }, [selectedGraphList])
+
   const storeTotalIndirectWorkForce = async (data) => {
     setTotalIndirectWorkForce(data)
   }
@@ -490,22 +495,15 @@ export const DailyReportProvider = ({ children }) => {
       setGraphList([data])
     } else {
       const graphFilter = graphList?.filter((item) => item.name !== data.name)
-      console.log('graphFilter', graphFilter)
       if (graphFilter.length === 0) {
-        console.log('quedo sin ninguno')
         setGraphList([data])
       } else {
-        console.log('tenia unos')
         graph = graphFilter
         graph.push(data)
         setGraphList(graph)
       }
     }
   }
-
-  useEffect(() => {
-    console.log('graphList', graphList)
-  }, [graphList])
 
   const clearContext = () => {
     setCompany({

@@ -262,7 +262,7 @@ const Activities = () => {
                 <CTableHeaderCell scope="col">Cantidad Real Turno</CTableHeaderCell>
                 <CTableHeaderCell scope="col">% Avance Acumulado</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Unidad</CTableHeaderCell>
-                <CTableHeaderCell scope="col">HH Gastada Anterior</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH Gastada Acumulada Anterior</CTableHeaderCell>
                 <CTableHeaderCell scope="col">HH Gastada Real Turno</CTableHeaderCell>
               </CTableRow>
               <CTableRow>
@@ -366,7 +366,7 @@ const Activities = () => {
               <CTableHeaderCell scope="col">Cantidad Real Turno</CTableHeaderCell>
               <CTableHeaderCell scope="col">% Avance Acumulado</CTableHeaderCell>
               <CTableHeaderCell scope="col">Unidad</CTableHeaderCell>
-              <CTableHeaderCell scope="col">HH Gastada Anterior</CTableHeaderCell>
+              <CTableHeaderCell scope="col">HH Gastada Acumulada Anterior</CTableHeaderCell>
               <CTableHeaderCell scope="col">HH Gastada Real Turno</CTableHeaderCell>
               <CTableHeaderCell scope="col">HH Gastada Acumulada</CTableHeaderCell>
               <CTableHeaderCell scope="col"></CTableHeaderCell>
