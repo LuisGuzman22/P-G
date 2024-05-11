@@ -21,6 +21,8 @@ import { useLocation } from 'react-router-dom'
 const IndirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
+  console.log('isCreatingMode', isCreatingMode)
 
   const initialState = {
     indirectWorkForce: undefined,
@@ -85,6 +87,24 @@ const IndirectWorkForce = () => {
 
     removeIndirectWorkForce(id)
   }
+
+  const editIndirectWorkForce = (id) => {
+    const selectedIndirectWorkForce = indirectWorkForceListContext.find((item) => item.id === id)
+    setIndirectWorkForce({
+      indirectWorkForce: selectedIndirectWorkForce.indirectWorkForce,
+      contractAdministratorOfferedNumber: selectedIndirectWorkForce.offeredNumber,
+      contractAdministratorContractedNumber: selectedIndirectWorkForce.contractedNumber,
+      contractAdministratorCertified: selectedIndirectWorkForce.certified,
+      contractAdministratorBreakNumber: selectedIndirectWorkForce.breakNumber,
+      contractAdministratorWorkNumber: selectedIndirectWorkForce.workNumber,
+      contractAdministratorHHNumber: selectedIndirectWorkForce.hh,
+    })
+    deleteIndirectWorkForce(id)
+  }
+
+  useEffect(() => {
+    console.log('indirectWorkForce', indirectWorkForce)
+  }, [indirectWorkForce])
 
   return (
     <div className="work-force-report">
@@ -238,6 +258,7 @@ const IndirectWorkForce = () => {
                 <CTableHeaderCell scope="col">N° Obra</CTableHeaderCell>
                 <CTableHeaderCell scope="col">HH (Turno)</CTableHeaderCell>
                 <CTableHeaderCell scope="col"></CTableHeaderCell>
+                <CTableHeaderCell scope="col"></CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -255,7 +276,7 @@ const IndirectWorkForce = () => {
                     <CTableDataCell>{item.workNumber}</CTableDataCell>
                     <CTableDataCell>{item.hh}</CTableDataCell>
                     <CTableDataCell>
-                      {!isViewMode && (
+                      {isCreatingMode && (
                         <CButton
                           className="btn-project-action"
                           onClick={() => {
@@ -263,6 +284,18 @@ const IndirectWorkForce = () => {
                           }}
                         >
                           eliminar
+                        </CButton>
+                      )}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {isCreatingMode && (
+                        <CButton
+                          className="btn-project-action"
+                          onClick={() => {
+                            editIndirectWorkForce(item.id)
+                          }}
+                        >
+                          Editar
                         </CButton>
                       )}
                     </CTableDataCell>

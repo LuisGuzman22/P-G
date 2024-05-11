@@ -5,6 +5,10 @@ import {
   CAccordionHeader,
   CAccordionItem,
   CButton,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
   CToast,
   CToastBody,
 } from '@coreui/react'
@@ -31,11 +35,14 @@ import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
 import { useNavigate } from 'react-router-dom'
 import Loading from './loading'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const DailyReportCollapse = () => {
   const { registerData, loading, error, success, clearData } = useRegisterDailyReport()
   const navigate = useNavigate()
-  const [chartOpen, setChartOpen] = useState(false)
+  const { getData } = useGetCachedQueryData()
+  const reportsQuery = getData('reports')
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     localStorage.removeItem('daily_report')
@@ -51,226 +58,162 @@ const DailyReportCollapse = () => {
     if (success) navigate(`/dashboard`)
   }, [success])
 
+  useEffect(() => {
+    setVisible(reportsQuery.length > 0)
+  }, [reportsQuery])
+
+  const handleLoadData = () => {
+    setVisible(false)
+    localStorage.setItem('daily_report', 3)
+  }
+
   return (
     <div className="dailyReport">
-      <CAccordion className="dailyReport-accordion" activeItemKey={1}>
-        <CAccordionItem itemKey={1}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
+      <CModal
+        scrollable
+        visible={visible}
+        onClose={() => setVisible(false)}
+        aria-labelledby="ScrollingLongContentExampleLabel2"
+        size="xl"
+        className="project-creation-modal"
+      >
+        <CModalHeader>
+          {/* <CModalTitle id="ScrollingLongContentExampleLabel2">Categorías</CModalTitle> */}
+        </CModalHeader>
+        <CModalBody>¿Quieres pre cargar los datos del informe diario del día anterior?</CModalBody>
+        <CModalFooter>
+          <CButton
+            color="danger"
+            onClick={() => {
+              setVisible(false)
+            }}
           >
-            1) Empresa
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <CompanyReport />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={2}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
+            No cargar
+          </CButton>
+          <CButton
+            color="primary"
+            onClick={() => {
+              handleLoadData()
+            }}
           >
-            2) Fuerza de trabajo personal indirecto
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <IndirectWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={3}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            3) Fuerza laboral total personal indirecto
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <TotalIndirectWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={4}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            4) Fuerza laboral contratista personal directo
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <DirectWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={5}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            5) Fuerza laboral total personal directo
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <TotalDirectWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={6}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            6) Dotación por frente de trabajo personal directo
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <DirectDotationWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={7}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            7) Maquinarias contratistas
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Machinery />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={8}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            8) Maquinarias por frente de trabajo
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <MachineryWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={9}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            9) ASARCO Maquinarias
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <AsarcoMachinery />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={10}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            10) Equipos contratistas
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <EquipmentMachinery />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={11}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            11) Equipos con patentes contratistas
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <EquipmentPlate />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={12}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            12) Equipos por frente de trabajo
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <EquipmentWorkForce />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={13}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            13) Vehículos menores contratistas
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Vehicle />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={14}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            14) Vehículos con patente menores contratistas
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <VehiclePlate />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={15}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            15) Descripción de actividades desarrolladas
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Activities />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={16}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            16) Control de aguas industriales utilizadas
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <IndustrialWaterControl />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={17}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            17) Comentarios y alertas en general
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Comments />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={18}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
-          >
-            18) Registro fotográfico diario
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <PhotoRecord />
-          </CAccordionBody>
-        </CAccordionItem>
-        {/* <CAccordionItem itemKey={19}>
+            Cargar
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      {!visible && (
+        <>
+          <CAccordion className="dailyReport-accordion" activeItemKey={1}>
+            <CAccordionItem itemKey={1}>
+              <CAccordionHeader>1) Empresa</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <CompanyReport />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={2}>
+              <CAccordionHeader>2) Fuerza de trabajo personal indirecto</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <IndirectWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={3}>
+              <CAccordionHeader>3) Fuerza laboral total personal indirecto</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <TotalIndirectWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={4}>
+              <CAccordionHeader>4) Fuerza laboral contratista personal directo</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <DirectWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={5}>
+              <CAccordionHeader>5) Fuerza laboral total personal directo</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <TotalDirectWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={6}>
+              <CAccordionHeader>
+                6) Dotación por frente de trabajo personal directo
+              </CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <DirectDotationWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={7}>
+              <CAccordionHeader>7) Maquinarias contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Machinery />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={8}>
+              <CAccordionHeader>8) Maquinarias por frente de trabajo</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <MachineryWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={9}>
+              <CAccordionHeader>9) ASARCO Maquinarias</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <AsarcoMachinery />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={10}>
+              <CAccordionHeader>10) Equipos contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <EquipmentMachinery />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={11}>
+              <CAccordionHeader>11) Equipos con patentes contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <EquipmentPlate />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={12}>
+              <CAccordionHeader>12) Equipos por frente de trabajo</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <EquipmentWorkForce />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={13}>
+              <CAccordionHeader>13) Vehículos menores contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Vehicle />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={14}>
+              <CAccordionHeader>14) Vehículos con patente menores contratistas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <VehiclePlate />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={15}>
+              <CAccordionHeader>15) Descripción de actividades desarrolladas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Activities />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={16}>
+              <CAccordionHeader>16) Control de aguas industriales utilizadas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <IndustrialWaterControl />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={17}>
+              <CAccordionHeader>17) Comentarios y alertas en general</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Comments />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={18}>
+              <CAccordionHeader>18) Registro fotográfico diario</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <PhotoRecord />
+              </CAccordionBody>
+            </CAccordionItem>
+            {/* <CAccordionItem itemKey={19}>
           <CAccordionHeader
             onClick={() => {
               setChartOpen(!chartOpen)
@@ -282,54 +225,44 @@ const DailyReportCollapse = () => {
             <Graphs isOpen={chartOpen} />
           </CAccordionBody>
         </CAccordionItem> */}
-        <CAccordionItem itemKey={20}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
+            <CAccordionItem itemKey={20}>
+              <CAccordionHeader>20) Incidentes, lesiones o eventos</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <Incidents />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={21}>
+              <CAccordionHeader>21) Firmas</CAccordionHeader>
+              <CAccordionBody className="dailyReport-accordion">
+                <></>
+              </CAccordionBody>
+            </CAccordionItem>
+          </CAccordion>
+          <CToast
+            autohide={true}
+            visible={showError}
+            color="danger"
+            onClose={() => {
+              setShowError(false)
+            }}
+            className="text-white align-items-center"
           >
-            20) Incidentes, lesiones o eventos
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <Incidents />
-          </CAccordionBody>
-        </CAccordionItem>
-        <CAccordionItem itemKey={21}>
-          <CAccordionHeader
-          // onClick={() => {
-          //              setChartOpen(false)
-          //            }}
+            <div className="d-flex">
+              <CToastBody>{error}</CToastBody>
+            </div>
+          </CToast>
+          {loading && <Loading />}
+          <CButton
+            className="btn-project-action"
+            disabled={loading}
+            onClick={() => {
+              registerData()
+            }}
           >
-            21) Firmas
-          </CAccordionHeader>
-          <CAccordionBody className="dailyReport-accordion">
-            <></>
-          </CAccordionBody>
-        </CAccordionItem>
-      </CAccordion>
-      <CToast
-        autohide={true}
-        visible={showError}
-        color="danger"
-        onClose={() => {
-          setShowError(false)
-        }}
-        className="text-white align-items-center"
-      >
-        <div className="d-flex">
-          <CToastBody>{error}</CToastBody>
-        </div>
-      </CToast>
-      {loading && <Loading />}
-      <CButton
-        className="btn-project-action"
-        disabled={loading}
-        onClick={() => {
-          registerData()
-        }}
-      >
-        Registrar informe diario
-      </CButton>
+            Registrar informe diario
+          </CButton>
+        </>
+      )}
     </div>
   )
 }

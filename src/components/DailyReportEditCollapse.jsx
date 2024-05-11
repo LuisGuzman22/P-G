@@ -43,9 +43,12 @@ import Loading from './loading'
 import { Chart } from 'react-google-charts'
 import { toPng } from 'html-to-image'
 
-const DailyReportViewCollapse = () => {
+const DailyReportEditCollapse = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const navigate = useNavigate()
+  const columnChartElement = useRef(null)
+  const pieChartElement = useRef(null)
 
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
   const {
@@ -69,6 +72,8 @@ const DailyReportViewCollapse = () => {
     equipmentWorkForceList,
     graphList,
   } = useRegisterDailyReportCompany()
+  const [imagenColumnChart, setImagenColumnChart] = useState()
+  const [imagenPieChart, setImagenPieChart] = useState()
 
   const [isLoading, setIsloading] = useState(false)
   const [blobData, setBlobData] = useState()
@@ -76,8 +81,15 @@ const DailyReportViewCollapse = () => {
 
   const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
   const [totalWorkDotation, setTotalWorkDotation] = useState(0)
+  const [showDotationChart, setShowDotationChart] = useState(false)
 
   useEffect(() => {
+    if (
+      totalDirectWorkForce.directSubtotalOfferedNumber &&
+      totalDirectWorkForce.directSubtotalWorkNumber
+    ) {
+      setShowDotationChart(true)
+    }
     setTotalPlanedDotation(totalDirectWorkForce.directSubtotalOfferedNumber)
     setTotalWorkDotation(totalDirectWorkForce.directSubtotalWorkNumber)
   }, [totalDirectWorkForce])
@@ -135,6 +147,43 @@ const DailyReportViewCollapse = () => {
     }
   }
 
+  const barGraphData = [
+    ['Dotación', 'Dotación', { role: 'style' }],
+    ['Dotación Planeada Directos Total', totalPlanedDotation, '#b87333'], // RGB value
+    ['Dotación Directos Obra Total', totalWorkDotation, 'silver'], // English color name
+  ]
+
+  const piechartData = [
+    ['Task', 'Hours per Day'],
+    ['Tiempo Efectivo (Hrs)', effectiveTime],
+    ['Mantención Programada (Hrs)', scheduleMaintimeTime],
+    ['Demora Programada (Hrs)', scheduleDelay],
+    ['Perdida Operacional (Hrs)', opperationalLoss],
+    ['Mantención No Programada (Hrs)', unscheduleMaintimeTime],
+    ['Demora No Programada (Hrs)', unscheduleDelay],
+    ['Reservas (Hrs)', reserves],
+  ]
+
+  const convertAsarcoChart = () => {
+    setImagenPieChart()
+    toPng(pieChartElement.current, { cacheBust: false })
+      .then((dataUrl) => {
+        setImagenPieChart(dataUrl)
+      })
+      .catch((err) => {
+        // console.log('ERROR', err)
+      })
+  }
+
+  const convertDotationChart = () => {
+    setImagenColumnChart()
+    toPng(columnChartElement.current, { cacheBust: false })
+      .then((dataUrl) => {
+        setImagenColumnChart(dataUrl)
+      })
+      .catch((err) => {})
+  }
+
   return (
     <div className="dailyReport">
       {visibleSendDailyReportModal && (
@@ -146,6 +195,28 @@ const DailyReportViewCollapse = () => {
         />
       )}
       <div>
+        <div>
+          {/* <CRow> */}
+          {/* <div ref={columnChartElement}> */}
+          {/* <CRow>
+                <CCol>Dotación Planeada Directos Total</CCol>
+                <CCol>{totalPlanedDotation}</CCol>
+              </CRow>
+              <CRow>
+                <CCol>Dotación Directos Obra Total</CCol>
+                <CCol>{totalWorkDotation}</CCol>
+              </CRow> */}
+          {/* {showDotationChart && ( */}
+          {/* <Chart chartType="ColumnChart" width="100%" height="200px" data={barGraphData} /> */}
+          {/* )} */}
+          {/* </div> */}
+          {/* <div ref={pieChartElement}> */}
+          {/* {showAsarcoChart && ( */}
+          {/* <Chart chartType="PieChart" data={piechartData} width={'100%'} height={'300px'} /> */}
+          {/* )} */}
+          {/* </div> */}
+          {/* </CRow> */}
+        </div>
         <PDFDownloadLink
           document={
             <Pdf
@@ -168,6 +239,8 @@ const DailyReportViewCollapse = () => {
               directDotationWorkForceList={directDotationWorkForceList}
               machineryWorkForceList={machineryWorkForceList}
               equipmentWorkForceList={equipmentWorkForceList}
+              imagenColumnChart={imagenColumnChart}
+              imagenPieChart={imagenPieChart}
               graphList={graphList}
             />
           }
@@ -176,6 +249,15 @@ const DailyReportViewCollapse = () => {
           {({ blob, url, loading, error }) => {
             setIsloading(loading)
             setBlobData(blob)
+            if (showAsarcoChart)
+              if (!imagenPieChart || imagenPieChart === 'data:,') {
+                convertAsarcoChart()
+              }
+            if (showDotationChart) {
+              if (!imagenColumnChart || imagenColumnChart === 'data:,') {
+                convertDotationChart()
+              }
+            }
             setUrl(url)
             return loading ? 'Generando documento...' : 'Descargar PDF'
           }}
@@ -326,4 +408,4 @@ const DailyReportViewCollapse = () => {
   )
 }
 
-export default DailyReportViewCollapse
+export default DailyReportEditCollapse
