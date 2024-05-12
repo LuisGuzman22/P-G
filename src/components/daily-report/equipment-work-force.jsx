@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom'
 const EquipmentWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     equipmentWorkForce: undefined,
@@ -96,6 +97,31 @@ const EquipmentWorkForce = () => {
 
     removeEquipmentWorkForce(id)
   }
+
+  const editEquipmentWorkForce = (id) => {
+    const selectedEquipmentWorkForce = equipmentWorkForceListContext.find((item) => item.id === id)
+
+    if (selectedEquipmentWorkForce.equipmentSubWorkFront) {
+      setEnableSubFrontWork(true)
+    }
+    setEquipmentWorkForce({
+      equipmentWorkForce: selectedEquipmentWorkForce.equipmentWorkForce,
+      equipmentWorkForceObservation: selectedEquipmentWorkForce.equipmentWorkForceObservation,
+      equipmentSubWorkFront: selectedEquipmentWorkForce.equipmentSubWorkFront,
+      equipmentWorkFrontCharge: selectedEquipmentWorkForce.equipmentWorkFrontCharge,
+      equipmentWorkFrontQuantity: selectedEquipmentWorkForce.equipmentWorkFrontQuantity,
+    })
+    deleteEquipmentWorkForce(id)
+  }
+
+  useEffect(() => {
+    setEquipmentWorkForce({
+      ...equipmentWorkForce,
+      equipmentSubWorkFront: enableSubFrontWork
+        ? equipmentWorkForce.equipmentSubWorkFront
+        : undefined,
+    })
+  }, [enableSubFrontWork])
 
   useEffect(() => {
     if (!isViewMode) storeEquipmentWorkForce(equipmentWorkForceList)
@@ -249,7 +275,7 @@ const EquipmentWorkForce = () => {
                           <span key={item.id}>{item.equipmentWorkForceObservation}</span>
                         </CTableDataCell>
                         <CTableDataCell>
-                          {!isViewMode && (
+                          {isCreatingMode && (
                             <CButton
                               className="btn-project-action"
                               onClick={() => {
@@ -257,6 +283,18 @@ const EquipmentWorkForce = () => {
                               }}
                             >
                               eliminar
+                            </CButton>
+                          )}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          {isCreatingMode && (
+                            <CButton
+                              className="btn-project-action"
+                              onClick={() => {
+                                editEquipmentWorkForce(item.id)
+                              }}
+                            >
+                              Editar
                             </CButton>
                           )}
                         </CTableDataCell>

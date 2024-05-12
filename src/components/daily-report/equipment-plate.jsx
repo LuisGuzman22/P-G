@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom'
 const EquipmentPlate = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     equipment: undefined,
@@ -108,6 +109,29 @@ const EquipmentPlate = () => {
     const newData = equipmentPlateList.filter((item) => item.id !== id)
     setEquipmenPlatetList(newData)
     removeEquipmentPlate(id)
+  }
+
+  const editEquipment = (id) => {
+    const selectedEquipmentPlate = equipmentPlateListContext.find((item) => item.id === id)
+    const selectedEquipment = basicQuery.equipment.find(
+      (equip) => equip.id.toString() === selectedEquipmentPlate.equipment.toString(),
+    )
+
+    setPlates(selectedEquipment.plate)
+
+    setEquipmentPlate({
+      equipment: selectedEquipmentPlate.equipment,
+      equipmentEffectiveTime: selectedEquipmentPlate.equipmentEffectiveTime,
+      equipmentCorrectiveMaintenance: selectedEquipmentPlate.equipmentCorrectiveMaintenance,
+      equipmentPreventiveMaintenance: selectedEquipmentPlate.equipmentPreventiveMaintenance,
+      equipmentOutOfService: selectedEquipmentPlate.equipmentOutOfService,
+      equipmentWaiting: selectedEquipmentPlate.equipmentWaiting,
+      equipmentNoOperator: selectedEquipmentPlate.equipmentNoOperator,
+      equipmentInitialHorometer: selectedEquipmentPlate.equipmentInitialHorometer,
+      equipmentFinalHorometer: selectedEquipmentPlate.equipmentFinalHorometer,
+      equipmentPlate: selectedEquipmentPlate.equipmentPlate,
+    })
+    deleteEquipment(id)
   }
 
   useEffect(() => {
@@ -334,7 +358,7 @@ const EquipmentPlate = () => {
                   <CTableDataCell>{item.equipmentInitialHorometer}</CTableDataCell>
                   <CTableDataCell>{item.equipmentFinalHorometer}</CTableDataCell>
                   <CTableDataCell>
-                    {!isViewMode && (
+                    {isCreatingMode && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -342,6 +366,18 @@ const EquipmentPlate = () => {
                         }}
                       >
                         eliminar
+                      </CButton>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {isCreatingMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          editEquipment(item.id)
+                        }}
+                      >
+                        Editar
                       </CButton>
                     )}
                   </CTableDataCell>

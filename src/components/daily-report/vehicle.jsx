@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom'
 const Vehicle = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     vehicle: undefined,
@@ -83,6 +84,17 @@ const Vehicle = () => {
     const newData = vehicleList.filter((item) => item.id !== id)
     setVehicleList(newData)
     removeVehicle(id)
+  }
+
+  const editVehicle = (id) => {
+    const selectedVehicle = vehicleListContext.find((item) => item.id === id)
+    setVehicle({
+      vehicle: selectedVehicle.vehicle,
+      vehicleOfferedNumber: selectedVehicle.actions.vehicleOfferedNumber,
+      vehicleCertifiedNumber: selectedVehicle.actions.vehicleCertifiedNumber,
+      vehicleWorkNumber: selectedVehicle.actions.vehicleWorkNumber,
+    })
+    deletevehicle(id)
   }
 
   useEffect(() => {
@@ -227,7 +239,7 @@ const Vehicle = () => {
                   <CTableDataCell>{item.actions.vehicleCertifiedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.vehicleWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    {!isViewMode && (
+                    {isCreatingMode && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -235,6 +247,18 @@ const Vehicle = () => {
                         }}
                       >
                         eliminar
+                      </CButton>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {isCreatingMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          editVehicle(item.id)
+                        }}
+                      >
+                        Editar
                       </CButton>
                     )}
                   </CTableDataCell>

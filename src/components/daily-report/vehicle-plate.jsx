@@ -22,6 +22,7 @@ import { useLocation } from 'react-router'
 const VehiclePlate = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     vehicle: undefined,
@@ -108,6 +109,30 @@ const VehiclePlate = () => {
     const newData = vehiclePlateList.filter((item) => item.id !== id)
     setVehiclePlateList(newData)
     removeVehiclePlate(id)
+  }
+
+  const editVehiclePlate = (id) => {
+    const selectedVehiclePlate = vehiclePlateListContext.find((item) => item.id === id)
+
+    const selectedVehicle = basicQuery.vehicles.find((vehic) => {
+      return vehic.id.toString() === selectedVehiclePlate.vehicle.toString()
+    })
+    setPlates(selectedVehicle.plate)
+
+    setVehiclePlate({
+      vehicle: selectedVehiclePlate.vehicle,
+      vehicleEffectiveTime: selectedVehiclePlate.vehicleEffectiveTime,
+      vehicleCorrectiveMaintenance: selectedVehiclePlate.vehicleCorrectiveMaintenance,
+      vehiclePreventiveMaintenance: selectedVehiclePlate.vehiclePreventiveMaintenance,
+      vehicleOutOfService: selectedVehiclePlate.vehicleOutOfService,
+      vehicleWaiting: selectedVehiclePlate.vehicleWaiting,
+      vehicleNoOperator: selectedVehiclePlate.vehicleNoOperator,
+      vehicleInitialHorometer: selectedVehiclePlate.vehicleInitialHorometer,
+      vehicleFinalHorometer: selectedVehiclePlate.vehicleFinalHorometer,
+      vehiclePlate: selectedVehiclePlate.vehiclePlate,
+    })
+
+    deletevehiclePlate(id)
   }
 
   useEffect(() => {
@@ -308,13 +333,14 @@ const VehiclePlate = () => {
               <CTableHeaderCell scope="col">Patente</CTableHeaderCell>
               <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
               <CTableHeaderCell scope="col">Sin Operador (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Horometro Inicial </CTableHeaderCell>
               <CTableHeaderCell scope="col">Horometro Final </CTableHeaderCell>
+              <CTableHeaderCell scope="col"></CTableHeaderCell>
+              <CTableHeaderCell scope="col"></CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
@@ -338,7 +364,7 @@ const VehiclePlate = () => {
                   <CTableDataCell>{item.vehicleInitialHorometer ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.vehicleFinalHorometer ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    {!isViewMode && (
+                    {isCreatingMode && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -346,6 +372,18 @@ const VehiclePlate = () => {
                         }}
                       >
                         eliminar
+                      </CButton>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {isCreatingMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          editVehiclePlate(item.id)
+                        }}
+                      >
+                        Editar
                       </CButton>
                     )}
                   </CTableDataCell>

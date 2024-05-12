@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom'
 const EquipmentMachinery = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     equipment: undefined,
@@ -84,6 +85,17 @@ const EquipmentMachinery = () => {
     const newData = equipmentList.filter((item) => item.id !== id)
     setEquipmentList(newData)
     removeEquipment(id)
+  }
+
+  const editEquipment = (id) => {
+    const selectedEquipment = equipmentListContext.find((item) => item.id === id)
+    setEquipment({
+      equipment: selectedEquipment.equipment,
+      equipmentOfferedNumber: selectedEquipment.actions.equipmentOfferedNumber,
+      equipmentCertifiedNumber: selectedEquipment.actions.equipmentCertifiedNumber,
+      equipmentWorkNumber: selectedEquipment.actions.equipmentWorkNumber,
+    })
+    deleteEquipment(id)
   }
 
   useEffect(() => {
@@ -229,7 +241,7 @@ const EquipmentMachinery = () => {
                   <CTableDataCell>{item.actions.equipmentCertifiedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.equipmentWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    {!isViewMode && (
+                    {isCreatingMode && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -237,6 +249,18 @@ const EquipmentMachinery = () => {
                         }}
                       >
                         eliminar
+                      </CButton>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {isCreatingMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          editEquipment(item.id)
+                        }}
+                      >
+                        Editar
                       </CButton>
                     )}
                   </CTableDataCell>
