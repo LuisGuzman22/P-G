@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom'
 const Machinery = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     machinery: undefined,
@@ -85,6 +86,17 @@ const Machinery = () => {
     setMachineryList(newData)
 
     removeMachinery(id)
+  }
+
+  const editMachinery = (id) => {
+    const selectedMachinery = machineryListContext.find((item) => item.id === id)
+    setMachinery({
+      machinery: selectedMachinery.machinery,
+      machineryOfferedNumber: selectedMachinery.actions.machineryOfferedNumber,
+      machineryCertifiedNumber: selectedMachinery.actions.machineryCertifiedNumber,
+      machineryWorkNumber: selectedMachinery.actions.machineryWorkNumber,
+    })
+    deleteMachinery(id)
   }
 
   useEffect(() => {
@@ -231,7 +243,7 @@ const Machinery = () => {
                   <CTableDataCell>{item.actions.machineryCertifiedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.machineryWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    {!isViewMode && (
+                    {isCreatingMode && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -239,6 +251,18 @@ const Machinery = () => {
                         }}
                       >
                         eliminar
+                      </CButton>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {isCreatingMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          editMachinery(item.id)
+                        }}
+                      >
+                        Editar
                       </CButton>
                     )}
                   </CTableDataCell>

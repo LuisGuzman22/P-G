@@ -22,7 +22,6 @@ const IndirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
-  console.log('isCreatingMode', isCreatingMode)
 
   const initialState = {
     indirectWorkForce: undefined,
@@ -101,10 +100,6 @@ const IndirectWorkForce = () => {
     })
     deleteIndirectWorkForce(id)
   }
-
-  useEffect(() => {
-    console.log('indirectWorkForce', indirectWorkForce)
-  }, [indirectWorkForce])
 
   return (
     <div className="work-force-report">

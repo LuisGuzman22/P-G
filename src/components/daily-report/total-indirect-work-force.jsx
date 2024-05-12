@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom'
 const TotalIndirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     indirectSubtotalOfferedNumber: undefined,

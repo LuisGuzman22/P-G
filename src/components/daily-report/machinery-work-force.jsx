@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom'
 const MachineryWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     machineryWorkForce: undefined,
@@ -96,6 +97,31 @@ const MachineryWorkForce = () => {
 
     removeMachineryWorkForce(id)
   }
+
+  const editMachineryWorkForce = (id) => {
+    const selectedMachineryWorkForce = machineryWorkForceListContext.find((item) => item.id === id)
+    console.log('selectedMachineryWorkForce', selectedMachineryWorkForce)
+    if (selectedMachineryWorkForce.machinerySubWorkFront) {
+      setEnableSubFrontWork(true)
+    }
+    setMachineryWorkForce({
+      machineryWorkForce: selectedMachineryWorkForce.machineryWorkForce,
+      machineryWorkForceObservation: selectedMachineryWorkForce.machineryWorkForceObservation,
+      machinerySubWorkFront: selectedMachineryWorkForce.machinerySubWorkFront,
+      machineryWorkFrontCharge: selectedMachineryWorkForce.machineryWorkFrontCharge,
+      machineryWorkFrontQuantity: selectedMachineryWorkForce.machineryWorkFrontQuantity,
+    })
+    deleteMachineryWorkForce(id)
+  }
+
+  useEffect(() => {
+    setMachineryWorkForce({
+      ...machineryWorkForce,
+      machinerySubWorkFront: enableSubFrontWork
+        ? machineryWorkForce.machinerySubWorkFront
+        : undefined,
+    })
+  }, [enableSubFrontWork])
 
   useEffect(() => {
     if (!isViewMode) storeMachineryWorkForce(machineryWorkForceList)
@@ -248,7 +274,7 @@ const MachineryWorkForce = () => {
                         <span key={item.id}>{item.machineryWorkForceObservation}</span>
                       </CTableDataCell>
                       <CTableDataCell>
-                        {!isViewMode && (
+                        {isCreatingMode && (
                           <CButton
                             className="btn-project-action"
                             onClick={() => {
@@ -256,6 +282,18 @@ const MachineryWorkForce = () => {
                             }}
                           >
                             eliminar
+                          </CButton>
+                        )}
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {isCreatingMode && (
+                          <CButton
+                            className="btn-project-action"
+                            onClick={() => {
+                              editMachineryWorkForce(item.id)
+                            }}
+                          >
+                            Editar
                           </CButton>
                         )}
                       </CTableDataCell>

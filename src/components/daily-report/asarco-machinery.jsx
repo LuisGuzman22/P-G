@@ -24,6 +24,8 @@ import { toPng } from 'html-to-image'
 const AsarcoMachinery = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
+
   const pieChartElement = useRef(null)
 
   const initialState = {
@@ -136,6 +138,31 @@ const AsarcoMachinery = () => {
     setAsarcoMachineryList(newData)
 
     removeAsarcoMachinery(id)
+  }
+
+  const editAsarcoMachinery = (id) => {
+    const selectedAsarcoMachinery = asarcoMachineryListContext.find((item) => item.id === id)
+
+    const selectedMachinery = basicQuery.machinery.find((mac) => {
+      return mac.id.toString() === selectedAsarcoMachinery.machinery.toString()
+    })
+    setPlates(selectedMachinery.plate)
+
+    setAsarcoMachinery({
+      machinery: selectedAsarcoMachinery.machinery,
+      asarcoMachineryEffectiveTime: selectedAsarcoMachinery.asarcoMachineryEffectiveTime,
+      asarcoMachineryUnscheduleMaintenance:
+        selectedAsarcoMachinery.asarcoMachineryUnscheduleMaintenance,
+      asarcoMachineryScheduleMaintenance:
+        selectedAsarcoMachinery.asarcoMachineryScheduleMaintenance,
+      asarcoMachineryUnscheduleDelay: selectedAsarcoMachinery.asarcoMachineryUnscheduleDelay,
+      asarcoMachineryReserves: selectedAsarcoMachinery.asarcoMachineryReserves,
+      asarcoMachineryHorometer: selectedAsarcoMachinery.asarcoMachineryHorometer,
+      asarcoMachineryOpperationalLoss: selectedAsarcoMachinery.asarcoMachineryOpperationalLoss,
+      asarcoMachineryScheduleDelay: selectedAsarcoMachinery.asarcoMachineryScheduleDelay,
+      machineryPlate: selectedAsarcoMachinery.machineryPlate,
+    })
+    deleteAsarcoMachinery(id)
   }
 
   useEffect(() => {
@@ -462,7 +489,7 @@ const AsarcoMachinery = () => {
                   <CTableDataCell>{item.asarcoMachineryOpperationalLoss}</CTableDataCell>
                   <CTableDataCell>{item.asarcoMachineryScheduleDelay}</CTableDataCell>
                   <CTableDataCell>
-                    {!isViewMode && (
+                    {isCreatingMode && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -470,6 +497,18 @@ const AsarcoMachinery = () => {
                         }}
                       >
                         eliminar
+                      </CButton>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {isCreatingMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          editAsarcoMachinery(item.id)
+                        }}
+                      >
+                        Editar
                       </CButton>
                     )}
                   </CTableDataCell>

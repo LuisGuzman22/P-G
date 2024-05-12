@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom'
 const DirectDotationWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     directWorkFront: undefined,
@@ -69,6 +70,15 @@ const DirectDotationWorkForce = () => {
     }
   }
 
+  useEffect(() => {
+    setDirectDotationWorkForce({
+      ...directDotationWorkForce,
+      directSubWorkFront: enableSubFrontWork
+        ? directDotationWorkForce.directSubWorkFront
+        : undefined,
+    })
+  }, [enableSubFrontWork])
+
   const registerDirectDotationWorkForce = () => {
     if (
       !directDotationWorkForce.directWorkFront ||
@@ -99,6 +109,24 @@ const DirectDotationWorkForce = () => {
     const newData = directDotationWorkForceList.filter((item) => item.id !== id)
     setDirectDotationWorkForceList(newData)
     removeDirectDotationWorkForce(id)
+  }
+
+  const editDirectDotationWorkForce = (id) => {
+    const selectDirectDotationWorkForce = directDotationWorkForceListContext.find(
+      (item) => item.id === id,
+    )
+    if (selectDirectDotationWorkForce.directSubWorkFront) {
+      setEnableSubFrontWork(true)
+    }
+    setDirectDotationWorkForce({
+      directWorkFront: selectDirectDotationWorkForce.directWorkFront,
+      directDotationWorkForceObservation:
+        selectDirectDotationWorkForce.directDotationWorkForceObservation,
+      directSubWorkFront: selectDirectDotationWorkForce.directSubWorkFront,
+      directWorkFrontCharge: selectDirectDotationWorkForce.directWorkFrontCharge,
+      directWorkFrontQuantity: selectDirectDotationWorkForce.directWorkFrontQuantity,
+    })
+    deletedirectDotationWorkForce(id)
   }
 
   useEffect(() => {
@@ -253,7 +281,7 @@ const DirectDotationWorkForce = () => {
                         <span key={item.id}>{item.directDotationWorkForceObservation}</span>
                       </CTableDataCell>
                       <CTableDataCell>
-                        {!isViewMode && (
+                        {isCreatingMode && (
                           <CButton
                             className="btn-project-action"
                             onClick={() => {
@@ -261,6 +289,18 @@ const DirectDotationWorkForce = () => {
                             }}
                           >
                             eliminar
+                          </CButton>
+                        )}
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {isCreatingMode && (
+                          <CButton
+                            className="btn-project-action"
+                            onClick={() => {
+                              editDirectDotationWorkForce(item.id)
+                            }}
+                          >
+                            Editar
                           </CButton>
                         )}
                       </CTableDataCell>

@@ -24,6 +24,8 @@ import { toPng } from 'html-to-image'
 const DirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
+
   const columnChartElement = useRef(null)
 
   const initialStatee = {
@@ -94,6 +96,21 @@ const DirectWorkForce = () => {
     setDirectWorkForceList(newData)
 
     removeDirectWorkForce(id)
+  }
+
+  const editDirectWorkForce = (id) => {
+    const selectedDirectWorkForce = directWorkForceListContext.find((item) => item.id === id)
+
+    setDirectWorkForce({
+      directWorkForce: selectedDirectWorkForce.directWorkForce,
+      directWorkForceOfferedNumber: selectedDirectWorkForce.offeredNumber,
+      directWorkForceContractedNumber: selectedDirectWorkForce.contractedNumber,
+      directWorkForceCertifiedNumber: selectedDirectWorkForce.certified,
+      directWorkForceBreakNumber: selectedDirectWorkForce.breakNumber,
+      directWorkForceWorkNumber: selectedDirectWorkForce.workNumber,
+      directWorkForceHHNumber: selectedDirectWorkForce.hh,
+    })
+    deleteDirectWorkForce(id)
   }
 
   useEffect(() => {
@@ -303,7 +320,7 @@ const DirectWorkForce = () => {
                   <CTableDataCell>{item.workNumber}</CTableDataCell>
                   <CTableDataCell>{item.hh}</CTableDataCell>
                   <CTableDataCell>
-                    {!isViewMode && (
+                    {isCreatingMode && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -311,6 +328,18 @@ const DirectWorkForce = () => {
                         }}
                       >
                         eliminar
+                      </CButton>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {isCreatingMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          editDirectWorkForce(item.id)
+                        }}
+                      >
+                        Editar
                       </CButton>
                     )}
                   </CTableDataCell>
