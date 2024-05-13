@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom'
 const IndustrialWaterControl = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     aljibe: undefined,
@@ -120,6 +121,29 @@ const IndustrialWaterControl = () => {
     removealjibe(id)
   }
 
+  const editAljibe = (id) => {
+    const selectedAljibe = aljibeListContext.find((item) => item.id === id)
+    console.log('selectedAljibe', selectedAljibe)
+
+    const selectedAljibeData = basicQuery.aljibe.find((alj) => {
+      return alj.id.toString() === selectedAljibe.aljibe.toString()
+    })
+    setPlates(selectedAljibeData.plate)
+
+    setAlgibe({
+      aljibe: selectedAljibe.aljibe,
+      aljibeCachimbaName: selectedAljibe.aljibeCachimbaName,
+      aljibeQuantityTurns: selectedAljibe.aljibeQuantityTurns,
+      aljibeM3: selectedAljibe.aljibeM3,
+      aljibePlate: selectedAljibe.aljibePlate,
+      aljibeOfferedNumber: selectedAljibe.aljibeOfferedNumber,
+      aljibeCertifiedNumber: selectedAljibe.aljibeCertifiedNumber,
+      aljibeWorkNumber: selectedAljibe.aljibeWorkNumber,
+    })
+
+    deletealjibe(id)
+  }
+
   useEffect(() => {
     if (!isViewMode) storealjibe(aljibeList)
   }, [aljibeList])
@@ -154,7 +178,6 @@ const IndustrialWaterControl = () => {
     <div className="work-force-report">
       {!isViewMode && (
         <>
-          {' '}
           {error && (
             <CToast
               autohide={true}
@@ -343,7 +366,7 @@ const IndustrialWaterControl = () => {
                   <CTableDataCell>{item.aljibeCertifiedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.aljibeWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    {!isViewMode && (
+                    {isCreatingMode && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -351,6 +374,18 @@ const IndustrialWaterControl = () => {
                         }}
                       >
                         eliminar
+                      </CButton>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {isCreatingMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          editAljibe(item.id)
+                        }}
+                      >
+                        editar
                       </CButton>
                     )}
                   </CTableDataCell>

@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom'
 const Activities = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     activityFrontWork: undefined,
@@ -139,8 +140,28 @@ const Activities = () => {
 
   const deleteActivity = (id) => {
     const newData = activityList.filter((item) => item.id !== id)
-    setActivity(newData)
+    setActivityList(newData)
     removeActivity(id)
+  }
+
+  const editActivity = (id) => {
+    const selectedActivity = activityListContext.find((item) => item.id === id)
+    setActivity({
+      activityFrontWork: selectedActivity.activityFrontWork,
+      primaveraId: selectedActivity.primaveraId,
+      activityName: selectedActivity.activityName,
+      activityDiscipline: selectedActivity.activityDiscipline,
+      activityTotalAmount: selectedActivity.activityTotalAmount,
+      activityPreviousAcumulatedAmount: selectedActivity.activityPreviousAcumulatedAmount,
+      activityActualShiftQuantity: selectedActivity.activityActualShiftQuantity,
+      activityAccumulatedAcvancePercent: selectedActivity.activityAccumulatedAcvancePercent,
+      activityUnit: selectedActivity.activityUnit,
+      activityHoursSpendPrevius: selectedActivity.activityHoursSpendPrevius,
+      activityHoursSpendShift: selectedActivity.activityHoursSpendShift,
+      activityHoursAccumulated: selectedActivity.activityHoursAccumulated,
+    })
+
+    deleteActivity(id)
   }
 
   useEffect(() => {
@@ -392,7 +413,7 @@ const Activities = () => {
                   <CTableDataCell>{item.activityHoursSpendShift}</CTableDataCell>
                   <CTableDataCell>{item.activityHoursAccumulated}</CTableDataCell>
                   <CTableDataCell>
-                    {!isViewMode && (
+                    {isCreatingMode && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -400,6 +421,18 @@ const Activities = () => {
                         }}
                       >
                         eliminar
+                      </CButton>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {isCreatingMode && (
+                      <CButton
+                        className="btn-project-action"
+                        onClick={() => {
+                          editActivity(item.id)
+                        }}
+                      >
+                        Editar
                       </CButton>
                     )}
                   </CTableDataCell>

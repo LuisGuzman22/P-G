@@ -23,6 +23,7 @@ const NON_CONFORMITY_LIMIT = 200
 const Incidents = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   const initialState = {
     incident: '',
@@ -67,8 +68,17 @@ const Incidents = () => {
 
   const deleteIncident = (id) => {
     const newData = incidentList.filter((item) => item.id !== id)
-    setIncident(newData)
+    setIncidentList(newData)
     removeIncident(id)
+  }
+
+  const editIncident = (id) => {
+    const selectedIncident = incidentContext.find((item) => item.id === id)
+    setIncident({
+      incident: selectedIncident.incident,
+      nonConformity: selectedIncident.nonConformity,
+    })
+    deleteIncident(id)
   }
 
   useEffect(() => {
@@ -145,7 +155,7 @@ const Incidents = () => {
                     <CTableDataCell>{item.incident}</CTableDataCell>
                     <CTableDataCell>{item.nonConformity}</CTableDataCell>
                     <CTableDataCell>
-                      {!isViewMode && (
+                      {isCreatingMode && (
                         <CButton
                           className="btn-project-action"
                           onClick={() => {
@@ -153,6 +163,18 @@ const Incidents = () => {
                           }}
                         >
                           eliminar
+                        </CButton>
+                      )}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {isCreatingMode && (
+                        <CButton
+                          className="btn-project-action"
+                          onClick={() => {
+                            editIncident(item.id)
+                          }}
+                        >
+                          editar
                         </CButton>
                       )}
                     </CTableDataCell>
