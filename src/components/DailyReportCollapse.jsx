@@ -64,7 +64,7 @@ const DailyReportCollapse = () => {
 
   const handleLoadData = () => {
     setVisible(false)
-    localStorage.setItem('daily_report', 3)
+    localStorage.setItem('daily_report', reportsQuery[0].id)
   }
 
   return (

@@ -36,9 +36,8 @@ const useRegisterDailyReport = () => {
   } = useContext(DailyReportContext)
 
   const { mutate } = useMutation({
-    mutationFn: async (newTodo) => axios.post('asds', newTodo),
-
-    // axios.post('https://pyg-production.up.railway.app/api/v1/reports', newTodo),
+    mutationFn: async (newTodo) =>
+      axios.post('https://pyg-production.up.railway.app/api/v1/reports', newTodo),
     onSuccess: () => {
       setLoading(false)
       setSuccess(true)
