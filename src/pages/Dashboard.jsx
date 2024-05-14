@@ -48,7 +48,9 @@ const Dashboard = () => {
   ]
   return (
     <div className="dashboard">
-      <Chart chartType="ColumnChart" width="100%" height="400px" data={datagraph} />
+      <div style={{ display: 'none' }}>
+        <Chart chartType="ColumnChart" width="100%" height="400px" data={datagraph} />
+      </div>
 
       <CCard>
         <CCardHeader>Panel Informativo</CCardHeader>

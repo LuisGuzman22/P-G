@@ -280,10 +280,10 @@ const Pdf = (props) => {
   useEffect(() => {
     console.log('graph', graphList)
 
-    const dotationChart = graphList.find((graph) => graph.name === 'dotationChart')
-    const asarcoChart = graphList.find((graph) => graph.name === 'asarcoChart')
-    setImagenColumnChart(dotationChart.value)
-    setImagenPieChart(asarcoChart.value)
+    const dotationChart = graphList?.find((graph) => graph.name === 'dotationChart')
+    const asarcoChart = graphList?.find((graph) => graph.name === 'asarcoChart')
+    setImagenColumnChart(dotationChart?.value || '')
+    setImagenPieChart(asarcoChart?.value || '')
   }, [graphList])
 
   const element = (
