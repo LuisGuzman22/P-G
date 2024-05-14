@@ -129,12 +129,12 @@ const AsarcoMachinery = () => {
         machineryPlate: asarcoMachinery.machineryPlate,
       }
       setAsarcoMachinery(initialState) // Clear the object
-      setAsarcoMachineryList([...asarcoMachineryList, asarcoMachineryInitialState])
+      setAsarcoMachineryList([...asarcoMachineryListContext, asarcoMachineryInitialState])
     }
   }
 
   const deleteAsarcoMachinery = (id) => {
-    const newData = asarcoMachineryList.filter((item) => item.id !== id)
+    const newData = asarcoMachineryListContext.filter((item) => item.id !== id)
     setAsarcoMachineryList(newData)
 
     removeAsarcoMachinery(id)

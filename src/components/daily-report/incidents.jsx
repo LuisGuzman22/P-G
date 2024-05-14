@@ -63,11 +63,11 @@ const Incidents = () => {
       nonConformity: incident.nonConformity,
     }
     setIncident(initialState)
-    setIncidentList([...incidentList, incidentInitialState])
+    setIncidentList([...incidentContext, incidentInitialState])
   }
 
   const deleteIncident = (id) => {
-    const newData = incidentList.filter((item) => item.id !== id)
+    const newData = incidentContext.filter((item) => item.id !== id)
     setIncidentList(newData)
     removeIncident(id)
   }

@@ -111,12 +111,12 @@ const IndustrialWaterControl = () => {
         aljibeWorkNumber: aljibe.aljibeWorkNumber,
       }
       setAlgibe(initialState) // Clear the object
-      setAlgibeList([...aljibeList, aljibeInitialState])
+      setAlgibeList([...aljibeListContext, aljibeInitialState])
     }
   }
 
   const deletealjibe = (id) => {
-    const newData = aljibeList.filter((item) => item.id !== id)
+    const newData = aljibeListContext.filter((item) => item.id !== id)
     setAlgibeList(newData)
     removealjibe(id)
   }

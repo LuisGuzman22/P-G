@@ -57,6 +57,10 @@ const IndirectWorkForce = () => {
     }
   }
 
+  // useEffect(() => {
+  //   if (isCreatingMode) setIndirectWorkForceList(indirectWorkForceListContext)
+  // }, [indirectWorkForceListContext])
+
   const registerIndirectWorkForce = () => {
     if (!indirectWorkForce.indirectWorkForce) {
       setError(true)
@@ -72,7 +76,12 @@ const IndirectWorkForce = () => {
         hh: indirectWorkForce.contractAdministratorHHNumber,
       }
       setIndirectWorkForce(initialState) // Clear the object
-      setIndirectWorkForceList([...indirectWorkForceList, indirectWorkForceInitialState])
+      console.log('indirectWorkForceList', indirectWorkForceList)
+      setIndirectWorkForceList([
+        // ...indirectWorkForceList,
+        ...indirectWorkForceListContext,
+        indirectWorkForceInitialState,
+      ])
     }
   }
 
@@ -81,7 +90,7 @@ const IndirectWorkForce = () => {
   }, [indirectWorkForceList])
 
   const deleteIndirectWorkForce = (id) => {
-    const newData = indirectWorkForceList.filter((item) => item.id !== id)
+    const newData = indirectWorkForceListContext.filter((item) => item.id !== id)
     setIndirectWorkForceList(newData)
 
     removeIndirectWorkForce(id)

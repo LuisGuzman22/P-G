@@ -101,12 +101,12 @@ const EquipmentPlate = () => {
         equipmentPlate: equipmentPlate.equipmentPlate,
       }
       setEquipmentPlate(initialState) // Clear the object
-      setEquipmenPlatetList([...equipmentPlateList, equipmentInitialState])
+      setEquipmenPlatetList([...equipmentPlateListContext, equipmentInitialState])
     }
   }
 
   const deleteEquipment = (id) => {
-    const newData = equipmentPlateList.filter((item) => item.id !== id)
+    const newData = equipmentPlateListContext.filter((item) => item.id !== id)
     setEquipmenPlatetList(newData)
     removeEquipmentPlate(id)
   }

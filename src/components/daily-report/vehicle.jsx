@@ -76,12 +76,12 @@ const Vehicle = () => {
         },
       }
       setVehicle(initialState) // Clear the object
-      setVehicleList([...vehicleList, vehicleInitialState])
+      setVehicleList([...vehicleListContext, vehicleInitialState])
     }
   }
 
   const deletevehicle = (id) => {
-    const newData = vehicleList.filter((item) => item.id !== id)
+    const newData = vehicleListContext.filter((item) => item.id !== id)
     setVehicleList(newData)
     removeVehicle(id)
   }

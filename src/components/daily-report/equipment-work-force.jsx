@@ -88,11 +88,11 @@ const EquipmentWorkForce = () => {
         equipmentWorkFrontQuantity: equipmentWorkForce.equipmentWorkFrontQuantity,
       }
       setEquipmentWorkForce(initialState) // Clear the object
-      setEquipmentWorkForceList([...equipmentWorkForceList, equipmentWorkForceInitialState])
+      setEquipmentWorkForceList([...equipmentWorkForceListContext, equipmentWorkForceInitialState])
     }
   }
   const deleteEquipmentWorkForce = (id) => {
-    const newData = equipmentWorkForceList.filter((item) => item.id !== id)
+    const newData = equipmentWorkForceListContext.filter((item) => item.id !== id)
     setEquipmentWorkForceList(newData)
 
     removeEquipmentWorkForce(id)

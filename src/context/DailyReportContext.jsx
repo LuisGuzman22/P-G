@@ -238,6 +238,7 @@ export const DailyReportProvider = ({ children }) => {
   })
 
   useEffect(() => {
+    console.log('selectedIndirectWorkForceList', selectedIndirectWorkForceList)
     if (selectedIndirectWorkForceList) {
       setIndirectWorkForceList(selectedIndirectWorkForceList)
     }

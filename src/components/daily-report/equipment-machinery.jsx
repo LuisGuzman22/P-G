@@ -77,12 +77,12 @@ const EquipmentMachinery = () => {
         },
       }
       setEquipment(initialState) // Clear the object
-      setEquipmentList([...equipmentList, equipmentInitialState])
+      setEquipmentList([...equipmentListContext, equipmentInitialState])
     }
   }
 
   const deleteEquipment = (id) => {
-    const newData = equipmentList.filter((item) => item.id !== id)
+    const newData = equipmentListContext.filter((item) => item.id !== id)
     setEquipmentList(newData)
     removeEquipment(id)
   }

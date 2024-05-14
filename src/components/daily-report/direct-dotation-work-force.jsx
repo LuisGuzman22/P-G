@@ -99,14 +99,14 @@ const DirectDotationWorkForce = () => {
       }
       setDirectDotationWorkForce(initialState) // Clear the object
       setDirectDotationWorkForceList([
-        ...directDotationWorkForceList,
+        ...directDotationWorkForceListContext,
         directDotationWorkForceInitialState,
       ])
     }
   }
 
   const deletedirectDotationWorkForce = (id) => {
-    const newData = directDotationWorkForceList.filter((item) => item.id !== id)
+    const newData = directDotationWorkForceListContext.filter((item) => item.id !== id)
     setDirectDotationWorkForceList(newData)
     removeDirectDotationWorkForce(id)
   }

@@ -134,12 +134,12 @@ const Activities = () => {
         activityHoursAccumulated: activity.activityHoursAccumulated,
       }
       setActivity(initialState) // Clear the object
-      setActivityList([...activityList, activityInitialState])
+      setActivityList([...activityListContext, activityInitialState])
     }
   }
 
   const deleteActivity = (id) => {
-    const newData = activityList.filter((item) => item.id !== id)
+    const newData = activityListContext.filter((item) => item.id !== id)
     setActivityList(newData)
     removeActivity(id)
   }

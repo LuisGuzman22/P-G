@@ -87,12 +87,12 @@ const DirectWorkForce = () => {
         hh: directWorkForce.directWorkForceHHNumber,
       }
       setDirectWorkForce(initialStatee) // Clear the object
-      setDirectWorkForceList([...directWorkForceList, directWorkForceInitialState])
+      setDirectWorkForceList([...directWorkForceListContext, directWorkForceInitialState])
     }
   }
 
   const deleteDirectWorkForce = (id) => {
-    const newData = directWorkForceList.filter((item) => item.id !== id)
+    const newData = directWorkForceListContext.filter((item) => item.id !== id)
     setDirectWorkForceList(newData)
 
     removeDirectWorkForce(id)

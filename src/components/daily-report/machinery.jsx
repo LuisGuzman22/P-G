@@ -77,12 +77,12 @@ const Machinery = () => {
         },
       }
       setMachinery(initialState) // Clear the object
-      setMachineryList([...machineryList, machineryInitialState])
+      setMachineryList([...machineryListContext, machineryInitialState])
     }
   }
 
   const deleteMachinery = (id) => {
-    const newData = machineryList.filter((item) => item.id !== id)
+    const newData = machineryListContext.filter((item) => item.id !== id)
     setMachineryList(newData)
 
     removeMachinery(id)

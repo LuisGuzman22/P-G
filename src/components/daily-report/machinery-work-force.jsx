@@ -87,12 +87,12 @@ const MachineryWorkForce = () => {
         machineryWorkFrontQuantity: machineryWorkForce.machineryWorkFrontQuantity,
       }
       setMachineryWorkForce(initialState) // Clear the object
-      setMachineryWorkForceList([...machineryWorkForceList, machineryWorkForceInitialState])
+      setMachineryWorkForceList([...machineryWorkForceListContext, machineryWorkForceInitialState])
     }
   }
 
   const deleteMachineryWorkForce = (id) => {
-    const newData = machineryWorkForceList.filter((item) => item.id !== id)
+    const newData = machineryWorkForceListContext.filter((item) => item.id !== id)
     setMachineryWorkForceList(newData)
 
     removeMachineryWorkForce(id)
@@ -100,7 +100,6 @@ const MachineryWorkForce = () => {
 
   const editMachineryWorkForce = (id) => {
     const selectedMachineryWorkForce = machineryWorkForceListContext.find((item) => item.id === id)
-    console.log('selectedMachineryWorkForce', selectedMachineryWorkForce)
     if (selectedMachineryWorkForce.machinerySubWorkFront) {
       setEnableSubFrontWork(true)
     }
