@@ -538,7 +538,6 @@ const AsarcoMachinery = () => {
           </CTableBody>
         </CTable>
       )}
-
       <div ref={pieChartElement}>
         <Chart chartType="PieChart" data={pieChartData} width={'100%'} height={'300px'} />
       </div>
