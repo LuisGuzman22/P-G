@@ -83,7 +83,7 @@ const DailyReportCollapse = () => {
         <CModalBody>¿Quieres pre cargar los datos del informe diario del día anterior?</CModalBody>
         <CModalFooter>
           <CButton
-            color="danger"
+            className="cancel-btn"
             onClick={() => {
               setVisible(false)
             }}
@@ -91,7 +91,7 @@ const DailyReportCollapse = () => {
             No cargar
           </CButton>
           <CButton
-            color="primary"
+            className="confirm-btn"
             onClick={() => {
               handleLoadData()
             }}
