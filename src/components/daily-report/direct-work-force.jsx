@@ -41,6 +41,8 @@ const DirectWorkForce = () => {
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
 
+  const [isInView, setIsInView] = useState(false)
+
   const [directWorkForce, setDirectWorkForce] = useState(initialStatee)
   const [directWorkForceList, setDirectWorkForceList] = useState([])
   const [error, setError] = useState(false)
@@ -155,6 +157,19 @@ const DirectWorkForce = () => {
   useEffect(() => {
     if (!isViewMode) storeGraphs({ name: 'dotationChart', value: imagenColumnChart })
   }, [imagenColumnChart])
+
+  const checkInView = () => {
+    const rect = columnChartElement?.current?.getBoundingClientRect()
+    if (rect) setIsInView(rect.top < window.innerHeight && rect.bottom >= 0)
+  }
+
+  useEffect(() => {
+    convertDotationChart()
+  }, [isInView])
+
+  useEffect(() => {
+    checkInView()
+  }, [])
 
   return (
     <div className="work-force-report">

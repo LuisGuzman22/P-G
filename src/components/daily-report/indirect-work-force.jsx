@@ -76,7 +76,6 @@ const IndirectWorkForce = () => {
         hh: indirectWorkForce.contractAdministratorHHNumber,
       }
       setIndirectWorkForce(initialState) // Clear the object
-      console.log('indirectWorkForceList', indirectWorkForceList)
       setIndirectWorkForceList([
         // ...indirectWorkForceList,
         ...indirectWorkForceListContext,

@@ -64,6 +64,28 @@ const AsarcoMachinery = () => {
   const [plates, setPlates] = useState()
   const [error, setError] = useState(false)
 
+  const [isInView, setIsInView] = useState(false)
+
+  const checkInView = () => {
+    const rect = pieChartElement?.current?.getBoundingClientRect()
+    if (rect) setIsInView(rect.top < window.innerHeight && rect.bottom >= 0)
+  }
+
+  useEffect(() => {
+    convertAsarcoChart()
+  }, [isInView])
+
+  useEffect(() => {
+    checkInView()
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener('scroll', checkInView)
+    return () => {
+      document.removeEventListener('scroll', checkInView)
+    }
+  }, [])
+
   const [imagenPieChart, setImagenPieChart] = useState()
   const [pieChartData, setPieChartData] = useState([
     ['Task', 'Hours per Day'],

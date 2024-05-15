@@ -123,7 +123,6 @@ const IndustrialWaterControl = () => {
 
   const editAljibe = (id) => {
     const selectedAljibe = aljibeListContext.find((item) => item.id === id)
-    console.log('selectedAljibe', selectedAljibe)
 
     const selectedAljibeData = basicQuery.aljibe.find((alj) => {
       return alj.id.toString() === selectedAljibe.aljibe.toString()
