@@ -55,7 +55,7 @@ const EquipmentWorkForce = () => {
       })
       setEnableSubFrontWork(selectedWorkFront.hasSubFront)
     }
-    if (e.target.id === 'equipmentSubWorkFront' || e.target.id === 'equipmentWorkFrontQuantity') {
+    if (e.target.id === 'equipmentWorkFrontQuantity') {
       if (validate(e.target.value)) {
         setEquipmentWorkForce({
           ...equipmentWorkForce,

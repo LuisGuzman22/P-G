@@ -55,7 +55,7 @@ const DirectDotationWorkForce = () => {
       })
       setEnableSubFrontWork(selectedWorkFront.hasSubFront)
     }
-    if (e.target.id === 'directSubWorkFront' || e.target.id === 'directWorkFrontQuantity') {
+    if (e.target.id === 'directWorkFrontQuantity') {
       if (validate(e.target.value)) {
         setDirectDotationWorkForce({
           ...directDotationWorkForce,

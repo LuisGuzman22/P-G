@@ -54,7 +54,7 @@ const MachineryWorkForce = () => {
       })
       setEnableSubFrontWork(selectedWorkFront.hasSubFront)
     }
-    if (e.target.id === 'machinerySubWorkFront' || e.target.id === 'machineryWorkFrontQuantity') {
+    if (e.target.id === 'machineryWorkFrontQuantity') {
       if (validate(e.target.value)) {
         setMachineryWorkForce({
           ...machineryWorkForce,
