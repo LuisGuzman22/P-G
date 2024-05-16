@@ -23,7 +23,8 @@ const TotalDirectWorkForce = () => {
   const { getData } = useGetCachedQueryData()
   const reportsQuery = getData('reports')
 
-  const { totalDirectWorkForce: totalDirectWorkForcePrevious } = reportsQuery[0]
+  const { totalDirectWorkForce: totalDirectWorkForcePrevious } =
+    reportsQuery.length > 0 ? reportsQuery[0] : 0
 
   const initialState = {
     directSubtotalOfferedNumber: undefined,
@@ -69,7 +70,7 @@ const TotalDirectWorkForce = () => {
   useEffect(() => {
     setTotalDirectWorkForce({
       ...totalDirectWorkForce,
-      directPreviusAccumulated: totalDirectWorkForcePrevious.directCurrentAccumulated || 0,
+      directPreviusAccumulated: totalDirectWorkForcePrevious?.directCurrentAccumulated || 0,
     })
   }, [totalDirectWorkForcePrevious])
 
@@ -108,9 +109,9 @@ const TotalDirectWorkForce = () => {
         directSubtotalBreakNumber: breaked,
         directSubtotalWorkNumber: workekd,
         directSubstotalHHNumber: hours,
-        directPreviusAccumulated: totalDirectWorkForcePrevious.directCurrentAccumulated || 0,
+        directPreviusAccumulated: totalDirectWorkForcePrevious?.directCurrentAccumulated || 0,
         directCurrentAccumulated:
-          Number(totalDirectWorkForcePrevious.directCurrentAccumulated) + Number(hours),
+          Number(totalDirectWorkForcePrevious?.directCurrentAccumulated || 0) + Number(hours),
       }
 
       setTotalDirectWorkForce(data)
