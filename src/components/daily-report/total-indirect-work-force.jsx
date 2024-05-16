@@ -11,11 +11,16 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { validate } from 'src/utils/validate'
 import { useLocation } from 'react-router-dom'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const TotalIndirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const { getData } = useGetCachedQueryData()
+  const reportsQuery = getData('reports')
+
+  const { totalIndirectWorkForce: totalIndirectWorkForcePrevious } = reportsQuery[0]
 
   const initialState = {
     indirectSubtotalOfferedNumber: undefined,
@@ -45,14 +50,14 @@ const TotalIndirectWorkForce = () => {
   const [total, setTotal] = useState(0)
 
   const onChangeData = (e) => {
-    if (validate(e.target.value)) {
-      setTotalIndirectWorkForce({
-        // Después debe cambiar por el state unico
-        ...totalIndirectWorkForce,
-        indirectPreviusAccumulated: e.target.value,
-      })
-      setIndirectAccumulatedActual(Number(e.target.value) + Number(indirectAccumulatedHours))
-    }
+    // if (validate(e.target.value)) {
+    //   // setTotalIndirectWorkForce({
+    //   //   // Después debe cambiar por el state unico
+    //   //   ...totalIndirectWorkForce,
+    //   //   indirectPreviusAccumulated: e.target.value,
+    //   // })
+    //   setIndirectAccumulatedActual(Number(e.target.value) + Number(indirectAccumulatedHours))
+    // }
   }
 
   useEffect(() => {
@@ -61,6 +66,13 @@ const TotalIndirectWorkForce = () => {
       indirectCurrentAccumulated: indirectAccumulatedActual,
     })
   }, [indirectAccumulatedActual])
+
+  useEffect(() => {
+    setTotalIndirectWorkForce({
+      ...totalIndirectWorkForce,
+      indirectPreviusAccumulated: totalIndirectWorkForcePrevious.indirectCurrentAccumulated || 0,
+    })
+  }, [totalIndirectWorkForcePrevious])
 
   useEffect(() => {
     if (!isViewMode) {
@@ -98,9 +110,9 @@ const TotalIndirectWorkForce = () => {
         indirectSubtotalBreakNumber: breaked,
         indirectSubtotalWorkNumber: workekd,
         indirectSubstotalHHNumber: hours,
-        indirectPreviusAccumulated: totalIndirectWorkForce.indirectPreviusAccumulated || 0,
+        indirectPreviusAccumulated: totalIndirectWorkForcePrevious.indirectCurrentAccumulated || 0,
         indirectCurrentAccumulated:
-          Number(totalIndirectWorkForce.indirectPreviusAccumulated) + Number(hours),
+          Number(totalIndirectWorkForcePrevious.indirectCurrentAccumulated) + Number(hours),
       }
 
       setTotalIndirectWorkForce(data)
@@ -207,13 +219,15 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectPreviusAccumulated"
+                disabled
+                // value={totalIndirectWorkForcePrevious.indirectCurrentAccumulated || '0'}
                 value={
                   !isViewMode
                     ? totalIndirectWorkForce.indirectPreviusAccumulated || ''
                     : indirectAccumulatedPrevious
                 }
                 // indirectAccumulatedPrevious
-                disabled={isViewMode}
+                // disabled={isViewMode}
                 onChange={(e) => {
                   onChangeData(e)
                 }}

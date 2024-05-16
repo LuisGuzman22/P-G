@@ -14,10 +14,16 @@ import {
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { validate } from 'src/utils/validate'
 import { useLocation } from 'react-router-dom'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const TotalDirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+
+  const { getData } = useGetCachedQueryData()
+  const reportsQuery = getData('reports')
+
+  const { totalDirectWorkForce: totalDirectWorkForcePrevious } = reportsQuery[0]
 
   const initialState = {
     directSubtotalOfferedNumber: undefined,
@@ -47,10 +53,10 @@ const TotalDirectWorkForce = () => {
   const [total, setTotal] = useState(0)
 
   const onChangeData = (e) => {
-    if (validate(e.target.value)) {
-      setTotalDirectWorkForce({ ...totalDirectWorkForce, directPreviusAccumulated: e.target.value })
-      setDirectAccumulatedActual(Number(e.target.value) + Number(directAccumulatedHours))
-    }
+    // if (validate(e.target.value)) {
+    //   setTotalDirectWorkForce({ ...totalDirectWorkForce, directPreviusAccumulated: e.target.value })
+    //   setDirectAccumulatedActual(Number(e.target.value) + Number(directAccumulatedHours))
+    // }
   }
 
   useEffect(() => {
@@ -59,6 +65,13 @@ const TotalDirectWorkForce = () => {
       directCurrentAccumulated: directAccumulatedActual,
     })
   }, [directAccumulatedActual])
+
+  useEffect(() => {
+    setTotalDirectWorkForce({
+      ...totalDirectWorkForce,
+      directPreviusAccumulated: totalDirectWorkForcePrevious.directCurrentAccumulated || 0,
+    })
+  }, [totalDirectWorkForcePrevious])
 
   useEffect(() => {
     if (!isViewMode) {
@@ -95,9 +108,9 @@ const TotalDirectWorkForce = () => {
         directSubtotalBreakNumber: breaked,
         directSubtotalWorkNumber: workekd,
         directSubstotalHHNumber: hours,
-        directPreviusAccumulated: totalDirectWorkForce.directPreviusAccumulated || 0,
+        directPreviusAccumulated: totalDirectWorkForcePrevious.directCurrentAccumulated || 0,
         directCurrentAccumulated:
-          Number(totalDirectWorkForce.directPreviusAccumulated) + Number(hours),
+          Number(totalDirectWorkForcePrevious.directCurrentAccumulated) + Number(hours),
       }
 
       setTotalDirectWorkForce(data)
@@ -208,7 +221,7 @@ const TotalDirectWorkForce = () => {
                     : directAccumulatedPrevious
                 }
                 // indirectAccumulatedPrevious
-                disabled={isViewMode}
+                disabled
                 placeholder="Total"
                 text=""
                 onChange={(e) => {
