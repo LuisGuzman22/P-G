@@ -1,16 +1,34 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { CForm, CFormInput, CRow, CCol, CFormSelect } from '@coreui/react'
+import {
+  CForm,
+  CFormInput,
+  CRow,
+  CCol,
+  CFormSelect,
+  CButton,
+  CTable,
+  CTableHead,
+  CTableRow,
+  CTableHeaderCell,
+  CTableBody,
+  CTableDataCell,
+} from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import { useLocation } from 'react-router-dom'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { Button } from '@coreui/coreui'
+import { validate } from 'src/utils/validate'
+import { v4 as uuidv4 } from 'uuid'
 
 const CompanyReport = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const isCreatingMode = currentLocation === '/informe-diario'
 
-  const { storeCompanyData, company } = useRegisterDailyReportCompany()
+  const { storeCompanyData, storeIndirectCompanyTurn, company, removeIndirectCompanyTurn } =
+    useRegisterDailyReportCompany()
   const { registerData } = useRegisterDailyReport()
   const { getProject, getContract } = useRegisterGeneralData()
 
@@ -20,8 +38,56 @@ const CompanyReport = () => {
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
 
+  const initialState = {
+    dailyReportIndirectPersonalShift: undefined,
+    dailyReportIndirectPersonalHours: undefined,
+    dailyReportIndirectPersonalJourney: undefined,
+  }
+
+  const [indirectPersonalList, setIndirectPersonalList] = useState([])
+  const [indirectPersonal, setIndirectPersonal] = useState(initialState)
+  const [error, setError] = useState(false)
+
   const onChangeData = (e) => {
     storeCompanyData(e)
+  }
+
+  const onChangeIndirectPersonal = (e) => {
+    if (validate(e.target.value)) {
+      setIndirectPersonal({ ...indirectPersonal, [e.target.id]: e.target.value })
+    }
+  }
+
+  const registerIndirectTurn = () => {
+    if (
+      !indirectPersonal.dailyReportIndirectPersonalShift ||
+      !indirectPersonal.dailyReportIndirectPersonalHours ||
+      !indirectPersonal.dailyReportIndirectPersonalJourney
+    ) {
+      setError(true)
+    } else {
+      const indirectPersonalInitialState = {
+        id: uuidv4(),
+        dailyReportIndirectPersonalShift: indirectPersonal.dailyReportIndirectPersonalShift,
+        dailyReportIndirectPersonalHours: indirectPersonal.dailyReportIndirectPersonalHours,
+        dailyReportIndirectPersonalJourney: indirectPersonal.dailyReportIndirectPersonalJourney,
+      }
+      setIndirectPersonal(initialState) // Clear the object
+      setIndirectPersonalList([
+        ...(company?.dailyReportIndirectCompanyTurn || []),
+        indirectPersonalInitialState,
+      ])
+    }
+  }
+
+  useEffect(() => {
+    if (!isViewMode) storeIndirectCompanyTurn(indirectPersonalList)
+  }, [indirectPersonalList])
+
+  const deleteIndirectCompanyTurn = (id) => {
+    const newData = company?.dailyReportIndirectCompanyTurn.filter((item) => item.id !== id)
+    setIndirectPersonalList(newData)
+    removeIndirectCompanyTurn(id)
   }
 
   return (
@@ -196,10 +262,10 @@ const CompanyReport = () => {
               aria-label="Turno (Personal indirecto)"
               id="dailyReportIndirectPersonalShift"
               label="Turno (Personal indirecto)"
-              value={company.dailyReportIndirectPersonalShift || '0'}
+              value={indirectPersonal.dailyReportIndirectPersonalShift || '0'}
               disabled={isViewMode}
               onChange={(e) => {
-                onChangeData(e)
+                onChangeIndirectPersonal(e)
               }}
             >
               <option value={'0'}>Seleccione</option>
@@ -216,11 +282,11 @@ const CompanyReport = () => {
               id="dailyReportIndirectPersonalHours"
               label="Horas turno (Personal indirecto)"
               placeholder="Horas turno (Personal indirecto)"
-              value={company.dailyReportIndirectPersonalHours || ''}
+              value={indirectPersonal.dailyReportIndirectPersonalHours || ''}
               text=""
               disabled={isViewMode}
               onChange={(e) => {
-                onChangeData(e)
+                onChangeIndirectPersonal(e)
               }}
             />
           </CCol>
@@ -229,10 +295,10 @@ const CompanyReport = () => {
               aria-label="Jornada (Personal indirecto)"
               id="dailyReportIndirectPersonalJourney"
               label="Jornada (Personal indirecto)"
-              value={company.dailyReportIndirectPersonalJourney || '0'}
+              value={indirectPersonal.dailyReportIndirectPersonalJourney || '0'}
               disabled={isViewMode}
               onChange={(e) => {
-                onChangeData(e)
+                onChangeIndirectPersonal(e)
               }}
             >
               <option value={'0'}>Seleccione</option>
@@ -244,6 +310,76 @@ const CompanyReport = () => {
             </CFormSelect>
           </CCol>
         </CRow>
+        <CRow>
+          <CCol>
+            <CButton
+              onClick={() => {
+                registerIndirectTurn()
+              }}
+            >
+              Registrar turno personal indirecto
+            </CButton>
+          </CCol>
+        </CRow>
+        {company &&
+          company.dailyReportIndirectCompanyTurn &&
+          company.dailyReportIndirectCompanyTurn.length > 0 &&
+          company.dailyReportIndirectCompanyTurn[0].dailyReportIndirectPersonalShift && (
+            <CTable className="resume-table">
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">Turno (Personal indirecto)</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Horas turno (Personal indirecto)</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Jornada (Personal indirecto)</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {company.dailyReportIndirectCompanyTurn.map((item, index) => {
+                  const selectedShift = basicQuery?.shifts.find(
+                    (shift) => shift.id == item.dailyReportIndirectPersonalShift,
+                  )
+
+                  const selectedTurn = basicQuery?.indirect_staff_shift.find(
+                    (turn) => turn.id == item.dailyReportIndirectPersonalShift,
+                  )
+
+                  return (
+                    <CTableRow key={index}>
+                      <CTableDataCell>{selectedTurn?.name ?? ''}</CTableDataCell>
+                      <CTableDataCell>
+                        {item.dailyReportIndirectPersonalJourney ?? 0}
+                      </CTableDataCell>
+                      <CTableDataCell>{selectedShift?.name ?? ''}</CTableDataCell>
+                      <CTableDataCell>
+                        {isCreatingMode && (
+                          <CButton
+                            className="btn-project-action"
+                            onClick={() => {
+                              deleteIndirectCompanyTurn(item.id)
+                            }}
+                          >
+                            eliminar
+                          </CButton>
+                        )}
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {isCreatingMode && (
+                          <CButton
+                            className="btn-project-action"
+                            onClick={() => {
+                              // editEquipment(item.id)
+                            }}
+                          >
+                            Editar
+                          </CButton>
+                        )}
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
+              </CTableBody>
+            </CTable>
+          )}
       </CForm>
     </div>
   )

@@ -59,9 +59,10 @@ export const DailyReportProvider = ({ children }) => {
     dailyReportDirectPersonalShift: undefined,
     dailyReportDirectPersonalHours: undefined,
     dailyReportDirectPersonalJourney: undefined,
-    dailyReportIndirectPersonalShift: undefined,
-    dailyReportIndirectPersonalHours: undefined,
-    dailyReportIndirectPersonalJourney: undefined,
+    dailyReportIndirectTurns: [],
+    // dailyReportIndirectPersonalShift: undefined,
+    // dailyReportIndirectPersonalHours: undefined,
+    // dailyReportIndirectPersonalJourney: undefined,
   })
 
   useEffect(() => {
@@ -90,15 +91,15 @@ export const DailyReportProvider = ({ children }) => {
       dailyReportDirectPersonalJourney: selectedCompany
         ? selectedCompany.dailyReportDirectPersonalJourney
         : undefined,
-      dailyReportIndirectPersonalShift: selectedCompany
-        ? selectedCompany.dailyReportIndirectPersonalShift
-        : undefined,
-      dailyReportIndirectPersonalHours: selectedCompany
-        ? selectedCompany.dailyReportIndirectPersonalHours
-        : undefined,
-      dailyReportIndirectPersonalJourney: selectedCompany
-        ? selectedCompany.dailyReportIndirectPersonalJourney
-        : undefined,
+      // dailyReportIndirectPersonalShift: selectedCompany
+      //   ? selectedCompany.dailyReportIndirectPersonalShift
+      //   : undefined,
+      // dailyReportIndirectPersonalHours: selectedCompany
+      //   ? selectedCompany.dailyReportIndirectPersonalHours
+      //   : undefined,
+      // dailyReportIndirectPersonalJourney: selectedCompany
+      //   ? selectedCompany.dailyReportIndirectPersonalJourney
+      //   : undefined,
     })
   }, [selectedCompany])
 
@@ -272,6 +273,15 @@ export const DailyReportProvider = ({ children }) => {
     setVehiclePlateList(selectedVehiclePlateList || [])
   }, [selectedVehiclePlateList])
 
+  const storeIndirectCompanyTurn = async (data) => {
+    setCompany({ ...company, dailyReportIndirectCompanyTurn: data })
+  }
+
+  const removeIndirectCompanyTurn = async (id) => {
+    const newData = company?.dailyReportIndirectCompanyTurn.filter((item) => item.id !== id)
+    setCompany({ ...company, dailyReportIndirectCompanyTurn: newData })
+  }
+
   const storeCompanyData = async (data) => {
     switch (data.target.id) {
       case 'dailyReportDate':
@@ -303,15 +313,15 @@ export const DailyReportProvider = ({ children }) => {
       case 'dailyReportDirectPersonalJourney':
         setCompany({ ...company, dailyReportDirectPersonalJourney: data.target.value })
         break
-      case 'dailyReportIndirectPersonalShift':
-        setCompany({ ...company, dailyReportIndirectPersonalShift: data.target.value })
-        break
-      case 'dailyReportIndirectPersonalHours':
-        setCompany({ ...company, dailyReportIndirectPersonalHours: data.target.value })
-        break
-      case 'dailyReportIndirectPersonalJourney':
-        setCompany({ ...company, dailyReportIndirectPersonalJourney: data.target.value })
-        break
+      // case 'dailyReportIndirectPersonalShift':
+      //   setCompany({ ...company, dailyReportIndirectPersonalShift: data.target.value })
+      //   break
+      // case 'dailyReportIndirectPersonalHours':
+      //   setCompany({ ...company, dailyReportIndirectPersonalHours: data.target.value })
+      //   break
+      // case 'dailyReportIndirectPersonalJourney':
+      //   setCompany({ ...company, dailyReportIndirectPersonalJourney: data.target.value })
+      //   break
       case 'dailyReportContractManagerName':
         setCompany({ ...company, dailyReportContractManagerName: data.target.value })
         break
@@ -517,9 +527,9 @@ export const DailyReportProvider = ({ children }) => {
       dailyReportDirectPersonalShift: undefined,
       dailyReportDirectPersonalHours: undefined,
       dailyReportDirectPersonalJourney: undefined,
-      dailyReportIndirectPersonalShift: undefined,
-      dailyReportIndirectPersonalHours: undefined,
-      dailyReportIndirectPersonalJourney: undefined,
+      // dailyReportIndirectPersonalShift: undefined,
+      // dailyReportIndirectPersonalHours: undefined,
+      // dailyReportIndirectPersonalJourney: undefined,
     })
     setTotalDirectWorkForce({
       directCurrentAccumulated: undefined,
@@ -575,6 +585,8 @@ export const DailyReportProvider = ({ children }) => {
     <DailyReportContext.Provider
       value={{
         company,
+        storeIndirectCompanyTurn,
+        removeIndirectCompanyTurn,
         totalIndirectWorkForce,
         directWorkForceList,
         storeCompanyData,
