@@ -66,6 +66,9 @@ const useRegisterDailyReportCompany = () => {
     clearContext,
     storeGraphs,
     graphList,
+    photoList,
+    storePhoto,
+    removePhoto,
   } = useContext(DailyReportContext)
 
   return {
@@ -132,6 +135,9 @@ const useRegisterDailyReportCompany = () => {
     clearContext,
     storeGraphs,
     graphList,
+    photoList,
+    storePhoto,
+    removePhoto,
   }
 }
 

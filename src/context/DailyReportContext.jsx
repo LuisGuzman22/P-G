@@ -27,6 +27,7 @@ export const DailyReportProvider = ({ children }) => {
   }
 
   const selectedCompany = selectedReport?.company
+  const selectedIndirectCompanyTurnList = selectedReport?.indirectCompanyTurnList
   const selectedIndirectWorkForceList = selectedReport?.indirectWorkForceList
   const selectedTotalIndirectWorkForce = selectedReport?.totalIndirectWorkForce
   const selectedDirectWorkForceList = selectedReport?.directWorkForceList
@@ -280,6 +281,10 @@ export const DailyReportProvider = ({ children }) => {
     setIndirectCompanyTurnList(newData)
   }
 
+  useEffect(() => {
+    setIndirectCompanyTurnList(selectedIndirectCompanyTurnList || [])
+  }, [selectedIndirectCompanyTurnList])
+
   const storeCompanyData = async (data) => {
     switch (data.target.id) {
       case 'dailyReportDate':
@@ -513,6 +518,21 @@ export const DailyReportProvider = ({ children }) => {
     }
   }
 
+  const [photoList, setPhotoList] = useState([])
+
+  const storePhoto = async (data) => {
+    setPhotoList(data)
+  }
+
+  useEffect(() => {
+    console.log('photoList', photoList)
+  }, [photoList])
+
+  const removePhoto = async (id) => {
+    const newData = photoList.filter((item) => item.id !== id)
+    setPhotoList(newData)
+  }
+
   const clearContext = () => {
     setCompany({
       dailyReportContractManagerName: undefined,
@@ -645,6 +665,9 @@ export const DailyReportProvider = ({ children }) => {
         clearContext,
         storeGraphs,
         graphList,
+        photoList,
+        storePhoto,
+        removePhoto,
       }}
     >
       {children}

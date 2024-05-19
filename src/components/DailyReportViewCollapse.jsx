@@ -50,6 +50,7 @@ const DailyReportViewCollapse = () => {
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
   const {
     company,
+    indirectCompanyTurnList,
     indirectWorkForceList,
     totalIndirectWorkForce,
     directWorkForceList,
@@ -150,6 +151,7 @@ const DailyReportViewCollapse = () => {
           document={
             <Pdf
               company={company}
+              indirectCompanyTurnList={indirectCompanyTurnList}
               indirectWorkForceList={indirectWorkForceList}
               basicQuery={basicQuery}
               totalIndirectWorkForce={totalIndirectWorkForce}

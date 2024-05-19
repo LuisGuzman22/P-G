@@ -26,6 +26,7 @@ const Pdf = (props) => {
 
   const {
     company,
+    indirectCompanyTurnList,
     indirectWorkForceList,
     totalIndirectWorkForce,
     directWorkForceList,
@@ -44,8 +45,6 @@ const Pdf = (props) => {
     directDotationWorkForceList,
     machineryWorkForceList,
     equipmentWorkForceList,
-    // imagenColumnChart,
-    // imagenPieChart,
     graphList,
   } = props
   const {
