@@ -59,10 +59,6 @@ export const DailyReportProvider = ({ children }) => {
     dailyReportDirectPersonalShift: undefined,
     dailyReportDirectPersonalHours: undefined,
     dailyReportDirectPersonalJourney: undefined,
-    dailyReportIndirectTurns: [],
-    // dailyReportIndirectPersonalShift: undefined,
-    // dailyReportIndirectPersonalHours: undefined,
-    // dailyReportIndirectPersonalJourney: undefined,
   })
 
   useEffect(() => {
@@ -273,13 +269,15 @@ export const DailyReportProvider = ({ children }) => {
     setVehiclePlateList(selectedVehiclePlateList || [])
   }, [selectedVehiclePlateList])
 
+  const [indirectCompanyTurnList, setIndirectCompanyTurnList] = useState([])
+
   const storeIndirectCompanyTurn = async (data) => {
-    setCompany({ ...company, dailyReportIndirectCompanyTurn: data })
+    setIndirectCompanyTurnList(data)
   }
 
   const removeIndirectCompanyTurn = async (id) => {
-    const newData = company?.dailyReportIndirectCompanyTurn.filter((item) => item.id !== id)
-    setCompany({ ...company, dailyReportIndirectCompanyTurn: newData })
+    const newData = indirectCompanyTurnList.filter((item) => item.id !== id)
+    setIndirectCompanyTurnList(newData)
   }
 
   const storeCompanyData = async (data) => {
@@ -527,10 +525,8 @@ export const DailyReportProvider = ({ children }) => {
       dailyReportDirectPersonalShift: undefined,
       dailyReportDirectPersonalHours: undefined,
       dailyReportDirectPersonalJourney: undefined,
-      // dailyReportIndirectPersonalShift: undefined,
-      // dailyReportIndirectPersonalHours: undefined,
-      // dailyReportIndirectPersonalJourney: undefined,
     })
+    setIndirectCompanyTurnList([])
     setTotalDirectWorkForce({
       directCurrentAccumulated: undefined,
       directPreviusAccumulated: undefined,
@@ -585,6 +581,7 @@ export const DailyReportProvider = ({ children }) => {
     <DailyReportContext.Provider
       value={{
         company,
+        indirectCompanyTurnList,
         storeIndirectCompanyTurn,
         removeIndirectCompanyTurn,
         totalIndirectWorkForce,

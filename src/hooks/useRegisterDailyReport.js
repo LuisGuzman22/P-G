@@ -13,6 +13,7 @@ const useRegisterDailyReport = () => {
   const [success, setSuccess] = useState(false)
   const {
     company,
+    indirectCompanyTurnList,
     indirectWorkForceList,
     directWorkForceList,
     totalIndirectWorkForce,
@@ -89,6 +90,7 @@ const useRegisterDailyReport = () => {
       projectId: projectLS.id,
       contractId: contractLS.id,
       company, // 1
+      indirectCompanyTurnList,
       indirectWorkForceList, // 2
       totalIndirectWorkForce, // 3
       directWorkForceList, // 4

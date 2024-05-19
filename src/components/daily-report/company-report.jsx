@@ -27,8 +27,13 @@ const CompanyReport = () => {
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
 
-  const { storeCompanyData, storeIndirectCompanyTurn, company, removeIndirectCompanyTurn } =
-    useRegisterDailyReportCompany()
+  const {
+    storeCompanyData,
+    storeIndirectCompanyTurn,
+    company,
+    removeIndirectCompanyTurn,
+    indirectCompanyTurnList: indirectCompanyTurnListContext,
+  } = useRegisterDailyReportCompany()
   const { registerData } = useRegisterDailyReport()
   const { getProject, getContract } = useRegisterGeneralData()
 
@@ -73,10 +78,7 @@ const CompanyReport = () => {
         dailyReportIndirectPersonalJourney: indirectPersonal.dailyReportIndirectPersonalJourney,
       }
       setIndirectPersonal(initialState) // Clear the object
-      setIndirectPersonalList([
-        ...(company?.dailyReportIndirectCompanyTurn || []),
-        indirectPersonalInitialState,
-      ])
+      setIndirectPersonalList([...indirectCompanyTurnListContext, indirectPersonalInitialState])
     }
   }
 
@@ -85,7 +87,7 @@ const CompanyReport = () => {
   }, [indirectPersonalList])
 
   const deleteIndirectCompanyTurn = (id) => {
-    const newData = company?.dailyReportIndirectCompanyTurn.filter((item) => item.id !== id)
+    const newData = indirectCompanyTurnListContext.filter((item) => item.id !== id)
     setIndirectPersonalList(newData)
     removeIndirectCompanyTurn(id)
   }
@@ -321,10 +323,9 @@ const CompanyReport = () => {
             </CButton>
           </CCol>
         </CRow>
-        {company &&
-          company.dailyReportIndirectCompanyTurn &&
-          company.dailyReportIndirectCompanyTurn.length > 0 &&
-          company.dailyReportIndirectCompanyTurn[0].dailyReportIndirectPersonalShift && (
+        {indirectCompanyTurnListContext &&
+          indirectCompanyTurnListContext.length > 0 &&
+          indirectCompanyTurnListContext[0].dailyReportIndirectPersonalShift && (
             <CTable className="resume-table">
               <CTableHead>
                 <CTableRow>
@@ -334,7 +335,7 @@ const CompanyReport = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {company.dailyReportIndirectCompanyTurn.map((item, index) => {
+                {indirectCompanyTurnListContext.map((item, index) => {
                   const selectedShift = basicQuery?.shifts.find(
                     (shift) => shift.id == item.dailyReportIndirectPersonalShift,
                   )

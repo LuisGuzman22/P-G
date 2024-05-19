@@ -5,6 +5,7 @@ const useRegisterDailyReportCompany = () => {
   const {
     company,
     storeCompanyData,
+    indirectCompanyTurnList,
     removeIndirectCompanyTurn,
     storeIndirectCompanyTurn,
     storeIndirectWorkForceData,
@@ -70,6 +71,7 @@ const useRegisterDailyReportCompany = () => {
   return {
     company,
     storeCompanyData,
+    indirectCompanyTurnList,
     removeIndirectCompanyTurn,
     storeIndirectCompanyTurn,
     storeIndirectWorkForceData,
