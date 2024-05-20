@@ -222,7 +222,7 @@ const TotalIndirectWorkForce = () => {
               <CFormInput
                 type="text"
                 id="indirectPreviusAccumulated"
-                disabled
+                disabled={isViewMode}
                 // value={totalIndirectWorkForcePrevious.indirectCurrentAccumulated || '0'}
                 value={
                   !isViewMode

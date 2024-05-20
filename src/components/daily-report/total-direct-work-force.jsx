@@ -222,7 +222,7 @@ const TotalDirectWorkForce = () => {
                     : directAccumulatedPrevious
                 }
                 // indirectAccumulatedPrevious
-                disabled
+                disabled={isViewMode}
                 placeholder="Total"
                 text=""
                 onChange={(e) => {
