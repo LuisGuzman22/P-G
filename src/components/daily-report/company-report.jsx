@@ -92,6 +92,16 @@ const CompanyReport = () => {
     removeIndirectCompanyTurn(id)
   }
 
+  const editIndirectCompanyTurn = (id) => {
+    const newData = indirectCompanyTurnListContext.find((item) => item.id === id)
+    setIndirectPersonal({
+      dailyReportIndirectPersonalShift: newData.dailyReportIndirectPersonalShift,
+      dailyReportIndirectPersonalHours: newData.dailyReportIndirectPersonalHours,
+      dailyReportIndirectPersonalJourney: newData.dailyReportIndirectPersonalJourney,
+    })
+    deleteIndirectCompanyTurn(id)
+  }
+
   return (
     <div className="company-report">
       <CForm>
@@ -174,9 +184,9 @@ const CompanyReport = () => {
               id="dailyReportContractManagerName"
               label="Administrador de contrato"
               placeholder="Administrador de contrato"
-              value={company.dailyReportContractManagerName || ''}
+              value={company.dailyReportContractManagerName || projectLS.manager}
               text=""
-              disabled={isViewMode}
+              disabled
               onChange={(e) => {
                 onChangeData(e)
               }}
@@ -368,7 +378,7 @@ const CompanyReport = () => {
                           <CButton
                             className="btn-project-action"
                             onClick={() => {
-                              // editEquipment(item.id)
+                              editIndirectCompanyTurn(item.id)
                             }}
                           >
                             Editar

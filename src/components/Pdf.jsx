@@ -67,26 +67,21 @@ const Pdf = (props) => {
   const [selectedIndirectStaffShift, setSelectedIndirectStaffShift] = useState('')
   const [selectedDirectShift, setSelectedDirectShift] = useState('')
   const [selectedIndirectShift, setSelectedIndirectShift] = useState('')
+  const [selectedIndirectHours, setSelectedIndirectHours] = useState('')
 
   useEffect(() => {
     const weatherSel = weather.find((weath) => weath.id === company?.dailyReportWeather)
     const directStaffShiftSel = direct_staff_shift.find(
       (dss) => dss.id.toString() === company?.dailyReportDirectPersonalShift.toString(),
     )
-    const indirectStaffShiftSel = indirect_staff_shift.find(
-      (iss) => iss.id.toString() === company?.dailyReportIndirectPersonalShift.toString(),
-    )
+
     const directShiftSel = shifts.find(
       (shift) => shift.id.toString() === company?.dailyReportDirectPersonalJourney.toString(),
     )
-    const indirectShiftSel = shifts.find(
-      (shift) => shift.id.toString() === company?.dailyReportIndirectPersonalJourney.toString(),
-    )
+
     setSelectedWeather(weatherSel.name)
     setSelectedDirectStaffShift(directStaffShiftSel.name)
-    setSelectedIndirectStaffShift(indirectStaffShiftSel.name)
     setSelectedDirectShift(directShiftSel.name)
-    setSelectedIndirectShift(indirectShiftSel.name)
   }, [company])
 
   const [totalMacOffered, setTotalMacOffered] = useState(0)
@@ -149,6 +144,41 @@ const Pdf = (props) => {
     setTotalMacOpperationalLoss(macOperationalLoss)
     setTotalMacHorometer(macHorometer)
   }, [machineryList])
+
+  const concatWithPipe = (arr) => {
+    return arr
+      .map((str, index) => {
+        if (index < arr.length - 1) {
+          return str + ' | '
+        }
+        return str
+      })
+      .join('')
+  }
+  useEffect(() => {
+    let shiftList = []
+    let journeyList = []
+    let hourList = []
+    indirectCompanyTurnList.map((indirect) => {
+      const indirectStaffShiftSel = indirect_staff_shift.find(
+        (iss) => iss.id.toString() === indirect.dailyReportIndirectPersonalShift.toString(),
+      )
+
+      shiftList.push(indirectStaffShiftSel.name)
+
+      const indirectShiftSel = shifts.find(
+        (shift) => shift.id.toString() === indirect.dailyReportIndirectPersonalJourney.toString(),
+      )
+
+      journeyList.push(indirectShiftSel.name)
+
+      hourList.push(indirect.dailyReportIndirectPersonalHours)
+    })
+
+    setSelectedIndirectStaffShift(concatWithPipe(shiftList))
+    setSelectedIndirectShift(concatWithPipe(journeyList))
+    setSelectedIndirectHours(concatWithPipe(hourList))
+  }, [indirectCompanyTurnList])
 
   const [totalEquipOffered, setTotalEquipOffered] = useState(0)
   const [totalEquipCertified, setTotalEquipCertified] = useState(0)
@@ -367,7 +397,7 @@ const Pdf = (props) => {
               <td className="td-label">Horas Turno</td>
               <td>{company?.dailyReportDirectPersonalHours}</td>
               <td className="td-label">Horas Turno</td>
-              <td>{company?.dailyReportIndirectPersonalHours}</td>
+              <td>{selectedIndirectHours}</td>
             </tr>
             <tr>
               <td className="td-label">Nombre del Administrador de Contrato</td>

@@ -9,9 +9,10 @@ export const DailyReportContext = createContext({
 
 // eslint-disable-next-line react/prop-types
 export const DailyReportProvider = ({ children }) => {
-  const { getContract } = useRegisterGeneralData()
+  const { getContract, getProject } = useRegisterGeneralData()
 
   const contractLS = JSON.parse(getContract())
+  const projectLT = JSON.parse(getProject())
 
   const { getData } = useGetCachedQueryData()
 
@@ -293,6 +294,7 @@ export const DailyReportProvider = ({ children }) => {
           dailyReportDate: data.target.value,
           dailyReportContratistNumber: contractLS.code,
           dailyReportContractName: contractLS.name,
+          dailyReportContractManagerName: projectLT.manager,
         })
         break
       case 'dailyReportNumber':
@@ -524,9 +526,9 @@ export const DailyReportProvider = ({ children }) => {
     setPhotoList(data)
   }
 
-  useEffect(() => {
-    console.log('photoList', photoList)
-  }, [photoList])
+  // useEffect(() => {
+  //   console.log('photoList', photoList)
+  // }, [photoList])
 
   const removePhoto = async (id) => {
     const newData = photoList.filter((item) => item.id !== id)

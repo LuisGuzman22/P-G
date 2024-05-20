@@ -38,6 +38,7 @@ const ProjectSelector = () => {
       const data = {
         name: project.name,
         id: project.id,
+        manager: project.manager || '',
       }
       saveProject(data)
       navigate(`/contrato`)
@@ -45,6 +46,7 @@ const ProjectSelector = () => {
       const data = {
         name: project.name,
         id: project.id,
+        manager: project.manager || '',
       }
       saveProject(data)
       navigate(`/dashboard`)
