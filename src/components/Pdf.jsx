@@ -1082,25 +1082,19 @@ const Pdf = (props) => {
           <tbody>
             <tr>
               <td className="">Nombre</td>
-              <td className="">Marcelo Paniagua</td>
+              <td className=""></td>
               <td className="">Nombre</td>
-              <td className="">Alfonso Aguilar</td>
+              <td className=""></td>
               <td className="">Nombre</td>
-              <td className="">Alexis Tapia</td>
+              <td className=""></td>
             </tr>
             <tr>
               <td className="">Firma</td>
-              <td className="">
-                <img src={firma2} style={{ width: 'auto' }} />
-              </td>
+              <td className="">{/* <img src={firma2} style={{ width: 'auto' }} /> */}</td>
               <td className="">Firma</td>
-              <td className="">
-                <img src={firma3} style={{ width: 'auto' }} />
-              </td>
+              <td className="">{/* <img src={firma3} style={{ width: 'auto' }} /> */}</td>
               <td className="">Firma</td>
-              <td className="">
-                <img src={firma1} style={{ width: 'auto' }} />
-              </td>
+              <td className="">{/* <img src={firma1} style={{ width: 'auto' }} /> */}</td>
             </tr>
             <tr>
               <td className="">Fecha</td>
