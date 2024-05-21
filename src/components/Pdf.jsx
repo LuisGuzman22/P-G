@@ -1090,11 +1090,35 @@ const Pdf = (props) => {
             </tr>
             <tr>
               <td className="">Firma</td>
-              <td className="">{/* <img src={firma2} style={{ width: 'auto' }} /> */}</td>
+              <td className="">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                {/* <img src={firma2} style={{ width: 'auto' }} /> */}
+              </td>
               <td className="">Firma</td>
-              <td className="">{/* <img src={firma3} style={{ width: 'auto' }} /> */}</td>
+              <td className="">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                {/* <img src={firma3} style={{ width: 'auto' }} /> */}
+              </td>
               <td className="">Firma</td>
-              <td className="">{/* <img src={firma1} style={{ width: 'auto' }} /> */}</td>
+              <td className="">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                {/* <img src={firma1} style={{ width: 'auto' }} /> */}
+              </td>
             </tr>
             <tr>
               <td className="">Fecha</td>
