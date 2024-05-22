@@ -53,14 +53,14 @@ const TotalIndirectWorkForce = () => {
   const [total, setTotal] = useState(0)
 
   const onChangeData = (e) => {
-    // if (validate(e.target.value)) {
-    //   // setTotalIndirectWorkForce({
-    //   //   // Después debe cambiar por el state unico
-    //   //   ...totalIndirectWorkForce,
-    //   //   indirectPreviusAccumulated: e.target.value,
-    //   // })
-    //   setIndirectAccumulatedActual(Number(e.target.value) + Number(indirectAccumulatedHours))
-    // }
+    if (validate(e.target.value)) {
+      setTotalIndirectWorkForce({
+        // Después debe cambiar por el state unico
+        ...totalIndirectWorkForce,
+        indirectPreviusAccumulated: e.target.value,
+      })
+      setIndirectAccumulatedActual(Number(e.target.value) + Number(indirectAccumulatedHours))
+    }
   }
 
   useEffect(() => {
@@ -223,7 +223,7 @@ const TotalIndirectWorkForce = () => {
                 type="text"
                 id="indirectPreviusAccumulated"
                 disabled={isViewMode}
-                // value={totalIndirectWorkForcePrevious.indirectCurrentAccumulated || '0'}
+                // value={totalIndirectWorkForce.indirectPreviusAccumulated || '0'}
                 value={
                   !isViewMode
                     ? totalIndirectWorkForce.indirectPreviusAccumulated || ''

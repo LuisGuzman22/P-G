@@ -54,10 +54,10 @@ const TotalDirectWorkForce = () => {
   const [total, setTotal] = useState(0)
 
   const onChangeData = (e) => {
-    // if (validate(e.target.value)) {
-    //   setTotalDirectWorkForce({ ...totalDirectWorkForce, directPreviusAccumulated: e.target.value })
-    //   setDirectAccumulatedActual(Number(e.target.value) + Number(directAccumulatedHours))
-    // }
+    if (validate(e.target.value)) {
+      setTotalDirectWorkForce({ ...totalDirectWorkForce, directPreviusAccumulated: e.target.value })
+      setDirectAccumulatedActual(Number(e.target.value) + Number(directAccumulatedHours))
+    }
   }
 
   useEffect(() => {

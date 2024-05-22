@@ -34,11 +34,18 @@ const useRegisterDailyReport = () => {
     aljibeList,
     clearContext,
     graphList,
-    // photoList,
+    photoList,
   } = useContext(DailyReportContext)
 
   const { mutate } = useMutation({
     mutationFn: async (newTodo) =>
+      //   axios.post('ASD', newTodo,
+      //   {
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   }),
+
       axios.post('https://pyg-production.up.railway.app/api/v1/reports', newTodo),
     onSuccess: () => {
       setLoading(false)
@@ -84,6 +91,7 @@ const useRegisterDailyReport = () => {
   }
 
   const registerData = async () => {
+    console.log('post', photoList)
     setLoading(true)
     setError()
     setSuccess(false)

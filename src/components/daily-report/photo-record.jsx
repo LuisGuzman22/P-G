@@ -36,13 +36,13 @@ const PhotoRecord = () => {
   const onChangeFile = (pos, e) => {
     if (pos >= 0 && pos < items.length) {
       const file = e.target.files[0]
+      console.log('file', file)
       const description = items[pos].description // Retain the current description
       setFileAndDescription(pos, file, description)
     }
   }
 
   const onChangeDescription = (pos, e) => {
-    console.log('pos', pos)
     if (pos >= 0 && pos < items.length) {
       const file = items[pos].file // Retain the current file
       const description = e.target.value
