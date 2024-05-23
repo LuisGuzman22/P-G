@@ -357,9 +357,7 @@ const CompanyReport = () => {
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell>{selectedTurn?.name ?? ''}</CTableDataCell>
-                      <CTableDataCell>
-                        {item.dailyReportIndirectPersonalJourney ?? 0}
-                      </CTableDataCell>
+                      <CTableDataCell>{item.dailyReportIndirectPersonalHours ?? 0}</CTableDataCell>
                       <CTableDataCell>{selectedShift?.name ?? ''}</CTableDataCell>
                       <CTableDataCell>
                         {isCreatingMode && (
