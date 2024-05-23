@@ -39,14 +39,17 @@ const useRegisterDailyReport = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (newTodo) =>
-      //   axios.post('ASD', newTodo,
-      //   {
-      //     headers: {
-      //       'Content-Type': 'multipart/form-data',
-      //     },
-      //   }),
+      // axios.post('ASD', newTodo, {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data',
+      //   },
+      // }),
 
-      axios.post('https://pyg-production.up.railway.app/api/v1/reports', newTodo),
+      axios.post('https://pyg-production.up.railway.app/api/v1/reports', newTodo, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
     onSuccess: () => {
       setLoading(false)
       setSuccess(true)
@@ -119,7 +122,7 @@ const useRegisterDailyReport = () => {
       equipmentPlateList, // 11
       aljibeList, // 16
       graphList,
-      // photoList,
+      photoList,
     })
     return data
   }

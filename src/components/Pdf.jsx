@@ -1087,6 +1087,10 @@ const Pdf = (props) => {
               <td className=""></td>
               <td className="">Nombre</td>
               <td className=""></td>
+              <td className="">Nombre</td>
+              <td className=""></td>
+              <td className="">Nombre</td>
+              <td className=""></td>
             </tr>
             <tr>
               <td className="">Firma</td>
@@ -1119,8 +1123,32 @@ const Pdf = (props) => {
                 <br />
                 {/* <img src={firma1} style={{ width: 'auto' }} /> */}
               </td>
+              <td className="">Firma</td>
+              <td className="">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                {/* <img src={firma1} style={{ width: 'auto' }} /> */}
+              </td>
+              <td className="">Firma</td>
+              <td className="">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                {/* <img src={firma1} style={{ width: 'auto' }} /> */}
+              </td>
             </tr>
             <tr>
+              <td className="">Fecha</td>
+              <td>{company?.dailyReportDate}</td>
+              <td className="">Fecha</td>
+              <td>{company?.dailyReportDate}</td>
               <td className="">Fecha</td>
               <td>{company?.dailyReportDate}</td>
               <td className="">Fecha</td>
