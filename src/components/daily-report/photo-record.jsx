@@ -3,9 +3,10 @@ import { CFormInput, CFormTextarea, CRow, CCol } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { useLocation } from 'react-router-dom'
 import firma2 from 'src/assets/images/firma2.png'
+import { v4 as uuidv4 } from 'uuid'
 
 const PhotoRecord = () => {
-  const MAX_IMAGES = 10
+  const MAX_IMAGES = 5
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
@@ -20,8 +21,12 @@ const PhotoRecord = () => {
     const setFileAndDescription = (index, file, description) => {
       setItems((prevItems) => {
         const newItems = [...prevItems]
-        const urlImg = URL.createObjectURL(file)
-        newItems[index] = { file, description, urlImg }
+        const blob = file || file !== null ? file.slice(0, file.size, file.type) : undefined
+        const newFile = blob
+          ? new File([blob], `${uuidv4().split('-')[0]}.png`, { type: 'image/png' })
+          : undefined
+        const urlImg = newFile ? URL.createObjectURL(newFile) : undefined
+        newItems[index] = { file: newFile, description, urlImg }
         return newItems
       })
     }
@@ -29,7 +34,7 @@ const PhotoRecord = () => {
     return [items, setFileAndDescription]
   }
 
-  const [items, setFileAndDescription] = useFileState(10) // Adjust the number of files as needed
+  const [items, setFileAndDescription] = useFileState(5) // Adjust the number of files as needed
 
   useEffect(() => {
     if (!isViewMode) storePhoto(items)
@@ -38,7 +43,6 @@ const PhotoRecord = () => {
   const onChangeFile = (pos, e) => {
     if (pos >= 0 && pos < items.length) {
       const file = e.target.files[0]
-      console.log('file', file)
       const description = items[pos].description // Retain the current description
       setFileAndDescription(pos, file, description)
     }

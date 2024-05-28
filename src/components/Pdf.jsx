@@ -63,7 +63,7 @@ const Pdf = (props) => {
     indirect_staff_shift,
     shifts,
   } = basicQuery
-  console.log('props', props.photoList)
+  // console.log('props', props.photoList)
 
   const [selectedWeather, setSelectedWeather] = useState('')
   const [selectedDirectStaffShift, setSelectedDirectStaffShift] = useState('')
@@ -1086,12 +1086,14 @@ const Pdf = (props) => {
               {photoList.map((photo, i) => {
                 return (
                   <td className="" style={{ textAlign: 'center' }} key={i}>
-                    <img
-                      // src={`https://pyg-production.up.railway.app${photo.url}`}
-                      src={not_found}
-                      style={{ width: '50%', textAlign: 'center' }}
-                    />
-                    <label style={{ textAlign: 'center' }}>{photo.description}</label>
+                    <div style={{ textAlign: 'center', width: '100%' }}>
+                      <img
+                        src={photo.base64}
+                        // src={not_found}
+                        style={{ width: '500px', height: '500px', textAlign: 'center' }}
+                      />
+                      <label style={{ textAlign: 'justify' }}>{photo.description}</label>
+                    </div>
                   </td>
                 )
               })}
