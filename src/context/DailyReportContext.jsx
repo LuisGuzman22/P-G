@@ -527,10 +527,6 @@ export const DailyReportProvider = ({ children }) => {
     setPhotoList(data)
   }
 
-  useEffect(() => {
-    console.log('photolist', photoList)
-  }, [photoList])
-
   const removePhoto = async (id) => {
     const newData = photoList.filter((item) => item.id !== id)
     setPhotoList(newData)

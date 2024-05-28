@@ -47,6 +47,7 @@ const Pdf = (props) => {
     equipmentWorkForceList,
     graphList,
     photoList,
+    barChartData,
   } = props
   const {
     indirectPersonal,
@@ -61,7 +62,7 @@ const Pdf = (props) => {
     indirect_staff_shift,
     shifts,
   } = basicQuery
-  // console.log('props', props.graphList)
+  console.log('props', props.barChartData)
 
   const [selectedWeather, setSelectedWeather] = useState('')
   const [selectedDirectStaffShift, setSelectedDirectStaffShift] = useState('')
@@ -69,8 +70,6 @@ const Pdf = (props) => {
   const [selectedDirectShift, setSelectedDirectShift] = useState('')
   const [selectedIndirectShift, setSelectedIndirectShift] = useState('')
   const [selectedIndirectHours, setSelectedIndirectHours] = useState('')
-
-  console.log('photoList', photoList)
 
   useEffect(() => {
     const weatherSel = weather.find((weath) => weath.id === company?.dailyReportWeather)
@@ -1088,7 +1087,7 @@ const Pdf = (props) => {
                 {/* <Image src={img} style={{ width: '100%', textAlign: 'center' }} /> */}
                 {/* <img src={img} style={{ width: 'auto' }} /> */}
 
-                <img src="https://pyg-production.up.railway.app/storage/report-images/9/copia.jpeg" />
+                <img src="https://pyg-production.up.railway.app/storage/report-images/10/copia.jpeg" />
                 {/* <img src="https://images.pexels.com/photos/20066389/pexels-photo-20066389/free-photo-of-a-bubble-is-floating-in-the-sky-over-trees.jpeg" /> */}
               </td>
             </tr>
@@ -1107,9 +1106,49 @@ const Pdf = (props) => {
           <tbody>
             <tr>
               <td className="" style={{ textAlign: 'center' }}>
+                <table>
+                  <tr>
+                    <td>Dotación planeada directos total</td>
+                    <td>{barChartData?.totalPlanedDotation || 0}</td>
+                  </tr>
+                  <tr>
+                    <td>Dotación directos obra total</td>
+                    <td>{barChartData?.totalWorkDotation || 0}</td>
+                  </tr>
+                </table>
                 <img src={imagenColumnChart} style={{ width: '100%', textAlign: 'center' }} />
               </td>
               <td className="" style={{ textAlign: 'center' }}>
+                <table>
+                  <tr>
+                    <td>Tiempo Efectivo (Hrs)</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td>Mantención Programada (Hrs)</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td>Demora Programada (Hrs)</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td>Perdida Operacional (Hrs)</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td>Mantención No Programada (Hrs)</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td>Demora No Programada (Hrs)</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td>Reservas (Hrs)</td>
+                    <td>1</td>
+                  </tr>
+                </table>
                 <img src={imagenPieChart} style={{ width: '100%', textAlign: 'center' }} />
               </td>
             </tr>

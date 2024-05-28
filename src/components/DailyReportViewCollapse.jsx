@@ -173,6 +173,7 @@ const DailyReportViewCollapse = () => {
               equipmentWorkForceList={equipmentWorkForceList}
               graphList={graphList}
               photoList={photoList}
+              barChartData={{ totalPlanedDotation, totalWorkDotation }}
             />
           }
           fileName="Reporte 1.pdf"
