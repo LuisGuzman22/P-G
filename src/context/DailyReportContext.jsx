@@ -47,6 +47,7 @@ export const DailyReportProvider = ({ children }) => {
   const selectedComment = selectedReport?.comment
   const selectedVehiclePlateList = selectedReport?.vehiclePlateList
   const selectedGraphList = selectedReport?.graphList
+  const selectedPhotoList = selectedReport?.photoList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -526,10 +527,18 @@ export const DailyReportProvider = ({ children }) => {
     setPhotoList(data)
   }
 
+  useEffect(() => {
+    console.log('photolist', photoList)
+  }, [photoList])
+
   const removePhoto = async (id) => {
     const newData = photoList.filter((item) => item.id !== id)
     setPhotoList(newData)
   }
+
+  useEffect(() => {
+    setPhotoList(selectedPhotoList || [])
+  }, [selectedPhotoList])
 
   const clearContext = () => {
     setCompany({
@@ -593,6 +602,7 @@ export const DailyReportProvider = ({ children }) => {
     setComment('')
     setVehiclePlateList([])
     setGraphList([])
+    setPhotoList([])
   }
 
   return (

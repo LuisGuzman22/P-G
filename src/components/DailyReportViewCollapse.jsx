@@ -69,6 +69,7 @@ const DailyReportViewCollapse = () => {
     machineryWorkForceList,
     equipmentWorkForceList,
     graphList,
+    photoList,
   } = useRegisterDailyReportCompany()
 
   const [isLoading, setIsloading] = useState(false)
@@ -171,6 +172,7 @@ const DailyReportViewCollapse = () => {
               machineryWorkForceList={machineryWorkForceList}
               equipmentWorkForceList={equipmentWorkForceList}
               graphList={graphList}
+              photoList={photoList}
             />
           }
           fileName="Reporte 1.pdf"

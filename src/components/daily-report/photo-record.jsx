@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react'
 import { CFormInput, CFormTextarea, CRow, CCol } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { useLocation } from 'react-router-dom'
+import firma2 from 'src/assets/images/firma2.png'
 
 const PhotoRecord = () => {
   const MAX_IMAGES = 10
@@ -13,13 +14,14 @@ const PhotoRecord = () => {
 
   const useFileState = (initialCount) => {
     const [items, setItems] = useState(
-      Array.from({ length: initialCount }, () => ({ file: null, description: '' })),
+      Array.from({ length: initialCount }, () => ({ file: null, description: '', urlImg: '' })),
     )
 
     const setFileAndDescription = (index, file, description) => {
       setItems((prevItems) => {
         const newItems = [...prevItems]
-        newItems[index] = { file, description }
+        const urlImg = URL.createObjectURL(file)
+        newItems[index] = { file, description, urlImg }
         return newItems
       })
     }
@@ -76,6 +78,9 @@ const PhotoRecord = () => {
                 label="Fotografía"
                 aria-label="Upload"
               />
+            </CCol>
+            <CCol>
+              <img src={items[i].urlImg} style={{ width: '70%' }} />
             </CCol>
           </CRow>
         ))}

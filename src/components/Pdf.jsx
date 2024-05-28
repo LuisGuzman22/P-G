@@ -46,6 +46,7 @@ const Pdf = (props) => {
     machineryWorkForceList,
     equipmentWorkForceList,
     graphList,
+    photoList,
   } = props
   const {
     indirectPersonal,
@@ -68,6 +69,8 @@ const Pdf = (props) => {
   const [selectedDirectShift, setSelectedDirectShift] = useState('')
   const [selectedIndirectShift, setSelectedIndirectShift] = useState('')
   const [selectedIndirectHours, setSelectedIndirectHours] = useState('')
+
+  console.log('photoList', photoList)
 
   useEffect(() => {
     const weatherSel = weather.find((weath) => weath.id === company?.dailyReportWeather)
@@ -312,6 +315,41 @@ const Pdf = (props) => {
     setImagenColumnChart(dotationChart?.value || '')
     setImagenPieChart(asarcoChart?.value || '')
   }, [graphList])
+
+  // const toDataURL = (url) =>
+  //   fetch(url, { mode: 'no-cors' })
+  //     .then((response) => response.blob())
+  //     .then(
+  //       (blob) =>
+  //         new Promise((resolve, reject) => {
+  //           const reader = new FileReader()
+  //           reader.onloadend = () => resolve(reader.result)
+  //           reader.onerror = reject
+  //           reader.readAsDataURL(blob)
+  //         }),
+  //     )
+
+  // toDataURL('https://pyg-production.up.railway.app/storage/report-images/8/copia.jpeg')
+  //   .then((dataUrl) => {
+  //     console.log('RESULT:', dataUrl)
+  //   })
+  //   .catch((err) => {
+  //     console.log('err', err)
+  //   })
+
+  // const fetchPromise = fetch(
+  //   'https://pyg-production.up.railway.app/storage/report-images/8/copia.jpeg',
+  //   { mode: 'no-cors' },
+  // )
+
+  // fetchPromise
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log('fetch 2 ok', data)
+  //   })
+  //   .catch((err) => {
+  //     console.log('fetch 2 err', err)
+  //   })
 
   const element = (
     <html>
@@ -1031,6 +1069,29 @@ const Pdf = (props) => {
                 })}
               </>
             )}
+          </tbody>
+        </table>
+        <table border={1}>
+          <tbody>
+            <tr>
+              <td className="td-label" style={{ textAlign: 'center' }}>
+                FOTOGRAFÍAS
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table border={1}>
+          <tbody>
+            <tr>
+              <td className="" style={{ textAlign: 'center' }}>
+                {/* <img src={img} style={{ width: '100%', textAlign: 'center' }} /> */}
+                {/* <Image src={img} style={{ width: '100%', textAlign: 'center' }} /> */}
+                {/* <img src={img} style={{ width: 'auto' }} /> */}
+
+                <img src="https://pyg-production.up.railway.app/storage/report-images/8/copia.jpeg" />
+                {/* <img src="https://images.pexels.com/photos/20066389/pexels-photo-20066389/free-photo-of-a-bubble-is-floating-in-the-sky-over-trees.jpeg" /> */}
+              </td>
+            </tr>
           </tbody>
         </table>
         <table border={1}>
