@@ -59,7 +59,7 @@ const DailyReportCollapse = () => {
   }, [success])
 
   useEffect(() => {
-    setVisible(reportsQuery.length > 0)
+    setVisible(reportsQuery !== undefined && reportsQuery.length > 0)
   }, [reportsQuery])
 
   const handleLoadData = () => {

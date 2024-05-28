@@ -24,7 +24,7 @@ const TotalDirectWorkForce = () => {
   const reportsQuery = getData('reports')
 
   const { totalDirectWorkForce: totalDirectWorkForcePrevious } =
-    reportsQuery.length > 0 ? reportsQuery[0] : 0
+    reportsQuery !== undefined && reportsQuery.length > 0 ? reportsQuery[0] : 0
 
   const initialState = {
     directSubtotalOfferedNumber: undefined,

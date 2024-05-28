@@ -19,11 +19,18 @@ const TotalIndirectWorkForce = () => {
   const isCreatingMode = currentLocation === '/informe-diario'
   const { getData } = useGetCachedQueryData()
   const reportsQuery = getData('reports')
+  console.log('reportsQuery', reportsQuery)
 
   // let totalIndirectWorkForcePrevious = undefined
 
+  // if (reportsQuery !== undefined && reportsQuery.length > 0) {
+  //   totalIndirectWorkForcePrevious = reportsQuery[0].totalIndirectWorkForce
+  // } else {
+  //   totalIndirectWorkForcePrevious = 0
+  // }
+
   const { totalIndirectWorkForce: totalIndirectWorkForcePrevious } =
-    reportsQuery.length > 0 ? reportsQuery[0] : 0
+    reportsQuery !== undefined && reportsQuery.length > 0 ? reportsQuery[0] : 0
 
   const initialState = {
     indirectSubtotalOfferedNumber: undefined,
