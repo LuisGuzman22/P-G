@@ -81,6 +81,7 @@ const PhotoRecord = () => {
                 }}
                 label="Fotografía"
                 aria-label="Upload"
+                accept="image/png, image/jpeg"
               />
             </CCol>
             <CCol>
