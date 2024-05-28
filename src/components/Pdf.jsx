@@ -48,6 +48,7 @@ const Pdf = (props) => {
     graphList,
     photoList,
     barChartData,
+    pieChartData,
   } = props
   const {
     indirectPersonal,
@@ -62,7 +63,7 @@ const Pdf = (props) => {
     indirect_staff_shift,
     shifts,
   } = basicQuery
-  console.log('props', props.barChartData)
+  console.log('props', props.photoList)
 
   const [selectedWeather, setSelectedWeather] = useState('')
   const [selectedDirectStaffShift, setSelectedDirectStaffShift] = useState('')
@@ -1082,15 +1083,28 @@ const Pdf = (props) => {
         <table border={1}>
           <tbody>
             <tr>
-              <td className="" style={{ textAlign: 'center' }}>
-                {/* <img src={img} style={{ width: '100%', textAlign: 'center' }} /> */}
-                {/* <Image src={img} style={{ width: '100%', textAlign: 'center' }} /> */}
-                {/* <img src={img} style={{ width: 'auto' }} /> */}
-
-                <img src="https://pyg-production.up.railway.app/storage/report-images/10/copia.jpeg" />
-                {/* <img src="https://images.pexels.com/photos/20066389/pexels-photo-20066389/free-photo-of-a-bubble-is-floating-in-the-sky-over-trees.jpeg" /> */}
-              </td>
+              {photoList.map((photo, i) => {
+                return (
+                  <td className="" style={{ textAlign: 'center' }} key={i}>
+                    <img
+                      // src={`https://pyg-production.up.railway.app${photo.url}`}
+                      src={not_found}
+                      style={{ width: '50%', textAlign: 'center' }}
+                    />
+                    <label style={{ textAlign: 'center' }}>{photo.description}</label>
+                  </td>
+                )
+              })}
             </tr>
+
+            {/* <tr>
+              <td className="" style={{ textAlign: 'center' }}>
+                <img
+                  src="https://pyg-production.up.railway.app/storage/report-images/10/copia.jpeg"
+                  style={{ width: '50%', textAlign: 'center' }}
+                />
+              </td>
+            </tr> */}
           </tbody>
         </table>
         <table border={1}>
@@ -1122,31 +1136,31 @@ const Pdf = (props) => {
                 <table>
                   <tr>
                     <td>Tiempo Efectivo (Hrs)</td>
-                    <td>1</td>
+                    <td>{pieChartData?.effectiveTime || 0}</td>
                   </tr>
                   <tr>
                     <td>Mantención Programada (Hrs)</td>
-                    <td>1</td>
+                    <td>{pieChartData?.scheduleMaintimeTime || 0}</td>
                   </tr>
                   <tr>
                     <td>Demora Programada (Hrs)</td>
-                    <td>1</td>
+                    <td>{pieChartData?.scheduleDelay || 0}</td>
                   </tr>
                   <tr>
                     <td>Perdida Operacional (Hrs)</td>
-                    <td>1</td>
+                    <td>{pieChartData?.opperationalLoss || 0}</td>
                   </tr>
                   <tr>
                     <td>Mantención No Programada (Hrs)</td>
-                    <td>1</td>
+                    <td>{pieChartData?.unscheduleMaintimeTime || 0}</td>
                   </tr>
                   <tr>
                     <td>Demora No Programada (Hrs)</td>
-                    <td>1</td>
+                    <td>{pieChartData?.unscheduleDelay || 0}</td>
                   </tr>
                   <tr>
                     <td>Reservas (Hrs)</td>
-                    <td>1</td>
+                    <td>{pieChartData?.reserves || 0}</td>
                   </tr>
                 </table>
                 <img src={imagenPieChart} style={{ width: '100%', textAlign: 'center' }} />

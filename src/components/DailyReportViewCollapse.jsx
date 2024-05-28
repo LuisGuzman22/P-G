@@ -174,6 +174,15 @@ const DailyReportViewCollapse = () => {
               graphList={graphList}
               photoList={photoList}
               barChartData={{ totalPlanedDotation, totalWorkDotation }}
+              pieChartData={{
+                effectiveTime,
+                scheduleMaintimeTime,
+                scheduleDelay,
+                opperationalLoss,
+                unscheduleMaintimeTime,
+                unscheduleDelay,
+                reserves,
+              }}
             />
           }
           fileName="Reporte 1.pdf"
