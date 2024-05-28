@@ -1088,7 +1088,7 @@ const Pdf = (props) => {
                 {/* <Image src={img} style={{ width: '100%', textAlign: 'center' }} /> */}
                 {/* <img src={img} style={{ width: 'auto' }} /> */}
 
-                <img src="https://pyg-production.up.railway.app/storage/report-images/8/copia.jpeg" />
+                <img src="https://pyg-production.up.railway.app/storage/report-images/9/copia.jpeg" />
                 {/* <img src="https://images.pexels.com/photos/20066389/pexels-photo-20066389/free-photo-of-a-bubble-is-floating-in-the-sky-over-trees.jpeg" /> */}
               </td>
             </tr>
