@@ -9,6 +9,8 @@ import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useGetBasicData from 'src/hooks/useGetBasicData'
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import Chart from 'react-google-charts'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Dashboard = () => {
   let navigate = useNavigate()
@@ -21,7 +23,8 @@ const Dashboard = () => {
   const { data, isLoading, error } = useGetBasicData(contractLS.id)
   const { getData } = useGetCachedQueryData()
 
-  useFetchReportsData()
+  const { isFetching } = useFetchReportsData(projectLS.id, contractLS.id)
+  console.log('loadingReports', isFetching)
   const reportsQuery = getData('reports')
 
   useEffect(() => {
@@ -60,42 +63,43 @@ const Dashboard = () => {
           </CCardText>
         </CCardBody>
       </CCard>
-      {
-        /*localStorage.getItem('USER_TYPE') === 'admin' &&*/ reportsQuery &&
-          reportsQuery.length > 0 && (
-            <>
-              <br />
-              <CCard>
-                <CCardBody>
-                  <CCardText>
-                    <>
-                      <span>Tienes {reportsQuery.length} informes diarios generados.</span>
-                      <CRow>
-                        {reportsQuery.map((report) => {
-                          return (
-                            <>
-                              <CCol>
-                                <CButton
-                                  className="dashboard-button"
-                                  onClick={() => {
-                                    localStorage.setItem('daily_report', report.id)
-                                    redirectTo('/informe-diario/view')
-                                  }}
-                                >
-                                  {report.id}
-                                </CButton>
-                              </CCol>
-                            </>
-                          )
-                        })}
-                      </CRow>
-                    </>
-                  </CCardText>
-                </CCardBody>
-              </CCard>
-            </>
-          )
-      }
+      {reportsQuery && reportsQuery.length > 0 && (
+        <>
+          <br />
+          <CCard>
+            <CCardBody>
+              {!isFetching ? (
+                <CCardText>
+                  <>
+                    <span>Tienes {reportsQuery.length} informes diarios generados.</span>
+                    <CRow>
+                      {reportsQuery.map((report) => {
+                        return (
+                          <>
+                            <CCol>
+                              <CButton
+                                className="dashboard-button"
+                                onClick={() => {
+                                  localStorage.setItem('daily_report', report.id)
+                                  redirectTo('/informe-diario/view')
+                                }}
+                              >
+                                {report.id}
+                              </CButton>
+                            </CCol>
+                          </>
+                        )
+                      })}
+                    </CRow>
+                  </>
+                </CCardText>
+              ) : (
+                <Skeleton count={2} />
+              )}
+            </CCardBody>
+          </CCard>
+        </>
+      )}
 
       <br />
       <CCard>
@@ -108,60 +112,64 @@ const Dashboard = () => {
       <br />
       <CCard>
         <CCardBody>
-          <CCardText>
-            <div>
-              <CRow>
-                <CCol sm={4}>
-                  <CButton
-                    className="dashboard-button"
-                    onClick={() => {
-                      redirectTo('/informe-diario')
-                    }}
-                  >
-                    Informe Diario
-                  </CButton>
-                </CCol>
-                <CCol sm={4}>
-                  <CButton
-                    className="dashboard-button"
-                    onClick={() => {
-                      redirectTo('/trisemanal')
-                    }}
-                  >
-                    Trisemanal
-                  </CButton>
-                </CCol>
-                <CCol sm={4}>
-                  <CButton
-                    className="dashboard-button"
-                    onClick={() => {
-                      redirectTo('/carta-gantt')
-                    }}
-                  >
-                    Carta Gantt
-                  </CButton>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol sm={4}>
-                  <CButton
-                    className="dashboard-button"
-                    onClick={() => {
-                      redirectTo('/avance')
-                    }}
-                  >
-                    Avance
-                  </CButton>
-                </CCol>
-                <CCol sm={4}>
-                  <CButton className="dashboard-button">TOP NO+PAPEL</CButton>
-                </CCol>
-                <CCol sm={4}>
-                  {/* <CButton className="dashboard-button">Carta Gantt</CButton> */}
-                </CCol>
-              </CRow>
-            </div>
-          </CCardText>
+          {!isFetching ? (
+            <CCardText>
+              <div>
+                <CRow>
+                  <CCol sm={4}>
+                    <CButton
+                      className="dashboard-button"
+                      onClick={() => {
+                        redirectTo('/informe-diario')
+                      }}
+                    >
+                      Informe Diario
+                    </CButton>
+                  </CCol>
+                  <CCol sm={4}>
+                    <CButton
+                      className="dashboard-button"
+                      onClick={() => {
+                        redirectTo('/trisemanal')
+                      }}
+                    >
+                      Trisemanal
+                    </CButton>
+                  </CCol>
+                  <CCol sm={4}>
+                    <CButton
+                      className="dashboard-button"
+                      onClick={() => {
+                        redirectTo('/carta-gantt')
+                      }}
+                    >
+                      Carta Gantt
+                    </CButton>
+                  </CCol>
+                </CRow>
+                <CRow>
+                  <CCol sm={4}>
+                    <CButton
+                      className="dashboard-button"
+                      onClick={() => {
+                        redirectTo('/avance')
+                      }}
+                    >
+                      Avance
+                    </CButton>
+                  </CCol>
+                  <CCol sm={4}>
+                    <CButton className="dashboard-button">TOP NO+PAPEL</CButton>
+                  </CCol>
+                  <CCol sm={4}>
+                    {/* <CButton className="dashboard-button">Carta Gantt</CButton> */}
+                  </CCol>
+                </CRow>
+              </div>
+            </CCardText>
+          ) : (
+            <Skeleton count={2} />
+          )}
         </CCardBody>
       </CCard>
     </div>

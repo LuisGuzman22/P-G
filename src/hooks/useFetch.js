@@ -38,8 +38,11 @@ const testToken = async () => {
   return res.data.data
 }
 
-export const fetchReportsData = async () => {
-  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/reports', {
+export const fetchReportsData = async (projectId, contractId) => {
+  // const res = await axios.get(
+  //   `https://pyg-production.up.railway.app/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
+  //   {
+  const res = await axios.get(`https://pyg-production.up.railway.app/api/v1/reports`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -93,14 +96,14 @@ export const useFetchUserList = () => {
   })
 }
 
-export const useFetchReportsData = () => {
+export const useFetchReportsData = (projectId, contractId) => {
   return useQuery({
     queryKey: ['reports'],
     staleTime: 0,
     gcTime: 2147483647,
     refetchType: 'all',
     queryFn: async () => {
-      return fetchReportsData()
+      return fetchReportsData(projectId, contractId)
     },
   })
 }

@@ -18,6 +18,8 @@ import useLogin from 'src/hooks/useLogin'
 import { useQueryClient } from '@tanstack/react-query'
 import { regex } from 'src/utils/regex'
 import Loading from 'src/components/loading'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Login = () => {
   const queryClient = useQueryClient()
@@ -104,7 +106,7 @@ const Login = () => {
                       />
                     </CInputGroup>
                     {error && <>{error}</>}
-                    {isLoading && <Loading />}
+                    {isLoading && <Skeleton count={2} />}
                     <CRow>
                       <CCol xs={12}>
                         <CButton

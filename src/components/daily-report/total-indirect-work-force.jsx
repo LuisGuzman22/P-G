@@ -19,7 +19,6 @@ const TotalIndirectWorkForce = () => {
   const isCreatingMode = currentLocation === '/informe-diario'
   const { getData } = useGetCachedQueryData()
   const reportsQuery = getData('reports')
-  console.log('reportsQuery', reportsQuery)
 
   // let totalIndirectWorkForcePrevious = undefined
 
