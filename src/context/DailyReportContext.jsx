@@ -2,7 +2,6 @@ import { React, useEffect, useState } from 'react'
 import { createContext } from 'react'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import { useFetchReportData } from 'src/hooks/useFetch'
 
 export const DailyReportContext = createContext({
   data: null,
@@ -17,35 +16,16 @@ export const DailyReportProvider = ({ children }) => {
 
   const { getData } = useGetCachedQueryData()
 
-  const [selectedReport, setSelectedReport] = useState()
-  // const [selectedCompany, setSelectedCompany] = useState()
-
-  // const reportsQuery = getData('reports')
   const reportsQuery = getData('reports')
 
-  let lastReport = reportsQuery ? reportsQuery[0].id : undefined
+  const reportId = localStorage.getItem('daily_report')
+  let selectedReport
 
-  const reportId = localStorage.getItem('daily_report') ?? lastReport
-  // let selectedReport
-
-  // if (reportId && reportsQuery) {
-  //   selectedReport = reportsQuery.find((report) => {
-  //     return report.id.toString() === reportId.toString()
-  //   })
-  // }
-
-  const { data } = useFetchReportData(reportId)
-
-  useEffect(() => {
-    setSelectedReport(data)
-  }, [data])
-
-  // selectedReport = data
-
-  // useEffect(() => {
-  //   console.log('selectedReport', selectedReport)
-  //   setSelectedCompany(selectedReport?.company)
-  // }, [selectedReport])
+  if (reportId && reportsQuery) {
+    selectedReport = reportsQuery.find((report) => {
+      return report.id.toString() === reportId.toString()
+    })
+  }
 
   const selectedCompany = selectedReport?.company
   const selectedIndirectCompanyTurnList = selectedReport?.indirectCompanyTurnList
@@ -85,7 +65,6 @@ export const DailyReportProvider = ({ children }) => {
   })
 
   useEffect(() => {
-    console.log('selectedCompany', selectedCompany)
     setCompany({
       dailyReportContractManagerName: selectedCompany
         ? selectedCompany.dailyReportContractManagerName

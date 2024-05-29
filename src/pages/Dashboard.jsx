@@ -23,7 +23,7 @@ const Dashboard = () => {
   const { data, isLoading, error } = useGetBasicData(contractLS.id)
   const { getData } = useGetCachedQueryData()
 
-  const { isFetching } = useFetchReportsData(projectLS.id, contractLS.id)
+  const { isFetching } = useFetchReportsData()
   const reportsQuery = getData('reports')
 
   useEffect(() => {

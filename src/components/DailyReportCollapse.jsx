@@ -46,12 +46,12 @@ const DailyReportCollapse = () => {
   const currentLocation = useLocation().pathname
   const isCreatingMode = currentLocation === '/informe-diario'
 
-  useEffect(() => {
-    if (isCreatingMode) {
-      localStorage.removeItem('daily_report')
-      clearData()
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (isCreatingMode) {
+  //     localStorage.removeItem('daily_report')
+  //     clearData()
+  //   }
+  // }, [])
 
   const [showError, setShowError] = useState(false)
   useEffect(() => {
