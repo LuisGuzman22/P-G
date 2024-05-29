@@ -17,10 +17,16 @@ export const DailyReportProvider = ({ children }) => {
 
   const { getData } = useGetCachedQueryData()
 
-  // const reportsQuery = getData('reports')
+  const [selectedReport, setSelectedReport] = useState()
+  // const [selectedCompany, setSelectedCompany] = useState()
 
-  const reportId = localStorage.getItem('daily_report') ?? undefined
-  let selectedReport
+  // const reportsQuery = getData('reports')
+  const reportsQuery = getData('reports')
+
+  let lastReport = reportsQuery ? reportsQuery[0].id : undefined
+
+  const reportId = localStorage.getItem('daily_report') ?? lastReport
+  // let selectedReport
 
   // if (reportId && reportsQuery) {
   //   selectedReport = reportsQuery.find((report) => {
@@ -30,7 +36,16 @@ export const DailyReportProvider = ({ children }) => {
 
   const { data } = useFetchReportData(reportId)
 
-  selectedReport = data
+  useEffect(() => {
+    setSelectedReport(data)
+  }, [data])
+
+  // selectedReport = data
+
+  // useEffect(() => {
+  //   console.log('selectedReport', selectedReport)
+  //   setSelectedCompany(selectedReport?.company)
+  // }, [selectedReport])
 
   const selectedCompany = selectedReport?.company
   const selectedIndirectCompanyTurnList = selectedReport?.indirectCompanyTurnList
@@ -70,6 +85,7 @@ export const DailyReportProvider = ({ children }) => {
   })
 
   useEffect(() => {
+    console.log('selectedCompany', selectedCompany)
     setCompany({
       dailyReportContractManagerName: selectedCompany
         ? selectedCompany.dailyReportContractManagerName

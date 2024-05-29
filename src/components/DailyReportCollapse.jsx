@@ -33,7 +33,7 @@ import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Loading from './loading'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
@@ -43,10 +43,14 @@ const DailyReportCollapse = () => {
   const { getData } = useGetCachedQueryData()
   const reportsQuery = getData('reports')
   const [visible, setVisible] = useState(false)
+  const currentLocation = useLocation().pathname
+  const isCreatingMode = currentLocation === '/informe-diario'
 
   useEffect(() => {
-    localStorage.removeItem('daily_report')
-    clearData()
+    if (isCreatingMode) {
+      localStorage.removeItem('daily_report')
+      clearData()
+    }
   }, [])
 
   const [showError, setShowError] = useState(false)
