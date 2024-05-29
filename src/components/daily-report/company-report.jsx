@@ -102,6 +102,8 @@ const CompanyReport = () => {
     deleteIndirectCompanyTurn(id)
   }
 
+  console.log('indirectCompanyTurnListContext', indirectCompanyTurnListContext)
+
   return (
     <div className="company-report">
       <CForm>
@@ -346,19 +348,19 @@ const CompanyReport = () => {
               </CTableHead>
               <CTableBody>
                 {indirectCompanyTurnListContext.map((item, index) => {
-                  const selectedShift = basicQuery?.shifts.find(
-                    (shift) => shift.id == item.dailyReportIndirectPersonalShift,
+                  const selectedJourney = basicQuery?.shifts.find(
+                    (shift) => shift.id == item.dailyReportIndirectPersonalJourney,
                   )
 
-                  const selectedTurn = basicQuery?.indirect_staff_shift.find(
+                  const selectedShift = basicQuery?.indirect_staff_shift.find(
                     (turn) => turn.id == item.dailyReportIndirectPersonalShift,
                   )
 
                   return (
                     <CTableRow key={index}>
-                      <CTableDataCell>{selectedTurn?.name ?? ''}</CTableDataCell>
-                      <CTableDataCell>{item.dailyReportIndirectPersonalHours ?? 0}</CTableDataCell>
                       <CTableDataCell>{selectedShift?.name ?? ''}</CTableDataCell>
+                      <CTableDataCell>{item.dailyReportIndirectPersonalHours ?? 0}</CTableDataCell>
+                      <CTableDataCell>{selectedJourney?.name ?? ''}</CTableDataCell>
                       <CTableDataCell>
                         {isCreatingMode && (
                           <CButton

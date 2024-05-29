@@ -977,7 +977,7 @@ const Pdf = (props) => {
                       <td className="">{activity.activityTotalAmount}</td>
                       <td className="">{activity.activityPreviousAcumulatedAmount}</td>
                       <td className="">{activity.activityActualShiftQuantity}</td>
-                      <td className="">{activity.activityAccumulatedAcvancePercent}</td>
+                      <td className="">{activity.activityAccumulatedAdvancePercent}</td>
                       <td className="">{activity.activityUnit}</td>
                       <td className="">{activity.activityHoursSpendPrevius}</td>
                       <td className="">{activity.activityHoursSpendShift}</td>
