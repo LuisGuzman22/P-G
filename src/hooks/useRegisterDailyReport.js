@@ -94,7 +94,7 @@ const useRegisterDailyReport = () => {
   }
 
   const registerData = async () => {
-    // console.log('post', photoList)
+    // console.log('post', comment.comment)
     setLoading(true)
     setError()
     setSuccess(false)

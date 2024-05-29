@@ -24,7 +24,6 @@ const Dashboard = () => {
   const { getData } = useGetCachedQueryData()
 
   const { isFetching } = useFetchReportsData(projectLS.id, contractLS.id)
-  console.log('loadingReports', isFetching)
   const reportsQuery = getData('reports')
 
   useEffect(() => {
@@ -73,23 +72,25 @@ const Dashboard = () => {
                   <>
                     <span>Tienes {reportsQuery.length} informes diarios generados.</span>
                     <CRow>
-                      {reportsQuery.map((report) => {
-                        return (
-                          <>
-                            <CCol>
-                              <CButton
-                                className="dashboard-button"
-                                onClick={() => {
-                                  localStorage.setItem('daily_report', report.id)
-                                  redirectTo('/informe-diario/view')
-                                }}
-                              >
-                                {report.id}
-                              </CButton>
-                            </CCol>
-                          </>
-                        )
-                      })}
+                      {reportsQuery
+                        .sort((a, b) => b.id - a.id)
+                        .map((report) => {
+                          return (
+                            <>
+                              <CCol>
+                                <CButton
+                                  className="dashboard-button"
+                                  onClick={() => {
+                                    localStorage.setItem('daily_report', report.id)
+                                    redirectTo('/informe-diario/view')
+                                  }}
+                                >
+                                  {report.id}
+                                </CButton>
+                              </CCol>
+                            </>
+                          )
+                        })}
                     </CRow>
                   </>
                 </CCardText>

@@ -102,8 +102,6 @@ const CompanyReport = () => {
     deleteIndirectCompanyTurn(id)
   }
 
-  console.log('indirectCompanyTurnListContext', indirectCompanyTurnListContext)
-
   return (
     <div className="company-report">
       <CForm>

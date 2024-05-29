@@ -73,18 +73,24 @@ const Pdf = (props) => {
   const [selectedIndirectHours, setSelectedIndirectHours] = useState('')
 
   useEffect(() => {
-    const weatherSel = weather.find((weath) => weath.id === company?.dailyReportWeather)
-    const directStaffShiftSel = direct_staff_shift.find(
-      (dss) => dss.id.toString() === company?.dailyReportDirectPersonalShift.toString(),
-    )
+    const weatherSel = company?.dailyReportWeather
+      ? weather.find((weath) => weath.id === company?.dailyReportWeather)
+      : undefined
+    const directStaffShiftSel = company?.dailyReportDirectPersonalShift
+      ? direct_staff_shift.find(
+          (dss) => dss.id.toString() === company?.dailyReportDirectPersonalShift.toString(),
+        )
+      : undefined
 
-    const directShiftSel = shifts.find(
-      (shift) => shift.id.toString() === company?.dailyReportDirectPersonalJourney.toString(),
-    )
+    const directShiftSel = company?.dailyReportDirectPersonalJourney
+      ? shifts.find(
+          (shift) => shift.id.toString() === company?.dailyReportDirectPersonalJourney.toString(),
+        )
+      : undefined
 
-    setSelectedWeather(weatherSel.name)
-    setSelectedDirectStaffShift(directStaffShiftSel.name)
-    setSelectedDirectShift(directShiftSel.name)
+    setSelectedWeather(weatherSel?.name || '')
+    setSelectedDirectStaffShift(directStaffShiftSel?.name || '')
+    setSelectedDirectShift(directShiftSel?.name || '')
   }, [company])
 
   const [totalMacOffered, setTotalMacOffered] = useState(0)

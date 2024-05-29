@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react'
 import { createContext } from 'react'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
+import { useFetchReportData } from 'src/hooks/useFetch'
 
 export const DailyReportContext = createContext({
   data: null,
@@ -16,16 +17,20 @@ export const DailyReportProvider = ({ children }) => {
 
   const { getData } = useGetCachedQueryData()
 
-  const reportsQuery = getData('reports')
+  // const reportsQuery = getData('reports')
 
-  const reportId = localStorage.getItem('daily_report')
+  const reportId = localStorage.getItem('daily_report') ?? undefined
   let selectedReport
 
-  if (reportId && reportsQuery) {
-    selectedReport = reportsQuery.find((report) => {
-      return report.id.toString() === reportId.toString()
-    })
-  }
+  // if (reportId && reportsQuery) {
+  //   selectedReport = reportsQuery.find((report) => {
+  //     return report.id.toString() === reportId.toString()
+  //   })
+  // }
+
+  const { data } = useFetchReportData(reportId)
+
+  selectedReport = data
 
   const selectedCompany = selectedReport?.company
   const selectedIndirectCompanyTurnList = selectedReport?.indirectCompanyTurnList
@@ -260,10 +265,10 @@ export const DailyReportProvider = ({ children }) => {
     setAljibeList(selectedAljibeList || [])
   }, [selectedAljibeList])
 
-  const [comment, setComment] = useState('')
+  const [comment, setComment] = useState(undefined)
 
   useEffect(() => {
-    setComment({ comment: selectedComment?.comment || '' })
+    setComment({ comment: selectedComment?.comment || undefined })
   }, [selectedComment])
 
   const [vehiclePlateList, setVehiclePlateList] = useState([])
