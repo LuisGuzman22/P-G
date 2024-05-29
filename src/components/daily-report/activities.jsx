@@ -32,7 +32,7 @@ const Activities = () => {
     activityTotalAmount: undefined,
     activityPreviousAcumulatedAmount: undefined,
     activityActualShiftQuantity: undefined,
-    activityAccumulatedAcvancePercent: undefined,
+    activityAccumulatedAdvancePercent: undefined,
     activityUnit: undefined,
     activityHoursSpendPrevius: undefined,
     activityHoursSpendShift: undefined,
@@ -62,7 +62,7 @@ const Activities = () => {
       e.target.id === 'activityTotalAmount' ||
       e.target.id === 'activityPreviousAcumulatedAmount' ||
       e.target.id === 'activityActualShiftQuantity' ||
-      e.target.id === 'activityAccumulatedAcvancePercent' ||
+      e.target.id === 'activityAccumulatedAdvancePercent' ||
       e.target.id === 'activityHoursSpendPrevius' ||
       e.target.id === 'activityHoursSpendShift' ||
       e.target.id === 'activityHoursAccumulated'
@@ -106,7 +106,7 @@ const Activities = () => {
 
       const calc = (actualHours + previousHh) / totalHours
 
-      setActivity({ ...activity, activityAccumulatedAcvancePercent: calc.toFixed(2) })
+      setActivity({ ...activity, activityAccumulatedAdvancePercent: calc.toFixed(2) })
     }
   }, [
     activity.activityPreviousAcumulatedAmount,
@@ -127,7 +127,7 @@ const Activities = () => {
         activityTotalAmount: activity.activityTotalAmount,
         activityPreviousAcumulatedAmount: activity.activityPreviousAcumulatedAmount,
         activityActualShiftQuantity: activity.activityActualShiftQuantity,
-        activityAccumulatedAcvancePercent: activity.activityAccumulatedAcvancePercent,
+        activityAccumulatedAdvancePercent: activity.activityAccumulatedAdvancePercent,
         activityUnit: activity.activityUnit,
         activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
         activityHoursSpendShift: activity.activityHoursSpendShift,
@@ -154,7 +154,7 @@ const Activities = () => {
       activityTotalAmount: selectedActivity.activityTotalAmount,
       activityPreviousAcumulatedAmount: selectedActivity.activityPreviousAcumulatedAmount,
       activityActualShiftQuantity: selectedActivity.activityActualShiftQuantity,
-      activityAccumulatedAcvancePercent: selectedActivity.activityAccumulatedAcvancePercent,
+      activityAccumulatedAdvancePercent: selectedActivity.activityAccumulatedAdvancePercent,
       activityUnit: selectedActivity.activityUnit,
       activityHoursSpendPrevius: selectedActivity.activityHoursSpendPrevius,
       activityHoursSpendShift: selectedActivity.activityHoursSpendShift,
@@ -301,8 +301,8 @@ const Activities = () => {
                 <CTableDataCell>
                   <CFormInput
                     type="text"
-                    id="activityAccumulatedAcvancePercent"
-                    value={activity.activityAccumulatedAcvancePercent || ''}
+                    id="activityAccumulatedAdvancePercent"
+                    value={activity.activityAccumulatedAdvancePercent || ''}
                     disabled
                     text=""
                     onChange={(e) => {
@@ -407,7 +407,7 @@ const Activities = () => {
                   <CTableDataCell>{item.activityTotalAmount}</CTableDataCell>
                   <CTableDataCell>{item.activityPreviousAcumulatedAmount}</CTableDataCell>
                   <CTableDataCell>{item.activityActualShiftQuantity}</CTableDataCell>
-                  <CTableDataCell>{item.activityAccumulatedAcvancePercent}</CTableDataCell>
+                  <CTableDataCell>{item.activityAccumulatedAdvancePercent}</CTableDataCell>
                   <CTableDataCell>{item.activityUnit}</CTableDataCell>
                   <CTableDataCell>{item.activityHoursSpendPrevius}</CTableDataCell>
                   <CTableDataCell>{item.activityHoursSpendShift}</CTableDataCell>
