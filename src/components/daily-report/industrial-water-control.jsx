@@ -30,9 +30,6 @@ const IndustrialWaterControl = () => {
     aljibeQuantityTurns: undefined,
     aljibeM3: undefined,
     aljibePlate: undefined,
-    aljibeOfferedNumber: undefined,
-    aljibeCertifiedNumber: undefined,
-    aljibeWorkNumber: undefined,
   }
 
   const aljibeTotalsInitialState = {
@@ -40,9 +37,6 @@ const IndustrialWaterControl = () => {
     aljibeQuantityTurns: 0,
     aljibeM3: 0,
     aljibePlate: 0,
-    aljibeOfferedNumber: 0,
-    aljibeCertifiedNumber: 0,
-    aljibeWorkNumber: 0,
   }
 
   const { getData } = useGetCachedQueryData()
@@ -106,9 +100,6 @@ const IndustrialWaterControl = () => {
         aljibeQuantityTurns: aljibe.aljibeQuantityTurns,
         aljibeM3: aljibe.aljibeM3,
         aljibePlate: aljibe.aljibePlate,
-        aljibeOfferedNumber: aljibe.aljibeOfferedNumber,
-        aljibeCertifiedNumber: aljibe.aljibeCertifiedNumber,
-        aljibeWorkNumber: aljibe.aljibeWorkNumber,
       }
       setAlgibe(initialState) // Clear the object
       setAlgibeList([...aljibeListContext, aljibeInitialState])
@@ -135,9 +126,6 @@ const IndustrialWaterControl = () => {
       aljibeQuantityTurns: selectedAljibe.aljibeQuantityTurns,
       aljibeM3: selectedAljibe.aljibeM3,
       aljibePlate: selectedAljibe.aljibePlate,
-      aljibeOfferedNumber: selectedAljibe.aljibeOfferedNumber,
-      aljibeCertifiedNumber: selectedAljibe.aljibeCertifiedNumber,
-      aljibeWorkNumber: selectedAljibe.aljibeWorkNumber,
     })
 
     deletealjibe(id)
@@ -149,23 +137,13 @@ const IndustrialWaterControl = () => {
 
   useEffect(() => {
     let aljibeTotalsCounter = {
-      aljibeOfferedNumber: 0,
-      aljibeCertifiedNumber: 0,
       aljibeM3: 0,
-      aljibeWorkNumber: 0,
       aljibeQuantityTurns: 0,
     }
 
     for (let data of aljibeListContext) {
       aljibeTotalsCounter = {
-        aljibeOfferedNumber:
-          Number(aljibeTotalsCounter.aljibeOfferedNumber) + Number(data.aljibeOfferedNumber ?? 0),
-        aljibeCertifiedNumber:
-          Number(aljibeTotalsCounter.aljibeCertifiedNumber) +
-          Number(data.aljibeCertifiedNumber ?? 0),
         aljibeM3: Number(aljibeTotalsCounter.aljibeM3) + Number(data.aljibeM3 ?? 0),
-        aljibeWorkNumber:
-          Number(aljibeTotalsCounter.aljibeWorkNumber) + Number(data.aljibeWorkNumber ?? 0),
         aljibeQuantityTurns:
           Number(aljibeTotalsCounter.aljibeQuantityTurns) + Number(data.aljibeQuantityTurns ?? 0),
       }
@@ -236,49 +214,8 @@ const IndustrialWaterControl = () => {
             </>
           )}
           <CTable>
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col">N° Vehículo oferta</CTableHeaderCell>
-                <CTableHeaderCell scope="col">N° Vehículo Acreditado</CTableHeaderCell>
-                <CTableHeaderCell scope="col">N° Vehículo en Obra</CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
+            <CTableHead></CTableHead>
             <CTableBody>
-              <CTableRow>
-                <CTableDataCell>
-                  <CFormInput
-                    type="text"
-                    id="aljibeOfferedNumber"
-                    value={aljibe.aljibeOfferedNumber || ''}
-                    text=""
-                    onChange={(e) => {
-                      onChangeData(e)
-                    }}
-                  />
-                </CTableDataCell>
-                <CTableDataCell>
-                  <CFormInput
-                    type="text"
-                    id="aljibeCertifiedNumber"
-                    value={aljibe.aljibeCertifiedNumber || ''}
-                    text=""
-                    onChange={(e) => {
-                      onChangeData(e)
-                    }}
-                  />
-                </CTableDataCell>
-                <CTableDataCell>
-                  <CFormInput
-                    type="text"
-                    id="aljibeWorkNumber"
-                    value={aljibe.aljibeWorkNumber || ''}
-                    text=""
-                    onChange={(e) => {
-                      onChangeData(e)
-                    }}
-                  />
-                </CTableDataCell>
-              </CTableRow>
               <CTableRow>
                 <CTableHeaderCell scope="col">Nombre Cachimba</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Cantidad de vueltas</CTableHeaderCell>
@@ -361,9 +298,6 @@ const IndustrialWaterControl = () => {
                   <CTableDataCell>{item.aljibeCachimbaName ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.aljibeQuantityTurns ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.aljibeM3 ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.aljibeOfferedNumber ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.aljibeCertifiedNumber ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.aljibeWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
                     {isCreatingMode && (
                       <CButton
@@ -397,9 +331,6 @@ const IndustrialWaterControl = () => {
               <CTableDataCell></CTableDataCell>
               <CTableDataCell>{aljibeTotals.aljibeQuantityTurns ?? 0}</CTableDataCell>
               <CTableDataCell>{aljibeTotals.aljibeM3 ?? 0}</CTableDataCell>
-              <CTableDataCell>{aljibeTotals.aljibeOfferedNumber ?? 0}</CTableDataCell>
-              <CTableDataCell>{aljibeTotals.aljibeCertifiedNumber ?? 0}</CTableDataCell>
-              <CTableDataCell>{aljibeTotals.aljibeWorkNumber ?? 0}</CTableDataCell>
             </CTableRow>
           </CTableBody>
         </CTable>
