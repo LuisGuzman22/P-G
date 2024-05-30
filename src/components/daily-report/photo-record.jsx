@@ -21,7 +21,7 @@ const PhotoRecord = () => {
     const setFileAndDescription = (index, file, description) => {
       setItems((prevItems) => {
         const newItems = [...prevItems]
-        const blob = file || file !== null ? file.slice(0, file.size, file.type) : undefined
+        const blob = file && file !== null ? file.slice(0, file.size, file.type) : undefined
         const newFile = blob
           ? new File([blob], `${uuidv4().split('-')[0]}.png`, { type: 'image/png' })
           : undefined
