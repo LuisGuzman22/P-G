@@ -27,7 +27,7 @@ const Comments = () => {
     <div className="work-force-report">
       <CFormTextarea
         id="comment"
-        label="Comentarios y alertas en genenral"
+        label="Comentarios y alertas en general"
         disabled={isViewMode}
         value={isViewMode ? commentContext.comment : comment.comment}
         onChange={(e) => {
