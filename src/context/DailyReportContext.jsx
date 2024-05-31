@@ -506,6 +506,7 @@ export const DailyReportProvider = ({ children }) => {
   }
 
   const storeGraphs = async (data) => {
+    // console.log('data', data)
     let graph = []
     if (graphList.length === 0) {
       setGraphList([data])

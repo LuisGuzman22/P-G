@@ -155,7 +155,10 @@ const DirectWorkForce = () => {
   }, [barGraphData])
 
   useEffect(() => {
-    if (!isViewMode) storeGraphs({ name: 'dotationChart', value: imagenColumnChart })
+    if (!isViewMode) {
+      if (imagenColumnChart !== undefined)
+        storeGraphs({ name: 'dotationChart', value: imagenColumnChart })
+    }
   }, [imagenColumnChart])
 
   const checkInView = () => {

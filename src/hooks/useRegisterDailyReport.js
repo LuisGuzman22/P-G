@@ -94,7 +94,32 @@ const useRegisterDailyReport = () => {
   }
 
   const registerData = async () => {
-    // console.log('post', comment.comment)
+    // console.log('post', {
+    //   projectId: projectLS.id,
+    //   contractId: contractLS.id,
+    //   company, // 1
+    //   indirectCompanyTurnList,
+    //   indirectWorkForceList, // 2
+    //   totalIndirectWorkForce, // 3
+    //   directWorkForceList, // 4
+    //   totalDirectWorkForce, // 5
+    //   directDotationWorkForceList, // 7
+    //   machineryList: machinList, // 9
+    //   machineryWorkForceList, // 10
+    //   equipmentList: equipList, // 11
+    //   equipmentWorkForceList, // 12
+    //   vehicleList: vehicList, // 13
+    //   vehiclePlateList,
+    //   activityList, // 15
+    //   comment: comment.comment === '' || comment?.comment === undefined ? undefined : comment, // 16
+    //   // 17 (graficos)
+    //   incident, // 18 //
+    //   asarcoMachineryList, // 9
+    //   equipmentPlateList, // 11
+    //   aljibeList, // 16
+    //   graphList,
+    //   photoList,
+    // })
     setLoading(true)
     setError()
     setSuccess(false)
@@ -115,7 +140,7 @@ const useRegisterDailyReport = () => {
       vehicleList: vehicList, // 13
       vehiclePlateList,
       activityList, // 15
-      comment, // 16
+      comment: comment.comment === '' || comment?.comment === undefined ? undefined : comment, // 16
       // 17 (graficos)
       incident, // 18 //
       asarcoMachineryList, // 9

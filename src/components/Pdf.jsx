@@ -62,6 +62,7 @@ const Pdf = (props) => {
     direct_staff_shift,
     indirect_staff_shift,
     shifts,
+    diciplines,
   } = basicQuery
   // console.log('props', props.photoList)
 
@@ -975,11 +976,14 @@ const Pdf = (props) => {
             {activityList.length > 0 && (
               <>
                 {activityList.map((activity) => {
+                  const selectedDicipline = diciplines.find((dicipline) => {
+                    return dicipline.id.toString() === activity.activityDiscipline.toString()
+                  })
                   return (
                     <tr key={activity.id}>
                       <td className="">{activity.primaveraId}</td>
                       <td className="">{activity.activityName}</td>
-                      <td className="">{activity.activityDiscipline}</td>
+                      <td className="">{selectedDicipline.name}</td>
                       <td className="">{activity.activityTotalAmount}</td>
                       <td className="">{activity.activityPreviousAcumulatedAmount}</td>
                       <td className="">{activity.activityActualShiftQuantity}</td>

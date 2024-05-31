@@ -252,8 +252,13 @@ const Activities = () => {
                     }}
                   >
                     <option value={'0'}>Seleccione</option>
-                    <option value="Obras_civiles">Obras Civiles</option>
-                    <option value="Movimiento_de_tierra">Movimiento de tierra</option>
+                    {basicQuery.diciplines.map((dicipline) => {
+                      return (
+                        <option key={dicipline.id} value={dicipline.id}>
+                          {dicipline.name}
+                        </option>
+                      )
+                    })}{' '}
                   </CFormSelect>
                 </CTableDataCell>
                 <CTableDataCell>
@@ -398,12 +403,16 @@ const Activities = () => {
               const charge = basicQuery.workFront.find((work) => {
                 return work.id == item.activityFrontWork
               })
+
+              const selectedDicipline = basicQuery.diciplines.find((dicipline) => {
+                return dicipline.id.toString() === item.activityDiscipline.toString()
+              })
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{charge.name}</CTableDataCell>
                   <CTableDataCell>{item.primaveraId}</CTableDataCell>
                   <CTableDataCell>{item.activityName}</CTableDataCell>
-                  <CTableDataCell>{item.activityDiscipline}</CTableDataCell>
+                  <CTableDataCell>{selectedDicipline.name}</CTableDataCell>
                   <CTableDataCell>{item.activityTotalAmount}</CTableDataCell>
                   <CTableDataCell>{item.activityPreviousAcumulatedAmount}</CTableDataCell>
                   <CTableDataCell>{item.activityActualShiftQuantity}</CTableDataCell>
