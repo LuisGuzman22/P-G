@@ -402,6 +402,10 @@ const Pdf = (props) => {
         .td-label {
           background-color: #006666;
           color: white;
+        }
+        .td-label-gray {
+          background-color: #818181;
+          color: white;
         }`}
         </style>
 
@@ -1193,13 +1197,25 @@ const Pdf = (props) => {
           <tbody>
             <tr>
               <td className="td-label" style={{ textAlign: 'center' }}>
-                Encargado de calidad
+                Encargado de terreno
               </td>
               <td className="td-label" style={{ textAlign: 'center' }}>
-                Oficina técnica
+                Encargado Oficina Técnica
               </td>
               <td className="td-label" style={{ textAlign: 'center' }}>
                 Administrador de contrato
+              </td>
+              <td
+                className="td-label-gray"
+                style={{ textAlign: 'center', backgroundColor: '#818181' }}
+              >
+                ITO Construcción
+              </td>
+              <td
+                className="td-label-gray"
+                style={{ textAlign: 'center', backgroundColor: '#818181' }}
+              >
+                Mineta Centinela
               </td>
             </tr>
           </tbody>
