@@ -1215,7 +1215,7 @@ const Pdf = (props) => {
                 className="td-label-gray"
                 style={{ textAlign: 'center', backgroundColor: '#818181' }}
               >
-                Mineta Centinela
+                Minera Centinela
               </td>
             </tr>
           </tbody>
