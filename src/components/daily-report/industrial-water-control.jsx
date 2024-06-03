@@ -278,9 +278,6 @@ const IndustrialWaterControl = () => {
               <CTableHeaderCell scope="col">Nombre Cachimba</CTableHeaderCell>
               <CTableHeaderCell scope="col">Cantidad de vueltas</CTableHeaderCell>
               <CTableHeaderCell scope="col">Cantidad de m3</CTableHeaderCell>
-              <CTableHeaderCell scope="col">N° Vehículos oferta</CTableHeaderCell>
-              <CTableHeaderCell scope="col">N° Vehículos Acreditado</CTableHeaderCell>
-              <CTableHeaderCell scope="col">N° Vehículos en Obra</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>

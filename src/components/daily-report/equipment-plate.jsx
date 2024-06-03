@@ -328,7 +328,6 @@ const EquipmentPlate = () => {
               <CTableHeaderCell scope="col">Patente</CTableHeaderCell>
               <CTableHeaderCell scope="col">Operativos (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Mantención Correctiva (Hrs)</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mantenimiento Programado (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Mantención preventiva (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Fuera de Servicio (Hrs)</CTableHeaderCell>
               <CTableHeaderCell scope="col">En Espera (Hrs) </CTableHeaderCell>
