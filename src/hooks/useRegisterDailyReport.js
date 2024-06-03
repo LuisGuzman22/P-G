@@ -45,7 +45,7 @@ const useRegisterDailyReport = () => {
       //   },
       // }),
 
-      axios.post('https://pyg-production.up.railway.app/api/v1/reports', newTodo, {
+      axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/reports`, newTodo, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
