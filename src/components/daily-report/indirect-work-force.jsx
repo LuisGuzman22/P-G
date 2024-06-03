@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useLocation } from 'react-router-dom'
+import Select from 'react-select'
 
 const IndirectWorkForce = () => {
   const currentLocation = useLocation().pathname
@@ -38,6 +39,15 @@ const IndirectWorkForce = () => {
   const [indirectWorkForce, setIndirectWorkForce] = useState(initialState)
   const [indirectWorkForceList, setIndirectWorkForceList] = useState([])
   const [error, setError] = useState(false)
+  const [selectedOption, setSelectedOption] = useState({ value: 0, label: 'Seleccione' })
+
+  const [options, setOptions] = useState([])
+
+  // const options = [
+  //   { value: 'chocolate', label: 'Chocolate' },
+  //   { value: 'strawberry', label: 'Strawberry' },
+  //   { value: 'vanilla', label: 'Vanilla' },
+  // ]
 
   const {
     storeIndirectWorkForceData,
@@ -48,18 +58,41 @@ const IndirectWorkForce = () => {
   const onChangeData = (e) => {
     setError(false)
 
-    if (e.target.id === 'indirectWorkForce') {
-      setIndirectWorkForce(initialState) // Clear the object
-      setIndirectWorkForce({ [e.target.id]: e.target.value })
-    }
+    console.log('e', e)
+
+    // if (e.target.id === 'indirectWorkForce') {
+    //   setIndirectWorkForce(initialState) // Clear the object
+    //   setIndirectWorkForce({ [e.target.id]: e.target.value })
+    // }
     if (validate(e.target.value)) {
       setIndirectWorkForce({ ...indirectWorkForce, [e.target.id]: e.target.value })
     }
   }
 
+  const onChangeIndirectWorkForceCharge = (e) => {
+    setSelectedOption(e)
+    setIndirectWorkForce(initialState) // Clear the object
+    setIndirectWorkForce({ indirectWorkForce: e.value })
+  }
+
   // useEffect(() => {
   //   if (isCreatingMode) setIndirectWorkForceList(indirectWorkForceListContext)
   // }, [indirectWorkForceListContext])
+
+  useEffect(() => {
+    const data = []
+    if (basicQuery && basicQuery.indirectPersonal) {
+      basicQuery.indirectPersonal.map((indirectPersonalCached) => {
+        //  return (
+        //  <option key={indirectPersonalCached.id} value={indirectPersonalCached.id}>
+        //    {indirectPersonalCached.name}
+        //  </option>
+        //  )
+        data.push({ value: indirectPersonalCached.id, label: indirectPersonalCached.name })
+      })
+      setOptions(data)
+    }
+  }, [basicQuery.indirectPersonal])
 
   const registerIndirectWorkForce = () => {
     if (!indirectWorkForce.indirectWorkForce) {
@@ -76,6 +109,7 @@ const IndirectWorkForce = () => {
         hh: indirectWorkForce.contractAdministratorHHNumber,
       }
       setIndirectWorkForce(initialState) // Clear the object
+      setSelectedOption({ value: 0, label: 'Seleccione' })
       setIndirectWorkForceList([
         // ...indirectWorkForceList,
         ...indirectWorkForceListContext,
@@ -97,6 +131,10 @@ const IndirectWorkForce = () => {
 
   const editIndirectWorkForce = (id) => {
     const selectedIndirectWorkForce = indirectWorkForceListContext.find((item) => item.id === id)
+    const charge = basicQuery.indirectPersonal.find((personal) => {
+      return personal.id == selectedIndirectWorkForce.indirectWorkForce
+    })
+    console.log('charge', charge)
     setIndirectWorkForce({
       indirectWorkForce: selectedIndirectWorkForce.indirectWorkForce,
       contractAdministratorOfferedNumber: selectedIndirectWorkForce.offeredNumber,
@@ -105,6 +143,11 @@ const IndirectWorkForce = () => {
       contractAdministratorBreakNumber: selectedIndirectWorkForce.breakNumber,
       contractAdministratorWorkNumber: selectedIndirectWorkForce.workNumber,
       contractAdministratorHHNumber: selectedIndirectWorkForce.hh,
+    })
+
+    setSelectedOption({
+      value: charge.id,
+      label: charge.name,
     })
     deleteIndirectWorkForce(id)
   }
@@ -128,7 +171,7 @@ const IndirectWorkForce = () => {
               </div>
             </CToast>
           )}
-          <CFormSelect
+          {/* <CFormSelect
             aria-label="Default select example"
             id="indirectWorkForce"
             label="Cargo"
@@ -145,7 +188,18 @@ const IndirectWorkForce = () => {
                 </option>
               )
             })}
-          </CFormSelect>
+          </CFormSelect> */}
+          <Select
+            id="indirectWorkForce"
+            label="Cargo"
+            value={selectedOption}
+            // value={indirectWorkForce.indirectWorkForce || ''}
+            onChange={(e) => {
+              onChangeIndirectWorkForceCharge(e)
+            }}
+            options={options}
+          />
+
           <CTable>
             <CTableHead>
               <CTableRow>
