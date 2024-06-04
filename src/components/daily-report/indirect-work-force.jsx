@@ -57,9 +57,6 @@ const IndirectWorkForce = () => {
 
   const onChangeData = (e) => {
     setError(false)
-
-    console.log('e', e)
-
     // if (e.target.id === 'indirectWorkForce') {
     //   setIndirectWorkForce(initialState) // Clear the object
     //   setIndirectWorkForce({ [e.target.id]: e.target.value })
