@@ -595,7 +595,7 @@ const Pdf = (props) => {
             {totalDirectWorkForce && (
               <>
                 <tr>
-                  <td className="td-workers-label">Subtotal Indirectos</td>
+                  <td className="td-workers-label">Subtotal directos</td>
                   <td className="td-green-label">
                     {totalDirectWorkForce.directSubtotalOfferedNumber}
                   </td>
