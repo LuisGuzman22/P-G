@@ -131,7 +131,6 @@ const IndirectWorkForce = () => {
     const charge = basicQuery.indirectPersonal.find((personal) => {
       return personal.id == selectedIndirectWorkForce.indirectWorkForce
     })
-    console.log('charge', charge)
     setIndirectWorkForce({
       indirectWorkForce: selectedIndirectWorkForce.indirectWorkForce,
       contractAdministratorOfferedNumber: selectedIndirectWorkForce.offeredNumber,
