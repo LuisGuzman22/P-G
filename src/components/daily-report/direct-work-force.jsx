@@ -20,6 +20,7 @@ import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useLocation } from 'react-router-dom'
 import { Chart } from 'react-google-charts'
 import { toPng } from 'html-to-image'
+import Select from 'react-select'
 
 const DirectWorkForce = () => {
   const currentLocation = useLocation().pathname
@@ -55,6 +56,9 @@ const DirectWorkForce = () => {
     ['Dotación Directos Obra Total', 0, 'silver'], // English color name
   ])
 
+  const [selectedOption, setSelectedOption] = useState({ value: 0, label: 'Seleccione' })
+  const [options, setOptions] = useState([])
+
   const {
     storeDirectWorkForce,
     removeDirectWorkForce,
@@ -65,14 +69,30 @@ const DirectWorkForce = () => {
   const onChangeData = (e) => {
     setError(false)
 
-    if (e.target.id === 'directWorkForce') {
-      setDirectWorkForce(initialStatee) // Clear the object
-      setDirectWorkForce({ [e.target.id]: e.target.value })
-    }
+    // if (e.target.id === 'directWorkForce') {
+    //   setDirectWorkForce(initialStatee) // Clear the object
+    //   setDirectWorkForce({ [e.target.id]: e.target.value })
+    // }
     if (validate(e.target.value)) {
       setDirectWorkForce({ ...directWorkForce, [e.target.id]: e.target.value })
     }
   }
+
+  const onChangeDirectWorkForceCharge = (e) => {
+    setSelectedOption(e)
+    setDirectWorkForce(initialStatee) // Clear the object
+    setDirectWorkForce({ directWorkForce: e.value })
+  }
+
+  useEffect(() => {
+    const data = []
+    if (basicQuery && basicQuery.directPersonal) {
+      basicQuery.directPersonal.map((directPersonalCached) => {
+        data.push({ value: directPersonalCached.id, label: directPersonalCached.name })
+      })
+      setOptions(data)
+    }
+  }, [basicQuery.directPersonal])
 
   const registerDirectWorkForce = () => {
     if (!directWorkForce.directWorkForce) {
@@ -89,6 +109,7 @@ const DirectWorkForce = () => {
         hh: directWorkForce.directWorkForceHHNumber,
       }
       setDirectWorkForce(initialStatee) // Clear the object
+      setSelectedOption({ value: 0, label: 'Seleccione' })
       setDirectWorkForceList([...directWorkForceListContext, directWorkForceInitialState])
     }
   }
@@ -102,7 +123,9 @@ const DirectWorkForce = () => {
 
   const editDirectWorkForce = (id) => {
     const selectedDirectWorkForce = directWorkForceListContext.find((item) => item.id === id)
-
+    const charge = basicQuery.directPersonal.find((personal) => {
+      return personal.id == selectedDirectWorkForce.directWorkForce
+    })
     setDirectWorkForce({
       directWorkForce: selectedDirectWorkForce.directWorkForce,
       directWorkForceOfferedNumber: selectedDirectWorkForce.offeredNumber,
@@ -112,6 +135,12 @@ const DirectWorkForce = () => {
       directWorkForceWorkNumber: selectedDirectWorkForce.workNumber,
       directWorkForceHHNumber: selectedDirectWorkForce.hh,
     })
+
+    setSelectedOption({
+      value: charge.id,
+      label: charge.name,
+    })
+
     deleteDirectWorkForce(id)
   }
 
@@ -193,7 +222,7 @@ const DirectWorkForce = () => {
               </div>
             </CToast>
           )}
-          <CFormSelect
+          {/* <CFormSelect
             aria-label="Default select example"
             id="directWorkForce"
             value={directWorkForce.directWorkForce || ''}
@@ -210,7 +239,19 @@ const DirectWorkForce = () => {
                 </option>
               )
             })}
-          </CFormSelect>
+          </CFormSelect> */}
+
+          <Select
+            id="directWorkForce"
+            label="Cargo"
+            value={selectedOption}
+            // value={indirectWorkForce.indirectWorkForce || ''}
+            onChange={(e) => {
+              onChangeDirectWorkForceCharge(e)
+            }}
+            options={options}
+          />
+
           <CTable>
             <CTableHead>
               <CTableRow>
