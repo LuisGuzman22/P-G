@@ -9,7 +9,7 @@
 //   const queryClient = useQueryClient()
 
 //   const fetchReportsData = async () => {
-//     const res = await axios.get('https://pyg-production.up.railway.app/api/v1/reports')
+//     const res = await axios.get('https://mpm.pgproject.cl/api/v1/reports')
 //     return res.data.data
 //   }
 

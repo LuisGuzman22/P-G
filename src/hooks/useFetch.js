@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
 const fetchProducts = async (projectId) => {
-  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/projects', {
+  const res = await axios.get('https://mpm.pgproject.cl/api/v1/projects', {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -22,7 +22,6 @@ const fetchContracts = async (contractId) => {
 
 const fetchBasicData = async (contractId) => {
   const url = 'https://mpm.pgproject.cl/api/v1/basicData'
-  // const url = 'https://pyg-production.up.railway.app/api/v1/basicData'
   const res = await axios.get(url, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -32,7 +31,7 @@ const fetchBasicData = async (contractId) => {
 }
 
 const testToken = async () => {
-  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/test', {
+  const res = await axios.get('https://mpm.pgproject.cl/api/v1/test', {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -42,9 +41,9 @@ const testToken = async () => {
 
 export const fetchReportsData = async () => {
   // const res = await axios.get(
-  //   `https://pyg-production.up.railway.app/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
+  //   `https://mpm.pgproject.cl/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
   //   {
-  const res = await axios.get(`https://pyg-production.up.railway.app/api/v1/reports`, {
+  const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -53,8 +52,8 @@ export const fetchReportsData = async () => {
 }
 
 export const fetchReportDataByReportId = async (reportId) => {
-  const res = await axios.get(`https://pyg-production.up.railway.app/api/v1/reports/${reportId}`, {
-    // const res = await axios.get(`https://pyg-production.up.railway.app/api/v1/reports`, {
+  const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports/${reportId}`, {
+    // const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },

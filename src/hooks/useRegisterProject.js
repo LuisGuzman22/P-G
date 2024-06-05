@@ -10,7 +10,7 @@ const useRegisterProject = () => {
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .post('https://pyg-production.up.railway.app/api/v1/projects', newTodo)
+        .post('https://mpm.pgproject.cl/api/v1/projects', newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -51,7 +51,7 @@ const useRegisterProject = () => {
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .put(`https://pyg-production.up.railway.app/api/v1/projects/${newTodo.id}`, newTodo)
+        .put(`https://mpm.pgproject.cl/api/v1/projects/${newTodo.id}`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
