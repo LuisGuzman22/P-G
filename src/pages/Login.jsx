@@ -48,6 +48,7 @@ const Login = () => {
     localStorage.removeItem('REACT_QUERY_OFFLINE_CACHE')
     localStorage.setItem('color', 'light')
     localStorage.removeItem('token')
+    localStorage.removeItem('company_user')
 
     // localStorage.clear()
     queryClient.clear()

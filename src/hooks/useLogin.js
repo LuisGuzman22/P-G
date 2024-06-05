@@ -18,8 +18,8 @@ const useLogin = () => {
         .post('https://mpm.pgproject.cl/api/v1/login', newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Ok) {
-            // console.log('res', res.data.data)
             localStorage.setItem('token', res.data.data.token)
+            localStorage.setItem('company_user', res.data.data.user.company_id)
             setIsLoading(false)
             setIsError(false)
             navigate(`/project_selector`)

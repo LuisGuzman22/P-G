@@ -2,7 +2,12 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
 const fetchProducts = async (projectId) => {
-  const res = await axios.get('https://mpm.pgproject.cl/api/v1/projects', {
+  let url = 'https://mpm.pgproject.cl/api/v1/projects'
+  const company_id = localStorage.getItem('company_user')
+  if (company_id !== undefined && company_id !== null && company_id !== 'null') {
+    url = url + `/search?company_id=${company_id}`
+  }
+  const res = await axios.get(url, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },

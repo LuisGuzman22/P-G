@@ -1103,6 +1103,7 @@ const Pdf = (props) => {
                     <div style={{ textAlign: 'center', width: '100%' }}>
                       <img
                         src={photo.base64}
+                        // src={`https://mpm.pgproject.cl${photo.url}`}
                         // src={not_found}
                         style={{ width: '500px', height: '500px', textAlign: 'center' }}
                       />
