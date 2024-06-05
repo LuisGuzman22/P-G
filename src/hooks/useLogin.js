@@ -15,7 +15,7 @@ const useLogin = () => {
       setError('')
       setIsLoading(true)
       return await axios
-        .post('https://pyg-production.up.railway.app/api/v1/login', newTodo)
+        .post('https://mpm.pgproject.cl/api/v1/login', newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Ok) {
             // console.log('res', res.data.data)
