@@ -21,9 +21,7 @@ const fetchContracts = async (contractId) => {
 }
 
 const fetchBasicData = async (contractId) => {
-  const url = 'https://mpm.pgproject.cl/api/v1/basicData'
-  // const url = 'https://pyg-production.up.railway.app/api/v1/basicData'
-  const res = await axios.get(url, {
+  const res = await axios.get('https://pyg-production.up.railway.app/api/v1/basicData', {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
