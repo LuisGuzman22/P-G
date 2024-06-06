@@ -30,6 +30,7 @@ const IndustrialWaterControl = () => {
     aljibeQuantityTurns: undefined,
     aljibeM3: undefined,
     aljibePlate: undefined,
+    aljibeM3Accumulated: undefined,
   }
 
   const aljibeTotalsInitialState = {
@@ -37,6 +38,7 @@ const IndustrialWaterControl = () => {
     aljibeQuantityTurns: 0,
     aljibeM3: 0,
     aljibePlate: 0,
+    aljibeM3Accumulated: 0,
   }
 
   const { getData } = useGetCachedQueryData()
@@ -47,12 +49,19 @@ const IndustrialWaterControl = () => {
   const [aljibeTotals, setAlgibeTotals] = useState(aljibeTotalsInitialState)
   const [plates, setPlates] = useState()
   const [error, setError] = useState(false)
+  const [accumulatedM3, setAccumulatedM3] = useState(0)
 
   const {
     storealjibe,
     removealjibe,
     aljibeList: aljibeListContext,
   } = useRegisterDailyReportCompany()
+
+  const selectedReport = getData('selectedReport')
+
+  useEffect(() => {
+    setAccumulatedM3(selectedReport?.aljibeList[0].aljibeM3Accumulated || 0)
+  }, [selectedReport])
 
   const onChangeData = (e) => {
     setError(false)
@@ -132,8 +141,36 @@ const IndustrialWaterControl = () => {
   }
 
   useEffect(() => {
-    if (!isViewMode) storealjibe(aljibeList)
+    let tempAcumulated = selectedReport?.aljibeList[0].aljibeM3Accumulated || 0
+    aljibeList.map((aljibe) => {
+      tempAcumulated = Number(tempAcumulated) + Number(aljibe?.aljibeM3 || 0)
+    })
+    setAccumulatedM3(tempAcumulated)
+
+    if (!isViewMode) {
+      storealjibe(aljibeList)
+    }
   }, [aljibeList])
+
+  useEffect(() => {
+    let aljData = {}
+    let algDataList = []
+    if (aljibeList.length > 0) {
+      aljibeList.map((aljibe) => {
+        aljData = {
+          id: aljibe.id,
+          aljibe: aljibe.aljibe,
+          aljibeCachimbaName: aljibe.aljibeCachimbaName,
+          aljibeQuantityTurns: aljibe.aljibeQuantityTurns,
+          aljibeM3: aljibe.aljibeM3,
+          aljibePlate: aljibe.aljibePlate,
+          aljibeM3Accumulated: accumulatedM3,
+        }
+        algDataList.push(aljData)
+      })
+      setAlgibeList(algDataList)
+    }
+  }, [accumulatedM3])
 
   useEffect(() => {
     let aljibeTotalsCounter = {
@@ -258,6 +295,7 @@ const IndustrialWaterControl = () => {
               </CTableRow>
             </CTableBody>
           </CTable>
+
           <CButton
             className="btn-project-action"
             onClick={() => {
@@ -268,6 +306,7 @@ const IndustrialWaterControl = () => {
           </CButton>
         </>
       )}
+      <CTableHeaderCell scope="col">Cantidad de m3 acumulada: {accumulatedM3}</CTableHeaderCell>
 
       {aljibeListContext.length > 0 && aljibeListContext[0].aljibe && (
         <CTable className="resume-table">

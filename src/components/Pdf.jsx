@@ -1044,6 +1044,12 @@ const Pdf = (props) => {
                     })}
                   </>
                 )}
+                <tr>
+                  <td>Total m3</td>
+                  <td></td>
+                  <td></td>
+                  <td>{aljibeList[0]?.aljibeM3Accumulated || 0}</td>
+                </tr>
               </tbody>
             </table>
           </>
