@@ -39,6 +39,7 @@ import Pdf from './Pdf'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import Loading from './loading'
+import Skeleton from 'react-loading-skeleton'
 
 import { Chart } from 'react-google-charts'
 import { toPng } from 'html-to-image'
@@ -130,9 +131,9 @@ const DailyReportEditCollapse = () => {
     }
   }, [asarcoMachineryList])
 
-  useEffect(() => {
-    if (!company.dailyReportDate) window.location.reload()
-  }, [company])
+  // useEffect(() => {
+  //   if (!company.dailyReportDate) window.location.reload()
+  // }, [company])
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
@@ -217,7 +218,7 @@ const DailyReportEditCollapse = () => {
           {/* </div> */}
           {/* </CRow> */}
         </div>
-        <PDFDownloadLink
+        {/* <PDFDownloadLink
           document={
             <Pdf
               company={company}
@@ -261,7 +262,7 @@ const DailyReportEditCollapse = () => {
             setUrl(url)
             return loading ? 'Generando documento...' : 'Descargar PDF'
           }}
-        </PDFDownloadLink>
+        </PDFDownloadLink> */}
       </div>
       {!isLoading && url && blobData ? (
         <>
@@ -401,7 +402,7 @@ const DailyReportEditCollapse = () => {
         </>
       ) : (
         <>
-          <Loading />
+          <Skeleton count={2} />
         </>
       )}
     </div>

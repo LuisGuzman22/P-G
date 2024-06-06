@@ -36,9 +36,12 @@ import PhotoRecord from './daily-report/photo-record'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Loading from './loading'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import { useFetchReportData } from 'src/hooks/useFetch'
+import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 
 const DailyReportCollapse = () => {
   const { registerData, loading, error, success, clearData } = useRegisterDailyReport()
+  const { loadData } = useRegisterDailyReportCompany()
   const navigate = useNavigate()
   const { getData } = useGetCachedQueryData()
   const reportsQuery = getData('reports')
@@ -46,12 +49,24 @@ const DailyReportCollapse = () => {
   const currentLocation = useLocation().pathname
   const isCreatingMode = currentLocation === '/informe-diario'
 
+  const { isFetching } = useFetchReportData()
+
   // useEffect(() => {
   //   if (isCreatingMode) {
   //     localStorage.removeItem('daily_report')
   //     clearData()
   //   }
   // }, [])
+
+  // useEffect(() => {
+  //   console.log('report id', localStorage.getItem('daily_report'))
+  //   loadData()
+  // }, [localStorage.getItem('daily_report')])
+
+  // useEffect(() => {
+  //   console.log('isFetching', isFetching)
+  //   if (!isFetching) loadData()
+  // }, [isFetching])
 
   const [showError, setShowError] = useState(false)
   useEffect(() => {
@@ -69,6 +84,7 @@ const DailyReportCollapse = () => {
   const handleLoadData = () => {
     setVisible(false)
     localStorage.setItem('daily_report', reportsQuery[0].id)
+    loadData()
   }
 
   return (
@@ -97,6 +113,7 @@ const DailyReportCollapse = () => {
           <CButton
             className="confirm-btn"
             onClick={() => {
+              localStorage.removeItem('daily_report')
               handleLoadData()
             }}
           >

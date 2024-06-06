@@ -11,8 +11,10 @@ import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import Chart from 'react-google-charts'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useQueryClient } from '@tanstack/react-query'
 
 const Dashboard = () => {
+  const queryClient = useQueryClient()
   let navigate = useNavigate()
   const { getProject, getContract } = useRegisterGeneralData()
   const { clearData } = useRegisterDailyReport()
@@ -23,12 +25,15 @@ const Dashboard = () => {
   const { data, isLoading, error } = useGetBasicData(contractLS.id)
   const { getData } = useGetCachedQueryData()
 
-  const { isFetching } = useFetchReportsData()
+  // const { isFetching } = useFetchReportsData()
+  const { isFetching } = useFetchReportsData(contractLS.id, projectLS.id)
+  // const reportsQuery = getData('reports')
   const reportsQuery = getData('reports')
 
   useEffect(() => {
     localStorage.removeItem('daily_report')
     clearData()
+    queryClient.removeQueries('selectedReport')
   }, [])
 
   useEffect(() => {
@@ -101,6 +106,45 @@ const Dashboard = () => {
           </CCard>
         </>
       )}
+      {/* {reportsQuery && reportsQuery.length > 0 && (
+        <>
+          <br />
+          <CCard>
+            <CCardBody>
+              {!isFetching ? (
+                <CCardText>
+                  <>
+                    <span>Tienes {reportsQuery.length} informes diarios generados.</span>
+                    <CRow>
+                      {reportsQuery
+                        .sort((a, b) => b.id - a.id)
+                        .map((report) => {
+                          return (
+                            <>
+                              <CCol>
+                                <CButton
+                                  className="dashboard-button"
+                                  onClick={() => {
+                                    localStorage.setItem('daily_report', report.id)
+                                    redirectTo('/informe-diario/view')
+                                  }}
+                                >
+                                  {report.id}
+                                </CButton>
+                              </CCol>
+                            </>
+                          )
+                        })}
+                    </CRow>
+                  </>
+                </CCardText>
+              ) : (
+                <Skeleton count={2} />
+              )}
+            </CCardBody>
+          </CCard>
+        </>
+      )} */}
 
       <br />
       <CCard>
@@ -122,6 +166,7 @@ const Dashboard = () => {
                       className="dashboard-button"
                       onClick={() => {
                         redirectTo('/informe-diario')
+                        localStorage.setItem('daily_report', reportsQuery[0]?.id || undefined)
                       }}
                     >
                       Informe Diario

@@ -44,21 +44,32 @@ const testToken = async () => {
   return res.data.data
 }
 
-export const fetchReportsData = async () => {
-  // const res = await axios.get(
-  //   `https://mpm.pgproject.cl/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
-  //   {
-  const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+// export const fetchReportsData = async () => {
+//   // const res = await axios.get(
+//   //   `https://mpm.pgproject.cl/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
+//   //   {
+//   const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports`, {
+//     headers: {
+//       Authorization: 'Bearer ' + localStorage.getItem('token'),
+//     },
+//   })
+//   return res.data.data
+// }
+
+export const fetchReportsData = async (contractId, projectId) => {
+  const res = await axios.get(
+    `https://mpm.pgproject.cl/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
 export const fetchReportDataByReportId = async (reportId) => {
   const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports/${reportId}`, {
-    // const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -112,19 +123,32 @@ export const useFetchUserList = () => {
   })
 }
 
-export const useFetchReportsData = () => {
+// export const useFetchReportsData = () => {
+//   return useQuery({
+//     queryKey: ['reports'],
+//     staleTime: 0,
+//     gcTime: 2147483647,
+//     refetchType: 'all',
+//     queryFn: async () => {
+//       return fetchReportsData()
+//     },
+//   })
+// }
+
+export const useFetchReportsData = (contractId, projectId) => {
   return useQuery({
     queryKey: ['reports'],
     staleTime: 0,
     gcTime: 2147483647,
     refetchType: 'all',
     queryFn: async () => {
-      return fetchReportsData()
+      return fetchReportsData(contractId, projectId)
     },
   })
 }
 
-export const useFetchReportData = (reportId) => {
+export const useFetchReportData = () => {
+  const reportId = localStorage.getItem('daily_report')
   return useQuery({
     queryKey: ['selectedReport'],
     staleTime: 0,

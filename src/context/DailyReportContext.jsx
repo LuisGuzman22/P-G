@@ -18,6 +18,12 @@ export const DailyReportProvider = ({ children }) => {
 
   const reportsQuery = getData('reports')
 
+  const [selectedReportQuery, setSelectedReportQuery] = useState()
+
+  const loadData = () => {
+    setSelectedReportQuery(getData('selectedReport'))
+  }
+
   const reportId = localStorage.getItem('daily_report')
   let selectedReport
 
@@ -27,27 +33,27 @@ export const DailyReportProvider = ({ children }) => {
     })
   }
 
-  const selectedCompany = selectedReport?.company
-  const selectedIndirectCompanyTurnList = selectedReport?.indirectCompanyTurnList
-  const selectedIndirectWorkForceList = selectedReport?.indirectWorkForceList
-  const selectedTotalIndirectWorkForce = selectedReport?.totalIndirectWorkForce
-  const selectedDirectWorkForceList = selectedReport?.directWorkForceList
-  const selectedTotalDirectWorkForce = selectedReport?.totalDirectWorkForce
-  const selectedDirectDotationWorkForceList = selectedReport?.directDotationWorkForceList
-  const selectedMachineryList = selectedReport?.machineryList
-  const selectedMachineryWorkForceList = selectedReport?.machineryWorkForceList
-  const selectedAsarcoMachineryList = selectedReport?.asarcoMachineryList
-  const selectedEquipmentList = selectedReport?.equipmentList
-  const selectedEquipmentWorkForceList = selectedReport?.equipmentWorkForceList
-  const selectedVehicleList = selectedReport?.vehicleList
-  const selectedActivityList = selectedReport?.activityList
-  const selectedIncident = selectedReport?.incident
-  const selectedEquipmentPlateList = selectedReport?.equipmentPlateList
-  const selectedAljibeList = selectedReport?.aljibeList
-  const selectedComment = selectedReport?.comment
-  const selectedVehiclePlateList = selectedReport?.vehiclePlateList
-  const selectedGraphList = selectedReport?.graphList
-  const selectedPhotoList = selectedReport?.photoList
+  const selectedCompany = selectedReportQuery?.company
+  const selectedIndirectCompanyTurnList = selectedReportQuery?.indirectCompanyTurnList
+  const selectedIndirectWorkForceList = selectedReportQuery?.indirectWorkForceList
+  const selectedTotalIndirectWorkForce = selectedReportQuery?.totalIndirectWorkForce
+  const selectedDirectWorkForceList = selectedReportQuery?.directWorkForceList
+  const selectedTotalDirectWorkForce = selectedReportQuery?.totalDirectWorkForce
+  const selectedDirectDotationWorkForceList = selectedReportQuery?.directDotationWorkForceList
+  const selectedMachineryList = selectedReportQuery?.machineryList
+  const selectedMachineryWorkForceList = selectedReportQuery?.machineryWorkForceList
+  const selectedAsarcoMachineryList = selectedReportQuery?.asarcoMachineryList
+  const selectedEquipmentList = selectedReportQuery?.equipmentList
+  const selectedEquipmentWorkForceList = selectedReportQuery?.equipmentWorkForceList
+  const selectedVehicleList = selectedReportQuery?.vehicleList
+  const selectedActivityList = selectedReportQuery?.activityList
+  const selectedIncident = selectedReportQuery?.incident
+  const selectedEquipmentPlateList = selectedReportQuery?.equipmentPlateList
+  const selectedAljibeList = selectedReportQuery?.aljibeList
+  const selectedComment = selectedReportQuery?.comment
+  const selectedVehiclePlateList = selectedReportQuery?.vehiclePlateList
+  const selectedGraphList = selectedReportQuery?.graphList
+  const selectedPhotoList = selectedReportQuery?.photoList
 
   const [company, setCompany] = useState({
     dailyReportContractManagerName: selectedCompany
@@ -673,6 +679,7 @@ export const DailyReportProvider = ({ children }) => {
         photoList,
         storePhoto,
         removePhoto,
+        loadData,
       }}
     >
       {children}
