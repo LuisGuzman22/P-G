@@ -246,14 +246,14 @@ const DailyReportCollapse = () => {
             <Graphs isOpen={chartOpen} />
           </CAccordionBody>
         </CAccordionItem> */}
-            <CAccordionItem itemKey={20}>
-              <CAccordionHeader>20) Incidentes, lesiones o eventos</CAccordionHeader>
+            <CAccordionItem itemKey={19}>
+              <CAccordionHeader>19) Incidentes, lesiones o eventos</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <Incidents />
               </CAccordionBody>
             </CAccordionItem>
-            <CAccordionItem itemKey={21}>
-              <CAccordionHeader>21) Firmas</CAccordionHeader>
+            <CAccordionItem itemKey={20}>
+              <CAccordionHeader>20) Firmas</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <></>
               </CAccordionBody>

@@ -155,8 +155,6 @@ export const useFetchReportData = () => {
     gcTime: 2147483647,
     refetchType: 'all',
     queryFn: async () => {
-      console.log('report', reportId)
-
       return reportId && reportId !== 'undefined' ? fetchReportDataByReportId(reportId) : undefined
     },
   })

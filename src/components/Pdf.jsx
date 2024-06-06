@@ -1098,6 +1098,7 @@ const Pdf = (props) => {
           <tbody>
             <tr>
               {photoList.map((photo, i) => {
+                // console.log(`https://mpm.pgproject.cl${photo.url}`)
                 return (
                   <td className="" style={{ textAlign: 'center' }} key={i}>
                     <div style={{ textAlign: 'center', width: '100%' }}>
