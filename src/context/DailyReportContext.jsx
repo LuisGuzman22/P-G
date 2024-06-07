@@ -262,6 +262,14 @@ export const DailyReportProvider = ({ children }) => {
 
   const [aljibeList, setAljibeList] = useState([])
 
+  const [accumulatedM3, setAccumulatedM3] = useState(
+    selectedAljibeList?.[0]?.aljibeM3Accumulated || 0,
+  )
+
+  const storeAccumulatedM3 = (data) => {
+    setAccumulatedM3(data)
+  }
+
   useEffect(() => {
     setAljibeList(selectedAljibeList || [])
   }, [selectedAljibeList])
@@ -673,6 +681,8 @@ export const DailyReportProvider = ({ children }) => {
         storealjibe,
         removealjibe,
         aljibeList,
+        storeAccumulatedM3,
+        accumulatedM3,
         clearContext,
         storeGraphs,
         graphList,

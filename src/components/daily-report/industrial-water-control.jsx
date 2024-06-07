@@ -12,6 +12,7 @@ import {
   CTableDataCell,
   CToast,
   CToastBody,
+  CTooltip,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -55,13 +56,24 @@ const IndustrialWaterControl = () => {
     storealjibe,
     removealjibe,
     aljibeList: aljibeListContext,
+    storeAccumulatedM3,
+    accumulatedM3: accumulatedM3Context,
   } = useRegisterDailyReportCompany()
 
   const selectedReport = getData('selectedReport')
 
-  useEffect(() => {
-    setAccumulatedM3(selectedReport?.aljibeList[0].aljibeM3Accumulated || 0)
-  }, [selectedReport])
+  // useEffect(() => {
+  //   console.log(
+  //     'selectedReport.aljibeList[0].aljibeM3Accumulated',
+  //     selectedReport.aljibeList[0].aljibeM3Accumulated,
+  //   )
+  //   if (selectedReport && selectedReport.aljibeList.length > 0) {
+  //     console.log('carga')
+  //     setAccumulatedM3(selectedReport.aljibeList[0].aljibeM3Accumulated)
+  //   } else {
+  //     setAccumulatedM3(0)
+  //   }
+  // }, [selectedReport])
 
   const onChangeData = (e) => {
     setError(false)
@@ -109,6 +121,7 @@ const IndustrialWaterControl = () => {
         aljibeQuantityTurns: aljibe.aljibeQuantityTurns,
         aljibeM3: aljibe.aljibeM3,
         aljibePlate: aljibe.aljibePlate,
+        aljibeM3Accumulated: accumulatedM3,
       }
       setAlgibe(initialState) // Clear the object
       setAlgibeList([...aljibeListContext, aljibeInitialState])
@@ -145,7 +158,7 @@ const IndustrialWaterControl = () => {
     aljibeList.map((aljibe) => {
       tempAcumulated = Number(tempAcumulated) + Number(aljibe?.aljibeM3 || 0)
     })
-    setAccumulatedM3(tempAcumulated)
+    // setAccumulatedM3(tempAcumulated)
 
     if (!isViewMode) {
       storealjibe(aljibeList)
@@ -153,6 +166,7 @@ const IndustrialWaterControl = () => {
   }, [aljibeList])
 
   useEffect(() => {
+    storeAccumulatedM3(accumulatedM3)
     let aljData = {}
     let algDataList = []
     if (aljibeList.length > 0) {
@@ -177,7 +191,6 @@ const IndustrialWaterControl = () => {
       aljibeM3: 0,
       aljibeQuantityTurns: 0,
     }
-
     for (let data of aljibeListContext) {
       aljibeTotalsCounter = {
         aljibeM3: Number(aljibeTotalsCounter.aljibeM3) + Number(data.aljibeM3 ?? 0),
@@ -185,8 +198,26 @@ const IndustrialWaterControl = () => {
           Number(aljibeTotalsCounter.aljibeQuantityTurns) + Number(data.aljibeQuantityTurns ?? 0),
       }
     }
+
     setAlgibeTotals(aljibeTotalsCounter)
   }, [aljibeListContext])
+
+  useEffect(() => {
+    if (isCreatingMode) {
+      if (selectedReport && selectedReport.aljibeList.length > 0) {
+        setAccumulatedM3(
+          selectedReport.aljibeList[0].aljibeM3Accumulated + Number(aljibeTotals.aljibeM3),
+        )
+      } else {
+        setAccumulatedM3(Number(aljibeTotals.aljibeM3))
+      }
+    } else {
+      setAccumulatedM3(selectedReport.aljibeList[0].aljibeM3Accumulated)
+      // setAccumulatedM3(
+      //   selectedReport.aljibeList[0].aljibeM3Accumulated + Number(aljibeTotals.aljibeM3),
+      // )
+    }
+  }, [aljibeTotals])
 
   return (
     <div className="work-force-report">
@@ -306,7 +337,13 @@ const IndustrialWaterControl = () => {
           </CButton>
         </>
       )}
-      <CTableHeaderCell scope="col">Cantidad de m3 acumulada: {accumulatedM3}</CTableHeaderCell>
+      <CTooltip
+        content="Total de m3 acumulados a la Fecha."
+        placement="top"
+        // style={customTooltipStyle}
+      >
+        <CTableHeaderCell scope="col">Cantidad de m3 acumulada: {accumulatedM3}</CTableHeaderCell>
+      </CTooltip>
 
       {aljibeListContext.length > 0 && aljibeListContext[0].aljibe && (
         <CTable className="resume-table">

@@ -35,6 +35,7 @@ const useRegisterDailyReport = () => {
     clearContext,
     graphList,
     photoList,
+    accumulatedM3,
   } = useContext(DailyReportContext)
 
   const { mutate } = useMutation({
@@ -94,6 +95,10 @@ const useRegisterDailyReport = () => {
   }
 
   const registerData = async () => {
+    aljibeList.map((aljibe) => {
+      aljibe.aljibeM3Accumulated = accumulatedM3
+    })
+
     // console.log('post', {
     //   projectId: projectLS.id,
     //   contractId: contractLS.id,
