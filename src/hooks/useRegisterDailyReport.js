@@ -46,7 +46,7 @@ const useRegisterDailyReport = () => {
       //   },
       // }),
 
-      axios.post('https://mpm.pgproject.cl/api/v1/reports', newTodo, {
+      axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/reports`, newTodo, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

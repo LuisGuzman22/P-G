@@ -15,7 +15,7 @@ const useLogin = () => {
       setError('')
       setIsLoading(true)
       return await axios
-        .post('https://mpm.pgproject.cl/api/v1/login', newTodo)
+        .post(`${process.env.REACT_APP_BASE_URL}api/v1/login`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Ok) {
             localStorage.setItem('token', res.data.data.token)
@@ -53,6 +53,7 @@ const useLogin = () => {
 
   const trueLogin = async (data) => {
     const { user, password } = data
+    console.log('REACT_APP_BASE_URL', process.env.REACT_APP_BASE_URL)
 
     const loginData = {
       email: user,

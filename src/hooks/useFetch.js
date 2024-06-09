@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
 const fetchProducts = async (projectId) => {
-  let url = 'https://mpm.pgproject.cl/api/v1/projects'
+  let url = `${process.env.REACT_APP_BASE_URL}api/v1/projects`
   const company_id = localStorage.getItem('company_user')
   if (company_id !== undefined && company_id !== null && company_id !== 'null') {
     url = url + `/search?company_id=${company_id}`
@@ -16,18 +16,17 @@ const fetchProducts = async (projectId) => {
 }
 
 const fetchUsers = async () => {
-  const res = await axios.get('https://b4b07e25f42d4135b6fc3791a6e1d1f8.api.mockbin.io/')
+  const res = await axios.get(`https://b4b07e25f42d4135b6fc3791a6e1d1f8.api.mockbin.io/`)
   return res.data.data
 }
 
 const fetchContracts = async (contractId) => {
-  const res = await axios.get('https://2b3570b8072a44e09ce5b5a80a4c8012.api.mockbin.io/')
+  const res = await axios.get(`https://2b3570b8072a44e09ce5b5a80a4c8012.api.mockbin.io/`)
   return res.data.data
 }
 
 const fetchBasicData = async (contractId) => {
-  const url = 'https://mpm.pgproject.cl/api/v1/basicData'
-  const res = await axios.get(url, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/basicData`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -36,7 +35,7 @@ const fetchBasicData = async (contractId) => {
 }
 
 const testToken = async () => {
-  const res = await axios.get('https://mpm.pgproject.cl/api/v1/test', {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/test`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -58,7 +57,7 @@ const testToken = async () => {
 
 export const fetchReportsData = async (contractId, projectId) => {
   const res = await axios.get(
-    `https://mpm.pgproject.cl/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -69,7 +68,8 @@ export const fetchReportsData = async (contractId, projectId) => {
 }
 
 export const fetchReportDataByReportId = async (reportId) => {
-  const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports/${reportId}`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/reports/${reportId}`, {
+    // const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/reports`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
