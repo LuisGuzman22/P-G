@@ -132,7 +132,7 @@ const TotalDirectWorkForce = () => {
   }, [totalDirectWorkForce])
 
   return (
-    <div className="work-force-report">
+    <div className="work-force-report form-group">
       <CTable>
         <CTableHead>
           <CTableRow>

@@ -204,7 +204,7 @@ const DirectWorkForce = () => {
   }, [])
 
   return (
-    <div className="work-force-report">
+    <div className="work-force-report form-group">
       {!isViewMode && (
         <>
           {error && (

@@ -1,6 +1,16 @@
 import React, { useEffect } from 'react'
 import InformativePanel from 'src/components/InformativePanel'
-import { CCard, CCardHeader, CButton, CCardBody, CCardText, CRow, CCol } from '@coreui/react'
+import {
+  CCard,
+  CCardHeader,
+  CButton,
+  CCardBody,
+  CCardText,
+  CRow,
+  CCol,
+  CListGroupItem,
+  CListGroup,
+} from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
 import ProjectCollapse from 'src/components/ProjectCollapse'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
@@ -30,6 +40,7 @@ const Dashboard = () => {
   // const reportsQuery = getData('reports')
   const reportsQuery = getData('reports')
 
+  console.log('reportsQuery', reportsQuery)
   useEffect(() => {
     localStorage.removeItem('daily_report')
     clearData()
@@ -67,94 +78,6 @@ const Dashboard = () => {
           </CCardText>
         </CCardBody>
       </CCard>
-      {reportsQuery && reportsQuery.length > 0 && (
-        <>
-          <br />
-          <CCard>
-            <CCardBody>
-              {!isFetching ? (
-                <CCardText>
-                  <>
-                    <span>Tienes {reportsQuery.length} informes diarios generados.</span>
-                    <CRow>
-                      {reportsQuery
-                        .sort((a, b) => b.id - a.id)
-                        .map((report) => {
-                          return (
-                            <>
-                              <CCol>
-                                <CButton
-                                  className="dashboard-button"
-                                  onClick={() => {
-                                    localStorage.setItem('daily_report', report.id)
-                                    redirectTo('/informe-diario/view')
-                                  }}
-                                >
-                                  {report.id}
-                                </CButton>
-                              </CCol>
-                            </>
-                          )
-                        })}
-                    </CRow>
-                  </>
-                </CCardText>
-              ) : (
-                <Skeleton count={2} />
-              )}
-            </CCardBody>
-          </CCard>
-        </>
-      )}
-      {/* {reportsQuery && reportsQuery.length > 0 && (
-        <>
-          <br />
-          <CCard>
-            <CCardBody>
-              {!isFetching ? (
-                <CCardText>
-                  <>
-                    <span>Tienes {reportsQuery.length} informes diarios generados.</span>
-                    <CRow>
-                      {reportsQuery
-                        .sort((a, b) => b.id - a.id)
-                        .map((report) => {
-                          return (
-                            <>
-                              <CCol>
-                                <CButton
-                                  className="dashboard-button"
-                                  onClick={() => {
-                                    localStorage.setItem('daily_report', report.id)
-                                    redirectTo('/informe-diario/view')
-                                  }}
-                                >
-                                  {report.id}
-                                </CButton>
-                              </CCol>
-                            </>
-                          )
-                        })}
-                    </CRow>
-                  </>
-                </CCardText>
-              ) : (
-                <Skeleton count={2} />
-              )}
-            </CCardBody>
-          </CCard>
-        </>
-      )} */}
-
-      <br />
-      <CCard>
-        <CCardBody>
-          <CCardText>
-            <ProjectCollapse />
-          </CCardText>
-        </CCardBody>
-      </CCard>
-      <br />
       <CCard>
         <CCardBody>
           {!isFetching ? (
@@ -218,6 +141,76 @@ const Dashboard = () => {
           )}
         </CCardBody>
       </CCard>
+
+      <br />
+      <CCard>
+        <CCardBody>
+          <CCardText>
+            <ProjectCollapse />
+          </CCardText>
+        </CCardBody>
+      </CCard>
+      <br />
+      {reportsQuery && reportsQuery.length > 0 && (
+        <>
+          <br />
+          <CCard>
+            <CCardBody>
+              {!isFetching ? (
+                <CCardText>
+                  <>
+                    <span>Tienes {reportsQuery.length} informes diarios generados.</span>
+                    <CListGroup>
+                      {reportsQuery
+                        .sort((a, b) => b.id - a.id)
+                        .map((report) => {
+                          return (
+                            <>
+                              <CListGroupItem
+                                as="a"
+                                key={report.id}
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => {
+                                  localStorage.setItem('daily_report', report.id)
+                                  redirectTo('/informe-diario/view')
+                                }}
+                              >
+                                Reporte número {report.id}
+                              </CListGroupItem>
+                            </>
+                          )
+                        })}
+                    </CListGroup>
+                    {/* <CRow>
+                      {reportsQuery
+                        .sort((a, b) => b.id - a.id)
+                        .map((report) => {
+                          return (
+                            <>
+                              <CCol>
+                                <CButton
+                                  className="dashboard-button"
+                                  onClick={() => {
+                                    localStorage.setItem('daily_report', report.id)
+                                    redirectTo('/informe-diario/view')
+                                  }}
+                                >
+                                  {report.id}
+                                </CButton>
+                              </CCol>
+                            </>
+                          )
+                        })}
+                    </CRow> */}
+                  </>
+                </CCardText>
+              ) : (
+                <Skeleton count={2} />
+              )}
+            </CCardBody>
+          </CCard>
+        </>
+      )}
     </div>
   )
 }

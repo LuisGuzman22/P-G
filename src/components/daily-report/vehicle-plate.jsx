@@ -142,7 +142,7 @@ const VehiclePlate = () => {
   return (
     <div className="work-force-report">
       {!isViewMode && (
-        <>
+        <div className="form-group">
           {error && (
             <CToast
               autohide={true}
@@ -322,7 +322,7 @@ const VehiclePlate = () => {
           >
             Registrar
           </CButton>
-        </>
+        </div>
       )}
 
       {vehiclePlateListContext.length > 0 && vehiclePlateListContext[0].vehicle && (

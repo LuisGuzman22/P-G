@@ -171,7 +171,7 @@ const Activities = () => {
   return (
     <div className="work-force-report">
       {!isViewMode && (
-        <>
+        <div className="form-group">
           {error && (
             <CToast
               autohide={true}
@@ -376,7 +376,7 @@ const Activities = () => {
           >
             Registrar
           </CButton>
-        </>
+        </div>
       )}
 
       {activityListContext.length > 0 && activityListContext[0].activityFrontWork && (

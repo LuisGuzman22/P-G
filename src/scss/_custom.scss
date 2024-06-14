@@ -265,6 +265,12 @@
   white-space: nowrap;
 }
 
+.form-group {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 .project-selector-container {
   margin: 0 auto;
   text-align: center;

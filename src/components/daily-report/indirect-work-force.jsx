@@ -151,7 +151,7 @@ const IndirectWorkForce = () => {
   return (
     <div className="work-force-report">
       {!isViewMode && (
-        <>
+        <div className="form-group">
           {error && (
             <CToast
               autohide={true}
@@ -296,7 +296,7 @@ const IndirectWorkForce = () => {
           >
             Registrar
           </CButton>
-        </>
+        </div>
       )}
       {indirectWorkForceListContext.length > 0 &&
         indirectWorkForceListContext[0].indirectWorkForce && (

@@ -276,7 +276,7 @@ const AsarcoMachinery = () => {
   return (
     <div className="work-force-report">
       {!isViewMode && (
-        <>
+        <div className="form-group">
           {error && (
             <CToast
               autohide={true}
@@ -463,7 +463,7 @@ const AsarcoMachinery = () => {
           >
             Registrar
           </CButton>
-        </>
+        </div>
       )}
 
       {asarcoMachineryListContext.length > 0 && asarcoMachineryListContext[0].machinery && (
