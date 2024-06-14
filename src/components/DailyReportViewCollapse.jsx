@@ -80,6 +80,7 @@ const DailyReportViewCollapse = () => {
   const [isLoading, setIsloading] = useState(false)
   const [blobData, setBlobData] = useState()
   const [url, setUrl] = useState()
+  const [pdfName, setPdfName] = useState('')
 
   useEffect(() => {
     if (!isFetching) loadData()
@@ -142,6 +143,12 @@ const DailyReportViewCollapse = () => {
     }
   }
 
+  useEffect(() => {
+    setPdfName(
+      `${company?.dailyReportContractName?.replaceAll(' ', '_')}-${company.dailyReportNumber}.pdf`,
+    )
+  }, [company])
+
   return (
     <div className="dailyReport">
       {!isFetching && (
@@ -192,7 +199,7 @@ const DailyReportViewCollapse = () => {
                   }}
                 />
               }
-              fileName="Reporte 1.pdf"
+              fileName={pdfName || 'Reporte 1.pdf'}
             >
               {({ blob, url, loading, error }) => {
                 setIsloading(loading)

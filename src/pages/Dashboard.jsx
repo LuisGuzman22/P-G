@@ -40,7 +40,6 @@ const Dashboard = () => {
   // const reportsQuery = getData('reports')
   const reportsQuery = getData('reports')
 
-  console.log('reportsQuery', reportsQuery)
   useEffect(() => {
     localStorage.removeItem('daily_report')
     clearData()

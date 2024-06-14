@@ -88,6 +88,28 @@ const ContractSelector = () => {
           </CCardTitle>
           <CCardBody>
             <CCardText>
+              <CRow key={1000}>
+                <CCol>
+                  <CWidgetStatsD
+                    onClick={() => {
+                      // onClickNewContract()
+                      localStorage.removeItem('project')
+                      navigate(`/project_selector`)
+                    }}
+                    className="mb-3"
+                    chart={
+                      <CContainer className="project-selector-container">
+                        <CRow>
+                          <span className="project-title-back">
+                            Volver a la selección de proyecto
+                          </span>
+                        </CRow>
+                      </CContainer>
+                    }
+                    style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
+                  />
+                </CCol>
+              </CRow>
               {contractList === undefined && <h3>No se encontraron contratos asociados</h3>}
               {contractList &&
                 contractList?.map((contract, index) => {
