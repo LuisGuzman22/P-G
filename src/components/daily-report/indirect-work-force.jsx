@@ -194,6 +194,12 @@ const IndirectWorkForce = () => {
               onChangeIndirectWorkForceCharge(e)
             }}
             options={options}
+            styles={{
+              option: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+                ...styles,
+                color: '#000000',
+              }),
+            }}
           />
 
           <CTable>

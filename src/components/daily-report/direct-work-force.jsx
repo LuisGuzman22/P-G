@@ -249,6 +249,12 @@ const DirectWorkForce = () => {
             onChange={(e) => {
               onChangeDirectWorkForceCharge(e)
             }}
+            styles={{
+              option: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+                ...styles,
+                color: '#000000',
+              }),
+            }}
             options={options}
           />
 
