@@ -541,7 +541,7 @@ const Pdf = (props) => {
           <tbody>
             <tr>
               <td className="td-workers-label">Directos</td>
-              <td className="td-green-label">N° Ofertado</td>
+              <td className="td-green-label">Dotación Planeada</td>
               <td className="td-workers-label">N° Contratados</td>
               <td className="td-workers-label">Acreditados</td>
               <td className="td-workers-label">N° Descanso</td>
