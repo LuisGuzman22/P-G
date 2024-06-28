@@ -34,6 +34,15 @@ const fetchBasicData = async (contractId) => {
   return res.data.data
 }
 
+const fetchTrisemanalData = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/clusters`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 const testToken = async () => {
   const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/test`, {
     headers: {
@@ -156,6 +165,18 @@ export const useFetchReportData = () => {
     refetchType: 'all',
     queryFn: async () => {
       return reportId && reportId !== 'undefined' ? fetchReportDataByReportId(reportId) : undefined
+    },
+  })
+}
+
+export const useFetchTrisemanalData = () => {
+  return useQuery({
+    queryKey: ['trisemanal'],
+    staleTime: 0,
+    gcTime: 2147483647,
+    refetchType: 'all',
+    queryFn: async () => {
+      return fetchTrisemanalData()
     },
   })
 }

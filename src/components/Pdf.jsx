@@ -798,7 +798,6 @@ const Pdf = (props) => {
                         const selectedEquipment = equipment.find((eq) => {
                           return eq.id === selectedEquipmentPlate.equipment
                         })
-
                         const selectedPlate = selectedEquipment.plate.find((plate) => {
                           return plate.id === selectedEquipmentPlate.equipmentPlate
                         })
