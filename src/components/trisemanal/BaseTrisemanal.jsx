@@ -25,21 +25,21 @@ const BaseTrisemanal = () => {
         !isLoading &&
         !error &&
         data.map((item, index) => {
-          console.log('item', item)
+          const childrens = item.childrens
           return (
-            <CRow key={index}>
-              <CCol sm={1}>{item.name}</CCol>
-              {/* <CCol sm={1}>{item.route}</CCol>
-              <CCol sm={1}>{item.activity_name}</CCol>
-              <CCol sm={1}>{item.ori_duration}</CCol>
-              <CCol sm={1}>{item.ori_duration}</CCol>
-              <CCol sm={1}>{item.ori_duration}</CCol>
-              <CCol sm={1}>{item.ori_duration}</CCol>
-              <CCol sm={1}>{item.ori_duration}</CCol>
-              <CCol sm={1}>{item.ori_duration}</CCol>
-              <CCol sm={1}>{item.ori_duration}</CCol>
-              <CCol sm={1}>{item.ori_duration}</CCol> */}
-            </CRow>
+            <>
+              <CRow key={index}>
+                <CCol sm={1}>{item.name}</CCol>
+              </CRow>
+              {childrens.map((child, index) => {
+                return (
+                  <CRow key={index}>
+                    <CCol sm={1}>{child.name}</CCol>
+                  </CRow>
+                )
+              })}
+              {}
+            </>
           )
         })}
     </div>
