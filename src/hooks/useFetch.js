@@ -52,6 +52,15 @@ const testToken = async () => {
   return res.data.data
 }
 
+const fetchMachinery = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/machineries`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 // export const fetchReportsData = async () => {
 //   // const res = await axios.get(
 //   //   `https://mpm.pgproject.cl/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
@@ -177,6 +186,18 @@ export const useFetchTrisemanalData = () => {
     refetchType: 'all',
     queryFn: async () => {
       return fetchTrisemanalData()
+    },
+  })
+}
+
+export const useFetchMachinery = () => {
+  return useQuery({
+    queryKey: ['machinery'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchMachinery()
     },
   })
 }

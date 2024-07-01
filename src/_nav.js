@@ -79,6 +79,20 @@ const _nav = [
     name: 'Administración',
   },
   {
+    component: CNavGroup,
+    name: 'Mantenedores',
+    to: '/base',
+    icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Maquinaria',
+        to: '/maintainer/machinery',
+        icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+      },
+    ],
+  },
+  {
     component: CNavItem,
     name: 'Administrar Proyectos',
     to: '/administrar_proyectos',

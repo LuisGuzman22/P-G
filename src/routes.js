@@ -16,6 +16,7 @@ const ProjectAdministration = React.lazy(() => import('./pages/ProjectAdministra
 const ContractAdministration = React.lazy(() => import('./pages/ContractAdministration'))
 const User = React.lazy(() => import('./pages/User'))
 const Pdf = React.lazy(() => import('./components/Pdf'))
+const MachineryMaintainer = React.lazy(() => import('./pages/MachineryMaintainerPage'))
 
 const routes = [
   { path: '/', name: 'Login' },
@@ -40,6 +41,7 @@ const routes = [
     element: ContractAdministration,
   },
   { path: '/administrar_usuarios', name: 'Administrar usuarios', element: User },
+  { path: '/maintainer/machinery', name: 'Administrar Maquinaria', element: MachineryMaintainer },
 ]
 
 export default routes
