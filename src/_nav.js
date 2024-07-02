@@ -90,6 +90,18 @@ const _nav = [
         to: '/maintainer/machinery',
         icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
       },
+      {
+        component: CNavItem,
+        name: 'Vehículo',
+        to: '/maintainer/vehicle',
+        icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Equipo',
+        to: '/maintainer/equipment',
+        icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+      },
     ],
   },
   {

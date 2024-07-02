@@ -61,6 +61,24 @@ const fetchMachinery = async () => {
   return res.data.data
 }
 
+const fetchVehicle = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
+const fetchEquipment = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/equipments`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 // export const fetchReportsData = async () => {
 //   // const res = await axios.get(
 //   //   `https://mpm.pgproject.cl/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
@@ -198,6 +216,30 @@ export const useFetchMachinery = () => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchMachinery()
+    },
+  })
+}
+
+export const useFetchVehicle = () => {
+  return useQuery({
+    queryKey: ['vehicle'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchVehicle()
+    },
+  })
+}
+
+export const useFetchEquipment = () => {
+  return useQuery({
+    queryKey: ['equipment'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchEquipment()
     },
   })
 }
