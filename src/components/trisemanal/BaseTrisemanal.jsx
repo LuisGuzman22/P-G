@@ -1,5 +1,14 @@
 /* eslint-disable react/prop-types */
-import { CCol, CRow } from '@coreui/react'
+import {
+  CCol,
+  CRow,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+} from '@coreui/react'
 import React, { useEffect, useRef, useState } from 'react'
 import useGetTrisemanalData from 'src/hooks/useGetTrisemanalData'
 
@@ -8,40 +17,73 @@ const BaseTrisemanal = () => {
 
   return (
     <div className="">
-      <CRow>
-        <CCol sm={1}>RUTA ORIENTE </CCol>
-        <CCol sm={1}>Activity Name</CCol>
-        <CCol sm={1}>Original Duration</CCol>
-        <CCol sm={1}>Forecast Duration</CCol>
-        <CCol sm={1}>Schedule % Complete</CCol>
-        <CCol sm={1}>BL Project Start</CCol>
-        <CCol sm={1}>BL Project Finish</CCol>
-        <CCol sm={1}>Start</CCol>
-        <CCol sm={1}>Finish</CCol>
-        <CCol sm={1}>Q total </CCol>
-      </CRow>
-
-      {data &&
-        !isLoading &&
-        !error &&
-        data.map((item, index) => {
-          const childrens = item.childrens
-          return (
-            <>
-              <CRow key={index}>
-                <CCol sm={1}>{item.name}</CCol>
-              </CRow>
-              {childrens.map((child, index) => {
-                return (
-                  <CRow key={index}>
-                    <CCol sm={1}>{child.name}</CCol>
-                  </CRow>
-                )
-              })}
-              {}
-            </>
-          )
-        })}
+      <CTable>
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">RUTA ORIENTE</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Activity Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Original Duration</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Forecast Duration</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Schedule % Complete</CTableHeaderCell>
+            <CTableHeaderCell scope="col">BL Project Start</CTableHeaderCell>
+            <CTableHeaderCell scope="col">BL Project Finish</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Start</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Finish</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Q total</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {data &&
+            !isLoading &&
+            !error &&
+            data.map((item, index) => {
+              console.log('item', item)
+              const activities = item.activities
+              return (
+                <>
+                  <CTableRow key={index} color="primary">
+                    <CTableDataCell>{item.name}</CTableDataCell>
+                    <CTableDataCell></CTableDataCell>
+                    <CTableDataCell></CTableDataCell>
+                    <CTableDataCell></CTableDataCell>
+                    <CTableDataCell></CTableDataCell>
+                    <CTableDataCell></CTableDataCell>
+                    <CTableDataCell></CTableDataCell>
+                    <CTableDataCell></CTableDataCell>
+                    <CTableDataCell></CTableDataCell>
+                    <CTableDataCell></CTableDataCell>
+                  </CTableRow>
+                  {activities.map((activity, index) => {
+                    return (
+                      <CTableRow key={index} color="secondary">
+                        <CTableDataCell>{activity.id}</CTableDataCell>
+                        <CTableDataCell>{activity.name}</CTableDataCell>
+                        <CTableDataCell>{activity.hh}</CTableDataCell>
+                        <CTableDataCell></CTableDataCell>
+                        <CTableDataCell></CTableDataCell>
+                        <CTableDataCell></CTableDataCell>
+                        <CTableDataCell></CTableDataCell>
+                        <CTableDataCell>{activity.start}</CTableDataCell>
+                        <CTableDataCell>{activity.finish}</CTableDataCell>
+                        <CTableDataCell></CTableDataCell>
+                      </CTableRow>
+                    )
+                  })}
+                </>
+              )
+            })}
+          {/* "id": 1, 
+          "name": "voluptatem", 
+          "start": "1989-06-08", 
+          "finish": "1972-11-02",
+          "original_duration": 197, 
+          "quantity_work": 93, 
+          "unit": "esse", 
+          "started": "2018-10-06",
+          "hh": 858, 
+          "id_primavera": 3 */}
+        </CTableBody>
+      </CTable>
     </div>
   )
 }
