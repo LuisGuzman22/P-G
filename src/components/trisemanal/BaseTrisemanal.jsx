@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import {
+  CButton,
   CCol,
+  CFormInput,
   CRow,
   CTable,
   CTableBody,
@@ -15,8 +17,28 @@ import useGetTrisemanalData from 'src/hooks/useGetTrisemanalData'
 const BaseTrisemanal = () => {
   const { data, isLoading, error } = useGetTrisemanalData()
 
+  const [file, setFile] = useState()
+
+  const onHandleSubmit = () => {
+    console.log('submit', file)
+  }
+
   return (
     <div className="">
+      <CFormInput
+        type="file"
+        id={`trisemanal`}
+        aria-describedby="inputGroupFileAddon03"
+        onChange={(e) => {
+          setFile(e.target.files[0])
+        }}
+        label="Cargar trisemanal"
+        aria-label="Upload"
+        accept="application/vnd.ms-excel"
+      />
+      <CButton className="confirm-btn" onClick={onHandleSubmit()}>
+        Subir Trisemanal
+      </CButton>
       <CTable>
         <CTableHead>
           <CTableRow>
