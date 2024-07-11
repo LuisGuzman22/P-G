@@ -59,11 +59,10 @@ const BaseTrisemanal = () => {
             !isLoading &&
             !error &&
             data.map((item, index) => {
-              console.log('item', item)
               const activities = item.activities
               return (
                 <>
-                  <CTableRow key={index} color="primary">
+                  <CTableRow key={index} className="node">
                     <CTableDataCell>{item.name}</CTableDataCell>
                     <CTableDataCell></CTableDataCell>
                     <CTableDataCell></CTableDataCell>
@@ -77,7 +76,7 @@ const BaseTrisemanal = () => {
                   </CTableRow>
                   {activities.map((activity, index) => {
                     return (
-                      <CTableRow key={index} color="secondary">
+                      <CTableRow key={index}>
                         <CTableDataCell>{activity.id}</CTableDataCell>
                         <CTableDataCell>{activity.name}</CTableDataCell>
                         <CTableDataCell>{activity.hh}</CTableDataCell>
