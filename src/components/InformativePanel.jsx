@@ -13,7 +13,10 @@ const InformativePanel = () => {
           <CImage className="d-block w-100" src={organigrama_canal_contorno} alt="slide 1" />
         </CCarouselItem>
         <CCarouselItem>
-          <CImage className="d-block w-100" src={organigrama_ruta_norte} alt="slide 1" />
+          <CImage className="d-block w-100" src={organigrama_ruta_oriente} alt="slide 2" />
+        </CCarouselItem>
+        <CCarouselItem>
+          <CImage className="d-block w-100" src={organigrama_ruta_norte} alt="slide 3" />
         </CCarouselItem>
       </CCarousel>
       <CButton>Subir Imagen</CButton>
