@@ -10,11 +10,13 @@
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "build:prod": "env-cmd -f .env.prod npm run-script build",
+    "build:dev": "env-cmd -f .env.dev npm run-script build",
     "build:qa": "env-cmd -f .env.qa npm run-script build",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.js\"",
     "start": "env-cmd -f .env.qa react-scripts start",
     "start:prod": "env-cmd -f .env.prod react-scripts start",
+    "start:dev": "env-cmd -f .env.dev react-scripts start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand"

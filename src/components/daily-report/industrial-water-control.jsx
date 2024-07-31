@@ -62,19 +62,6 @@ const IndustrialWaterControl = () => {
 
   const selectedReport = getData('selectedReport')
 
-  // useEffect(() => {
-  //   console.log(
-  //     'selectedReport.aljibeList[0].aljibeM3Accumulated',
-  //     selectedReport.aljibeList[0].aljibeM3Accumulated,
-  //   )
-  //   if (selectedReport && selectedReport.aljibeList.length > 0) {
-  //     console.log('carga')
-  //     setAccumulatedM3(selectedReport.aljibeList[0].aljibeM3Accumulated)
-  //   } else {
-  //     setAccumulatedM3(0)
-  //   }
-  // }, [selectedReport])
-
   const onChangeData = (e) => {
     setError(false)
     if (e.target.id === 'aljibe') {
@@ -154,7 +141,7 @@ const IndustrialWaterControl = () => {
   }
 
   useEffect(() => {
-    let tempAcumulated = selectedReport?.aljibeList[0].aljibeM3Accumulated || 0
+    let tempAcumulated = selectedReport?.aljibeList[0]?.aljibeM3Accumulated || 0
     aljibeList.map((aljibe) => {
       tempAcumulated = Number(tempAcumulated) + Number(aljibe?.aljibeM3 || 0)
     })
@@ -206,13 +193,13 @@ const IndustrialWaterControl = () => {
     if (isCreatingMode) {
       if (selectedReport && selectedReport.aljibeList.length > 0) {
         setAccumulatedM3(
-          selectedReport.aljibeList[0].aljibeM3Accumulated + Number(aljibeTotals.aljibeM3),
+          selectedReport.aljibeList[0].aljibeM3Accumulated || 0 + Number(aljibeTotals.aljibeM3),
         )
       } else {
         setAccumulatedM3(Number(aljibeTotals.aljibeM3))
       }
     } else {
-      setAccumulatedM3(selectedReport.aljibeList[0].aljibeM3Accumulated)
+      setAccumulatedM3(selectedReport.aljibeList[0]?.aljibeM3Accumulated || 0)
       // setAccumulatedM3(
       //   selectedReport.aljibeList[0].aljibeM3Accumulated + Number(aljibeTotals.aljibeM3),
       // )
