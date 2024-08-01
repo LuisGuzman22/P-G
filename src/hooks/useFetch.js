@@ -35,7 +35,7 @@ const fetchBasicData = async (contractId) => {
 }
 
 const fetchTrisemanalData = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/clusters`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/clusters?planning_id=2`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
