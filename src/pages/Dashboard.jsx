@@ -77,6 +77,17 @@ const Dashboard = () => {
           </CCardText>
         </CCardBody>
       </CCard>
+
+      <br />
+      <CCard>
+        <CCardBody>
+          <CCardText>
+            <ProjectCollapse />
+          </CCardText>
+        </CCardBody>
+      </CCard>
+      <br />
+
       <CCard>
         <CCardBody>
           {!isFetching ? (
@@ -116,7 +127,7 @@ const Dashboard = () => {
                   </CCol>
                 </CRow>
                 <CRow>
-                  <CCol sm={4}>
+                  {/* <CCol sm={4}>
                     <CButton
                       className="dashboard-button"
                       onClick={() => {
@@ -125,7 +136,7 @@ const Dashboard = () => {
                     >
                       Avance
                     </CButton>
-                  </CCol>
+                  </CCol> */}
                   <CCol sm={4}>
                     <CButton className="dashboard-button">TOP NO+PAPEL</CButton>
                   </CCol>
@@ -141,14 +152,6 @@ const Dashboard = () => {
         </CCardBody>
       </CCard>
 
-      <br />
-      <CCard>
-        <CCardBody>
-          <CCardText>
-            <ProjectCollapse />
-          </CCardText>
-        </CCardBody>
-      </CCard>
       <br />
       {reportsQuery && reportsQuery.length > 0 && (
         <>

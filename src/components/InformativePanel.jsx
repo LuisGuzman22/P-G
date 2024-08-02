@@ -6,8 +6,6 @@ import organigrama_ruta_norte from 'src/assets/images/organigrama-canal-contorno
 const InformativePanel = () => {
   return (
     <>
-      <CButton>Inicio seguro de SSO</CButton>
-
       <CCarousel controls indicators>
         <CCarouselItem>
           <CImage className="d-block w-100" src={organigrama_canal_contorno} alt="slide 1" />

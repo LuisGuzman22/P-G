@@ -26,7 +26,7 @@ const ProjectCollapse = () => {
   return (
     <>
       <CNav variant="tabs">
-        <CNavLink
+        {/* <CNavLink
           active={activeKey === 1}
           aria-selected={activeKey === 1}
           onClick={() => {
@@ -34,7 +34,7 @@ const ProjectCollapse = () => {
           }}
         >
           Dashboard
-        </CNavLink>
+        </CNavLink> */}
         <CNavLink
           active={activeKey === 2}
           aria-selected={activeKey === 2}
@@ -44,7 +44,7 @@ const ProjectCollapse = () => {
         >
           Descripción del proyecto
         </CNavLink>
-        <CNavLink
+        {/* <CNavLink
           active={activeKey === 3}
           aria-selected={activeKey === 3}
           onClick={() => {
@@ -52,7 +52,7 @@ const ProjectCollapse = () => {
           }}
         >
           SKYNAV
-        </CNavLink>
+        </CNavLink> */}
         <CNavLink
           active={activeKey === 4}
           aria-selected={activeKey === 4}
@@ -62,7 +62,7 @@ const ProjectCollapse = () => {
         >
           Documentación técnica
         </CNavLink>
-        <CNavLink
+        {/* <CNavLink
           active={activeKey === 5}
           aria-selected={activeKey === 5}
           onClick={() => {
@@ -88,22 +88,22 @@ const ProjectCollapse = () => {
           }}
         >
           Chat de equipo
-        </CNavLink>
+        </CNavLink> */}
       </CNav>
       <CTabContent>
-        <CTabPane role="tabpanel" aria-labelledby="home-tab-pane" visible={activeKey === 1}>
+        {/* <CTabPane role="tabpanel" aria-labelledby="home-tab-pane" visible={activeKey === 1}>
           <DashboardPanel />
-        </CTabPane>
+        </CTabPane> */}
         <CTabPane role="tabpanel" aria-labelledby="profile-tab-pane" visible={activeKey === 2}>
           <ProjectDescription />
         </CTabPane>
-        <CTabPane role="tabpanel" aria-labelledby="contact-tab-pane" visible={activeKey === 3}>
+        {/* <CTabPane role="tabpanel" aria-labelledby="contact-tab-pane" visible={activeKey === 3}>
           <Skynav />
-        </CTabPane>
+        </CTabPane> */}
         <CTabPane role="tabpanel" aria-labelledby="contact-tab-pane" visible={activeKey === 4}>
           <TechnicalDocumentation />
         </CTabPane>
-        <CTabPane role="tabpanel" aria-labelledby="contact-tab-pane" visible={activeKey === 5}>
+        {/* <CTabPane role="tabpanel" aria-labelledby="contact-tab-pane" visible={activeKey === 5}>
           <PIE />
         </CTabPane>
         <CTabPane role="tabpanel" aria-labelledby="contact-tab-pane" visible={activeKey === 6}>
@@ -111,7 +111,7 @@ const ProjectCollapse = () => {
         </CTabPane>
         <CTabPane role="tabpanel" aria-labelledby="contact-tab-pane" visible={activeKey === 7}>
           <TeamChat />
-        </CTabPane>
+        </CTabPane> */}
       </CTabContent>
     </>
   )
