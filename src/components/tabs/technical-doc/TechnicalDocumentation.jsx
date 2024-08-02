@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CRow,
   CCol,
@@ -12,11 +12,24 @@ import {
   CAccordionHeader,
   CAccordionBody,
 } from '@coreui/react'
+import ModalAddTechnicalDoc from './ModalAddTechnicalDoc'
 
 const TechnicalDocumentation = () => {
+  const [visibleTechnicalDoc, setVisibleTechnicalDoc] = useState(false)
+
   return (
     <div className="technicalDocumentation">
       <h2>Documentación técnica</h2>
+
+      {visibleTechnicalDoc && (
+        <ModalAddTechnicalDoc
+          visible={true}
+          sendDataToParent={async (data) => {
+            setVisibleTechnicalDoc(data)
+            // await refetch()
+          }}
+        />
+      )}
 
       <CRow>
         <CCol sm={8}>
@@ -53,7 +66,9 @@ const TechnicalDocumentation = () => {
               <CCardTitle>Acciones</CCardTitle>
               <CCardText>
                 <CRow>
-                  <CButton>Cargar adjunto</CButton>
+                  <CButton onClick={() => setVisibleTechnicalDoc(!visibleTechnicalDoc)}>
+                    Cargar adjunto
+                  </CButton>
                 </CRow>
                 <CRow>
                   <CButton>Ir a ACONEX</CButton>
