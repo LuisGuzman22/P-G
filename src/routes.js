@@ -19,6 +19,11 @@ const Pdf = React.lazy(() => import('./components/Pdf'))
 const MachineryMaintainer = React.lazy(() => import('./pages/MachineryMaintainerPage'))
 const VehicleMaintainer = React.lazy(() => import('./pages/VehicleMaintainerPage'))
 const EquipmentMaintainer = React.lazy(() => import('./pages/EquipmentMaintainerPage'))
+const DirectPersonalMaintainer = React.lazy(() => import('./pages/DirectPersonalMaintainerPage'))
+const IndirectPersonalMaintainer = React.lazy(
+  () => import('./pages/IndirectPersonalMaintainerPage'),
+)
+const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 
 const routes = [
   { path: '/', name: 'Login' },
@@ -46,6 +51,21 @@ const routes = [
   { path: '/maintainer/machinery', name: 'Administrar Maquinaria', element: MachineryMaintainer },
   { path: '/maintainer/vehicle', name: 'Administrar Vehículo', element: VehicleMaintainer },
   { path: '/maintainer/equipment', name: 'Administrar Vehículo', element: EquipmentMaintainer },
+  {
+    path: '/maintainer/direct-personal',
+    name: 'Administrar Vehículo',
+    element: DirectPersonalMaintainer,
+  },
+  {
+    path: '/maintainer/indirect-personal',
+    name: 'Administrar Vehículo',
+    element: IndirectPersonalMaintainer,
+  },
+  {
+    path: '/maintainer/aljibe',
+    name: 'Administrar Aljibes',
+    element: AljibeMaintainerPage,
+  },
 ]
 
 export default routes

@@ -53,7 +53,7 @@ const testToken = async () => {
 }
 
 const fetchMachinery = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/machineries`, {
+  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/machineries`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -76,6 +76,34 @@ const fetchEquipment = async () => {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
   })
+  return res.data.data
+}
+
+const fetchDirectPersonal = async () => {
+  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/indirect-personals`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
+const fetchIndirectPersonal = async () => {
+  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/indirect-personals`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
+const fetchAljibe = async () => {
+  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/aljibe`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  console.log('aljibe', res.data.data)
   return res.data.data
 }
 
@@ -240,6 +268,43 @@ export const useFetchEquipment = () => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchEquipment()
+    },
+  })
+}
+
+export const useFetchDirectPersonal = () => {
+  return useQuery({
+    queryKey: ['direct-personal'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchDirectPersonal()
+    },
+  })
+}
+
+export const useFetchIndirectPersonal = () => {
+  return useQuery({
+    queryKey: ['indirect-personal'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchIndirectPersonal()
+    },
+  })
+}
+
+export const useFetchAljibe = () => {
+  console.log('useFetchAljibe')
+  return useQuery({
+    queryKey: ['aljibe'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchAljibe()
     },
   })
 }

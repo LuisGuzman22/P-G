@@ -102,6 +102,24 @@ const _nav = [
         to: '/maintainer/equipment',
         icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
       },
+      {
+        component: CNavItem,
+        name: 'Aljibe',
+        to: '/maintainer/aljibe',
+        icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Personal Directo',
+        to: '/maintainer/direct-personal',
+        icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Personal Indirecto',
+        to: '/maintainer/indirect-personal',
+        icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+      },
     ],
   },
   {
