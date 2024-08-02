@@ -141,7 +141,12 @@ const Dashboard = () => {
                     <CButton className="dashboard-button">TOP NO+PAPEL</CButton>
                   </CCol>
                   <CCol sm={4}>
-                    <CButton className="dashboard-button">Reportes</CButton>
+                    <CButton
+                      className="dashboard-button"
+                      onClick={() => redirectTo('/dashboard-reportes')}
+                    >
+                      Reportes
+                    </CButton>
                   </CCol>
                 </CRow>
               </div>
