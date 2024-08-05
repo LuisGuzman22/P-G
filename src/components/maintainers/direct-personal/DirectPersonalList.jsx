@@ -48,32 +48,34 @@ const DirectPersonalList = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {directPersonalQuery?.map((dpersonal, index) => {
-            return (
-              <CTableRow key={dpersonal.id}>
-                <CTableDataCell scope="row">{dpersonal.id}</CTableDataCell>
-                <CTableDataCell>{dpersonal.name}</CTableDataCell>
-                <CTableDataCell>
-                  <CButton
-                    color="warning"
-                    onClick={() => {
-                      handleEditDirectPersonal(dpersonal)
-                    }}
-                  >
-                    <CIcon icon={cilPencil} />
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    onClick={() => {
-                      deleteDirectPersonal(dpersonal.id)
-                    }}
-                  >
-                    <CIcon icon={cilTrash} />
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+          {directPersonalQuery
+            ?.filter((personal) => personal.deleted_at === null)
+            .map((dpersonal, index) => {
+              return (
+                <CTableRow key={dpersonal.id}>
+                  <CTableDataCell scope="row">{dpersonal.id}</CTableDataCell>
+                  <CTableDataCell>{dpersonal.name}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      color="warning"
+                      onClick={() => {
+                        handleEditDirectPersonal(dpersonal)
+                      }}
+                    >
+                      <CIcon icon={cilPencil} />
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      onClick={() => {
+                        deleteDirectPersonal(dpersonal.id)
+                      }}
+                    >
+                      <CIcon icon={cilTrash} />
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
     </>

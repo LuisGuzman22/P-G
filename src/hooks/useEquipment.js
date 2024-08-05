@@ -100,6 +100,36 @@ const useEquipment = () => {
     },
   })
 
+  const mutationRestore = useMutation({
+    mutationFn: async (newTodo) => {
+      return await axios
+        .patch(`${'https://dev.pgproject.cl/'}api/v1/equipments/${newTodo}/restore`)
+        .then((res) => {
+          if (res.status === HttpStatusCode.Created) {
+            setIsError(false)
+            return res.ok
+          } else {
+            setErrorMutate('Error al actualizar vehículo')
+            setIsError(true)
+            return false
+          }
+        })
+        .catch((err) => {
+          setErrorMutate('Error al actualizar vehículo')
+          setIsError(true)
+          return false
+        })
+    },
+    onSuccess: (suc) => {
+      queryClient.invalidateQueries({ queryKey: ['equipment'] })
+    },
+    onError: (err) => {
+      setErrorMutate('Error al actualizar vehículo')
+      setIsError(true)
+      return false
+    },
+  })
+
   const register = (data) => {
     setIsError(false)
     const response = registerMutation.mutate(data)
@@ -118,6 +148,12 @@ const useEquipment = () => {
     return response
   }
 
+  const restoreEquipment = (data) => {
+    setIsError(false)
+    const response = mutationRestore.mutate(data)
+    return response
+  }
+
   return {
     data,
     isLoading,
@@ -129,6 +165,7 @@ const useEquipment = () => {
     isError,
     deleteEquipment,
     updateEquipment,
+    restoreEquipment,
   }
 }
 

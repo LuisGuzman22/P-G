@@ -43,6 +43,7 @@ import Skeleton from 'react-loading-skeleton'
 
 import { Chart } from 'react-google-charts'
 import { toPng } from 'html-to-image'
+import { useFetchReportData } from 'src/hooks/useFetch'
 
 const DailyReportEditCollapse = () => {
   const currentLocation = useLocation().pathname
@@ -52,6 +53,9 @@ const DailyReportEditCollapse = () => {
   const pieChartElement = useRef(null)
 
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
+
+  const { isFetching } = useFetchReportData()
+
   const {
     company,
     indirectWorkForceList,
@@ -72,6 +76,7 @@ const DailyReportEditCollapse = () => {
     machineryWorkForceList,
     equipmentWorkForceList,
     graphList,
+    loadData,
   } = useRegisterDailyReportCompany()
   const [imagenColumnChart, setImagenColumnChart] = useState()
   const [imagenPieChart, setImagenPieChart] = useState()
@@ -79,6 +84,10 @@ const DailyReportEditCollapse = () => {
   const [isLoading, setIsloading] = useState(false)
   const [blobData, setBlobData] = useState()
   const [url, setUrl] = useState()
+
+  useEffect(() => {
+    if (!isFetching) loadData()
+  }, [isFetching])
 
   const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
   const [totalWorkDotation, setTotalWorkDotation] = useState(0)
@@ -264,7 +273,7 @@ const DailyReportEditCollapse = () => {
           }}
         </PDFDownloadLink> */}
       </div>
-      {!isLoading && url && blobData ? (
+      {!isLoading ? (
         <>
           <CAccordion className="dailyReport-accordion" activeItemKey={1}>
             <CAccordionItem itemKey={1}>
@@ -273,7 +282,7 @@ const DailyReportEditCollapse = () => {
                 <CompanyReport />
               </CAccordionBody>
             </CAccordionItem>
-            <CAccordionItem itemKey={2}>
+            {/* <CAccordionItem itemKey={2}>
               <CAccordionHeader>2) Fuerza de trabajo personal indirecto</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <IndirectWorkForce />
@@ -388,7 +397,7 @@ const DailyReportEditCollapse = () => {
               <CAccordionBody className="dailyReport-accordion">
                 <></>
               </CAccordionBody>
-            </CAccordionItem>
+            </CAccordionItem> */}
           </CAccordion>
           <CButton
             className="btn-project-action"

@@ -5,11 +5,13 @@ import Skeleton from 'react-loading-skeleton'
 import useEquipment from 'src/hooks/useEquipment'
 import EquipmentList from './EquipmentList'
 import ModalAddEquipment from './ModalAddEquipment'
+import ModalRestoreEquipment from './ModalRestoreEquipment'
 
 const EquipmentMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useEquipment()
 
   const [visibleEquipment, setVisibleEquipment] = useState(false)
+  const [visibleRestoreEquipment, setVisibleRestoreEquipment] = useState(false)
 
   return (
     <div className="proyect-administration">
@@ -23,9 +25,22 @@ const EquipmentMaintainer = () => {
           }}
         />
       )}
+
+      {visibleRestoreEquipment && (
+        <ModalRestoreEquipment
+          visible={true}
+          sendDataToParent={async (data) => {
+            setVisibleRestoreEquipment(data)
+            await refetch()
+          }}
+        />
+      )}
       <CCard className="action-buttons">
         <CCardBody>
           <CButton onClick={() => setVisibleEquipment(!visibleEquipment)}>Añadir Equipos</CButton>
+          <CButton onClick={() => setVisibleRestoreEquipment(!visibleRestoreEquipment)}>
+            Ver eliminados
+          </CButton>
         </CCardBody>
       </CCard>
       <CCard>

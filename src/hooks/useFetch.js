@@ -81,7 +81,7 @@ const fetchEquipment = async () => {
 
 const fetchDirectPersonal = async () => {
   const res = await axios.get(
-    `${'https://dev.pgproject.cl/'}api/v1/direct-personals-with-trashed`,
+    `${'https://dev.pgproject.cl/'}api/v1/indirect-personals-with-trashed`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -104,7 +104,7 @@ const fetchIndirectPersonal = async () => {
 }
 
 const fetchAljibe = async () => {
-  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/aljibe`, {
+  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/aljibe-with-trashed`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },

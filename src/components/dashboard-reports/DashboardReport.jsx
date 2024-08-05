@@ -25,7 +25,7 @@ const DashboardReport = () => {
 
   const handleSelectReport = (report) => {
     localStorage.setItem('daily_report', report.id)
-    redirectTo('/informe-diario/view')
+    redirectTo('/informe-diario/edit')
   }
 
   return (

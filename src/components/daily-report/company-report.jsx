@@ -26,7 +26,8 @@ const CompanyReport = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
-
+  const isEditMode = currentLocation.includes('/edit')
+  console.log('isEditMode', isEditMode)
   const {
     storeCompanyData,
     storeIndirectCompanyTurn,
@@ -36,6 +37,8 @@ const CompanyReport = () => {
   } = useRegisterDailyReportCompany()
   const { registerData } = useRegisterDailyReport()
   const { getProject, getContract } = useRegisterGeneralData()
+
+  console.log('company', company)
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())

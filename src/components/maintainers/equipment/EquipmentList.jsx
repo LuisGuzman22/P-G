@@ -59,34 +59,36 @@ const EquipmentList = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {equipmentQuery?.map((equipment, index) => {
-            const plates = getPlates(equipment.plate)
-            return (
-              <CTableRow key={equipment.id}>
-                <CTableDataCell scope="row">{equipment.id}</CTableDataCell>
-                <CTableDataCell>{equipment.name}</CTableDataCell>
-                <CTableDataCell>{plates}</CTableDataCell>
-                <CTableDataCell>
-                  <CButton
-                    color="warning"
-                    onClick={() => {
-                      handleEditEquipmennt(equipment)
-                    }}
-                  >
-                    <CIcon icon={cilPencil} />
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    onClick={() => {
-                      deleteEquipment(equipment.id)
-                    }}
-                  >
-                    <CIcon icon={cilTrash} />
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+          {equipmentQuery
+            ?.filter((equipment) => equipment.deleted_at === null)
+            .map((equipment, index) => {
+              const plates = getPlates(equipment.plate)
+              return (
+                <CTableRow key={equipment.id}>
+                  <CTableDataCell scope="row">{equipment.id}</CTableDataCell>
+                  <CTableDataCell>{equipment.name}</CTableDataCell>
+                  <CTableDataCell>{plates}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      color="warning"
+                      onClick={() => {
+                        handleEditEquipmennt(equipment)
+                      }}
+                    >
+                      <CIcon icon={cilPencil} />
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      onClick={() => {
+                        deleteEquipment(equipment.id)
+                      }}
+                    >
+                      <CIcon icon={cilTrash} />
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
     </>

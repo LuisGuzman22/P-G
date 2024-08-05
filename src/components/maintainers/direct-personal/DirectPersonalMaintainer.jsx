@@ -4,11 +4,13 @@ import Skeleton from 'react-loading-skeleton'
 import ModalAddDirectPersonal from './ModalAddDirectPersonal'
 import DirectPersonalList from './DirectPersonalList'
 import useDirectPersonal from 'src/hooks/useDirectPersonal'
+import ModalRestoreDirectPersonal from './ModalRestoreDirectPersonal'
 
 const DirectPersonalMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useDirectPersonal()
 
   const [visibleDirectPersonal, setVisibleDirectPersonal] = useState(false)
+  const [visibleRestoreDirectPersonal, setVisibleRestoreDirectPersonal] = useState(false)
 
   return (
     <div className="proyect-administration">
@@ -22,10 +24,23 @@ const DirectPersonalMaintainer = () => {
           }}
         />
       )}
+
+      {visibleRestoreDirectPersonal && (
+        <ModalRestoreDirectPersonal
+          visible={true}
+          sendDataToParent={async (data) => {
+            setVisibleRestoreDirectPersonal(data)
+            await refetch()
+          }}
+        />
+      )}
       <CCard className="action-buttons">
         <CCardBody>
           <CButton onClick={() => setVisibleDirectPersonal(!visibleDirectPersonal)}>
             Añadir personal directo
+          </CButton>
+          <CButton onClick={() => setVisibleRestoreDirectPersonal(!visibleRestoreDirectPersonal)}>
+            Ver eliminados
           </CButton>
         </CCardBody>
       </CCard>

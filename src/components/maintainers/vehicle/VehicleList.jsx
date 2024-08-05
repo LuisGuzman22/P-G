@@ -60,34 +60,36 @@ const VehicleList = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {vehicleQuery?.map((vehicle, index) => {
-            const plates = getPlates(vehicle.plate)
-            return (
-              <CTableRow key={vehicle.id}>
-                <CTableDataCell scope="row">{vehicle.id}</CTableDataCell>
-                <CTableDataCell>{vehicle.name}</CTableDataCell>
-                <CTableDataCell>{plates}</CTableDataCell>
-                <CTableDataCell>
-                  <CButton
-                    color="warning"
-                    onClick={() => {
-                      handleEditVehicle(vehicle)
-                    }}
-                  >
-                    <CIcon icon={cilPencil} />
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    onClick={() => {
-                      deleteVehicle(vehicle.id)
-                    }}
-                  >
-                    <CIcon icon={cilTrash} />
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+          {vehicleQuery
+            ?.filter((vehicle) => vehicle.deleted_at === null)
+            .map((vehicle, index) => {
+              const plates = getPlates(vehicle.plate)
+              return (
+                <CTableRow key={vehicle.id}>
+                  <CTableDataCell scope="row">{vehicle.id}</CTableDataCell>
+                  <CTableDataCell>{vehicle.name}</CTableDataCell>
+                  <CTableDataCell>{plates}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      color="warning"
+                      onClick={() => {
+                        handleEditVehicle(vehicle)
+                      }}
+                    >
+                      <CIcon icon={cilPencil} />
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      onClick={() => {
+                        deleteVehicle(vehicle.id)
+                      }}
+                    >
+                      <CIcon icon={cilTrash} />
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
     </>

@@ -5,12 +5,13 @@ import Skeleton from 'react-loading-skeleton'
 import useVehicle from 'src/hooks/useVehicle'
 import VehicleList from './VehicleList'
 import ModalAddVehicle from './ModalAddVehicle'
+import ModalRestoreVehicle from './ModalRestoreVehicle'
 
 const VehicleMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useVehicle()
 
-  const [visibleCategories, setVisibleCategories] = useState(false)
   const [visibleVehicle, setVisibleVehicle] = useState(false)
+  const [visibleRestoreVehicle, setVisibleRestoreVehicle] = useState(false)
 
   return (
     <div className="proyect-administration">
@@ -24,9 +25,22 @@ const VehicleMaintainer = () => {
           }}
         />
       )}
+
+      {visibleRestoreVehicle && (
+        <ModalRestoreVehicle
+          visible={true}
+          sendDataToParent={async (data) => {
+            setVisibleRestoreVehicle(data)
+            await refetch()
+          }}
+        />
+      )}
       <CCard className="action-buttons">
         <CCardBody>
           <CButton onClick={() => setVisibleVehicle(!visibleVehicle)}>Añadir Vehículo</CButton>
+          <CButton onClick={() => setVisibleRestoreVehicle(!visibleRestoreVehicle)}>
+            Ver eliminados
+          </CButton>
         </CCardBody>
       </CCard>
       <CCard>
