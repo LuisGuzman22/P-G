@@ -53,7 +53,7 @@ const testToken = async () => {
 }
 
 const fetchMachinery = async () => {
-  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/machineries`, {
+  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/machineries-with-trashed`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -62,7 +62,7 @@ const fetchMachinery = async () => {
 }
 
 const fetchVehicle = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles-with-trashed`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -71,7 +71,7 @@ const fetchVehicle = async () => {
 }
 
 const fetchEquipment = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/equipments`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/equipments-with-trashed`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -80,20 +80,26 @@ const fetchEquipment = async () => {
 }
 
 const fetchDirectPersonal = async () => {
-  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/indirect-personals`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+  const res = await axios.get(
+    `${'https://dev.pgproject.cl/'}api/v1/direct-personals-with-trashed`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
 const fetchIndirectPersonal = async () => {
-  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/indirect-personals`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+  const res = await axios.get(
+    `${'https://dev.pgproject.cl/'}api/v1/indirect-personals-with-trashed`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 

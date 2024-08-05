@@ -48,32 +48,34 @@ const IndirectPersonalList = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {indirectPersonalQuery?.map((idpersonal, index) => {
-            return (
-              <CTableRow key={idpersonal.id}>
-                <CTableDataCell scope="row">{idpersonal.id}</CTableDataCell>
-                <CTableDataCell>{idpersonal.name}</CTableDataCell>
-                <CTableDataCell>
-                  <CButton
-                    color="warning"
-                    onClick={() => {
-                      handleEditIndirectPersonal(idpersonal)
-                    }}
-                  >
-                    <CIcon icon={cilPencil} />
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    onClick={() => {
-                      deleteIndirectPersonal(idpersonal.id)
-                    }}
-                  >
-                    <CIcon icon={cilTrash} />
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+          {indirectPersonalQuery
+            ?.filter((personal) => personal.deleted_at === null)
+            .map((idpersonal, index) => {
+              return (
+                <CTableRow key={idpersonal.id}>
+                  <CTableDataCell scope="row">{idpersonal.id}</CTableDataCell>
+                  <CTableDataCell>{idpersonal.name}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      color="warning"
+                      onClick={() => {
+                        handleEditIndirectPersonal(idpersonal)
+                      }}
+                    >
+                      <CIcon icon={cilPencil} />
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      onClick={() => {
+                        deleteIndirectPersonal(idpersonal.id)
+                      }}
+                    >
+                      <CIcon icon={cilTrash} />
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
     </>
