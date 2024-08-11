@@ -15,7 +15,7 @@ const VehicleMaintainer = () => {
 
   return (
     <div className="proyect-administration">
-      <h2>Administrar Vehiculos</h2>
+      <h2>Administrar Vehículos</h2>
       {visibleVehicle && (
         <ModalAddVehicle
           visible={true}

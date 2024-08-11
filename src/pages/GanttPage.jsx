@@ -1,7 +1,12 @@
 import React from 'react'
+import GanttChart from 'src/components/gantt-chart/GanttChart'
 
 const GanttPage = () => {
-  return <>Comming soon </>
+  return (
+    <>
+      <GanttChart />
+    </>
+  )
 }
 
 export default GanttPage

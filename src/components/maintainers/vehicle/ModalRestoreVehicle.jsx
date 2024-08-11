@@ -27,12 +27,13 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useDirectPersonal from 'src/hooks/useDirectPersonal'
 import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import useVehicle from 'src/hooks/useVehicle'
 
 const ModalRestoreVehicle = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
   const vehicleQuery = getData('vehicle')
-  const { restoreDirectPersonal } = useDirectPersonal()
+  const { restoreVehicle } = useVehicle()
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
@@ -75,7 +76,7 @@ const ModalRestoreVehicle = (props) => {
                         <CButton
                           color="warning"
                           onClick={() => {
-                            restoreDirectPersonal(vehicle.id)
+                            restoreVehicle(vehicle.id)
                           }}
                         >
                           Restaurar
