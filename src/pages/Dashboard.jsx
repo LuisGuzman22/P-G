@@ -148,6 +148,14 @@ const Dashboard = () => {
                       Reportes
                     </CButton>
                   </CCol>
+                  <CCol sm={4}>
+                    <CButton
+                      className="dashboard-button"
+                      onClick={() => redirectTo('/exportar-datos')}
+                    >
+                      Exportar datos
+                    </CButton>
+                  </CCol>
                 </CRow>
               </div>
             </CCardText>

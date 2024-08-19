@@ -25,6 +25,7 @@ const IndirectPersonalMaintainer = React.lazy(
 )
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
+const ExportPage = React.lazy(() => import('./pages/ExportPage'))
 
 const routes = [
   { path: '/', name: 'Login' },
@@ -71,6 +72,11 @@ const routes = [
     path: '/dashboard-reportes',
     name: 'Dashboard reportes',
     element: DashboardReportesPage,
+  },
+  {
+    path: '/exportar-datos',
+    name: 'Exportar datos',
+    element: ExportPage,
   },
 ]
 

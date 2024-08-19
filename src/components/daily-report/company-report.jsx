@@ -27,7 +27,6 @@ const CompanyReport = () => {
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
   const isEditMode = currentLocation.includes('/edit')
-  console.log('isEditMode', isEditMode)
   const {
     storeCompanyData,
     storeIndirectCompanyTurn,
