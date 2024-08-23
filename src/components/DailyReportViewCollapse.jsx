@@ -339,7 +339,7 @@ const DailyReportViewCollapse = () => {
                   </CAccordionBody>
                 </CAccordionItem>
               </CAccordion>
-              <CButton
+              {/* <CButton
                 className="btn-project-action"
                 onClick={() => {
                   // registerData()
@@ -347,7 +347,7 @@ const DailyReportViewCollapse = () => {
                 }}
               >
                 Registrar informe diario
-              </CButton>
+              </CButton> */}
             </>
           ) : (
             <>

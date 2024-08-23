@@ -40,17 +40,34 @@ const useRegisterDailyReport = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (newTodo) =>
-      // axios.post('ASD', newTodo, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // }),
-
       axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/reports`, newTodo, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       }),
+    onSuccess: () => {
+      setLoading(false)
+      setSuccess(true)
+      clearContext()
+    },
+    onError: (err) => {
+      setLoading(false)
+      setSuccess(false)
+      setError('Recuerda rellenar todos los campos')
+    },
+  })
+
+  const { mutate: updateMutate } = useMutation({
+    mutationFn: async (newTodo) =>
+      axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/reports/${newTodo.company.dailyReportNumber}`,
+        newTodo,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      ),
     onSuccess: () => {
       setLoading(false)
       setSuccess(true)
@@ -98,33 +115,6 @@ const useRegisterDailyReport = () => {
     aljibeList.map((aljibe) => {
       aljibe.aljibeM3Accumulated = accumulatedM3
     })
-
-    // console.log('post', {
-    //   projectId: projectLS.id,
-    //   contractId: contractLS.id,
-    //   company, // 1
-    //   indirectCompanyTurnList,
-    //   indirectWorkForceList, // 2
-    //   totalIndirectWorkForce, // 3
-    //   directWorkForceList, // 4
-    //   totalDirectWorkForce, // 5
-    //   directDotationWorkForceList, // 7
-    //   machineryList: machinList, // 9
-    //   machineryWorkForceList, // 10
-    //   equipmentList: equipList, // 11
-    //   equipmentWorkForceList, // 12
-    //   vehicleList: vehicList, // 13
-    //   vehiclePlateList,
-    //   activityList, // 15
-    //   comment: comment.comment === '' || comment?.comment === undefined ? undefined : comment, // 16
-    //   // 17 (graficos)
-    //   incident, // 18 //
-    //   asarcoMachineryList, // 9
-    //   equipmentPlateList, // 11
-    //   aljibeList, // 16
-    //   graphList,
-    //   photoList,
-    // })
     setLoading(true)
     setError()
     setSuccess(false)
@@ -157,7 +147,43 @@ const useRegisterDailyReport = () => {
     return data
   }
 
-  return { registerData, loading, error, success, clearData }
+  const updateData = async () => {
+    aljibeList.map((aljibe) => {
+      aljibe.aljibeM3Accumulated = accumulatedM3
+    })
+    setLoading(true)
+    setError()
+    setSuccess(false)
+    const data = updateMutate({
+      projectId: projectLS.id,
+      contractId: contractLS.id,
+      company, // 1
+      indirectCompanyTurnList,
+      indirectWorkForceList, // 2
+      totalIndirectWorkForce, // 3
+      directWorkForceList, // 4
+      totalDirectWorkForce, // 5
+      directDotationWorkForceList, // 7
+      machineryList: machinList, // 9
+      machineryWorkForceList, // 10
+      equipmentList: equipList, // 11
+      equipmentWorkForceList, // 12
+      vehicleList: vehicList, // 13
+      vehiclePlateList,
+      activityList, // 15
+      comment: comment.comment === '' || comment?.comment === undefined ? undefined : comment, // 16
+      // 17 (graficos)
+      incident, // 18 //
+      asarcoMachineryList, // 9
+      equipmentPlateList, // 11
+      aljibeList, // 16
+      graphList,
+      photoList,
+    })
+    return data
+  }
+
+  return { registerData, updateData, loading, error, success, clearData }
 }
 
 export default useRegisterDailyReport

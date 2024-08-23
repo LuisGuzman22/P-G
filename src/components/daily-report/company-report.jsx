@@ -37,8 +37,6 @@ const CompanyReport = () => {
   const { registerData } = useRegisterDailyReport()
   const { getProject, getContract } = useRegisterGeneralData()
 
-  console.log('company', company)
-
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 

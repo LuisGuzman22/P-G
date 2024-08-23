@@ -78,120 +78,24 @@ const DailyReportEditCollapse = () => {
     graphList,
     loadData,
   } = useRegisterDailyReportCompany()
-  const [imagenColumnChart, setImagenColumnChart] = useState()
-  const [imagenPieChart, setImagenPieChart] = useState()
 
   const [isLoading, setIsloading] = useState(false)
-  const [blobData, setBlobData] = useState()
-  const [url, setUrl] = useState()
 
   useEffect(() => {
     if (!isFetching) loadData()
   }, [isFetching])
 
-  const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
-  const [totalWorkDotation, setTotalWorkDotation] = useState(0)
-  const [showDotationChart, setShowDotationChart] = useState(false)
-
-  useEffect(() => {
-    if (
-      totalDirectWorkForce.directSubtotalOfferedNumber &&
-      totalDirectWorkForce.directSubtotalWorkNumber
-    ) {
-      setShowDotationChart(true)
-    }
-    setTotalPlanedDotation(totalDirectWorkForce.directSubtotalOfferedNumber)
-    setTotalWorkDotation(totalDirectWorkForce.directSubtotalWorkNumber)
-  }, [totalDirectWorkForce])
-
-  const [effectiveTime, setEffectiveTime] = useState(0)
-  const [scheduleMaintimeTime, setScheduleMaintimeTime] = useState(0)
-  const [scheduleDelay, setScheduleDelay] = useState(0)
-  const [opperationalLoss, setOpperationalLoss] = useState(0)
-  const [unscheduleMaintimeTime, setUnscheduleMaintimeTime] = useState(0)
-  const [unscheduleDelay, setUnscheduleDelay] = useState(0)
-  const [reserves, setReserves] = useState(0)
-  const [totals, setTotals] = useState(0)
-  const [showAsarcoChart, setShowAsarcoChart] = useState(false)
-  useEffect(() => {
-    for (let asarcoData of asarcoMachineryList) {
-      setShowAsarcoChart(true)
-      setTotals(
-        totals +
-          Number(asarcoData.asarcoMachineryEffectiveTime) +
-          Number(asarcoData.asarcoMachineryScheduleMaintenance) +
-          Number(asarcoData.asarcoMachineryScheduleDelay) +
-          Number(asarcoData.asarcoMachineryOpperationalLoss) +
-          Number(asarcoData.asarcoMachineryUnscheduleMaintenance) +
-          Number(asarcoData.asarcoMachineryUnscheduleDelay) +
-          Number(asarcoData.asarcoMachineryReserves),
-      )
-      setEffectiveTime(effectiveTime + Number(asarcoData.asarcoMachineryEffectiveTime))
-      setScheduleMaintimeTime(
-        scheduleMaintimeTime + Number(asarcoData.asarcoMachineryScheduleMaintenance),
-      )
-      setScheduleDelay(scheduleDelay + Number(asarcoData.asarcoMachineryScheduleDelay))
-      setOpperationalLoss(opperationalLoss + Number(asarcoData.asarcoMachineryOpperationalLoss))
-      setUnscheduleMaintimeTime(
-        unscheduleMaintimeTime + Number(asarcoData.asarcoMachineryUnscheduleMaintenance),
-      )
-      setUnscheduleDelay(unscheduleDelay + Number(asarcoData.asarcoMachineryUnscheduleDelay))
-      setReserves(reserves + Number(asarcoData.asarcoMachineryReserves))
-    }
-  }, [asarcoMachineryList])
-
-  // useEffect(() => {
-  //   if (!company.dailyReportDate) window.location.reload()
-  // }, [company])
-
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
 
-  const { registerData } = useRegisterDailyReport()
+  const { updateData } = useRegisterDailyReport()
 
   const registerDailyReport = () => {
-    if (isViewMode) {
-      setVisibleSendDailyReportModal(!visibleSendDailyReportModal)
-    } else {
-      registerData()
-    }
-  }
-
-  const barGraphData = [
-    ['Dotación', 'Dotación', { role: 'style' }],
-    ['Dotación Planeada Directos Total', totalPlanedDotation, '#b87333'], // RGB value
-    ['Dotación Directos Obra Total', totalWorkDotation, 'silver'], // English color name
-  ]
-
-  const piechartData = [
-    ['Task', 'Hours per Day'],
-    ['Tiempo Efectivo (Hrs)', effectiveTime],
-    ['Mantención Programada (Hrs)', scheduleMaintimeTime],
-    ['Demora Programada (Hrs)', scheduleDelay],
-    ['Perdida Operacional (Hrs)', opperationalLoss],
-    ['Mantención No Programada (Hrs)', unscheduleMaintimeTime],
-    ['Demora No Programada (Hrs)', unscheduleDelay],
-    ['Reservas (Hrs)', reserves],
-  ]
-
-  const convertAsarcoChart = () => {
-    setImagenPieChart()
-    toPng(pieChartElement.current, { cacheBust: false })
-      .then((dataUrl) => {
-        setImagenPieChart(dataUrl)
-      })
-      .catch((err) => {
-        // console.log('ERROR', err)
-      })
-  }
-
-  const convertDotationChart = () => {
-    setImagenColumnChart()
-    toPng(columnChartElement.current, { cacheBust: false })
-      .then((dataUrl) => {
-        setImagenColumnChart(dataUrl)
-      })
-      .catch((err) => {})
+    // if (isViewMode) {
+    //   setVisibleSendDailyReportModal(!visibleSendDailyReportModal)
+    // } else {
+    updateData()
+    // }
   }
 
   return (
@@ -204,75 +108,6 @@ const DailyReportEditCollapse = () => {
           }}
         />
       )}
-      <div>
-        <div>
-          {/* <CRow> */}
-          {/* <div ref={columnChartElement}> */}
-          {/* <CRow>
-                <CCol>Dotación Planeada Directos Total</CCol>
-                <CCol>{totalPlanedDotation}</CCol>
-              </CRow>
-              <CRow>
-                <CCol>Dotación Directos Obra Total</CCol>
-                <CCol>{totalWorkDotation}</CCol>
-              </CRow> */}
-          {/* {showDotationChart && ( */}
-          {/* <Chart chartType="ColumnChart" width="100%" height="200px" data={barGraphData} /> */}
-          {/* )} */}
-          {/* </div> */}
-          {/* <div ref={pieChartElement}> */}
-          {/* {showAsarcoChart && ( */}
-          {/* <Chart chartType="PieChart" data={piechartData} width={'100%'} height={'300px'} /> */}
-          {/* )} */}
-          {/* </div> */}
-          {/* </CRow> */}
-        </div>
-        {/* <PDFDownloadLink
-          document={
-            <Pdf
-              company={company}
-              indirectWorkForceList={indirectWorkForceList}
-              basicQuery={basicQuery}
-              totalIndirectWorkForce={totalIndirectWorkForce}
-              directWorkForceList={directWorkForceList}
-              totalDirectWorkForce={totalDirectWorkForce}
-              asarcoMachineryList={asarcoMachineryList}
-              machineryList={machineryList}
-              equipmentList={equipmentList}
-              equipmentPlateList={equipmentPlateList}
-              vehiclePlateList={vehiclePlateList}
-              vehicleList={vehicleList}
-              activityList={activityList}
-              aljibeList={aljibeList}
-              comment={comment}
-              incident={incident}
-              directDotationWorkForceList={directDotationWorkForceList}
-              machineryWorkForceList={machineryWorkForceList}
-              equipmentWorkForceList={equipmentWorkForceList}
-              imagenColumnChart={imagenColumnChart}
-              imagenPieChart={imagenPieChart}
-              graphList={graphList}
-            />
-          }
-          fileName="Reporte 1.pdf"
-        >
-          {({ blob, url, loading, error }) => {
-            setIsloading(loading)
-            setBlobData(blob)
-            if (showAsarcoChart)
-              if (!imagenPieChart || imagenPieChart === 'data:,') {
-                convertAsarcoChart()
-              }
-            if (showDotationChart) {
-              if (!imagenColumnChart || imagenColumnChart === 'data:,') {
-                convertDotationChart()
-              }
-            }
-            setUrl(url)
-            return loading ? 'Generando documento...' : 'Descargar PDF'
-          }}
-        </PDFDownloadLink> */}
-      </div>
       {!isLoading ? (
         <>
           <CAccordion className="dailyReport-accordion" activeItemKey={1}>
@@ -282,7 +117,7 @@ const DailyReportEditCollapse = () => {
                 <CompanyReport />
               </CAccordionBody>
             </CAccordionItem>
-            {/* <CAccordionItem itemKey={2}>
+            <CAccordionItem itemKey={2}>
               <CAccordionHeader>2) Fuerza de trabajo personal indirecto</CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <IndirectWorkForce />
@@ -397,16 +232,15 @@ const DailyReportEditCollapse = () => {
               <CAccordionBody className="dailyReport-accordion">
                 <></>
               </CAccordionBody>
-            </CAccordionItem> */}
+            </CAccordionItem>
           </CAccordion>
           <CButton
             className="btn-project-action"
             onClick={() => {
-              // registerData()
               registerDailyReport()
             }}
           >
-            Registrar informe diario
+            Editar informe diario
           </CButton>
         </>
       ) : (

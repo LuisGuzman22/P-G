@@ -187,7 +187,7 @@ const Dashboard = () => {
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
                                   localStorage.setItem('daily_report', report.id)
-                                  redirectTo('/informe-diario/view')
+                                  redirectTo('/informe-diario/edit')
                                 }}
                               >
                                 Reporte número {report.id}
