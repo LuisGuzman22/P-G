@@ -77,38 +77,42 @@ const ModalAddTechnicalDoc = (props) => {
       <CModalBody>
         <CForm>
           <CRow>
-            <CFormSelect
-              aria-label="Default select example"
-              label="Categoría"
-              id="category"
-              invalid={categoryError}
-              onChange={(e) => {
-                if (e.target.value !== '-1') {
-                  setCategoryError(false)
-                  handleRegisterCategory(e.target.value)
-                } else {
-                  setCategoryError(true)
-                }
-              }}
-            >
-              <option value={'-1'}>Seleccione</option>
-              <option value={'Ingeniría'}>Ingeniría</option>
-              <option value={'Planificación y control'}>Planificación y control</option>
-              <option value={'Contratos'}>Contratos</option>
-            </CFormSelect>
+            <CCol sm={12}>
+              <CFormSelect
+                aria-label="Default select example"
+                label="Categoría"
+                id="category"
+                invalid={categoryError}
+                onChange={(e) => {
+                  if (e.target.value !== '-1') {
+                    setCategoryError(false)
+                    handleRegisterCategory(e.target.value)
+                  } else {
+                    setCategoryError(true)
+                  }
+                }}
+              >
+                <option value={'-1'}>Seleccione</option>
+                <option value={'Ingeniría'}>Ingeniría</option>
+                <option value={'Planificación y control'}>Planificación y control</option>
+                <option value={'Contratos'}>Contratos</option>
+              </CFormSelect>
+            </CCol>
           </CRow>
           <CRow>
-            <CFormInput
-              type="file"
-              id={`doc`}
-              aria-describedby="inputGroupFileAddon03"
-              onChange={(e) => {
-                handleUploadFile(e)
-              }}
-              label="Documentación"
-              aria-label="Upload"
-              //   accept="image/png, image/jpeg"
-            />
+            <CCol sm={12}>
+              <CFormInput
+                type="file"
+                id={`doc`}
+                aria-describedby="inputGroupFileAddon03"
+                onChange={(e) => {
+                  handleUploadFile(e)
+                }}
+                label="Documentación"
+                aria-label="Upload"
+                //   accept="image/png, image/jpeg"
+              />
+            </CCol>
           </CRow>
           <CRow>
             {docs.map((doc, pos) => (

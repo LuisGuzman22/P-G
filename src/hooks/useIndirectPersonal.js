@@ -13,7 +13,7 @@ const useIndirectPersonal = () => {
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .post(`${'https://dev.pgproject.cl/'}api/v1/indirect-personals`, newTodo)
+        .post(`${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -43,7 +43,7 @@ const useIndirectPersonal = () => {
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
       return await axios
-        .delete(`${'https://dev.pgproject.cl/'}api/v1/indirect-personals/${id}`)
+        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/${id}`)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -73,7 +73,7 @@ const useIndirectPersonal = () => {
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .put(`${'https://dev.pgproject.cl/'}api/v1/indirect-personals/${newTodo.id}`, newTodo)
+        .put(`${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/${newTodo.id}`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -103,7 +103,7 @@ const useIndirectPersonal = () => {
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .patch(`${'https://dev.pgproject.cl/'}api/v1/indirect-personals/${newTodo}/restore`)
+        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/${newTodo}/restore`)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)

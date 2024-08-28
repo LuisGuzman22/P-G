@@ -13,7 +13,7 @@ const useAljibe = () => {
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .post(`${'https://dev.pgproject.cl/'}api/v1/aljibe`, newTodo)
+        .post(`${process.env.REACT_APP_BASE_URL}api/v1/aljibe`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -43,7 +43,7 @@ const useAljibe = () => {
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
       return await axios
-        .delete(`${'https://dev.pgproject.cl/'}api/v1/aljibe/${id}`)
+        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/aljibe/${id}`)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -73,7 +73,7 @@ const useAljibe = () => {
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .put(`${'https://dev.pgproject.cl/'}api/v1/aljibe/${newTodo.id}`, newTodo)
+        .put(`${process.env.REACT_APP_BASE_URL}api/v1/aljibe/${newTodo.id}`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)

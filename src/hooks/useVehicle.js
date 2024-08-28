@@ -103,7 +103,7 @@ const useVehicle = () => {
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .patch(`${'https://dev.pgproject.cl/'}api/v1/vehicles/${newTodo}/restore`)
+        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles/${newTodo}/restore`)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)

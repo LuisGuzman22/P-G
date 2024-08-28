@@ -21,7 +21,7 @@ import TeamChat from './TeamChat'
 import PIE from './PIE'
 
 const ProjectCollapse = () => {
-  const [activeKey, setActiveKey] = useState(1)
+  const [activeKey, setActiveKey] = useState(2)
 
   return (
     <>

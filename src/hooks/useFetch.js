@@ -53,7 +53,7 @@ const testToken = async () => {
 }
 
 const fetchMachinery = async () => {
-  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/machineries-with-trashed`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/machineries-with-trashed`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -81,7 +81,7 @@ const fetchEquipment = async () => {
 
 const fetchDirectPersonal = async () => {
   const res = await axios.get(
-    `${'https://dev.pgproject.cl/'}api/v1/indirect-personals-with-trashed`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals-with-trashed`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -93,7 +93,7 @@ const fetchDirectPersonal = async () => {
 
 const fetchIndirectPersonal = async () => {
   const res = await axios.get(
-    `${'https://dev.pgproject.cl/'}api/v1/indirect-personals-with-trashed`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals-with-trashed`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -104,7 +104,7 @@ const fetchIndirectPersonal = async () => {
 }
 
 const fetchAljibe = async () => {
-  const res = await axios.get(`${'https://dev.pgproject.cl/'}api/v1/aljibe-with-trashed`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/aljibe-with-trashed`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -303,7 +303,6 @@ export const useFetchIndirectPersonal = () => {
 }
 
 export const useFetchAljibe = () => {
-  console.log('useFetchAljibe')
   return useQuery({
     queryKey: ['aljibe'],
     refetchType: 'all',
