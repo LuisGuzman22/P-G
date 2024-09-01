@@ -14,10 +14,10 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useEquipment from 'src/hooks/useEquipment'
+import './css.scss'
 
 const ModalRestoreEquipment = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
@@ -39,7 +39,7 @@ const ModalRestoreEquipment = (props) => {
       onClose={() => handleClick()}
       aria-labelledby="ScrollingLongContentExampleLabel2"
       size="xl"
-      className="project-creation-modal"
+      className="restore-modal"
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">Restaurar Equipos</CModalTitle>
@@ -64,7 +64,7 @@ const ModalRestoreEquipment = (props) => {
                       <CTableDataCell>{equipment.name}</CTableDataCell>
                       <CTableDataCell>
                         <CButton
-                          color="warning"
+                          className="btn-action-restore"
                           onClick={() => {
                             restoreEquipment(equipment.id)
                           }}

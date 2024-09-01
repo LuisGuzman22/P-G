@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { React, useEffect, useState } from 'react'
+import { React } from 'react'
 import {
   CButton,
   CModalHeader,
@@ -7,14 +7,6 @@ import {
   CModalFooter,
   CModal,
   CModalBody,
-  CForm,
-  CFormInput,
-  CRow,
-  CCol,
-  CFormTextarea,
-  CFormCheck,
-  CToast,
-  CToastBody,
   CTable,
   CTableHead,
   CTableRow,
@@ -26,6 +18,7 @@ import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useAljibe from 'src/hooks/useAljibe'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import './css.scss'
 
 const ModalRestoreAljibe = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
@@ -47,7 +40,7 @@ const ModalRestoreAljibe = (props) => {
       onClose={() => handleClick()}
       aria-labelledby="ScrollingLongContentExampleLabel2"
       size="xl"
-      className="project-creation-modal"
+      className="restore-modal"
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">Restaurar Aljibes</CModalTitle>
@@ -72,7 +65,7 @@ const ModalRestoreAljibe = (props) => {
                       <CTableDataCell>{aljibe.name}</CTableDataCell>
                       <CTableDataCell>
                         <CButton
-                          color="warning"
+                          className="btn-action-restore"
                           onClick={() => {
                             restoreAljibe(aljibe.id)
                           }}

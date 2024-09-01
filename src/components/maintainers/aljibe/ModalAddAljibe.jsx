@@ -11,8 +11,6 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
-  CFormCheck,
   CToast,
   CToastBody,
 } from '@coreui/react'
@@ -22,6 +20,7 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useVehicle from 'src/hooks/useVehicle'
 import useEquipment from 'src/hooks/useEquipment'
 import useAljibe from 'src/hooks/useAljibe'
+import './css.scss'
 
 const ModalAddAljibe = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
@@ -102,7 +101,7 @@ const ModalAddAljibe = (props) => {
       onClose={() => handleClick()}
       aria-labelledby="ScrollingLongContentExampleLabel2"
       size="xl"
-      className="project-creation-modal"
+      className="creation-modal"
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">

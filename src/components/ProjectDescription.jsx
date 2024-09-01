@@ -3,11 +3,6 @@ import { CCallout, CImage } from '@coreui/react'
 const ProjectDescription = () => {
   return (
     <div className="project-description">
-      <h2>Descripción del proyecto</h2>
-      <div className="project-img-container">
-        {/* <CImage fluid src="https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg" /> */}
-      </div>
-
       <CCallout color="danger" style={{ textAlign: 'justify' }}>
         Minera Centinela, producto del crecimiento de su actividad, ha realizado un estudio de
         evaluación ambiental del proyecto &quot;Desarrollo Minera Centinela (DMC)&quot;, el cual

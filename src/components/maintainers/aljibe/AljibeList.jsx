@@ -11,11 +11,9 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import useEquipment from 'src/hooks/useEquipment'
-import ModalAddEquipment from './ModalAddAljibe'
 import useAljibe from 'src/hooks/useAljibe'
 import ModalAddAljibe from './ModalAddAljibe'
-// import ModalAddMachinery from './ModalAddMachinery'
+import './css.scss'
 
 const AljibeList = () => {
   const { getData } = useGetCachedQueryData()
@@ -72,7 +70,7 @@ const AljibeList = () => {
                   <CTableDataCell>{plates}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
-                      color="warning"
+                      className="btn-action-edit"
                       onClick={() => {
                         handleEditAljibe(aljibe)
                       }}
@@ -80,7 +78,7 @@ const AljibeList = () => {
                       <CIcon icon={cilPencil} />
                     </CButton>
                     <CButton
-                      color="danger"
+                      className="btn-action-delete"
                       onClick={() => {
                         deleteAljibe(aljibe.id)
                       }}

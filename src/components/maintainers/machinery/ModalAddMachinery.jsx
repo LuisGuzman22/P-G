@@ -20,6 +20,7 @@ import useRegisterProject from 'src/hooks/useRegisterProject'
 import { v4 as uuidv4 } from 'uuid'
 import useMachinery from 'src/hooks/useMachinery'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
+import './css.scss'
 
 const ModalAddMachinery = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
@@ -100,7 +101,7 @@ const ModalAddMachinery = (props) => {
       onClose={() => handleClick()}
       aria-labelledby="ScrollingLongContentExampleLabel2"
       size="xl"
-      className="project-creation-modal"
+      className="creation-modal"
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">

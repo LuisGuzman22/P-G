@@ -1,11 +1,11 @@
 import { React, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
-// import ModalAddMachinery from './ModalAddMachinery'
 import Skeleton from 'react-loading-skeleton'
 import useVehicle from 'src/hooks/useVehicle'
 import VehicleList from './VehicleList'
 import ModalAddVehicle from './ModalAddVehicle'
 import ModalRestoreVehicle from './ModalRestoreVehicle'
+import './css.scss'
 
 const VehicleMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useVehicle()
@@ -14,8 +14,8 @@ const VehicleMaintainer = () => {
   const [visibleRestoreVehicle, setVisibleRestoreVehicle] = useState(false)
 
   return (
-    <div className="proyect-administration">
-      <h2>Administrar Vehículos</h2>
+    <div className="vehicle-maintainer">
+      <h2 className="title">Administrar Vehículos</h2>
       {visibleVehicle && (
         <ModalAddVehicle
           visible={true}
@@ -37,8 +37,13 @@ const VehicleMaintainer = () => {
       )}
       <CCard className="action-buttons">
         <CCardBody>
-          <CButton onClick={() => setVisibleVehicle(!visibleVehicle)}>Añadir Vehículo</CButton>
-          <CButton onClick={() => setVisibleRestoreVehicle(!visibleRestoreVehicle)}>
+          <CButton className="btn-modal" onClick={() => setVisibleVehicle(!visibleVehicle)}>
+            Añadir Vehículo
+          </CButton>
+          <CButton
+            className="btn-modal"
+            onClick={() => setVisibleRestoreVehicle(!visibleRestoreVehicle)}
+          >
             Ver eliminados
           </CButton>
         </CCardBody>

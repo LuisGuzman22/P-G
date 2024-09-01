@@ -39,7 +39,7 @@ const ModalRestoreMachinery = (props) => {
       onClose={() => handleClick()}
       aria-labelledby="ScrollingLongContentExampleLabel2"
       size="xl"
-      className="project-creation-modal"
+      className="restore-modal"
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">Restaurar Maquinaria</CModalTitle>
@@ -64,7 +64,7 @@ const ModalRestoreMachinery = (props) => {
                       <CTableDataCell>{machinery.name}</CTableDataCell>
                       <CTableDataCell>
                         <CButton
-                          color="warning"
+                          className="btn-action-restore"
                           onClick={() => {
                             restoreMachinery(machinery.id)
                           }}

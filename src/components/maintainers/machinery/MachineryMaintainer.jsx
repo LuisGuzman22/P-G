@@ -1,13 +1,11 @@
 import { React, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
-import ModalAddProject from 'src/components/ModalAddProject'
-import ModalAddCategories from 'src/components/ModalAddCategories'
-import useGetProjects from 'src/hooks/useGetProjects'
 import MachineryList from './MachineryList'
 import ModalAddMachinery from './ModalAddMachinery'
 import useMachinery from 'src/hooks/useMachinery'
 import Skeleton from 'react-loading-skeleton'
 import ModalRestoreMachinery from './ModalRestoreMachinery'
+import './css.scss'
 
 const MachineryMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useMachinery()
@@ -16,8 +14,8 @@ const MachineryMaintainer = () => {
   const [visibleRestoreMachinery, setVisibleRestoreMachinery] = useState(false)
 
   return (
-    <div className="proyect-administration">
-      <h2>Administrar Maquinaria</h2>
+    <div className="machinery-maintainer">
+      <h2 className="title">Administrar Maquinaria</h2>
 
       {visibleMachinery && (
         <ModalAddMachinery
@@ -41,10 +39,13 @@ const MachineryMaintainer = () => {
 
       <CCard className="action-buttons">
         <CCardBody>
-          <CButton onClick={() => setVisibleMachinery(!visibleMachinery)}>
+          <CButton className="btn-modal" onClick={() => setVisibleMachinery(!visibleMachinery)}>
             Añadir maquinaria
           </CButton>
-          <CButton onClick={() => setVisibleRestoreMachinery(!visibleRestoreMachinery)}>
+          <CButton
+            className="btn-modal"
+            onClick={() => setVisibleRestoreMachinery(!visibleRestoreMachinery)}
+          >
             Ver eliminados
           </CButton>
         </CCardBody>

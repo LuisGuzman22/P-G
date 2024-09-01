@@ -71,7 +71,7 @@ const VehicleList = () => {
                   <CTableDataCell>{plates}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
-                      color="warning"
+                      className="btn-action-edit"
                       onClick={() => {
                         handleEditVehicle(vehicle)
                       }}
@@ -79,7 +79,7 @@ const VehicleList = () => {
                       <CIcon icon={cilPencil} />
                     </CButton>
                     <CButton
-                      color="danger"
+                      className="btn-action-delete"
                       onClick={() => {
                         deleteVehicle(vehicle.id)
                       }}

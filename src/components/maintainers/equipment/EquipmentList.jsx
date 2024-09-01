@@ -13,7 +13,7 @@ import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useEquipment from 'src/hooks/useEquipment'
 import ModalAddEquipment from './ModalAddEquipment'
-// import ModalAddMachinery from './ModalAddMachinery'
+import './css.scss'
 
 const EquipmentList = () => {
   const { getData } = useGetCachedQueryData()
@@ -70,7 +70,7 @@ const EquipmentList = () => {
                   <CTableDataCell>{plates}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
-                      color="warning"
+                      className="btn-action-edit"
                       onClick={() => {
                         handleEditEquipmennt(equipment)
                       }}
@@ -78,7 +78,7 @@ const EquipmentList = () => {
                       <CIcon icon={cilPencil} />
                     </CButton>
                     <CButton
-                      color="danger"
+                      className="btn-action-delete"
                       onClick={() => {
                         deleteEquipment(equipment.id)
                       }}

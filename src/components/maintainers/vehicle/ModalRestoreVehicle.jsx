@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { React, useEffect, useState } from 'react'
+import { React } from 'react'
 import {
   CButton,
   CModalHeader,
@@ -7,14 +7,6 @@ import {
   CModalFooter,
   CModal,
   CModalBody,
-  CForm,
-  CFormInput,
-  CRow,
-  CCol,
-  CFormTextarea,
-  CFormCheck,
-  CToast,
-  CToastBody,
   CTable,
   CTableHead,
   CTableRow,
@@ -24,8 +16,6 @@ import {
 } from '@coreui/react'
 import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useDirectPersonal from 'src/hooks/useDirectPersonal'
-import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useVehicle from 'src/hooks/useVehicle'
 
@@ -49,7 +39,7 @@ const ModalRestoreVehicle = (props) => {
       onClose={() => handleClick()}
       aria-labelledby="ScrollingLongContentExampleLabel2"
       size="xl"
-      className="project-creation-modal"
+      className="restore-modal"
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">Restaurar Vehículos</CModalTitle>
@@ -74,7 +64,7 @@ const ModalRestoreVehicle = (props) => {
                       <CTableDataCell>{vehicle.name}</CTableDataCell>
                       <CTableDataCell>
                         <CButton
-                          color="warning"
+                          className="btn-action-restore"
                           onClick={() => {
                             restoreVehicle(vehicle.id)
                           }}

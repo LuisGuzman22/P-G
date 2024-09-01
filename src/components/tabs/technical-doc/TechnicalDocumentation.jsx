@@ -19,8 +19,6 @@ const TechnicalDocumentation = () => {
 
   return (
     <div className="technicalDocumentation">
-      <h2>Documentación técnica</h2>
-
       {visibleTechnicalDoc && (
         <ModalAddTechnicalDoc
           visible={true}

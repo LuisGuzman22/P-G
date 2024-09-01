@@ -5,6 +5,7 @@ import ModalAddAljibe from './ModalAddAljibe'
 import AljibeList from './AljibeList'
 import useAljibe from 'src/hooks/useAljibe'
 import ModalRestoreAljibe from './ModalRestoreAljibe'
+import './css.scss'
 
 const AljibeMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useAljibe()
@@ -13,8 +14,8 @@ const AljibeMaintainer = () => {
   const [visibleRestoreAljibe, setVisibleRestoreAljibe] = useState(false)
 
   return (
-    <div className="proyect-administration">
-      <h2>Administrar Aljibes</h2>
+    <div className="aljibe-maintainer">
+      <h2 className="title">Administrar Aljibes</h2>
       {visibleAljibe && (
         <ModalAddAljibe
           visible={true}
@@ -36,8 +37,13 @@ const AljibeMaintainer = () => {
       )}
       <CCard className="action-buttons">
         <CCardBody>
-          <CButton onClick={() => setVisibleAljibe(!visibleAljibe)}>Añadir Aljibe</CButton>
-          <CButton onClick={() => setVisibleRestoreAljibe(!visibleRestoreAljibe)}>
+          <CButton className="btn-modal" onClick={() => setVisibleAljibe(!visibleAljibe)}>
+            Añadir Aljibe
+          </CButton>
+          <CButton
+            className="btn-modal"
+            onClick={() => setVisibleRestoreAljibe(!visibleRestoreAljibe)}
+          >
             Ver eliminados
           </CButton>
         </CCardBody>
