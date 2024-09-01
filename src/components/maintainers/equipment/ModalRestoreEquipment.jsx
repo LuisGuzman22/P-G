@@ -24,15 +24,14 @@ import {
 } from '@coreui/react'
 import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useDirectPersonal from 'src/hooks/useDirectPersonal'
-import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import useEquipment from 'src/hooks/useEquipment'
 
 const ModalRestoreEquipment = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
   const equipmentQuery = getData('equipment')
-  const { restoreDirectPersonal } = useDirectPersonal()
+  const { restoreEquipment } = useEquipment()
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
@@ -75,7 +74,7 @@ const ModalRestoreEquipment = (props) => {
                         <CButton
                           color="warning"
                           onClick={() => {
-                            restoreDirectPersonal(equipment.id)
+                            restoreEquipment(equipment.id)
                           }}
                         >
                           Restaurar
