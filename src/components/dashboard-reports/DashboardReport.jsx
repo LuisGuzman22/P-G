@@ -14,7 +14,7 @@ import Skeleton from 'react-loading-skeleton'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useNavigate } from 'react-router-dom'
 import CIcon from '@coreui/icons-react'
-import { cilClipboard } from '@coreui/icons'
+import { cilNotes, cilPencil, cilWatch } from '@coreui/icons'
 import './css.scss'
 
 const DashboardReport = () => {
@@ -61,15 +61,17 @@ const DashboardReport = () => {
                           handleSelectReport(report, 'view')
                         }}
                       >
-                        Ver
+                        <CIcon icon={cilNotes} />
                       </CButton>
+
                       <CButton
                         className="btn-project-action"
+                        alt="Edit"
                         onClick={() => {
                           handleSelectReport(report, 'edit')
                         }}
                       >
-                        Editar
+                        <CIcon icon={cilPencil} />
                       </CButton>
                     </CTableDataCell>
                     {/* <CTableDataCell>{report.signatures}</CTableDataCell> */}

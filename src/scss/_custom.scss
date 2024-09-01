@@ -257,6 +257,16 @@
       font-weight: 600;
     }
   }
+
+  @media only screen and (max-width: 800px) {
+    .row {
+      .dashboard-button {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 5px;
+      }
+    }
+  }
 }
 
 .daily-report {
