@@ -4,11 +4,13 @@ import Skeleton from 'react-loading-skeleton'
 import ModalAddAljibe from './ModalAddAljibe'
 import AljibeList from './AljibeList'
 import useAljibe from 'src/hooks/useAljibe'
+import ModalRestoreAljibe from './ModalRestoreAljibe'
 
 const AljibeMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useAljibe()
 
   const [visibleAljibe, setVisibleAljibe] = useState(false)
+  const [visibleRestoreAljibe, setVisibleRestoreAljibe] = useState(false)
 
   return (
     <div className="proyect-administration">
@@ -22,9 +24,22 @@ const AljibeMaintainer = () => {
           }}
         />
       )}
+
+      {visibleRestoreAljibe && (
+        <ModalRestoreAljibe
+          visible={true}
+          sendDataToParent={async (data) => {
+            setVisibleRestoreAljibe(data)
+            await refetch()
+          }}
+        />
+      )}
       <CCard className="action-buttons">
         <CCardBody>
           <CButton onClick={() => setVisibleAljibe(!visibleAljibe)}>Añadir Aljibe</CButton>
+          <CButton onClick={() => setVisibleRestoreAljibe(!visibleRestoreAljibe)}>
+            Ver eliminados
+          </CButton>
         </CCardBody>
       </CCard>
       <CCard>

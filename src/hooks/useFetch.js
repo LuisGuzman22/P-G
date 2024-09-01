@@ -104,7 +104,7 @@ const fetchIndirectPersonal = async () => {
 }
 
 const fetchAljibe = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/aljibe-with-trashed`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/waterTrucks-with-trashed`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },

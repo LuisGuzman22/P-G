@@ -166,7 +166,7 @@ const Dashboard = () => {
       </CCard>
 
       <br />
-      {reportsQuery && reportsQuery.length > 0 && (
+      {/* {reportsQuery && reportsQuery.length > 0 && (
         <>
           <br />
           <CCard>
@@ -196,27 +196,7 @@ const Dashboard = () => {
                           )
                         })}
                     </CListGroup>
-                    {/* <CRow>
-                      {reportsQuery
-                        .sort((a, b) => b.id - a.id)
-                        .map((report) => {
-                          return (
-                            <>
-                              <CCol>
-                                <CButton
-                                  className="dashboard-button"
-                                  onClick={() => {
-                                    localStorage.setItem('daily_report', report.id)
-                                    redirectTo('/informe-diario/view')
-                                  }}
-                                >
-                                  {report.id}
-                                </CButton>
-                              </CCol>
-                            </>
-                          )
-                        })}
-                    </CRow> */}
+                 
                   </>
                 </CCardText>
               ) : (
@@ -225,7 +205,7 @@ const Dashboard = () => {
             </CCardBody>
           </CCard>
         </>
-      )}
+      )} */}
     </div>
   )
 }

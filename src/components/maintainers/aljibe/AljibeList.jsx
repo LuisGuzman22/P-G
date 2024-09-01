@@ -61,34 +61,36 @@ const AljibeList = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {aljibeQuery?.map((aljibe, index) => {
-            const plates = getPlates(aljibe.plate)
-            return (
-              <CTableRow key={aljibe.id}>
-                <CTableDataCell scope="row">{aljibe.id}</CTableDataCell>
-                <CTableDataCell>{aljibe.name}</CTableDataCell>
-                <CTableDataCell>{plates}</CTableDataCell>
-                <CTableDataCell>
-                  <CButton
-                    color="warning"
-                    onClick={() => {
-                      handleEditAljibe(aljibe)
-                    }}
-                  >
-                    <CIcon icon={cilPencil} />
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    onClick={() => {
-                      deleteAljibe(aljibe.id)
-                    }}
-                  >
-                    <CIcon icon={cilTrash} />
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+          {aljibeQuery
+            ?.filter((aljibe) => aljibe.deleted_at === null)
+            .map((aljibe, index) => {
+              const plates = getPlates(aljibe.plate)
+              return (
+                <CTableRow key={aljibe.id}>
+                  <CTableDataCell scope="row">{aljibe.id}</CTableDataCell>
+                  <CTableDataCell>{aljibe.name}</CTableDataCell>
+                  <CTableDataCell>{plates}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      color="warning"
+                      onClick={() => {
+                        handleEditAljibe(aljibe)
+                      }}
+                    >
+                      <CIcon icon={cilPencil} />
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      onClick={() => {
+                        deleteAljibe(aljibe.id)
+                      }}
+                    >
+                      <CIcon icon={cilTrash} />
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
     </>

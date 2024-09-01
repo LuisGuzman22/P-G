@@ -13,7 +13,7 @@ const useAljibe = () => {
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .post(`${process.env.REACT_APP_BASE_URL}api/v1/aljibe`, newTodo)
+        .post(`${process.env.REACT_APP_BASE_URL}api/v1/waterTrucks`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -43,7 +43,7 @@ const useAljibe = () => {
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
       return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/aljibe/${id}`)
+        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/waterTrucks/${id}`)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -73,7 +73,7 @@ const useAljibe = () => {
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .put(`${process.env.REACT_APP_BASE_URL}api/v1/aljibe/${newTodo.id}`, newTodo)
+        .put(`${process.env.REACT_APP_BASE_URL}api/v1/waterTrucks/${newTodo.id}`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -100,6 +100,36 @@ const useAljibe = () => {
     },
   })
 
+  const mutationRestore = useMutation({
+    mutationFn: async (newTodo) => {
+      return await axios
+        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/waterTrucks/${newTodo}/restore`)
+        .then((res) => {
+          if (res.status === HttpStatusCode.Created) {
+            setIsError(false)
+            return res.ok
+          } else {
+            setErrorMutate('Error al actualizar aljibe')
+            setIsError(true)
+            return false
+          }
+        })
+        .catch((err) => {
+          setErrorMutate('Error al actualizar aljibe')
+          setIsError(true)
+          return false
+        })
+    },
+    onSuccess: (suc) => {
+      queryClient.invalidateQueries({ queryKey: ['aljibe'] })
+    },
+    onError: (err) => {
+      setErrorMutate('Error al actualizar aljibe')
+      setIsError(true)
+      return false
+    },
+  })
+
   const register = (data) => {
     setIsError(false)
     const response = registerMutation.mutate(data)
@@ -118,6 +148,12 @@ const useAljibe = () => {
     return response
   }
 
+  const restoreAljibe = (data) => {
+    setIsError(false)
+    const response = mutationRestore.mutate(data)
+    return response
+  }
+
   return {
     data,
     isLoading,
@@ -129,6 +165,7 @@ const useAljibe = () => {
     isError,
     deleteAljibe,
     updateAljibe,
+    restoreAljibe,
   }
 }
 

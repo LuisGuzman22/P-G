@@ -51,6 +51,7 @@ const useRegisterDailyReport = () => {
       clearContext()
     },
     onError: (err) => {
+      console.log('err', err)
       setLoading(false)
       setSuccess(false)
       setError('Recuerda rellenar todos los campos')
