@@ -100,6 +100,36 @@ const useMachinery = () => {
     },
   })
 
+  const mutationRestore = useMutation({
+    mutationFn: async (newTodo) => {
+      return await axios
+        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/machineries/${newTodo}/restore`)
+        .then((res) => {
+          if (res.status === HttpStatusCode.Created) {
+            setIsError(false)
+            return res.ok
+          } else {
+            setErrorMutate('Error al actualizar maquinaria')
+            setIsError(true)
+            return false
+          }
+        })
+        .catch((err) => {
+          setErrorMutate('Error al actualizar maquinaria')
+          setIsError(true)
+          return false
+        })
+    },
+    onSuccess: (suc) => {
+      queryClient.invalidateQueries({ queryKey: ['machinery'] })
+    },
+    onError: (err) => {
+      setErrorMutate('Error al actualizar maquinaria')
+      setIsError(true)
+      return false
+    },
+  })
+
   const register = (data) => {
     setIsError(false)
     const response = registerMutation.mutate(data)
@@ -118,6 +148,12 @@ const useMachinery = () => {
     return response
   }
 
+  const restoreMachinery = (data) => {
+    setIsError(false)
+    const response = mutationRestore.mutate(data)
+    return response
+  }
+
   return {
     data,
     isLoading,
@@ -129,6 +165,7 @@ const useMachinery = () => {
     isError,
     deleteMachinery,
     updateMachinery,
+    restoreMachinery,
   }
 }
 

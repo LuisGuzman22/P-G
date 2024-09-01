@@ -17,13 +17,13 @@ import {
 import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import useEquipment from 'src/hooks/useEquipment'
+import useMachinery from 'src/hooks/useMachinery'
 
-const ModalRestoreEquipment = (props) => {
+const ModalRestoreMachinery = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
-  const equipmentQuery = getData('equipment')
-  const { restoreEquipment } = useEquipment()
+  const machineryQuery = getData('machinery')
+  const { restoreMachinery } = useMachinery()
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
@@ -42,11 +42,11 @@ const ModalRestoreEquipment = (props) => {
       className="project-creation-modal"
     >
       <CModalHeader>
-        <CModalTitle id="ScrollingLongContentExampleLabel2">Restaurar Equipos</CModalTitle>
+        <CModalTitle id="ScrollingLongContentExampleLabel2">Restaurar Maquinaria</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        {equipmentQuery?.filter((equipment) => equipment.deleted_at !== null).length === 0 ? (
-          <>No hay equipos eliminado</>
+        {machineryQuery?.filter((machinery) => machinery.deleted_at !== null).length === 0 ? (
+          <>No hay maquinaria eliminada</>
         ) : (
           <CTable striped>
             <CTableHead>
@@ -56,17 +56,17 @@ const ModalRestoreEquipment = (props) => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {equipmentQuery
-                ?.filter((equipment) => equipment.deleted_at !== null)
-                .map((equipment, index) => {
+              {machineryQuery
+                ?.filter((machinery) => machinery.deleted_at !== null)
+                .map((machinery, index) => {
                   return (
-                    <CTableRow key={equipment.id}>
-                      <CTableDataCell>{equipment.name}</CTableDataCell>
+                    <CTableRow key={machinery.id}>
+                      <CTableDataCell>{machinery.name}</CTableDataCell>
                       <CTableDataCell>
                         <CButton
                           color="warning"
                           onClick={() => {
-                            restoreEquipment(equipment.id)
+                            restoreMachinery(machinery.id)
                           }}
                         >
                           Restaurar
@@ -88,4 +88,4 @@ const ModalRestoreEquipment = (props) => {
   )
 }
 
-export default ModalRestoreEquipment
+export default ModalRestoreMachinery

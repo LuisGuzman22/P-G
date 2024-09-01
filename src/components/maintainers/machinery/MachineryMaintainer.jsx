@@ -7,39 +7,46 @@ import MachineryList from './MachineryList'
 import ModalAddMachinery from './ModalAddMachinery'
 import useMachinery from 'src/hooks/useMachinery'
 import Skeleton from 'react-loading-skeleton'
+import ModalRestoreMachinery from './ModalRestoreMachinery'
 
 const MachineryMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useMachinery()
 
-  const [visibleCategories, setVisibleCategories] = useState(false)
-  const [visibleProject, setVisibleProject] = useState(false)
+  const [visibleMachinery, setVisibleMachinery] = useState(false)
+  const [visibleRestoreMachinery, setVisibleRestoreMachinery] = useState(false)
 
   return (
     <div className="proyect-administration">
       <h2>Administrar Maquinaria</h2>
 
-      {visibleProject && (
+      {visibleMachinery && (
         <ModalAddMachinery
           visible={true}
           sendDataToParent={async (data) => {
-            setVisibleProject(data)
+            setVisibleMachinery(data)
             await refetch()
           }}
         />
       )}
 
-      {visibleCategories && (
-        <ModalAddCategories
+      {visibleRestoreMachinery && (
+        <ModalRestoreMachinery
           visible={true}
-          sendDataToParent={(data) => {
-            setVisibleCategories(data)
+          sendDataToParent={async (data) => {
+            setVisibleRestoreMachinery(data)
+            await refetch()
           }}
         />
       )}
 
       <CCard className="action-buttons">
         <CCardBody>
-          <CButton onClick={() => setVisibleProject(!visibleProject)}>Añadir maquinaria</CButton>
+          <CButton onClick={() => setVisibleMachinery(!visibleMachinery)}>
+            Añadir maquinaria
+          </CButton>
+          <CButton onClick={() => setVisibleRestoreMachinery(!visibleRestoreMachinery)}>
+            Ver eliminados
+          </CButton>
         </CCardBody>
       </CCard>
       <CCard>

@@ -58,34 +58,36 @@ const MachineryList = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {machineryQuery?.map((machinery, index) => {
-            const plates = getPlates(machinery.plate)
-            return (
-              <CTableRow key={machinery.id}>
-                <CTableDataCell scope="row">{machinery.id}</CTableDataCell>
-                <CTableDataCell>{machinery.name}</CTableDataCell>
-                <CTableDataCell>{plates}</CTableDataCell>
-                <CTableDataCell>
-                  <CButton
-                    color="warning"
-                    onClick={() => {
-                      handleEditMachinery(machinery)
-                    }}
-                  >
-                    <CIcon icon={cilPencil} />
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    onClick={() => {
-                      deleteMachinery(machinery.id)
-                    }}
-                  >
-                    <CIcon icon={cilTrash} />
-                  </CButton>
-                </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+          {machineryQuery
+            ?.filter((machinery) => machinery.deleted_at === null)
+            .map((machinery, index) => {
+              const plates = getPlates(machinery.plate)
+              return (
+                <CTableRow key={machinery.id}>
+                  <CTableDataCell scope="row">{machinery.id}</CTableDataCell>
+                  <CTableDataCell>{machinery.name}</CTableDataCell>
+                  <CTableDataCell>{plates}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      color="warning"
+                      onClick={() => {
+                        handleEditMachinery(machinery)
+                      }}
+                    >
+                      <CIcon icon={cilPencil} />
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      onClick={() => {
+                        deleteMachinery(machinery.id)
+                      }}
+                    >
+                      <CIcon icon={cilTrash} />
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
     </>
