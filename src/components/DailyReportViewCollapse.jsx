@@ -151,7 +151,7 @@ const DailyReportViewCollapse = () => {
 
   return (
     <div className="dailyReport">
-      {!isFetching && (
+      {!isFetching ? (
         <>
           {visibleSendDailyReportModal && (
             <ModalSendDailyReport
@@ -354,6 +354,10 @@ const DailyReportViewCollapse = () => {
               <Skeleton count={2} />
             </>
           )}
+        </>
+      ) : (
+        <>
+          <Skeleton count={2} />
         </>
       )}
     </div>

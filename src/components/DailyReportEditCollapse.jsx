@@ -108,7 +108,7 @@ const DailyReportEditCollapse = () => {
           }}
         />
       )}
-      {!isLoading ? (
+      {!isLoading && !isFetching ? (
         <>
           <CAccordion className="dailyReport-accordion" activeItemKey={1}>
             <CAccordionItem itemKey={1}>
