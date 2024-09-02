@@ -23,6 +23,7 @@ const IndirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const isEditMode = currentLocation.includes('/edit')
 
   const initialState = {
     indirectWorkForce: undefined,
@@ -335,7 +336,7 @@ const IndirectWorkForce = () => {
                     <CTableDataCell>{item.workNumber}</CTableDataCell>
                     <CTableDataCell>{item.hh}</CTableDataCell>
                     <CTableDataCell>
-                      {isCreatingMode && (
+                      {(isCreatingMode || isEditMode) && (
                         <CButton
                           className="btn-project-action"
                           onClick={() => {
@@ -347,7 +348,7 @@ const IndirectWorkForce = () => {
                       )}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {isCreatingMode && (
+                      {(isCreatingMode || isEditMode) && (
                         <CButton
                           className="btn-project-action"
                           onClick={() => {

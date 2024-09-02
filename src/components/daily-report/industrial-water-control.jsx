@@ -24,6 +24,7 @@ const IndustrialWaterControl = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const isEditMode = currentLocation.includes('/edit')
 
   const initialState = {
     aljibe: undefined,
@@ -190,7 +191,7 @@ const IndustrialWaterControl = () => {
   }, [aljibeListContext])
 
   useEffect(() => {
-    if (isCreatingMode) {
+    if (isCreatingMode || isEditMode) {
       if (selectedReport && selectedReport.aljibeList.length > 0) {
         setAccumulatedM3(
           selectedReport.aljibeList[0].aljibeM3Accumulated || 0 + Number(aljibeTotals.aljibeM3),
@@ -359,7 +360,7 @@ const IndustrialWaterControl = () => {
                   <CTableDataCell>{item.aljibeQuantityTurns ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.aljibeM3 ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -371,7 +372,7 @@ const IndustrialWaterControl = () => {
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {

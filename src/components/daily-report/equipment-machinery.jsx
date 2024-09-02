@@ -23,6 +23,7 @@ const EquipmentMachinery = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const isEditMode = currentLocation.includes('/edit')
 
   const initialState = {
     equipment: undefined,
@@ -241,7 +242,7 @@ const EquipmentMachinery = () => {
                   <CTableDataCell>{item.actions.equipmentCertifiedNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.actions.equipmentWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -253,7 +254,7 @@ const EquipmentMachinery = () => {
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {

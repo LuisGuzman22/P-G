@@ -23,6 +23,7 @@ const DirectDotationWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const isEditMode = currentLocation.includes('/edit')
 
   const initialState = {
     directWorkFront: undefined,
@@ -281,7 +282,7 @@ const DirectDotationWorkForce = () => {
                         <span key={item.id}>{item.directDotationWorkForceObservation}</span>
                       </CTableDataCell>
                       <CTableDataCell>
-                        {isCreatingMode && (
+                        {(isCreatingMode || isEditMode) && (
                           <CButton
                             className="btn-project-action"
                             onClick={() => {
@@ -293,7 +294,7 @@ const DirectDotationWorkForce = () => {
                         )}
                       </CTableDataCell>
                       <CTableDataCell>
-                        {isCreatingMode && (
+                        {(isCreatingMode || isEditMode) && (
                           <CButton
                             className="btn-project-action"
                             onClick={() => {

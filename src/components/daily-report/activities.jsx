@@ -23,6 +23,7 @@ const Activities = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const isEditMode = currentLocation.includes('/edit')
 
   const initialState = {
     activityFrontWork: undefined,
@@ -422,7 +423,7 @@ const Activities = () => {
                   <CTableDataCell>{item.activityHoursSpendShift}</CTableDataCell>
                   <CTableDataCell>{item.activityHoursAccumulated}</CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -434,7 +435,7 @@ const Activities = () => {
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {

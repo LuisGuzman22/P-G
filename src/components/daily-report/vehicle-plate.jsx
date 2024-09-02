@@ -23,6 +23,7 @@ const VehiclePlate = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const isEditMode = currentLocation.includes('/edit')
 
   const initialState = {
     vehicle: undefined,
@@ -364,7 +365,7 @@ const VehiclePlate = () => {
                   <CTableDataCell>{item.vehicleInitialHorometer ?? 0}</CTableDataCell>
                   <CTableDataCell>{item.vehicleFinalHorometer ?? 0}</CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -376,7 +377,7 @@ const VehiclePlate = () => {
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {

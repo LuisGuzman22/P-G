@@ -26,6 +26,7 @@ const DirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const isEditMode = currentLocation.includes('/edit')
 
   const columnChartElement = useRef(null)
 
@@ -385,7 +386,7 @@ const DirectWorkForce = () => {
                   <CTableDataCell>{item.workNumber}</CTableDataCell>
                   <CTableDataCell>{item.hh}</CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -397,7 +398,7 @@ const DirectWorkForce = () => {
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {

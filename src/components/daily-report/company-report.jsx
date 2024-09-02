@@ -360,7 +360,7 @@ const CompanyReport = () => {
                       <CTableDataCell>{item.dailyReportIndirectPersonalHours ?? 0}</CTableDataCell>
                       <CTableDataCell>{selectedJourney?.name ?? ''}</CTableDataCell>
                       <CTableDataCell>
-                        {isCreatingMode && (
+                        {(isCreatingMode || isEditMode) && (
                           <CButton
                             className="btn-project-action"
                             onClick={() => {
@@ -372,7 +372,7 @@ const CompanyReport = () => {
                         )}
                       </CTableDataCell>
                       <CTableDataCell>
-                        {isCreatingMode && (
+                        {(isCreatingMode || isEditMode) && (
                           <CButton
                             className="btn-project-action"
                             onClick={() => {

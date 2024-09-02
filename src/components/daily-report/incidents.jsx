@@ -24,6 +24,7 @@ const Incidents = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const isEditMode = currentLocation.includes('/edit')
 
   const initialState = {
     incident: '',
@@ -155,7 +156,7 @@ const Incidents = () => {
                     <CTableDataCell>{item.incident}</CTableDataCell>
                     <CTableDataCell>{item.nonConformity}</CTableDataCell>
                     <CTableDataCell>
-                      {isCreatingMode && (
+                      {(isCreatingMode || isEditMode) && (
                         <CButton
                           className="btn-project-action"
                           onClick={() => {
@@ -167,7 +168,7 @@ const Incidents = () => {
                       )}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {isCreatingMode && (
+                      {(isCreatingMode || isEditMode) && (
                         <CButton
                           className="btn-project-action"
                           onClick={() => {

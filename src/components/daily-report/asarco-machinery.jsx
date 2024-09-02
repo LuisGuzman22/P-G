@@ -25,6 +25,7 @@ const AsarcoMachinery = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
   const isCreatingMode = currentLocation === '/informe-diario'
+  const isEditMode = currentLocation.includes('/edit')
 
   const pieChartElement = useRef(null)
 
@@ -513,7 +514,7 @@ const AsarcoMachinery = () => {
                   <CTableDataCell>{item.asarcoMachineryOpperationalLoss}</CTableDataCell>
                   <CTableDataCell>{item.asarcoMachineryScheduleDelay}</CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
@@ -525,7 +526,7 @@ const AsarcoMachinery = () => {
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {isCreatingMode && (
+                    {(isCreatingMode || isEditMode) && (
                       <CButton
                         className="btn-project-action"
                         onClick={() => {
