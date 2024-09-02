@@ -36,6 +36,11 @@ const GanttChart = () => {
             data={data}
             options={options}
             chartLanguage="es-419"
+            tooltip={{
+              trigger: 'selection',
+              showColorCode: true,
+              isHtml: true,
+            }}
           />
         </CCardBody>
       </CCard>
