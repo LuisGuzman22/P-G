@@ -4,11 +4,12 @@ import { CContainer, CSpinner } from '@coreui/react'
 
 // routes config
 import routes from '../routes'
+import Skeleton from 'react-loading-skeleton'
 
 const AppContent = () => {
   return (
     <CContainer className="px-4" lg>
-      <Suspense fallback={<CSpinner color="primary" />}>
+      <Suspense fallback={<Skeleton count={3} />}>
         <Routes>
           {routes.map((route, idx) => {
             return (
