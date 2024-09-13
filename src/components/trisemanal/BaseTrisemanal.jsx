@@ -15,30 +15,40 @@ import React, { useEffect, useRef, useState } from 'react'
 import useGetTrisemanalData from 'src/hooks/useGetTrisemanalData'
 
 const BaseTrisemanal = () => {
-  const { data, isLoading, error } = useGetTrisemanalData()
+  const { data, isLoading, error, uploadTrisemanal } = useGetTrisemanalData()
 
   const [file, setFile] = useState()
 
   const onHandleSubmit = () => {
-    console.log('submit', file)
+    uploadTrisemanal(file)
+  }
+
+  const handleUploadFile = (e) => {
+    const xls = e.target.files
+    setFile(xls)
   }
 
   return (
     <div className="">
-      {/* <CFormInput
+      <CFormInput
         type="file"
         id={`trisemanal`}
         aria-describedby="inputGroupFileAddon03"
         onChange={(e) => {
-          setFile(e.target.files[0])
+          handleUploadFile(e)
         }}
         label="Cargar trisemanal"
         aria-label="Upload"
         accept="application/vnd.ms-excel"
       />
-      <CButton className="confirm-btn" onClick={onHandleSubmit()}>
+      <CButton
+        className="confirm-btn"
+        onClick={() => {
+          onHandleSubmit()
+        }}
+      >
         Subir Trisemanal
-      </CButton> */}
+      </CButton>
       <CTable>
         <CTableHead>
           <CTableRow>

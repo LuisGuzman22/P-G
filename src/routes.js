@@ -24,6 +24,7 @@ const IndirectPersonalMaintainer = React.lazy(
   () => import('./pages/IndirectPersonalMaintainerPage'),
 )
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
+const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDocMaintainerPage'))
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
 const ExportPage = React.lazy(() => import('./pages/ExportPage'))
 
@@ -67,6 +68,11 @@ const routes = [
     path: '/maintainer/aljibe',
     name: 'Administrar Aljibes',
     element: AljibeMaintainerPage,
+  },
+  {
+    path: '/maintainer/technical-doc',
+    name: 'Administrar Documentación técnica',
+    element: TechnicalDocMaintainerPage,
   },
   {
     path: '/dashboard-reportes',

@@ -40,7 +40,8 @@ import { useFetchReportData } from 'src/hooks/useFetch'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 
 const DailyReportCollapse = () => {
-  const { registerData, loading, error, success, clearData } = useRegisterDailyReport()
+  const { registerData, loading, error, success, clearData, errorMessage } =
+    useRegisterDailyReport()
   const { loadData } = useRegisterDailyReportCompany()
   const navigate = useNavigate()
   const { getData } = useGetCachedQueryData()
@@ -48,7 +49,6 @@ const DailyReportCollapse = () => {
   const [visible, setVisible] = useState(false)
   const currentLocation = useLocation().pathname
   const isCreatingMode = currentLocation === '/informe-diario'
-
   const { isFetching } = useFetchReportData()
 
   // useEffect(() => {
@@ -70,6 +70,7 @@ const DailyReportCollapse = () => {
 
   const [showError, setShowError] = useState(false)
   useEffect(() => {
+    console.log('errorMessage', errorMessage)
     if (error) setShowError(true)
   }, [error])
 
@@ -259,6 +260,23 @@ const DailyReportCollapse = () => {
               </CAccordionBody>
             </CAccordionItem>
           </CAccordion>
+          {/* {errorMessage.length > 0 ? <></> : <></>} */}
+          {/* {errorMessage.map((error, index) => (
+            <CToast
+              key={index}
+              autohide={true}
+              visible={showError}
+              color="danger"
+              onClose={() => {
+                setShowError(false)
+              }}
+              className="text-white align-items-center"
+            >
+              <div className="d-flex">
+                <CToastBody>{error}</CToastBody>
+              </div>
+            </CToast>
+          ))} */}
           <CToast
             autohide={true}
             visible={showError}
@@ -269,7 +287,14 @@ const DailyReportCollapse = () => {
             className="text-white align-items-center"
           >
             <div className="d-flex">
-              <CToastBody>{error}</CToastBody>
+              <CToastBody>
+                {errorMessage.map((error, index) => (
+                  <span key={index}>
+                    {error}
+                    <br />
+                  </span>
+                ))}
+              </CToastBody>
             </div>
           </CToast>
           {loading && <Loading />}

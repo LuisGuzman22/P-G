@@ -17,24 +17,14 @@ import {
   CToastBody,
   CFormSelect,
 } from '@coreui/react'
-import useRegisterProject from 'src/hooks/useRegisterProject'
-import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useVehicle from 'src/hooks/useVehicle'
-import useEquipment from 'src/hooks/useEquipment'
-import useAljibe from 'src/hooks/useAljibe'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 
 const ModalAddTechnicalDoc = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
   const { register } = useTechnicalDoc()
   const [categoryError, setCategoryError] = useState(false)
-  const [techDoc, setTechDoc] = useState({
-    category: '',
-    file: [],
-  })
+
   const [category, setCategory] = useState('')
   const [docs, setDocs] = useState([])
 
@@ -43,7 +33,6 @@ const ModalAddTechnicalDoc = (props) => {
   }
 
   const handleUploadTechicalDoc = () => {
-    // setTechDoc({ category, docs })
     register({ category, docs })
   }
 
@@ -53,13 +42,8 @@ const ModalAddTechnicalDoc = (props) => {
   }
 
   const handleUploadFile = (e) => {
-    // if (pos >= 0 && pos < items.length) {
-    const file = e.target.files[0]
-    console.log('file', file)
-    setDocs([...docs, file])
-    // const description = items[pos].description // Retain the current description
-    // setFileAndDescription(pos, file, description)
-    // }
+    const file = e.target.files
+    setDocs(file)
   }
 
   return (
@@ -93,7 +77,7 @@ const ModalAddTechnicalDoc = (props) => {
                 }}
               >
                 <option value={'-1'}>Seleccione</option>
-                <option value={'Ingeniría'}>Ingeniría</option>
+                <option value={'Ingeniería'}>Ingeniería</option>
                 <option value={'Planificación y control'}>Planificación y control</option>
                 <option value={'Contratos'}>Contratos</option>
               </CFormSelect>
@@ -114,14 +98,7 @@ const ModalAddTechnicalDoc = (props) => {
               />
             </CCol>
           </CRow>
-          <CRow>
-            {docs.map((doc, pos) => (
-              <div key={pos}>
-                <p>{doc.name}</p>
-                {/* <img src={URL.createObjectURL(doc)} style={{ width: '70%' }} /> */}
-              </div>
-            ))}
-          </CRow>
+          <CRow></CRow>
         </CForm>
       </CModalBody>
       <CModalFooter>
