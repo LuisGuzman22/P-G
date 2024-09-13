@@ -109,7 +109,18 @@ const fetchAljibe = async () => {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
   })
-  console.log('aljibe', res.data.data)
+  return res.data.data
+}
+
+const fetchTechnicalDocumentation = async () => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/documentation/getTechnicalDocumentationUrls/2/2`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
   return res.data.data
 }
 
@@ -310,6 +321,18 @@ export const useFetchAljibe = () => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchAljibe()
+    },
+  })
+}
+
+export const useFetchGetTechnicalDocumentation = () => {
+  return useQuery({
+    queryKey: ['technical-documentation'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchTechnicalDocumentation()
     },
   })
 }

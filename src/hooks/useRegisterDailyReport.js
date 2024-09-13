@@ -10,6 +10,7 @@ const useRegisterDailyReport = () => {
   const contractLS = JSON.parse(getContract())
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState([])
   const [success, setSuccess] = useState(false)
   const {
     company,
@@ -51,24 +52,20 @@ const useRegisterDailyReport = () => {
       clearContext()
     },
     onError: (err) => {
-      console.log('err', err)
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setLoading(false)
       setSuccess(false)
-      setError('Recuerda rellenar todos los campos')
+      setError(true)
     },
   })
 
   const { mutate: updateMutate } = useMutation({
     mutationFn: async (newTodo) =>
-      axios.put(
-        `${process.env.REACT_APP_BASE_URL}api/v1/reports/${newTodo.company.dailyReportNumber}`,
-        newTodo,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+      axios.put(`${process.env.REACT_APP_BASE_URL}api/v1/reports`, newTodo, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-      ),
+      }),
     onSuccess: () => {
       setLoading(false)
       setSuccess(true)
@@ -119,6 +116,7 @@ const useRegisterDailyReport = () => {
     setLoading(true)
     setError()
     setSuccess(false)
+    console.log('photoList', photoList)
     const data = mutate({
       projectId: projectLS.id,
       contractId: contractLS.id,
@@ -184,7 +182,7 @@ const useRegisterDailyReport = () => {
     return data
   }
 
-  return { registerData, updateData, loading, error, success, clearData }
+  return { registerData, updateData, loading, error, success, clearData, errorMessage }
 }
 
 export default useRegisterDailyReport
