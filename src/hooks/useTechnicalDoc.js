@@ -13,7 +13,10 @@ const useTechnicalDoc = () => {
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
-  const { data, isLoading, error, refetch, isRefetching } = useFetchGetTechnicalDocumentation()
+  const { data, isLoading, error, refetch, isRefetching } = useFetchGetTechnicalDocumentation(
+    projectLS.id,
+    contractLS.id,
+  )
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {

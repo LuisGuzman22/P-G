@@ -28,6 +28,8 @@ const ModalAddProject = (props) => {
     props.sendDataToParent(false)
   }
 
+  console.log('props', props)
+
   const [project, setProject] = useState(
     props.selectedProject ? props.selectedProject : initialState,
   )
