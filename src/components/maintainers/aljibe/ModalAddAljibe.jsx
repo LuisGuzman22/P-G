@@ -14,11 +14,8 @@ import {
   CToast,
   CToastBody,
 } from '@coreui/react'
-import useRegisterProject from 'src/hooks/useRegisterProject'
 import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useVehicle from 'src/hooks/useVehicle'
-import useEquipment from 'src/hooks/useEquipment'
 import useAljibe from 'src/hooks/useAljibe'
 import './css.scss'
 

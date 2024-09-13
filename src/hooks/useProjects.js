@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useFetchProyects } from './useFetch'
 
-const useRegisterProject = () => {
-  const [error, setError] = useState()
+const useProjects = () => {
+  const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
   const queryClient = useQueryClient()
+
+  const { data, isLoading, error, refetch, isRefetching } = useFetchProyects(1)
 
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
@@ -16,13 +19,13 @@ const useRegisterProject = () => {
             setIsError(false)
             return res.ok
           } else {
-            setError('Error al registrar proyecto')
+            setErrorMutate('Error al registrar proyecto')
             setIsError(true)
             return false
           }
         })
         .catch((err) => {
-          setError('Error al registrar proyecto')
+          setErrorMutate('Error al registrar proyecto')
           setIsError(true)
           return false
         })
@@ -31,22 +34,11 @@ const useRegisterProject = () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
     },
     onError: (err) => {
-      setError('Error al registrar proyecto')
+      setErrorMutate('Error al registrar proyecto')
       setIsError(true)
       return false
     },
   })
-
-  // const useMutateTodo = () => {
-  //   const queryClient = useQueryClient()
-
-  //   return useMutation(editTodo, {
-  //     // Notice the second argument is the variables object that the `mutate` function receives
-  //     onSuccess: (data, variables) => {
-  //       queryClient.setQueryData(['todo', { id: variables.id }], data)
-  //     },
-  //   })
-  // }
 
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
@@ -57,13 +49,13 @@ const useRegisterProject = () => {
             setIsError(false)
             return res.ok
           } else {
-            setError('Error al actualizar proyecto')
+            setErrorMutate('Error al actualizar proyecto')
             setIsError(true)
             return false
           }
         })
         .catch((err) => {
-          setError('Error al actualizar proyecto')
+          setErrorMutate('Error al actualizar proyecto')
           setIsError(true)
           return false
         })
@@ -72,7 +64,37 @@ const useRegisterProject = () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
     },
     onError: (err) => {
-      setError('Error al actualizar proyecto')
+      setErrorMutate('Error al actualizar proyecto')
+      setIsError(true)
+      return false
+    },
+  })
+
+  const mutationDelete = useMutation({
+    mutationFn: async (newTodo) => {
+      return await axios
+        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/projects/${newTodo}`)
+        .then((res) => {
+          if (res.status === HttpStatusCode.Created) {
+            setIsError(false)
+            return res.ok
+          } else {
+            setErrorMutate('Error al actualizar proyecto')
+            setIsError(true)
+            return false
+          }
+        })
+        .catch((err) => {
+          setErrorMutate('Error al actualizar proyecto')
+          setIsError(true)
+          return false
+        })
+    },
+    onSuccess: (suc) => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] })
+    },
+    onError: (err) => {
+      setErrorMutate('Error al actualizar proyecto')
       setIsError(true)
       return false
     },
@@ -95,7 +117,25 @@ const useRegisterProject = () => {
     return response
   }
 
-  return { register, error, isError, update }
+  const deleteProject = (data) => {
+    console.log('data', data)
+    setIsError(false)
+    const response = mutationDelete.mutate(data)
+    return response
+  }
+
+  return {
+    data,
+    isLoading,
+    error,
+    refetch,
+    isRefetching,
+    errorMutate,
+    isError,
+    register,
+    update,
+    deleteProject,
+  }
 }
 
-export default useRegisterProject
+export default useProjects

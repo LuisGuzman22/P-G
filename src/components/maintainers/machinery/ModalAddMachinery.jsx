@@ -16,7 +16,6 @@ import {
   CToast,
   CToastBody,
 } from '@coreui/react'
-import useRegisterProject from 'src/hooks/useRegisterProject'
 import { v4 as uuidv4 } from 'uuid'
 import useMachinery from 'src/hooks/useMachinery'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
