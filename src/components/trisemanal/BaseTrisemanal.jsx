@@ -20,7 +20,6 @@ const BaseTrisemanal = () => {
   const [file, setFile] = useState()
 
   const onHandleSubmit = () => {
-    console.log('submit', file)
     uploadTrisemanal(file)
   }
 
