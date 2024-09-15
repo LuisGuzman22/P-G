@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 const useContracts = (contractId) => {
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState([])
   const queryClient = useQueryClient()
 
   const { data, isLoading, error, refetch, isRefetching } = useFetchContract(contractId)
@@ -15,6 +16,7 @@ const useContracts = (contractId) => {
       return await axios
         .post(`${process.env.REACT_APP_BASE_URL}api/v1/contracts`, newTodo)
         .then((res) => {
+          console.log('res', res)
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
             return res.ok
@@ -25,6 +27,7 @@ const useContracts = (contractId) => {
           }
         })
         .catch((err) => {
+          setErrorMessage(Object.values(err.response.data.errors).flat())
           setErrorMutate('Error al registrar contrato')
           setIsError(true)
           return false
@@ -35,6 +38,7 @@ const useContracts = (contractId) => {
     },
     onError: (err) => {
       setErrorMutate('Error al registrar contrato')
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setIsError(true)
       return false
     },
@@ -102,12 +106,15 @@ const useContracts = (contractId) => {
 
   const register = (data) => {
     setIsError(false)
-    const projectData = {
-      name: data.projectName,
-      description: data.projectDescription,
-      manager: data.projectManager,
+    const contractData = {
+      name: data.name,
+      detail: data.detail,
+      url: data.url,
+      telephone: data.telephone,
+      email: data.email,
+      company_id: 2,
     }
-    const response = mutation.mutate(projectData)
+    const response = mutation.mutate(contractData)
     return response
   }
 
@@ -134,6 +141,7 @@ const useContracts = (contractId) => {
     register,
     update,
     deleteProject,
+    errorMessage,
   }
 }
 
