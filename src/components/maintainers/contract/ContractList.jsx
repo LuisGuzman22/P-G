@@ -14,6 +14,7 @@ import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useVehicle from 'src/hooks/useVehicle'
 import ModalAddProject from 'src/components/maintainers/project/ModalAddProject'
 import useProjects from 'src/hooks/useProjects'
+import ModalAddContract from './ModalAddContract'
 
 const ContractList = () => {
   const { getData } = useGetCachedQueryData()
@@ -21,32 +22,26 @@ const ContractList = () => {
 
   //   const { deleteProject } = useProjects()
 
-  //   const [visibleProject, setVisibleProject] = useState(false)
-  //   const [selectedProject, setSelectedProject] = useState()
+  const [visibleContract, setVisibleContract] = useState(false)
+  const [selectedContract, setSelectedContract] = useState()
 
-  //   const handleEditProject = (project) => {
-  //     setSelectedProject(project)
-  //     setVisibleProject(!visibleProject)
-  //   }
+  const handleEditContract = (contract) => {
+    setSelectedContract(contract)
+    setVisibleContract(!visibleContract)
+  }
 
   return (
     <>
-      {/* {visibleProject && (
-        <ModalAddProject
+      {visibleContract && (
+        <ModalAddContract
           visible={true}
-          selectedProject={{
-            id: selectedProject.id,
-            projectName: selectedProject.name,
-            projectManager: selectedProject.manager,
-            projectDescription: selectedProject.description,
-            isActive: selectedProject.isActive,
-          }}
+          selectedContract={selectedContract}
           sendDataToParent={async (data) => {
             // await refetch()
-            setVisibleProject(data)
+            setVisibleContract(data)
           }}
         />
-      )} */}
+      )}
       <CTable striped>
         <CTableHead>
           <CTableRow>
@@ -56,7 +51,7 @@ const ContractList = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {contractsQuery.contract.map((contract, index) => {
+          {contractsQuery.map((contract, index) => {
             return (
               <CTableRow key={contract.id}>
                 <CTableDataCell>{contract.name}</CTableDataCell>
@@ -65,7 +60,7 @@ const ContractList = () => {
                   <CButton
                     className="btn-action-edit"
                     onClick={() => {
-                      //   handleEditProject(project)
+                      handleEditContract(contract)
                     }}
                   >
                     <CIcon icon={cilPencil} />

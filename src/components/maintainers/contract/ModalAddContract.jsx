@@ -14,10 +14,15 @@ import {
   CFormTextarea,
   CFormCheck,
 } from '@coreui/react'
+import useContracts from 'src/hooks/useContracts'
 const ModalAddContract = (props) => {
+  const { register, error, isError, update } = useContracts()
+
   const handleClick = () => {
     props.sendDataToParent(false)
   }
+
+  const handleRegisterContract = () => {}
 
   return (
     <CModal
@@ -96,7 +101,9 @@ const ModalAddContract = (props) => {
         <CButton color="secondary" onClick={() => handleClick()}>
           Cerrar
         </CButton>
-        <CButton className="btn-add">Añadir contrato</CButton>
+        <CButton className="btn-add" onClick={() => handleRegisterContract()}>
+          Añadir contrato
+        </CButton>
       </CModalFooter>
     </CModal>
   )

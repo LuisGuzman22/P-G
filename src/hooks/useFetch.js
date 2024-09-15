@@ -21,7 +21,7 @@ const fetchUsers = async () => {
 }
 
 const fetchContracts = async (contractId) => {
-  const res = await axios.get(`https://2b3570b8072a44e09ce5b5a80a4c8012.api.mockbin.io/`)
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/contracts`)
   return res.data.data
 }
 
