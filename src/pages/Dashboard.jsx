@@ -108,11 +108,9 @@ const Dashboard = () => {
                   <CCol sm={4}>
                     <CButton
                       className="dashboard-button"
-                      onClick={() => {
-                        redirectTo('/trisemanal')
-                      }}
+                      onClick={() => redirectTo('/dashboard-reportes')}
                     >
-                      Trisemanal
+                      Historial reportes diarios
                     </CButton>
                   </CCol>
                   <CCol sm={4}>
@@ -143,9 +141,11 @@ const Dashboard = () => {
                   <CCol sm={4}>
                     <CButton
                       className="dashboard-button"
-                      onClick={() => redirectTo('/dashboard-reportes')}
+                      onClick={() => {
+                        redirectTo('/trisemanal')
+                      }}
                     >
-                      Reportes
+                      Trisemanal
                     </CButton>
                   </CCol>
                   <CCol sm={4}>

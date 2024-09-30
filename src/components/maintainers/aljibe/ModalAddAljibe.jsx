@@ -177,7 +177,7 @@ const ModalAddAljibe = (props) => {
             </CCol>
             <CCol sm={6}>
               <CButton className="btn-add" onClick={() => handleRegisterPlate()}>
-                Registrar patente
+                Agregar patente
               </CButton>
             </CCol>
           </CRow>
