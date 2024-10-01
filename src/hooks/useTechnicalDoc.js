@@ -102,6 +102,24 @@ const useTechnicalDoc = () => {
     return response
   }
 
+  const registerCategory = (data) => {
+    setIsError(false)
+    // const response = registerMutation.mutate(data)
+    // return response
+  }
+
+  const editCategory = (data) => {
+    setIsError(false)
+    // const response = registerMutation.mutate(data)
+    // return response
+  }
+
+  const deleteCategory = (data) => {
+    setIsError(false)
+    // const response = registerMutation.mutate(data)
+    // return response
+  }
+
   return {
     register,
     errorMutate,
@@ -112,6 +130,9 @@ const useTechnicalDoc = () => {
     refetch,
     isRefetching,
     deleteVehicle,
+    registerCategory,
+    editCategory,
+    deleteCategory,
   }
 }
 
