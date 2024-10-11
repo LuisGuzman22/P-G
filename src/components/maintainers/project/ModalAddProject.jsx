@@ -16,7 +16,7 @@ import {
   CToast,
   CToastBody,
 } from '@coreui/react'
-import useRegisterProject from 'src/hooks/useRegisterProject'
+import useProjects from 'src/hooks/useProjects'
 const ModalAddProject = (props) => {
   const initialState = {
     projectName: undefined,
@@ -36,7 +36,7 @@ const ModalAddProject = (props) => {
   const [projectManagerError, setProjectManagerError] = useState(false)
   const [projectDescriptionError, setProjectDescriptionError] = useState(false)
 
-  const { register, error, isError, update } = useRegisterProject()
+  const { register, error, isError, update } = useProjects()
 
   const onChangeData = (e) => {
     setProject({ ...project, [e.target.id]: e.target.value })
@@ -81,12 +81,12 @@ const ModalAddProject = (props) => {
 
   useEffect(() => {
     if (project.isActive === undefined) {
-      project.isActive = false
+      project.isActive = true
     }
     if (errorForm === 3) {
-      if (props?.selectedProject?.projectId) {
+      if (project?.id) {
         update({
-          id: props.selectedProject.projectId,
+          id: project?.id,
           name: project.projectName,
           description: project.projectDescription,
           manager: project.projectManager,
@@ -109,7 +109,9 @@ const ModalAddProject = (props) => {
       className="project-creation-modal"
     >
       <CModalHeader>
-        <CModalTitle id="ScrollingLongContentExampleLabel2">Añadir Proyecto</CModalTitle>
+        <CModalTitle id="ScrollingLongContentExampleLabel2">
+          {project?.projectName ? 'Editar Proyecto' : 'Registrar Proyecto'}
+        </CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CToast
@@ -228,7 +230,7 @@ const ModalAddProject = (props) => {
               />
             </CCol> */}
           </CRow>
-          <CRow>
+          {/* <CRow>
             <CCol sm={6}>
               <CFormCheck
                 id="isActive"
@@ -239,7 +241,7 @@ const ModalAddProject = (props) => {
                 }}
               />
             </CCol>
-          </CRow>
+          </CRow> */}
         </CForm>
       </CModalBody>
       <CModalFooter>
@@ -247,7 +249,7 @@ const ModalAddProject = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterProject()}>
-          Registrar
+          {project?.projectName ? 'Editar' : 'Registrar'}
         </CButton>
       </CModalFooter>
     </CModal>

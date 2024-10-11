@@ -10,6 +10,7 @@ import {
   CCol,
   CListGroupItem,
   CListGroup,
+  CTooltip,
 } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
 import ProjectCollapse from 'src/components/ProjectCollapse'
@@ -106,14 +107,18 @@ const Dashboard = () => {
                     </CButton>
                   </CCol>
                   <CCol sm={4}>
+                    {/* <CTooltip
+                      content="Aquí encontrarás el historial de todos los reportes diarios, en donde podrás acceder a ellos para editarlos o descargar su PDF."
+                      placement="top"
+                      // style={customTooltipStyle}
+                    > */}
                     <CButton
                       className="dashboard-button"
-                      onClick={() => {
-                        redirectTo('/trisemanal')
-                      }}
+                      onClick={() => redirectTo('/dashboard-reportes')}
                     >
-                      Trisemanal
+                      Historial reportes diarios
                     </CButton>
+                    {/* </CTooltip> */}
                   </CCol>
                   <CCol sm={4}>
                     <CButton
@@ -143,9 +148,11 @@ const Dashboard = () => {
                   <CCol sm={4}>
                     <CButton
                       className="dashboard-button"
-                      onClick={() => redirectTo('/dashboard-reportes')}
+                      onClick={() => {
+                        redirectTo('/trisemanal')
+                      }}
                     >
-                      Reportes
+                      Trisemanal
                     </CButton>
                   </CCol>
                   <CCol sm={4}>

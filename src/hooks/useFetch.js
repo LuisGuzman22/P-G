@@ -21,7 +21,7 @@ const fetchUsers = async () => {
 }
 
 const fetchContracts = async (contractId) => {
-  const res = await axios.get(`https://2b3570b8072a44e09ce5b5a80a4c8012.api.mockbin.io/`)
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/contracts`)
   return res.data.data
 }
 
@@ -112,9 +112,9 @@ const fetchAljibe = async () => {
   return res.data.data
 }
 
-const fetchTechnicalDocumentation = async () => {
+const fetchTechnicalDocumentation = async (projectId, contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/documentation/getTechnicalDocumentationUrls/2/2`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/documentation/getTechnicalDocumentationUrls/${projectId}/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -325,14 +325,14 @@ export const useFetchAljibe = () => {
   })
 }
 
-export const useFetchGetTechnicalDocumentation = () => {
+export const useFetchGetTechnicalDocumentation = (projectId, contractId) => {
   return useQuery({
     queryKey: ['technical-documentation'],
     refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      return fetchTechnicalDocumentation()
+      return fetchTechnicalDocumentation(projectId, contractId)
     },
   })
 }

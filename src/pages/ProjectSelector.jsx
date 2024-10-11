@@ -14,9 +14,9 @@ import {
 import CIcon from '@coreui/icons-react'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import Loading from 'src/components/loading'
-import useGetProjects from 'src/hooks/useGetProjects'
+import useGetProjects from 'src/hooks/useProjects'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import ModalAddProject from 'src/components/ModalAddProject'
+import ModalAddProject from 'src/components/maintainers/project/ModalAddProject'
 
 const ProjectSelector = () => {
   const navigate = useNavigate()

@@ -13,9 +13,9 @@ import {
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 import CIcon from '@coreui/icons-react'
-import useGetContracts from 'src/hooks/useGetContracts'
+import useGetContracts from 'src/hooks/useContracts'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import ModalAddContract from 'src/components/ModalAddContract'
+import ModalAddContract from 'src/components/maintainers/contract/ModalAddContract'
 
 const ContractSelector = () => {
   const navigate = useNavigate()

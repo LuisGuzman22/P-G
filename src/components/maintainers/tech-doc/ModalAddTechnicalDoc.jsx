@@ -80,6 +80,9 @@ const ModalAddTechnicalDoc = (props) => {
                 <option value={'Ingeniería'}>Ingeniería</option>
                 <option value={'Planificación y control'}>Planificación y control</option>
                 <option value={'Contratos'}>Contratos</option>
+                <option value={'Calidad QAQC'}>Calidad QAQC</option>
+                <option value={'Seguridad SSO'}>Seguridad SSO</option>
+                <option value={'Información Importante'}>Información Importante</option>
               </CFormSelect>
             </CCol>
           </CRow>

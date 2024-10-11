@@ -10,8 +10,8 @@ import {
   CContainer,
 } from '@coreui/react'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import ModalAddProject from './ModalAddProject'
-import useGetProjects from 'src/hooks/useGetProjects'
+import ModalAddProject from './maintainers/project/ModalAddProject'
+import useGetProjects from 'src/hooks/useProjects'
 
 const ProjectList = () => {
   const { data: projectData, isLoading, error, refetch, isRefetching } = useGetProjects(1)

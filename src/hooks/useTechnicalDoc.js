@@ -13,7 +13,10 @@ const useTechnicalDoc = () => {
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
-  const { data, isLoading, error, refetch, isRefetching } = useFetchGetTechnicalDocumentation()
+  const { data, isLoading, error, refetch, isRefetching } = useFetchGetTechnicalDocumentation(
+    projectLS.id,
+    contractLS.id,
+  )
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
@@ -99,6 +102,24 @@ const useTechnicalDoc = () => {
     return response
   }
 
+  const registerCategory = (data) => {
+    setIsError(false)
+    // const response = registerMutation.mutate(data)
+    // return response
+  }
+
+  const editCategory = (data) => {
+    setIsError(false)
+    // const response = registerMutation.mutate(data)
+    // return response
+  }
+
+  const deleteCategory = (data) => {
+    setIsError(false)
+    // const response = registerMutation.mutate(data)
+    // return response
+  }
+
   return {
     register,
     errorMutate,
@@ -109,6 +130,9 @@ const useTechnicalDoc = () => {
     refetch,
     isRefetching,
     deleteVehicle,
+    registerCategory,
+    editCategory,
+    deleteCategory,
   }
 }
 

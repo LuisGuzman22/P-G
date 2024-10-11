@@ -5,12 +5,13 @@ import './css.scss'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import TechnicalDocList from './TechnicalDocList'
 import ModalAddTechnicalDoc from './ModalAddTechnicalDoc'
+import ModalAddCategory from './ModalAddCategory'
 
 const TechnicalDocMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useTechnicalDoc()
 
   const [visibleTechDoc, setVisibleTecDoc] = useState(false)
-  //   const [visibleRestoreVehicle, setVisibleRestoreVehicle] = useState(false)
+  const [visibleCategory, setVisibleCategory] = useState(false)
 
   return (
     <div className="technical-doc-maintainer">
@@ -25,10 +26,23 @@ const TechnicalDocMaintainer = () => {
         />
       )}
 
+      {visibleCategory && (
+        <ModalAddCategory
+          visible={true}
+          sendDataToParent={async (data) => {
+            setVisibleCategory(data)
+            await refetch()
+          }}
+        />
+      )}
+
       <CCard className="action-buttons">
         <CCardBody>
           <CButton className="btn-modal" onClick={() => setVisibleTecDoc(!visibleTechDoc)}>
             Añadir Documento
+          </CButton>
+          <CButton className="btn-modal" onClick={() => setVisibleCategory(!visibleCategory)}>
+            Añadir Categoría
           </CButton>
         </CCardBody>
       </CCard>
