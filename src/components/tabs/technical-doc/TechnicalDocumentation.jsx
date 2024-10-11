@@ -47,7 +47,7 @@ const TechnicalDocumentation = () => {
         <Skeleton count={5} />
       ) : (
         <CRow>
-          <CCol sm={8}>
+          <CCol sm={12}>
             <CCard>
               <CCardBody>
                 <CCardText>
@@ -81,23 +81,18 @@ const TechnicalDocumentation = () => {
               </CCardBody>
             </CCard>
           </CCol>
-          <CCol sm={4}>
+          {/* <CCol sm={4}>
             <CCard className="actions-card">
               <CCardBody>
                 <CCardTitle>Acciones</CCardTitle>
                 <CCardText>
-                  {/* <CRow>
-                    <CButton onClick={() => setVisibleTechnicalDoc(!visibleTechnicalDoc)}>
-                      Cargar adjunto
-                    </CButton>
-                  </CRow> */}
                   <CRow>
                     <CButton>Ir a ACONEX</CButton>
                   </CRow>
                 </CCardText>
               </CCardBody>
             </CCard>
-          </CCol>
+          </CCol> */}
         </CRow>
       )}
     </div>

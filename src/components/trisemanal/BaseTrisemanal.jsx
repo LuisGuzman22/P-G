@@ -39,7 +39,7 @@ const BaseTrisemanal = () => {
         }}
         label="Cargar trisemanal"
         aria-label="Upload"
-        accept="application/vnd.ms-excel"
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       />
       <CButton
         className="confirm-btn"

@@ -154,7 +154,7 @@ const _nav = [
           },
           {
             component: CNavItem,
-            name: 'Administrar documentacion técnica',
+            name: 'Adm. Doc. Técnica',
             to: '/maintainer/technical-doc',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
