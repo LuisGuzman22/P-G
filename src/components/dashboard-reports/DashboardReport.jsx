@@ -49,10 +49,10 @@ const DashboardReport = () => {
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell className="cell-row">
-                      {report.company.dailyReportDate}
+                      {report.company?.dailyReportDate || 'Sin fecha'}
                     </CTableDataCell>
                     <CTableDataCell className="cell-row">
-                      {report.company.dailyReportNumber}
+                      {report.company?.dailyReportNumber || 'Sin número'}
                     </CTableDataCell>
                     <CTableDataCell>
                       <CButton
