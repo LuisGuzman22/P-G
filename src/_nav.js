@@ -149,7 +149,7 @@ const _nav = [
           {
             component: CNavItem,
             name: 'Administrar usuarios',
-            to: '/administrar_usuarios',
+            to: '/maintainer/users',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
           {

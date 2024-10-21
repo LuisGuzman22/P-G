@@ -1,0 +1,38 @@
+.user-maintainer {
+  .btn-modal {
+    background-color: #00778b;
+    margin-right: 5px;
+    color: white;
+  }
+
+  .title {
+    color: #00778b;
+  }
+
+  .btn-action-delete {
+    background-color: #d5242e;
+    color: white;
+  }
+
+  .btn-action-edit {
+    background-color: #ecab25;
+    color: white;
+  }
+}
+
+.creation-modal {
+  .row {
+    margin-bottom: 2%;
+  }
+  .btn-add {
+    background-color: #00778b;
+    color: white;
+  }
+}
+
+.restore-modal {
+  .btn-action-restore {
+    background-color: #00778b;
+    color: white;
+  }
+}

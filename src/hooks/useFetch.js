@@ -79,6 +79,15 @@ const fetchEquipment = async () => {
   return res.data.data
 }
 
+const fetchUser = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/users`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 const fetchDirectPersonal = async () => {
   const res = await axios.get(
     `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals-with-trashed`,
@@ -333,6 +342,18 @@ export const useFetchGetTechnicalDocumentation = (projectId, contractId) => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchTechnicalDocumentation(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchUser = () => {
+  return useQuery({
+    queryKey: ['user'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchUser()
     },
   })
 }
