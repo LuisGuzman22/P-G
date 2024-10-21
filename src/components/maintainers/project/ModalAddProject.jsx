@@ -36,9 +36,10 @@ const ModalAddProject = (props) => {
   const [projectManagerError, setProjectManagerError] = useState(false)
   const [projectDescriptionError, setProjectDescriptionError] = useState(false)
 
-  const { register, error, isError, update } = useProjects()
+  const { register, error, isError, update, errorMessage } = useProjects()
 
   const onChangeData = (e) => {
+    setErrorForm(0)
     setProject({ ...project, [e.target.id]: e.target.value })
   }
 
@@ -80,9 +81,6 @@ const ModalAddProject = (props) => {
   }
 
   useEffect(() => {
-    if (project.isActive === undefined) {
-      project.isActive = true
-    }
     if (errorForm === 3) {
       if (project?.id) {
         update({
@@ -91,13 +89,32 @@ const ModalAddProject = (props) => {
           description: project.projectDescription,
           manager: project.projectManager,
         })
-        props.sendDataToParent(false)
+        // props.sendDataToParent(false)
       } else {
         register(project)
-        props.sendDataToParent(false)
+        // props.sendDataToParent(false)
       }
     }
   }, [errorForm])
+
+  useEffect(() => {
+    if (errorForm === 3) {
+      console.log('1')
+      if (errorMessage) {
+        console.log('2')
+        if (errorMessage.length === 0) {
+          console.log('se cierra')
+          props.sendDataToParent(false)
+        } else {
+          console.log('3')
+        }
+      } else {
+        console.log('4')
+      }
+    } else {
+      console.log('5')
+    }
+  }, [errorMessage, errorForm])
 
   return (
     <CModal
@@ -110,7 +127,7 @@ const ModalAddProject = (props) => {
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">
-          {project?.projectName ? 'Editar Proyecto' : 'Registrar Proyecto'}
+          {props.selectedProject?.projectName ? 'Editar Proyecto' : 'Registrar Proyecto'}
         </CModalTitle>
       </CModalHeader>
       <CModalBody>
@@ -121,7 +138,8 @@ const ModalAddProject = (props) => {
           className="text-white align-items-center"
         >
           <div className="d-flex">
-            <CToastBody>{error}</CToastBody>
+            {error && <CToastBody>{error}</CToastBody>}
+            {errorMessage && <CToastBody>{errorMessage}</CToastBody>}
           </div>
         </CToast>
         <CToast
@@ -219,29 +237,6 @@ const ModalAddProject = (props) => {
               ></CFormTextarea>
             </CCol>
           </CRow>
-          <CRow>
-            {/* <CCol sm={6}>
-              <CFormInput
-                type="color"
-                id="color"
-                defaultValue="#FFFFFF"
-                label="Color de fondo"
-                title="Color de fondo"
-              />
-            </CCol> */}
-          </CRow>
-          {/* <CRow>
-            <CCol sm={6}>
-              <CFormCheck
-                id="isActive"
-                label="Activo"
-                defaultChecked={project.isActive}
-                onChange={(e) => {
-                  setProject({ ...project, [e.target.id]: !project.isActive })
-                }}
-              />
-            </CCol>
-          </CRow> */}
         </CForm>
       </CModalBody>
       <CModalFooter>
@@ -249,7 +244,7 @@ const ModalAddProject = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterProject()}>
-          {project?.projectName ? 'Editar' : 'Registrar'}
+          {props.selectedProject?.projectName ? 'Editar' : 'Registrar'}
         </CButton>
       </CModalFooter>
     </CModal>

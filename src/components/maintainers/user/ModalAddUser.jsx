@@ -83,22 +83,20 @@ const ModalAddUser = (props) => {
       setUserPasswordError(false)
     }
 
-    console.log('register')
-
-    // if (
-    //   !user.name ||
-    //   user.name === '' ||
-    //   !user.email ||
-    //   user.email === '' ||
-    //   !user.password ||
-    //   user.password === '' ||
-    //   user.password.length < 8 ||
-    //   !user.email.match(regex)
-    // ) {
-    //   setErrorForm(1)
-    // } else {
-    setErrorForm(3)
-    // }
+    if (
+      !user.name ||
+      user.name === '' ||
+      !user.email ||
+      user.email === '' ||
+      !user.password ||
+      user.password === '' ||
+      user.password.length < 8 ||
+      !user.email.match(regex)
+    ) {
+      setErrorForm(1)
+    } else {
+      setErrorForm(3)
+    }
   }
 
   useEffect(() => {
@@ -165,7 +163,6 @@ const ModalAddUser = (props) => {
           className="text-white align-items-center"
         >
           <div className="d-flex">
-            {/* errorMessage */}
             {error && <CToastBody>{error}</CToastBody>}
             {errorMessage && <CToastBody>{errorMessage}</CToastBody>}
           </div>
