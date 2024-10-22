@@ -20,10 +20,12 @@ import useContracts from 'src/hooks/useContracts'
 const ModalAddContract = (props) => {
   const initialState = {
     name: undefined,
+    code: undefined,
     detail: undefined,
     url: undefined,
     telephone: undefined,
     email: undefined,
+    company_id: 2,
   }
 
   const { register, error, isError, update, errorMessage } = useContracts()
@@ -38,6 +40,7 @@ const ModalAddContract = (props) => {
   const [contractUrlError, setContractUrlError] = useState(false)
   const [contractTelephoneError, setContractTelephoneError] = useState(false)
   const [contractEmailError, setContractEmailError] = useState(false)
+  const [contractCodeError, setContractCodeError] = useState(false)
 
   const handleClick = () => {
     props.sendDataToParent(false)
@@ -48,7 +51,6 @@ const ModalAddContract = (props) => {
   }
 
   const handleRegisterContract = () => {
-    console.log('contract.name', contract.name)
     if (!contract.name || contract.name === '') {
       setContractNameError(true)
     } else {
@@ -79,6 +81,12 @@ const ModalAddContract = (props) => {
       setContractEmailError(false)
     }
 
+    if (!contract.code || contract.code === '') {
+      setContractCodeError(true)
+    } else {
+      setContractCodeError(false)
+    }
+
     if (
       !contract.name ||
       contract.name === '' ||
@@ -89,7 +97,9 @@ const ModalAddContract = (props) => {
       !contract.telephone ||
       contract.telephone === '' ||
       !contract.email ||
-      contract.email === ''
+      contract.email === '' ||
+      !contract.code ||
+      contract.code === ''
     ) {
       setErrorForm(1)
     } else {
@@ -109,6 +119,25 @@ const ModalAddContract = (props) => {
     }
   }, [errorForm])
 
+  useEffect(() => {
+    if (errorForm === 3) {
+      console.log('1')
+      if (errorMessage) {
+        console.log('2')
+        if (errorMessage.length === 0) {
+          console.log('se cierra')
+          props.sendDataToParent(false)
+        } else {
+          console.log('3')
+        }
+      } else {
+        console.log('4')
+      }
+    } else {
+      console.log('5')
+    }
+  }, [errorMessage, errorForm])
+
   return (
     <CModal
       scrollable
@@ -119,24 +148,21 @@ const ModalAddContract = (props) => {
       className="project-creation-modal"
     >
       <CModalHeader>
-        <CModalTitle id="ScrollingLongContentExampleLabel2">Añadir Contrato</CModalTitle>
+        <CModalTitle id="ScrollingLongContentExampleLabel2">
+          {' '}
+          {props.selectedContract?.name ? 'Editar Proyecto' : 'Registrar Proyecto'}
+        </CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CToast
           autohide={true}
-          visible={errorMessage.length > 0}
+          visible={isError}
           color="danger"
           className="text-white align-items-center"
         >
           <div className="d-flex">
-            <CToastBody>
-              {errorMessage.map((error, index) => (
-                <span key={index}>
-                  {error}
-                  <br />
-                </span>
-              ))}
-            </CToastBody>
+            {error && <CToastBody>{error}</CToastBody>}
+            {errorMessage && <CToastBody>{errorMessage}</CToastBody>}
           </div>
         </CToast>
         <CToast
@@ -263,6 +289,27 @@ const ModalAddContract = (props) => {
                 }}
               />
             </CCol>
+            <CCol sm={6}>
+              <CFormInput
+                type="text"
+                id="code"
+                label="Código"
+                placeholder="Código"
+                invalid={contractCodeError}
+                value={contract.code || ''}
+                text=""
+                onBlur={(e) => {
+                  if (e.target.value !== '') {
+                    setContractCodeError(false)
+                  } else {
+                    setContractCodeError(true)
+                  }
+                }}
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CCol>
           </CRow>
         </CForm>
       </CModalBody>
@@ -271,7 +318,7 @@ const ModalAddContract = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterContract()}>
-          Añadir contrato
+          {props.selectedContract?.name ? 'Editar' : 'Registrar'}
         </CButton>
       </CModalFooter>
     </CModal>
