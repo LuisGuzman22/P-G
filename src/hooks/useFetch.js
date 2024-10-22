@@ -133,17 +133,14 @@ const fetchTechnicalDocumentation = async (projectId, contractId) => {
   return res.data.data
 }
 
-// export const fetchReportsData = async () => {
-//   // const res = await axios.get(
-//   //   `https://mpm.pgproject.cl/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
-//   //   {
-//   const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports`, {
-//     headers: {
-//       Authorization: 'Bearer ' + localStorage.getItem('token'),
-//     },
-//   })
-//   return res.data.data
-// }
+const fetchTechnicalDocumentationCategories = async (projectId, contractId) => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/categories`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
 
 export const fetchReportsData = async (contractId, projectId) => {
   const res = await axios.get(
@@ -342,6 +339,18 @@ export const useFetchGetTechnicalDocumentation = (projectId, contractId) => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchTechnicalDocumentation(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchGetTechnicalDocumentationCategories = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['technical-documentation-categories'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchTechnicalDocumentationCategories(projectId, contractId)
     },
   })
 }

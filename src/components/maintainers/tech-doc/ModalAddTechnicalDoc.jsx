@@ -19,9 +19,13 @@ import {
 } from '@coreui/react'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const ModalAddTechnicalDoc = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
+  const { getData } = useGetCachedQueryData()
+  const techDocCatQuery = getData('technical-documentation-categories')
+
   const { register } = useTechnicalDoc()
   const [categoryError, setCategoryError] = useState(false)
 
@@ -77,12 +81,13 @@ const ModalAddTechnicalDoc = (props) => {
                 }}
               >
                 <option value={'-1'}>Seleccione</option>
-                <option value={'Ingeniería'}>Ingeniería</option>
-                <option value={'Planificación y control'}>Planificación y control</option>
-                <option value={'Contratos'}>Contratos</option>
-                <option value={'Calidad QAQC'}>Calidad QAQC</option>
-                <option value={'Seguridad SSO'}>Seguridad SSO</option>
-                <option value={'Información Importante'}>Información Importante</option>
+                {techDocCatQuery.map((doc) => {
+                  return (
+                    <option key={doc.id} value={doc.id}>
+                      {doc.name}
+                    </option>
+                  )
+                })}
               </CFormSelect>
             </CCol>
           </CRow>

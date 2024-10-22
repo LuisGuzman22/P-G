@@ -26,28 +26,51 @@ import { cilPencil, cilTrash } from '@coreui/icons'
 
 const ModalAddCategory = (props) => {
   const { getData } = useGetCachedQueryData()
-  const techDocQuery = getData('technical-documentation')
+  const techDocCatQuery = getData('technical-documentation-categories')
+  const initialStateCategory = {
+    name: undefined,
+  }
 
   const { registerCategory, editCategory, deleteCategory } = useTechnicalDoc()
   const [categoryError, setCategoryError] = useState(false)
+  const [editCategoryId, setEditCategoryId] = useState()
+  const [editCategoryName, setEditCategoryName] = useState()
 
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState(initialStateCategory)
 
   const handleClick = () => {
     props.sendDataToParent(false)
   }
 
   const onChangeCategory = (e) => {
-    setCategory(e.target.value)
+    setCategory({ ...category, [e.target.id]: e.target.value })
   }
 
-  const handleEdit = (categoryName) => {
-    setCategory(categoryName)
+  const handleEdit = (category) => {
+    setCategory({ name: category.name })
+    setEditCategoryId(category.id)
+    setEditCategoryName(category.name)
   }
 
   const handleRegisterCategory = () => {
-    console.log('category', category)
-    registerCategory(category)
+    if (category.name || !category.name === '') {
+      if (editCategoryId) {
+        editCategory({
+          id: editCategoryId,
+          name: category.name,
+        })
+      } else {
+        registerCategory(category)
+      }
+      props.sendDataToParent(false)
+    } else {
+      setCategoryError(true)
+    }
+  }
+
+  const handleExitEditMode = () => {
+    setCategory({ name: undefined })
+    setEditCategoryId()
   }
 
   return (
@@ -65,14 +88,23 @@ const ModalAddCategory = (props) => {
       <CModalBody>
         <CForm>
           <CRow>
+            {editCategoryId && (
+              <CCol sm={12}>
+                Editando categoría: {editCategoryId} - {editCategoryName} <br />
+                <CButton className="btn-add" onClick={() => handleExitEditMode()}>
+                  Salir modo edición
+                </CButton>
+              </CCol>
+            )}
+
             <CCol sm={12}>
               <CFormInput
                 type="text"
-                id="category"
+                id="name"
                 label="Categoría"
                 placeholder="Categoría"
                 invalid={categoryError}
-                value={category}
+                value={category.name}
                 text={''}
                 onBlur={(e) => {
                   if (e.target.value !== '') {
@@ -97,15 +129,15 @@ const ModalAddCategory = (props) => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {techDocQuery.map((doc, index) => {
+              {techDocCatQuery.map((doc, index) => {
                 return (
                   <CTableRow key={doc.id}>
-                    <CTableDataCell>{doc.category}</CTableDataCell>
+                    <CTableDataCell>{doc.name}</CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         className="btn-action-delete"
                         onClick={() => {
-                          // deleteVehicle(doc.id)
+                          deleteCategory(doc.id)
                         }}
                       >
                         <CIcon icon={cilTrash} />
@@ -113,7 +145,7 @@ const ModalAddCategory = (props) => {
                       <CButton
                         className="btn-action-edit"
                         onClick={() => {
-                          handleEdit(doc.category)
+                          handleEdit(doc)
                         }}
                       >
                         <CIcon icon={cilPencil} />

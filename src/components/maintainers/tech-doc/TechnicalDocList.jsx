@@ -16,6 +16,7 @@ import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 const TechnicalDocList = () => {
   const { getData } = useGetCachedQueryData()
   const techDocQuery = getData('technical-documentation')
+  const techDocCatQuery = getData('technical-documentation-categories')
   const { deleteVehicle } = useTechnicalDoc()
 
   return (
@@ -30,10 +31,11 @@ const TechnicalDocList = () => {
         </CTableHead>
         <CTableBody>
           {techDocQuery.map((doc, index) => {
+            const catName = techDocCatQuery.find((cat) => cat.id == doc.category)
             return (
               <CTableRow key={doc.id}>
                 <CTableDataCell> {doc.url.split('/')[4]}</CTableDataCell>
-                <CTableDataCell>{doc.category}</CTableDataCell>
+                <CTableDataCell>{catName?.name || 'Sin categoría'}</CTableDataCell>
                 <CTableDataCell>
                   <CButton
                     className="btn-action-delete"
