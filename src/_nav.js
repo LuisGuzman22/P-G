@@ -137,13 +137,19 @@ const _nav = [
           {
             component: CNavItem,
             name: 'Administrar Proyectos',
-            to: '/administrar_proyectos',
+            to: '/maintainer/project',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
           {
             component: CNavItem,
             name: 'Administrar Contratos',
-            to: '/administrar_contratos',
+            to: '/maintainer/contract',
+            icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+          },
+          {
+            component: CNavItem,
+            name: 'Asignar contrato',
+            to: '/maintainer/contract-asign',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
           {

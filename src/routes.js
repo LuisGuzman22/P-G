@@ -25,6 +25,7 @@ const IndirectPersonalMaintainer = React.lazy(
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDocMaintainerPage'))
 const UserMaintainerPage = React.lazy(() => import('./pages/UserMaintainerPage'))
+const ContractAsignPage = React.lazy(() => import('./pages/ContractAsignPage'))
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
 const ExportPage = React.lazy(() => import('./pages/ExportPage'))
 
@@ -43,10 +44,10 @@ const routes = [
   { path: '/trisemanal', name: 'Actividades Trisemanal', element: Trisemanal },
   { path: '/carta-gantt', name: 'Carta Gantt', element: Gantt },
   { path: '/avance', name: 'Detalles de avance', element: Detail },
-  { path: '/administrar_proyectos', name: 'Administrar Proyectos', element: ProjectAdministration },
+  { path: '/maintainer/project', name: 'Administrar Proyectos', element: ProjectAdministration },
 
   {
-    path: '/administrar_contratos',
+    path: '/maintainer/contract',
     name: 'Administrar Contratos',
     element: ContractAdministration,
   },
@@ -83,6 +84,11 @@ const routes = [
     path: '/exportar-datos',
     name: 'Exportar datos',
     element: ExportPage,
+  },
+  {
+    path: '/maintainer/contract-asign',
+    name: 'Asignar contrato',
+    element: ContractAsignPage,
   },
 ]
 
