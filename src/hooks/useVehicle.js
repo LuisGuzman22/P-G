@@ -8,33 +8,20 @@ const useVehicle = () => {
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState()
   const queryClient = useQueryClient()
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .post(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar proyecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar proyecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles`, newTodo)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['vehicle'] })
+      setErrorMessage([])
     },
     onError: (err) => {
-      setErrorMutate('Error al registrar proyecto')
+      setErrorMessage(Object.values(err.response.data.errors).flat())
+      setErrorMutate('Error al registrar vehiculo')
       setIsError(true)
       return false
     },
@@ -42,29 +29,15 @@ const useVehicle = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles/${id}`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar proyecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar proyecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles/${id}`)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['vehicle'] })
+      setErrorMessage([])
     },
     onError: (err) => {
-      setErrorMutate('Error al registrar proyecto')
+      setErrorMessage(Object.values(err.response.data.errors).flat())
+      setErrorMutate('Error al registrar vehiculo')
       setIsError(true)
       return false
     },
@@ -72,28 +45,17 @@ const useVehicle = () => {
 
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .put(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles/${newTodo.id}`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar vehículo')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar vehículo')
-          setIsError(true)
-          return false
-        })
+      return await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/vehicles/${newTodo.id}`,
+        newTodo,
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['vehicle'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar vehículo')
       setIsError(true)
       return false
@@ -102,28 +64,16 @@ const useVehicle = () => {
 
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles/${newTodo}/restore`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar vehículo')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar vehículo')
-          setIsError(true)
-          return false
-        })
+      return await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}api/v1/vehicles/${newTodo}/restore`,
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['vehicle'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar vehículo')
       setIsError(true)
       return false
@@ -166,6 +116,7 @@ const useVehicle = () => {
     deleteVehicle,
     updateVehicle,
     restoreVehicle,
+    errorMessage,
   }
 }
 
