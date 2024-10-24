@@ -9,32 +9,19 @@ const useMachinery = () => {
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
   const queryClient = useQueryClient()
+  const [errorMessage, setErrorMessage] = useState()
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .post(`${process.env.REACT_APP_BASE_URL}api/v1/machineries`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar proyecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar proyecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/machineries`, newTodo)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['machinery'] })
+      setErrorMessage([])
     },
     onError: (err) => {
-      setErrorMutate('Error al registrar proyecto')
+      setErrorMessage(Object.values(err.response.data.errors).flat())
+      setErrorMutate('Error al registrar maquinaria')
       setIsError(true)
       return false
     },
@@ -42,29 +29,15 @@ const useMachinery = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/machineries/${id}`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar proyecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar proyecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/machineries/${id}`)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['machinery'] })
+      setErrorMessage([])
     },
     onError: (err) => {
-      setErrorMutate('Error al registrar proyecto')
+      setErrorMutate('Error al registrar maquinaria')
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setIsError(true)
       return false
     },
@@ -72,29 +45,18 @@ const useMachinery = () => {
 
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .put(`${process.env.REACT_APP_BASE_URL}api/v1/machineries/${newTodo.id}`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar proyecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar proyecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/machineries/${newTodo.id}`,
+        newTodo,
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['machinery'] })
+      setErrorMessage([])
     },
     onError: (err) => {
-      setErrorMutate('Error al actualizar proyecto')
+      setErrorMutate('Error al actualizar maquinaria')
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setIsError(true)
       return false
     },
@@ -102,29 +64,17 @@ const useMachinery = () => {
 
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/machineries/${newTodo}/restore`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar maquinaria')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar maquinaria')
-          setIsError(true)
-          return false
-        })
+      return await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}api/v1/machineries/${newTodo}/restore`,
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['machinery'] })
+      setErrorMessage([])
     },
     onError: (err) => {
       setErrorMutate('Error al actualizar maquinaria')
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setIsError(true)
       return false
     },
@@ -166,6 +116,7 @@ const useMachinery = () => {
     deleteMachinery,
     updateMachinery,
     restoreMachinery,
+    errorMessage,
   }
 }
 

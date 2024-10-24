@@ -149,7 +149,6 @@ const ModalAddContract = (props) => {
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">
-          {' '}
           {props.selectedContract?.name ? 'Editar Proyecto' : 'Registrar Proyecto'}
         </CModalTitle>
       </CModalHeader>

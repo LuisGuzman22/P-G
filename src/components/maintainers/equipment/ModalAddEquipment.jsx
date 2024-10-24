@@ -35,7 +35,7 @@ const ModalAddEquipment = (props) => {
   const [errorForm, setErrorForm] = useState(0)
   const [plateError, setPlateError] = useState(false)
 
-  const { register, errorEquipment: error, isError, updateEquipment } = useEquipment()
+  const { register, errorEquipment: error, isError, updateEquipment, errorMessage } = useEquipment()
 
   const onChangeData = (e) => {
     setEquipmentName(e.target.value)
@@ -80,16 +80,35 @@ const ModalAddEquipment = (props) => {
           name: equipmentName,
           plates: plateList,
         })
-        props.sendDataToParent(false)
+        // props.sendDataToParent(false)
       } else {
         register({
           name: equipmentName,
           plates: plateList,
         })
-        props.sendDataToParent(false)
+        // props.sendDataToParent(false)
       }
     }
   }, [errorForm])
+
+  useEffect(() => {
+    if (errorForm === 3) {
+      console.log('1')
+      if (errorMessage) {
+        console.log('2')
+        if (errorMessage.length === 0) {
+          console.log('se cierra')
+          props.sendDataToParent(false)
+        } else {
+          console.log('3')
+        }
+      } else {
+        console.log('4')
+      }
+    } else {
+      console.log('5')
+    }
+  }, [errorMessage, errorForm])
 
   return (
     <CModal
@@ -113,7 +132,8 @@ const ModalAddEquipment = (props) => {
           className="text-white align-items-center"
         >
           <div className="d-flex">
-            <CToastBody>{error}</CToastBody>
+            {error && <CToastBody>{error}</CToastBody>}
+            {errorMessage && <CToastBody>{errorMessage}</CToastBody>}
           </div>
         </CToast>
         <CToast

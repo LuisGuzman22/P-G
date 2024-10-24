@@ -37,7 +37,7 @@ const ModalAddMachinery = (props) => {
   const [errorForm, setErrorForm] = useState(0)
   const [plateError, setPlateError] = useState(false)
 
-  const { register, errorMachinery: error, isError, updateMachinery } = useMachinery()
+  const { register, errorMachinery: error, isError, updateMachinery, errorMessage } = useMachinery()
 
   const onChangeData = (e) => {
     setMachineryName(e.target.value)
@@ -82,16 +82,35 @@ const ModalAddMachinery = (props) => {
           name: machineryName,
           plates: plateList,
         })
-        props.sendDataToParent(false)
+        // props.sendDataToParent(false)
       } else {
         register({
           name: machineryName,
           plates: plateList,
         })
-        props.sendDataToParent(false)
+        // props.sendDataToParent(false)
       }
     }
   }, [errorForm])
+
+  useEffect(() => {
+    if (errorForm === 3) {
+      console.log('1')
+      if (errorMessage) {
+        console.log('2')
+        if (errorMessage.length === 0) {
+          console.log('se cierra')
+          props.sendDataToParent(false)
+        } else {
+          console.log('3')
+        }
+      } else {
+        console.log('4')
+      }
+    } else {
+      console.log('5')
+    }
+  }, [errorMessage, errorForm])
 
   return (
     <CModal
@@ -115,7 +134,8 @@ const ModalAddMachinery = (props) => {
           className="text-white align-items-center"
         >
           <div className="d-flex">
-            <CToastBody>{error}</CToastBody>
+            {error && <CToastBody>{error}</CToastBody>}
+            {errorMessage && <CToastBody>{errorMessage}</CToastBody>}
           </div>
         </CToast>
         <CToast
