@@ -19,6 +19,7 @@ import {
 } from '@coreui/react'
 import useContracts from 'src/hooks/useContracts'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import useAsignContracts from 'src/hooks/useAsignContract'
 const ModalAsignContract = (props) => {
   const initialState = {
     project: undefined,
@@ -28,15 +29,13 @@ const ModalAsignContract = (props) => {
   const projectsQuery = getData('projects')
   const contractQuery = getData('contracts')
 
+  const { errorMutate, isError, register, errorMessage } = useAsignContracts()
+
   const [projectContract, setProjectContract] = useState(initialState)
 
-  // const [errorForm, setErrorForm] = useState(0)
-  // const [contractNameError, setContractNameError] = useState(false)
-  // const [contractDetailError, setContractDetailError] = useState(false)
-  // const [contractUrlError, setContractUrlError] = useState(false)
-  // const [contractTelephoneError, setContractTelephoneError] = useState(false)
-  // const [contractEmailError, setContractEmailError] = useState(false)
-  // const [contractCodeError, setContractCodeError] = useState(false)
+  const [projectError, setProjectError] = useState(false)
+  const [contractError, setContractError] = useState(false)
+  const [errorForm, setErrorForm] = useState(0)
 
   const handleClick = () => {
     props.sendDataToParent(false)
@@ -48,86 +47,54 @@ const ModalAsignContract = (props) => {
 
   const handleRegisterContract = () => {
     console.log('data', projectContract)
-    //   if (!contract.name || contract.name === '') {
-    //     setContractNameError(true)
-    //   } else {
-    //     setContractNameError(false)
-    //   }
-    //   if (!contract.detail || contract.detail === '') {
-    //     setContractDetailError(true)
-    //   } else {
-    //     setContractDetailError(false)
-    //   }
-    //   if (!contract.url || contract.url === '') {
-    //     setContractUrlError(true)
-    //   } else {
-    //     setContractUrlError(false)
-    //   }
-    //   if (!contract.telephone || contract.telephone === '') {
-    //     setContractTelephoneError(true)
-    //   } else {
-    //     setContractTelephoneError(false)
-    //   }
-    //   if (!contract.email || contract.email === '') {
-    //     setContractEmailError(true)
-    //   } else {
-    //     setContractEmailError(false)
-    //   }
-    //   if (!contract.code || contract.code === '') {
-    //     setContractCodeError(true)
-    //   } else {
-    //     setContractCodeError(false)
-    //   }
-    //   if (
-    //     !contract.name ||
-    //     contract.name === '' ||
-    //     !contract.detail ||
-    //     contract.detail === '' ||
-    //     !contract.url ||
-    //     contract.url === '' ||
-    //     !contract.telephone ||
-    //     contract.telephone === '' ||
-    //     !contract.email ||
-    //     contract.email === '' ||
-    //     !contract.code ||
-    //     contract.code === ''
-    //   ) {
-    //     setErrorForm(1)
-    //   } else {
-    //     setErrorForm(3)
-    //   }
+    if (!projectContract.project || projectContract.project === '') {
+      setProjectError(true)
+    } else {
+      setProjectError(false)
+    }
+    if (!projectContract.contract || projectContract.contract === '') {
+      setContractError(true)
+    } else {
+      setContractError(false)
+    }
+
+    if (
+      !projectContract.project ||
+      projectContract.project === '' ||
+      !projectContract.contract ||
+      projectContract.contract === ''
+    ) {
+      setErrorForm(1)
+    } else {
+      setErrorForm(3)
+    }
   }
 
-  // useEffect(() => {
-  //   if (errorForm === 3) {
-  //     if (contract?.id) {
-  //       update(contract)
-  //       // props.sendDataToParent(false)
-  //     } else {
-  //       register(contract)
-  //       // props.sendDataToParent(false)
-  //     }
-  //   }
-  // }, [errorForm])
+  useEffect(() => {
+    if (errorForm === 3) {
+      register(projectContract)
+      // props.sendDataToParent(false)
+    }
+  }, [errorForm])
 
-  // useEffect(() => {
-  //   if (errorForm === 3) {
-  //     console.log('1')
-  //     if (errorMessage) {
-  //       console.log('2')
-  //       if (errorMessage.length === 0) {
-  //         console.log('se cierra')
-  //         props.sendDataToParent(false)
-  //       } else {
-  //         console.log('3')
-  //       }
-  //     } else {
-  //       console.log('4')
-  //     }
-  //   } else {
-  //     console.log('5')
-  //   }
-  // }, [errorMessage, errorForm])
+  useEffect(() => {
+    if (errorForm === 3) {
+      console.log('1')
+      if (errorMessage) {
+        console.log('2')
+        if (errorMessage.length === 0) {
+          console.log('se cierra')
+          props.sendDataToParent(false)
+        } else {
+          console.log('3')
+        }
+      } else {
+        console.log('4')
+      }
+    } else {
+      console.log('5')
+    }
+  }, [errorMessage, errorForm])
 
   return (
     <CModal
@@ -142,16 +109,13 @@ const ModalAsignContract = (props) => {
         <CModalTitle id="ScrollingLongContentExampleLabel2">Asociar contrato</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        {/* <CToast
+        <CToast
           autohide={true}
           visible={isError}
           color="danger"
           className="text-white align-items-center"
         >
-          <div className="d-flex">
-            {error && <CToastBody>{error}</CToastBody>}
-            {errorMessage && <CToastBody>{errorMessage}</CToastBody>}
-          </div>
+          <div className="d-flex">{errorMessage && <CToastBody>{errorMessage}</CToastBody>}</div>
         </CToast>
         <CToast
           autohide={true}
@@ -165,7 +129,7 @@ const ModalAsignContract = (props) => {
           <div className="d-flex">
             <CToastBody>Debe completar todos los datos para crear el proyecto</CToastBody>
           </div>
-        </CToast> */}
+        </CToast>
         <CForm>
           <CRow>
             <CCol sm={12}>
@@ -173,7 +137,7 @@ const ModalAsignContract = (props) => {
                 aria-label="Default select example"
                 label="Proyecto"
                 id="project"
-                // value={asarcoMachinery.machinery ?? 0}
+                text={projectError && 'Seleccione un proyecto'}
                 onChange={(e) => {
                   onChangeData(e)
                 }}
@@ -195,7 +159,7 @@ const ModalAsignContract = (props) => {
                 aria-label="Default select example"
                 label="Contrato"
                 id="contract"
-                // value={asarcoMachinery.machinery ?? 0}
+                text={contractError && 'Seleccione un contrato'}
                 onChange={(e) => {
                   onChangeData(e)
                 }}
