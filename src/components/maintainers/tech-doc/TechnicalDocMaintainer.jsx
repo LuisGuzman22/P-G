@@ -8,7 +8,7 @@ import ModalAddTechnicalDoc from './ModalAddTechnicalDoc'
 import ModalAddCategory from './ModalAddCategory'
 
 const TechnicalDocMaintainer = () => {
-  const { isLoading, refetch, isRefetching } = useTechnicalDoc()
+  const { isLoading, refetch, isRefetching, categoryRefetch } = useTechnicalDoc()
 
   const [visibleTechDoc, setVisibleTecDoc] = useState(false)
   const [visibleCategory, setVisibleCategory] = useState(false)
@@ -31,7 +31,7 @@ const TechnicalDocMaintainer = () => {
           visible={true}
           sendDataToParent={async (data) => {
             setVisibleCategory(data)
-            await refetch()
+            await categoryRefetch()
           }}
         />
       )}

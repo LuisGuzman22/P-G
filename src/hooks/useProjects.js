@@ -9,31 +9,33 @@ const useProjects = () => {
   const queryClient = useQueryClient()
 
   const { data, isLoading, error, refetch, isRefetching } = useFetchProyects(1)
+  const [errorMessage, setErrorMessage] = useState()
 
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .post(`${process.env.REACT_APP_BASE_URL}api/v1/projects`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar proyecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar proyecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/projects`, newTodo)
+      // .then((res) => {
+      //   if (res.status === HttpStatusCode.Created) {
+      //     setIsError(false)
+      //     return res.ok
+      //   } else {
+      //     setErrorMutate('Error al registrar proyecto')
+      //     setIsError(true)
+      //     return false
+      //   }
+      // })
+      // .catch((err) => {
+      //   setErrorMutate('Error al registrar proyecto')
+      //   setIsError(true)
+      //   return false
+      // })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al registrar proyecto')
       setIsError(true)
       return false
@@ -42,29 +44,33 @@ const useProjects = () => {
 
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .put(`${process.env.REACT_APP_BASE_URL}api/v1/projects/${newTodo.id}`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar proyecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar proyecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/projects/${newTodo.id}`,
+        newTodo,
+      )
+      // .then((res) => {
+      //   if (res.status === HttpStatusCode.Created) {
+      //     setIsError(false)
+      //     return res.ok
+      //   } else {
+      //     setErrorMutate('Error al actualizar proyecto')
+      //     setIsError(true)
+      //     return false
+      //   }
+      // })
+      // .catch((err) => {
+      //   setErrorMutate('Error al actualizar proyecto')
+      //   setIsError(true)
+      //   return false
+      // })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
+      setErrorMessage([])
     },
     onError: (err) => {
       setErrorMutate('Error al actualizar proyecto')
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setIsError(true)
       return false
     },
@@ -102,6 +108,8 @@ const useProjects = () => {
 
   const register = (data) => {
     setIsError(false)
+    setErrorMessage()
+
     const projectData = {
       name: data.projectName,
       description: data.projectDescription,
@@ -113,12 +121,12 @@ const useProjects = () => {
 
   const update = (data) => {
     setIsError(false)
+    setErrorMessage()
     const response = mutationUpdate.mutate(data)
     return response
   }
 
   const deleteProject = (data) => {
-    console.log('data', data)
     setIsError(false)
     const response = mutationDelete.mutate(data)
     return response
@@ -135,6 +143,7 @@ const useProjects = () => {
     register,
     update,
     deleteProject,
+    errorMessage,
   }
 }
 

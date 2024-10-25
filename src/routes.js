@@ -14,7 +14,6 @@ const Trisemanal = React.lazy(() => import('./pages/TrisemanalPage'))
 // const Login = React.lazy(() => import('./pages/Login'))
 const ProjectAdministration = React.lazy(() => import('./pages/ProjectAdministrationPage'))
 const ContractAdministration = React.lazy(() => import('./pages/ContractAdministrationPage'))
-const User = React.lazy(() => import('./pages/User'))
 const Pdf = React.lazy(() => import('./components/Pdf'))
 const MachineryMaintainer = React.lazy(() => import('./pages/MachineryMaintainerPage'))
 const VehicleMaintainer = React.lazy(() => import('./pages/VehicleMaintainerPage'))
@@ -25,6 +24,8 @@ const IndirectPersonalMaintainer = React.lazy(
 )
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDocMaintainerPage'))
+const UserMaintainerPage = React.lazy(() => import('./pages/UserMaintainerPage'))
+const ContractAsignPage = React.lazy(() => import('./pages/ContractAsignPage'))
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
 const ExportPage = React.lazy(() => import('./pages/ExportPage'))
 
@@ -43,17 +44,17 @@ const routes = [
   { path: '/trisemanal', name: 'Actividades Trisemanal', element: Trisemanal },
   { path: '/carta-gantt', name: 'Carta Gantt', element: Gantt },
   { path: '/avance', name: 'Detalles de avance', element: Detail },
-  { path: '/administrar_proyectos', name: 'Administrar Proyectos', element: ProjectAdministration },
+  { path: '/maintainer/project', name: 'Administrar Proyectos', element: ProjectAdministration },
 
   {
-    path: '/administrar_contratos',
+    path: '/maintainer/contract',
     name: 'Administrar Contratos',
     element: ContractAdministration,
   },
-  { path: '/administrar_usuarios', name: 'Administrar usuarios', element: User },
   { path: '/maintainer/machinery', name: 'Administrar Maquinaria', element: MachineryMaintainer },
   { path: '/maintainer/vehicle', name: 'Administrar Vehículo', element: VehicleMaintainer },
   { path: '/maintainer/equipment', name: 'Administrar Vehículo', element: EquipmentMaintainer },
+  { path: '/maintainer/users', name: 'Administrar Usuarios', element: UserMaintainerPage },
   // {
   //   path: '/maintainer/direct-personal',
   //   name: 'Administrar Vehículo',
@@ -83,6 +84,11 @@ const routes = [
     path: '/exportar-datos',
     name: 'Exportar datos',
     element: ExportPage,
+  },
+  {
+    path: '/maintainer/contract-asign',
+    name: 'Asignar contrato',
+    element: ContractAsignPage,
   },
 ]
 

@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom'
 
 const TechnicalDocumentation = () => {
   const [visibleTechnicalDoc, setVisibleTechnicalDoc] = useState(false)
-  const { data, isLoading, isRefetching } = useTechnicalDoc()
+  const { data, isLoading, isRefetching, categoryData } = useTechnicalDoc()
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
@@ -53,29 +53,31 @@ const TechnicalDocumentation = () => {
                 <CCardText>
                   <CAccordion activeItemKey={1}>
                     {categories &&
-                      categories.map((category) => (
-                        <CAccordionItem itemKey={category} key={category}>
-                          <CAccordionHeader>{category}</CAccordionHeader>
-                          <CAccordionBody>
-                            {data
-                              .filter((item) => item.category === category)
-                              .map((item, index) => {
-                                return (
-                                  <p key={index}>
-                                    {/* <a href={item.url}>{item.url}</a> */}
-                                    <Link
-                                      to={`https://dev.pgproject.cl${item.url}`}
-                                      target="_blank"
-                                      download
-                                    >
-                                      {item.url.split('/')[4]}
-                                    </Link>
-                                  </p>
-                                )
-                              })}
-                          </CAccordionBody>
-                        </CAccordionItem>
-                      ))}
+                      categories.map((category) => {
+                        const catName = categoryData.find((cat) => cat.id == category)
+                        return (
+                          <CAccordionItem itemKey={category} key={category}>
+                            <CAccordionHeader>{catName?.name || 'Sin categoría'}</CAccordionHeader>
+                            <CAccordionBody>
+                              {data
+                                .filter((item) => item.category === category)
+                                .map((item, index) => {
+                                  return (
+                                    <p key={index}>
+                                      <Link
+                                        to={`https://dev.pgproject.cl${item.url}`}
+                                        target="_blank"
+                                        download
+                                      >
+                                        {item.url.split('/')[4]}
+                                      </Link>
+                                    </p>
+                                  )
+                                })}
+                            </CAccordionBody>
+                          </CAccordionItem>
+                        )
+                      })}
                   </CAccordion>
                 </CCardText>
               </CCardBody>

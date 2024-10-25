@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
-const fetchProducts = async (projectId) => {
+const fetchProyects = async (projectId) => {
   let url = `${process.env.REACT_APP_BASE_URL}api/v1/projects`
-  const company_id = localStorage.getItem('company_user')
-  if (company_id !== undefined && company_id !== null && company_id !== 'null') {
-    url = url + `/search?company_id=${company_id}`
-  }
+  // const company_id = localStorage.getItem('company_user')
+  // if (company_id !== undefined && company_id !== null && company_id !== 'null') {
+  //   url = url + `/search?company_id=${company_id}`
+  // }
   const res = await axios.get(url, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -79,6 +79,15 @@ const fetchEquipment = async () => {
   return res.data.data
 }
 
+const fetchUser = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/users`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 const fetchDirectPersonal = async () => {
   const res = await axios.get(
     `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals-with-trashed`,
@@ -124,17 +133,14 @@ const fetchTechnicalDocumentation = async (projectId, contractId) => {
   return res.data.data
 }
 
-// export const fetchReportsData = async () => {
-//   // const res = await axios.get(
-//   //   `https://mpm.pgproject.cl/api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
-//   //   {
-//   const res = await axios.get(`https://mpm.pgproject.cl/api/v1/reports`, {
-//     headers: {
-//       Authorization: 'Bearer ' + localStorage.getItem('token'),
-//     },
-//   })
-//   return res.data.data
-// }
+const fetchTechnicalDocumentationCategories = async (projectId, contractId) => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/categories`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
 
 export const fetchReportsData = async (contractId, projectId) => {
   const res = await axios.get(
@@ -167,7 +173,7 @@ export const useFetchProyects = (projectId) => {
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      return fetchProducts(projectId)
+      return fetchProyects(projectId)
     },
   })
 }
@@ -333,6 +339,30 @@ export const useFetchGetTechnicalDocumentation = (projectId, contractId) => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchTechnicalDocumentation(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchGetTechnicalDocumentationCategories = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['technical-documentation-categories'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchTechnicalDocumentationCategories(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchUser = () => {
+  return useQuery({
+    queryKey: ['user'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchUser()
     },
   })
 }

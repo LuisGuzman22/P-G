@@ -15,12 +15,13 @@ import useVehicle from 'src/hooks/useVehicle'
 import ModalAddProject from 'src/components/maintainers/project/ModalAddProject'
 import useProjects from 'src/hooks/useProjects'
 import ModalAddContract from './ModalAddContract'
+import useContracts from 'src/hooks/useContracts'
 
 const ContractList = () => {
   const { getData } = useGetCachedQueryData()
   const contractsQuery = getData('contracts')
 
-  //   const { deleteProject } = useProjects()
+  const { deleteContract } = useContracts()
 
   const [visibleContract, setVisibleContract] = useState(false)
   const [selectedContract, setSelectedContract] = useState()
@@ -46,7 +47,7 @@ const ContractList = () => {
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">Nombre</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Encargado</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Código</CTableHeaderCell>
             <CTableHeaderCell scope="col"></CTableHeaderCell>
           </CTableRow>
         </CTableHead>
@@ -55,7 +56,7 @@ const ContractList = () => {
             return (
               <CTableRow key={contract.id}>
                 <CTableDataCell>{contract.name}</CTableDataCell>
-                {/* <CTableDataCell>{project.manager}</CTableDataCell> */}
+                <CTableDataCell>{contract.code}</CTableDataCell>
                 <CTableDataCell>
                   <CButton
                     className="btn-action-edit"
@@ -68,7 +69,7 @@ const ContractList = () => {
                   <CButton
                     className="btn-action-delete"
                     onClick={() => {
-                      //   deleteProject(project.id)
+                      deleteContract(contract.id)
                     }}
                   >
                     <CIcon icon={cilTrash} />
