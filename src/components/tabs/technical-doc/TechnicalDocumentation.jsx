@@ -54,7 +54,7 @@ const TechnicalDocumentation = () => {
                   <CAccordion activeItemKey={1}>
                     {categories &&
                       categories.map((category) => {
-                        const catName = categoryData.find((cat) => cat.id == category)
+                        const catName = categoryData?.find((cat) => cat.id == category)
                         return (
                           <CAccordionItem itemKey={category} key={category}>
                             <CAccordionHeader>{catName?.name || 'Sin categoría'}</CAccordionHeader>
