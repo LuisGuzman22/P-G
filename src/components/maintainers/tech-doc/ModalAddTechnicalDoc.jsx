@@ -28,6 +28,7 @@ const ModalAddTechnicalDoc = (props) => {
 
   const { register } = useTechnicalDoc()
   const [categoryError, setCategoryError] = useState(false)
+  const [documentError, setDocumentError] = useState(false)
 
   const [category, setCategory] = useState('')
   const [docs, setDocs] = useState([])
@@ -37,7 +38,16 @@ const ModalAddTechnicalDoc = (props) => {
   }
 
   const handleUploadTechicalDoc = () => {
-    register({ category, docs })
+    if (category === '' || category === '-1') {
+      setCategoryError(true)
+    } else if (docs.length === 0) {
+      setDocumentError(true)
+    } else {
+      if (!categoryError) {
+        register({ category, docs })
+        props.sendDataToParent(false)
+      }
+    }
   }
 
   const handleRegisterCategory = (id) => {
@@ -71,6 +81,7 @@ const ModalAddTechnicalDoc = (props) => {
                 label="Categoría"
                 id="category"
                 invalid={categoryError}
+                text={categoryError && 'Debe seleccionar categoría'}
                 onChange={(e) => {
                   if (e.target.value !== '-1') {
                     setCategoryError(false)
@@ -96,9 +107,12 @@ const ModalAddTechnicalDoc = (props) => {
               <CFormInput
                 type="file"
                 id={`doc`}
+                invalid={documentError}
+                text={documentError && 'Debe seleccionar un documento'}
                 aria-describedby="inputGroupFileAddon03"
                 onChange={(e) => {
                   handleUploadFile(e)
+                  setDocumentError(false)
                 }}
                 label="Documentación"
                 aria-label="Upload"
