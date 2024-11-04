@@ -17,7 +17,7 @@ const TechnicalDocList = () => {
   const { getData } = useGetCachedQueryData()
   const techDocQuery = getData('technical-documentation')
   const techDocCatQuery = getData('technical-documentation-categories')
-  const { deleteVehicle } = useTechnicalDoc()
+  const { deleteDoc } = useTechnicalDoc()
 
   return (
     <>
@@ -40,7 +40,7 @@ const TechnicalDocList = () => {
                   <CButton
                     className="btn-action-delete"
                     onClick={() => {
-                      deleteVehicle(doc.id)
+                      deleteDoc(doc.id)
                     }}
                   >
                     <CIcon icon={cilTrash} />
