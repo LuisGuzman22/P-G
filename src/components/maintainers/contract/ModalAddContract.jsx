@@ -149,7 +149,7 @@ const ModalAddContract = (props) => {
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">
-          {props.selectedContract?.name ? 'Editar Proyecto' : 'Registrar Proyecto'}
+          {props.selectedContract?.name ? 'Editar Contrato' : 'Registrar Contrato'}
         </CModalTitle>
       </CModalHeader>
       <CModalBody>
@@ -183,8 +183,8 @@ const ModalAddContract = (props) => {
               <CFormInput
                 type="text"
                 id="name"
-                label="Nombre"
-                placeholder="Nombre"
+                label="Nombre de Contrato"
+                placeholder="Nombre de Contrato"
                 invalid={contractNameError}
                 value={contract.name || ''}
                 text=""
@@ -292,8 +292,8 @@ const ModalAddContract = (props) => {
               <CFormInput
                 type="text"
                 id="code"
-                label="Código"
-                placeholder="Código"
+                label="Número de contrato"
+                placeholder="Número de contrato"
                 invalid={contractCodeError}
                 value={contract.code || ''}
                 text=""
@@ -317,7 +317,7 @@ const ModalAddContract = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterContract()}>
-          {props.selectedContract?.name ? 'Editar' : 'Registrar'}
+          Guardar
         </CButton>
       </CModalFooter>
     </CModal>

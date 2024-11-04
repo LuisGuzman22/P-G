@@ -221,7 +221,7 @@ const ModalAddAljibe = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterEquipment()}>
-          {props?.selectedAljibe?.name ? 'Editar' : 'Registrar'}
+          Guardar
         </CButton>
       </CModalFooter>
     </CModal>

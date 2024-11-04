@@ -17,7 +17,7 @@ const TechnicalDocList = () => {
   const { getData } = useGetCachedQueryData()
   const techDocQuery = getData('technical-documentation')
   const techDocCatQuery = getData('technical-documentation-categories')
-  const { deleteVehicle } = useTechnicalDoc()
+  const { deleteDoc } = useTechnicalDoc()
 
   return (
     <>
@@ -30,8 +30,8 @@ const TechnicalDocList = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {techDocQuery.map((doc, index) => {
-            const catName = techDocCatQuery.find((cat) => cat.id == doc.category)
+          {techDocQuery?.map((doc, index) => {
+            const catName = techDocCatQuery?.find((cat) => cat.id == doc.category)
             return (
               <CTableRow key={doc.id}>
                 <CTableDataCell> {doc.url.split('/')[4]}</CTableDataCell>
@@ -40,7 +40,7 @@ const TechnicalDocList = () => {
                   <CButton
                     className="btn-action-delete"
                     onClick={() => {
-                      deleteVehicle(doc.id)
+                      deleteDoc(doc.id)
                     }}
                   >
                     <CIcon icon={cilTrash} />

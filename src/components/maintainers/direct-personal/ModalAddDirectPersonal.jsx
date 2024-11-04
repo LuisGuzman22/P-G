@@ -148,7 +148,7 @@ const ModalAddDirectPersonal = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterDirectPersonal()}>
-          {props?.selectedDirectPersonal?.name ? 'Editar' : 'Registrar'}
+          Guardar
         </CButton>
       </CModalFooter>
     </CModal>

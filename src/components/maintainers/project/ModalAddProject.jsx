@@ -244,7 +244,7 @@ const ModalAddProject = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterProject()}>
-          {props.selectedProject?.projectName ? 'Editar' : 'Registrar'}
+          Guardar
         </CButton>
       </CModalFooter>
     </CModal>

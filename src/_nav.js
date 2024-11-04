@@ -10,6 +10,7 @@ import {
   cilStorage,
   cilAlignCenter,
   cilGraph,
+  cibWhenIWork,
 } from '@coreui/icons'
 import { CNavItem, CNavTitle, CNavGroup } from '@coreui/react'
 
@@ -82,7 +83,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Mantenedores',
     to: '/base',
-    icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
+    icon: <CIcon icon={cibWhenIWork} customClassName="nav-icon" />,
     items: [
       {
         component: CNavGroup,

@@ -223,7 +223,7 @@ const ModalAddMachinery = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterMachinery()}>
-          {props?.selectedMachinery?.name ? 'Editar' : 'Registrar'}
+          Guardar
         </CButton>
       </CModalFooter>
     </CModal>
