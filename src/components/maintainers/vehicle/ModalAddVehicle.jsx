@@ -221,7 +221,7 @@ const ModalAddVehicle = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterVehicle()}>
-          {props?.selectedVehicle?.name ? 'Editar' : 'Registrar'}
+          Guardar
         </CButton>
       </CModalFooter>
     </CModal>

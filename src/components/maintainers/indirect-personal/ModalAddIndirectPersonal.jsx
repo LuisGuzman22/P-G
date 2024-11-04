@@ -149,7 +149,7 @@ const ModalAddIndirectPersonal = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterIndirectPersonal()}>
-          {props?.selectedIndirectPersonal?.name ? 'Editar' : 'Registrar'}
+          Guardar
         </CButton>
       </CModalFooter>
     </CModal>

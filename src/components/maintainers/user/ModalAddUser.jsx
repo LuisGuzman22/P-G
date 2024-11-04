@@ -273,7 +273,7 @@ const ModalAddUser = (props) => {
           Cerrar
         </CButton>
         <CButton className="btn-add" onClick={() => handleRegisterUser()}>
-          {props?.selectedUser?.name ? 'Editar' : 'Registrar'}
+          Guardar
         </CButton>
       </CModalFooter>
     </CModal>
