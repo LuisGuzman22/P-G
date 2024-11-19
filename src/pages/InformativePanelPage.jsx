@@ -6,7 +6,7 @@ const InformativePanelPage = () => {
   return (
     <>
       <CCard>
-        <CCardHeader>Panel Informativo</CCardHeader>
+        {/* <CCardHeader>Panel Informativo</CCardHeader> */}
         <CCardBody>
           <CCardText>
             <InformativePanel />

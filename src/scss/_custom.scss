@@ -239,22 +239,51 @@
   .row {
     padding: 10px;
     .dashboard-button {
-      background-color: #019999;
-      width: 200px;
+      width: 100%;
+      background: linear-gradient(135deg, #019999, #1fc8db);
+      // background-color: #019999;
+      //
+      // width: 200px;
       height: 200px;
       color: white;
       font-weight: 600;
+      font-size: 1.5rem;
+      transition:
+        transform 0.2s,
+        box-shadow 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+      .button-container {
+        display: flex;
+        flex-direction: row;
+        .button-label {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-left: 10%;
+        }
+
+        .icon-button {
+          opacity: 0.5;
+          height: 3em;
+        }
+      }
     }
   }
 
   .col {
     padding: 10px;
     .dashboard-button {
-      background-color: #019999;
+      background: linear-gradient(135deg, #019999, #1fc8db);
       width: 200px;
       height: 200px;
       color: white;
       font-weight: 600;
+      font-size: 1.5rem;
+      transition:
+        transform 0.2s,
+        box-shadow 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
   }
 
