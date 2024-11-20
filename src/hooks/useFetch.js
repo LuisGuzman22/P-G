@@ -164,6 +164,15 @@ export const fetchReportDataByReportId = async (reportId) => {
   return res.data.data
 }
 
+const fetchCompany = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/companies`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 const userType = localStorage.getItem('USER_TYPE')
 
 export const useFetchProyects = (projectId) => {
@@ -363,6 +372,18 @@ export const useFetchUser = () => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchUser()
+    },
+  })
+}
+
+export const useFetchCompany = () => {
+  return useQuery({
+    queryKey: ['company'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchCompany()
     },
   })
 }

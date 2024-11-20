@@ -5,9 +5,11 @@ import './css.scss'
 import useUser from 'src/hooks/useUser'
 import ModalAddUser from './ModalAddUser'
 import UserList from './UserList'
+import useCompany from 'src/hooks/useCompany'
 
 const UserMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useUser()
+  const { data } = useCompany()
 
   const [visibleUser, setVisibleUser] = useState(false)
   // const [visibleRestoreUser, setVisibleRestoreUser] = useState(false)

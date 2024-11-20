@@ -15,20 +15,24 @@ import {
   CFormCheck,
   CToast,
   CToastBody,
+  CFormSelect,
 } from '@coreui/react'
 import useContracts from 'src/hooks/useContracts'
+import useCompany from 'src/hooks/useCompany'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 const ModalAddContract = (props) => {
   const initialState = {
     name: undefined,
     code: undefined,
     detail: undefined,
-    url: undefined,
     telephone: undefined,
     email: undefined,
-    company_id: 2,
+    company_id: undefined,
   }
 
   const { register, error, isError, update, errorMessage } = useContracts()
+  const { getData } = useGetCachedQueryData()
+  const companyQuery = getData('company')
 
   const [contract, setContract] = useState(
     props.selectedContract ? props.selectedContract : initialState,
@@ -37,10 +41,10 @@ const ModalAddContract = (props) => {
   const [errorForm, setErrorForm] = useState(0)
   const [contractNameError, setContractNameError] = useState(false)
   const [contractDetailError, setContractDetailError] = useState(false)
-  const [contractUrlError, setContractUrlError] = useState(false)
   const [contractTelephoneError, setContractTelephoneError] = useState(false)
   const [contractEmailError, setContractEmailError] = useState(false)
   const [contractCodeError, setContractCodeError] = useState(false)
+  const [contractCompanyError, setContractCompanyError] = useState(false)
 
   const handleClick = () => {
     props.sendDataToParent(false)
@@ -57,16 +61,16 @@ const ModalAddContract = (props) => {
       setContractNameError(false)
     }
 
+    if (!contract.company_id || contract.company_id === '0' || contract.company_id === '') {
+      setContractCompanyError(true)
+    } else {
+      setContractCompanyError(false)
+    }
+
     if (!contract.detail || contract.detail === '') {
       setContractDetailError(true)
     } else {
       setContractDetailError(false)
-    }
-
-    if (!contract.url || contract.url === '') {
-      setContractUrlError(true)
-    } else {
-      setContractUrlError(false)
     }
 
     if (!contract.telephone || contract.telephone === '') {
@@ -92,14 +96,15 @@ const ModalAddContract = (props) => {
       contract.name === '' ||
       !contract.detail ||
       contract.detail === '' ||
-      !contract.url ||
-      contract.url === '' ||
       !contract.telephone ||
       contract.telephone === '' ||
       !contract.email ||
       contract.email === '' ||
       !contract.code ||
-      contract.code === ''
+      contract.code === '' ||
+      !contract.company_id ||
+      contract.company_id === '0' ||
+      contract.company_id === ''
     ) {
       setErrorForm(1)
     } else {
@@ -224,25 +229,32 @@ const ModalAddContract = (props) => {
           </CRow>
           <CRow>
             <CCol sm={6}>
-              <CFormInput
-                type="text"
-                id="url"
-                label="URL"
-                placeholder="URL"
-                invalid={contractUrlError}
-                value={contract.url || ''}
-                text=""
-                onBlur={(e) => {
-                  if (e.target.value !== '') {
-                    setContractUrlError(false)
-                  } else {
-                    setContractUrlError(true)
-                  }
-                }}
+              <CFormSelect
+                aria-label="Default select example"
+                id="company_id"
+                label="Empresa"
+                value={contract.company_id ?? 0}
+                invalid={contractCompanyError}
                 onChange={(e) => {
                   onChangeData(e)
                 }}
-              />
+                onBlur={(e) => {
+                  if (e.target.value !== '' || e.target.value === '0') {
+                    setContractCompanyError(false)
+                  } else {
+                    setContractCompanyError(true)
+                  }
+                }}
+              >
+                <option value={0}>Seleccione</option>
+                {companyQuery.map((company) => {
+                  return (
+                    <option key={company.id} value={company.id}>
+                      {company.name}
+                    </option>
+                  )
+                })}
+              </CFormSelect>
             </CCol>
             <CCol sm={6}>
               <CFormInput

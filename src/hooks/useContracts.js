@@ -113,7 +113,6 @@ const useContracts = (contractId) => {
     const contractData = {
       name: data.name,
       detail: data.detail,
-      url: data.url,
       telephone: data.telephone,
       email: data.email,
       company_id: data.company_id,

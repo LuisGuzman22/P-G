@@ -5,9 +5,11 @@ import './css.scss'
 import useContracts from 'src/hooks/useContracts'
 import ContractList from './ContractList'
 import ModalAddContract from './ModalAddContract'
+import useCompany from 'src/hooks/useCompany'
 
 const ContractMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useContracts()
+  const { data } = useCompany()
 
   const [visibleContract, setVisibleContract] = useState(false)
 
