@@ -147,20 +147,20 @@ const ModalAddUser = (props) => {
 
   useEffect(() => {
     if (errorForm === 3) {
-      console.log('1')
+      // console.log('1')
       if (errorMessage) {
-        console.log('2')
+        // console.log('2')
         if (errorMessage.length === 0) {
-          console.log('se cierra')
+          // console.log('se cierra')
           props.sendDataToParent(false)
         } else {
-          console.log('3')
+          // console.log('3')
         }
       } else {
-        console.log('4')
+        // console.log('4')
       }
     } else {
-      console.log('5')
+      // console.log('5')
     }
   }, [errorMessage, errorForm])
 

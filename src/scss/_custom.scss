@@ -296,6 +296,42 @@
       }
     }
   }
+
+  @media only screen and (max-width: 1300px) {
+    .row {
+      .dashboard-button {
+        .button-container {
+          .icon-button {
+            height: 2em;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1200px) {
+    .row {
+      .dashboard-button {
+        .button-container {
+          .icon-button {
+            height: 1em;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 576px) {
+    .row {
+      .dashboard-button {
+        .button-container {
+          .icon-button {
+            height: 3em;
+          }
+        }
+      }
+    }
+  }
 }
 
 .daily-report {

@@ -116,7 +116,6 @@ const useRegisterDailyReport = () => {
     setLoading(true)
     setError()
     setSuccess(false)
-    console.log('photoList', photoList)
     const data = mutate({
       projectId: projectLS.id,
       contractId: contractLS.id,
