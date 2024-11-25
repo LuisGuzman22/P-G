@@ -63,7 +63,10 @@ const MachineryList = () => {
     data: machineryData ? machineryData : data,
     enableColumnActions: false,
     enableSorting: false,
-    enableToolbarInternalActions: false,
+    enableColumnFilters: false,
+    enableDensityToggle: false,
+    enableFullScreenToggle: false,
+    enableHiding: false,
     muiPaginationProps: {
       color: 'primary',
       shape: 'rounded',
