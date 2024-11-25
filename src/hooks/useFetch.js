@@ -34,12 +34,27 @@ const fetchBasicData = async (contractId) => {
   return res.data.data
 }
 
-const fetchTrisemanalData = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/clusters?planning_id=2`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+const fetchTrisemanalData = async (planningId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/clusters?planning_id=${planningId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
+  return res.data.data
+}
+
+const fetchPlanninglData = async (projectId, contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/plannings/search?contract_id=${contractId}&project_id=${projectId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
   return res.data.data
 }
 
@@ -164,6 +179,15 @@ export const fetchReportDataByReportId = async (reportId) => {
   return res.data.data
 }
 
+const fetchCompany = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/companies`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 const userType = localStorage.getItem('USER_TYPE')
 
 export const useFetchProyects = (projectId) => {
@@ -247,14 +271,26 @@ export const useFetchReportData = () => {
   })
 }
 
-export const useFetchTrisemanalData = () => {
+export const useFetchPlanningData = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['planning'],
+    staleTime: 0,
+    gcTime: 2147483647,
+    refetchType: 'all',
+    queryFn: async () => {
+      return fetchPlanninglData(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchTrisemanalData = (planningId) => {
   return useQuery({
     queryKey: ['trisemanal'],
     staleTime: 0,
     gcTime: 2147483647,
     refetchType: 'all',
     queryFn: async () => {
-      return fetchTrisemanalData()
+      return fetchTrisemanalData(planningId)
     },
   })
 }
@@ -363,6 +399,18 @@ export const useFetchUser = () => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchUser()
+    },
+  })
+}
+
+export const useFetchCompany = () => {
+  return useQuery({
+    queryKey: ['company'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchCompany()
     },
   })
 }

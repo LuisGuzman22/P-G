@@ -51,7 +51,6 @@ const ModalAddTechnicalDoc = (props) => {
   }
 
   const handleRegisterCategory = (id) => {
-    console.log('handleRegisterCategory', id)
     setCategory(id)
   }
 

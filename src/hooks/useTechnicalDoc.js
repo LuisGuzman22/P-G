@@ -153,7 +153,6 @@ const useTechnicalDoc = () => {
   }
 
   const deleteDoc = (data) => {
-    console.log('data', data)
     setIsError(false)
     const response = deleteMutation.mutate(data)
     return response

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useFetchTrisemanalData } from './useFetch'
+import { useFetchPlanningData, useFetchTrisemanalData } from './useFetch'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios, { HttpStatusCode } from 'axios'
 import useRegisterGeneralData from './useRegisterGeneralData'
@@ -15,7 +15,17 @@ const useGetTrisemanalData = () => {
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
-  const { data, isLoading: loadingTrisemanal, error: errorTrisemanal } = useFetchTrisemanalData()
+  const {
+    data: planningData,
+    isLoading: loadingPlanning,
+    error: errorPlanning,
+  } = useFetchPlanningData(projectLS.id, contractLS.id)
+
+  const {
+    data,
+    isLoading: loadingTrisemanal,
+    error: errorTrisemanal,
+  } = useFetchTrisemanalData(planningData ? planningData[0]?.id : 0)
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
@@ -61,7 +71,14 @@ const useGetTrisemanalData = () => {
     return response
   }
 
-  return { data, loadingTrisemanal, errorTrisemanal, uploadTrisemanal }
+  return {
+    data,
+    loadingTrisemanal,
+    errorTrisemanal,
+    uploadTrisemanal,
+    loadingPlanning,
+    loadingTrisemanal,
+  }
 }
 
 export default useGetTrisemanalData

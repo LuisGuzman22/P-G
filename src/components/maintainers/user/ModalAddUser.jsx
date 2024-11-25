@@ -15,20 +15,23 @@ import {
   CFormCheck,
   CToast,
   CToastBody,
+  CFormSelect,
 } from '@coreui/react'
 import { v4 as uuidv4 } from 'uuid'
-import useMachinery from 'src/hooks/useMachinery'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
 import useUser from 'src/hooks/useUser'
 import { regex } from 'src/utils/regex'
+import useCompany from 'src/hooks/useCompany'
+import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const ModalAddUser = (props) => {
   const initialState = {
     name: undefined,
     email: undefined,
     password: undefined,
-    company_id: 2,
+    company_id: undefined,
+    job_position: undefined,
   }
   const { getProject, getContract } = useRegisterGeneralData()
   const projectLS = JSON.parse(getProject())
@@ -38,6 +41,11 @@ const ModalAddUser = (props) => {
   const [userNameError, setUserNameError] = useState(false)
   const [userEmailError, setUserEmailError] = useState(false)
   const [userPasswordError, setUserPasswordError] = useState(false)
+  const [userCompanyError, setUserCompanyError] = useState(false)
+  const [userJobPositionError, setUserJobPositionError] = useState(false)
+
+  const { getData } = useGetCachedQueryData()
+  const companyQuery = getData('company')
 
   const handleClick = () => {
     props.sendDataToParent(false)
@@ -65,22 +73,30 @@ const ModalAddUser = (props) => {
       // setErrorForm(1)
       setUserNameError(true)
     } else {
-      // setErrorForm(3)
       setUserNameError(false)
     }
     if (!user.email || user.email === '' || !user.email.match(regex)) {
-      // setErrorForm(1)
       setUserEmailError(true)
     } else {
-      // setErrorForm(3)
       setUserEmailError(false)
     }
     if (!user.password || user.password === '' || user.password.length < 8) {
-      // setErrorForm(1)
       setUserPasswordError(true)
     } else {
-      // setErrorForm(3)
       setUserPasswordError(false)
+    }
+
+    if (!user.company_id || user.company_id === '0' || user.company_id === '') {
+      setUserCompanyError(true)
+    } else {
+      setUserCompanyError(false)
+    }
+
+    if (!user.job_position || user.job_position === '') {
+      // setErrorForm(1)
+      setUserJobPositionError(true)
+    } else {
+      setUserJobPositionError(false)
     }
 
     if (
@@ -91,7 +107,12 @@ const ModalAddUser = (props) => {
       !user.password ||
       user.password === '' ||
       user.password.length < 8 ||
-      !user.email.match(regex)
+      !user.email.match(regex) ||
+      !user.company_id ||
+      user.company_id === '0' ||
+      user.company_id === '' ||
+      !user.job_position ||
+      user.job_position === ''
     ) {
       setErrorForm(1)
     } else {
@@ -108,6 +129,7 @@ const ModalAddUser = (props) => {
           email: user.email,
           password: user.password,
           company_id: user.company_id,
+          job_position: user.job_position,
         })
         // props.sendDataToParent(false)
       } else {
@@ -116,6 +138,7 @@ const ModalAddUser = (props) => {
           email: user.email,
           password: user.password,
           company_id: user.company_id,
+          job_position: user.job_position,
         })
         // props.sendDataToParent(false)
       }
@@ -124,20 +147,20 @@ const ModalAddUser = (props) => {
 
   useEffect(() => {
     if (errorForm === 3) {
-      console.log('1')
+      // console.log('1')
       if (errorMessage) {
-        console.log('2')
+        // console.log('2')
         if (errorMessage.length === 0) {
-          console.log('se cierra')
+          // console.log('se cierra')
           props.sendDataToParent(false)
         } else {
-          console.log('3')
+          // console.log('3')
         }
       } else {
-        console.log('4')
+        // console.log('4')
       }
     } else {
-      console.log('5')
+      // console.log('5')
     }
   }, [errorMessage, errorForm])
 
@@ -203,8 +226,6 @@ const ModalAddUser = (props) => {
                 }}
               />
             </CCol>
-          </CRow>
-          <CRow>
             <CCol sm={6}>
               <CFormInput
                 type="text"
@@ -264,6 +285,56 @@ const ModalAddUser = (props) => {
                   onChangeData(e)
                 }}
               />
+            </CCol>
+          </CRow>
+          <CRow>
+            <CCol sm={6}>
+              <CFormInput
+                type="text"
+                id="job_position"
+                label="Cargo"
+                placeholder="Cargo"
+                invalid={userJobPositionError}
+                value={user.job_position || ''}
+                onBlur={(e) => {
+                  if (e.target.value !== '') {
+                    setUserJobPositionError(false)
+                  } else {
+                    setUserJobPositionError(true)
+                  }
+                }}
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+              />
+            </CCol>
+            <CCol sm={6}>
+              <CFormSelect
+                aria-label="Default select example"
+                id="company_id"
+                label="Empresa"
+                value={user.company_id ?? 0}
+                invalid={userCompanyError}
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+                onBlur={(e) => {
+                  if (e.target.value !== '' || e.target.value === '0') {
+                    setUserCompanyError(false)
+                  } else {
+                    setUserCompanyError(true)
+                  }
+                }}
+              >
+                <option value={0}>Seleccione</option>
+                {companyQuery.map((company) => {
+                  return (
+                    <option key={company.id} value={company.id}>
+                      {company.name}
+                    </option>
+                  )
+                })}
+              </CFormSelect>
             </CCol>
           </CRow>
         </CForm>

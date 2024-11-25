@@ -53,7 +53,7 @@ const useLogin = () => {
 
   const trueLogin = async (data) => {
     const { user, password } = data
-    console.log('REACT_APP_BASE_URL', process.env.REACT_APP_BASE_URL)
+    // console.log('REACT_APP_BASE_URL', process.env.REACT_APP_BASE_URL)
 
     const loginData = {
       email: user,
