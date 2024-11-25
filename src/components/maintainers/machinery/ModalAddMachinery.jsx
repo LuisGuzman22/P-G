@@ -30,6 +30,8 @@ const ModalAddMachinery = (props) => {
     props.sendDataToParent(false)
   }
 
+  console.log('props?.selectedMachinery', props?.selectedMachinery)
+
   const [machineryName, setMachineryName] = useState(props?.selectedMachinery?.name || undefined)
   const [machineryError, setMachineryError] = useState(false)
   const [plate, setPlate] = useState()

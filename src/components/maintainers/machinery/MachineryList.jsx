@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CTable,
@@ -15,6 +15,10 @@ import useMachinery from 'src/hooks/useMachinery'
 import ModalAddMachinery from './ModalAddMachinery'
 import './css.scss'
 
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
+import { columns, data } from './makeData.ts'
+import { MenuItem } from '@mui/material'
+
 const MachineryList = () => {
   const { getData } = useGetCachedQueryData()
   const machineryQuery = getData('machinery')
@@ -22,6 +26,7 @@ const MachineryList = () => {
 
   const [visibleMachinery, setVisibleMachinery] = useState(false)
   const [selectedMachinery, setSelectedMachinery] = useState()
+  const [machineryData, setMachineryData] = useState([])
 
   const getPlates = (plates) => {
     const platesJoin = []
@@ -37,6 +42,58 @@ const MachineryList = () => {
     setVisibleMachinery(!visibleMachinery)
   }
 
+  useEffect(() => {
+    let mac = []
+    machineryQuery
+      ?.filter((machinery) => machinery.deleted_at === null)
+      .map((machinery) => {
+        const plates = getPlates(machinery.plate)
+        mac.push({
+          id: machinery.id,
+          name: machinery.name,
+          plates: plates,
+          plate: machinery.plate,
+        })
+      })
+    setMachineryData(mac)
+  }, [machineryQuery])
+
+  const table = useMaterialReactTable({
+    columns,
+    data: machineryData ? machineryData : data,
+    enableColumnActions: false,
+    enableSorting: false,
+    enableToolbarInternalActions: false,
+    muiPaginationProps: {
+      color: 'primary',
+      shape: 'rounded',
+      showRowsPerPage: false,
+      variant: 'outlined',
+    },
+    initialState: {
+      pagination: {
+        pageSize: 5,
+        pageIndex: 0,
+      },
+    },
+    paginationDisplayMode: 'pages',
+    enableRowActions: true,
+    positionActionsColumn: 'last',
+    renderRowActionMenuItems: ({ row }) => [
+      <MenuItem
+        key="edit"
+        onClick={() => {
+          handleEditMachinery(row.original)
+        }}
+      >
+        Editar
+      </MenuItem>,
+      <MenuItem key="delete" onClick={() => deleteMachinery(row.original.id)}>
+        Eliminar
+      </MenuItem>,
+    ],
+  })
+
   return (
     <>
       {visibleMachinery && (
@@ -49,48 +106,7 @@ const MachineryList = () => {
           }}
         />
       )}
-      <CTable striped>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Nombre</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Patentes</CTableHeaderCell>
-            <CTableHeaderCell scope="col"></CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          {machineryQuery
-            ?.filter((machinery) => machinery.deleted_at === null)
-            .map((machinery, index) => {
-              const plates = getPlates(machinery.plate)
-              return (
-                <CTableRow key={machinery.id}>
-                  <CTableDataCell scope="row">{machinery.id}</CTableDataCell>
-                  <CTableDataCell>{machinery.name}</CTableDataCell>
-                  <CTableDataCell>{plates}</CTableDataCell>
-                  <CTableDataCell>
-                    <CButton
-                      className="btn-action-edit"
-                      onClick={() => {
-                        handleEditMachinery(machinery)
-                      }}
-                    >
-                      <CIcon icon={cilPencil} />
-                    </CButton>
-                    <CButton
-                      className="btn-action-delete"
-                      onClick={() => {
-                        deleteMachinery(machinery.id)
-                      }}
-                    >
-                      <CIcon icon={cilTrash} />
-                    </CButton>
-                  </CTableDataCell>
-                </CTableRow>
-              )
-            })}
-        </CTableBody>
-      </CTable>
+      <MaterialReactTable table={table} />
     </>
   )
 }
