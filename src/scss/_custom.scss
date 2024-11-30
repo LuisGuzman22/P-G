@@ -1,5 +1,11 @@
 // Here you can add other styles
 
+body {
+  background-color: #557a95;
+  background-image: url('../../src/assets/images/fondo2.png');
+  height: auto;
+}
+
 .project-accordion {
   --cui-accordion-btn-color: white;
   --cui-accordion-btn-bg: #3c763d;
@@ -7,6 +13,17 @@
   --cui-accordion-active-bg: #3c763d;
 }
 
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.carousel {
+  width: 85%;
+  height: auto;
+}
 .nav-accordion {
   z-index: 1000;
   .accordion-button {
@@ -151,6 +168,7 @@
 
 .login-container {
   background-color: #557a95;
+  background-image: url('../../src/assets/images/fondo.png');
 
   .login-title {
     font-size: 1.75rem;
@@ -159,7 +177,7 @@
     font-weight: 500;
     line-height: 1.2;
     text-align: center;
-    color: white;
+    color: black;
   }
 
   .text-body-secondary {

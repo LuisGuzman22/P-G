@@ -5,7 +5,7 @@ import organigrama_ruta_oriente from 'src/assets/images/organigrama-ruta-oriente
 import organigrama_ruta_norte from 'src/assets/images/organigrama-canal-contorno-norte.jpeg'
 const InformativePanel = () => {
   return (
-    <>
+    <div className="carousel-container">
       <CCarousel controls indicators>
         <CCarouselItem>
           <CImage className="d-block w-100" src={organigrama_canal_contorno} alt="slide 1" />
@@ -18,7 +18,7 @@ const InformativePanel = () => {
         </CCarouselItem>
       </CCarousel>
       {/* <CButton>Subir Imagen</CButton> */}
-    </>
+    </div>
   )
 }
 
