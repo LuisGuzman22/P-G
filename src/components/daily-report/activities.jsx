@@ -18,7 +18,10 @@ import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useLocation } from 'react-router-dom'
-// FALTA VALIDAR
+import Select from 'react-select'
+import useGetActivityData from 'src/hooks/useGetActivityData'
+import Skeleton from 'react-loading-skeleton'
+
 const Activities = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
@@ -46,12 +49,31 @@ const Activities = () => {
   const [activity, setActivity] = useState(initialState)
   const [activityList, setActivityList] = useState([])
   const [error, setError] = useState(false)
+  const [options, setOptions] = useState([])
+  const [selectedOption, setSelectedOption] = useState({ value: 0, label: 'Seleccione' })
+
+  const { data, isLoading, error: activityError } = useGetActivityData()
+
+  useEffect(() => {
+    let mapData = []
+    if (data) {
+      data.map((item) => {
+        mapData.push({ value: item.id_primavera, label: item.name })
+      })
+    }
+    setOptions(mapData)
+  }, [data])
 
   const {
     storeActivity,
     removeActivity,
     activityList: activityListContext,
   } = useRegisterDailyReportCompany()
+
+  const onChangeActivity = (e) => {
+    setSelectedOption(e)
+    setActivity({ ...activity, primaveraId: e.value, activityName: e.label })
+  }
 
   const onChangeData = (e) => {
     setError(false)
@@ -135,6 +157,7 @@ const Activities = () => {
         activityHoursAccumulated: activity.activityHoursAccumulated,
       }
       setActivity(initialState) // Clear the object
+      setSelectedOption({ value: 0, label: 'Seleccione' })
       setActivityList([...activityListContext, activityInitialState])
     }
   }
@@ -211,17 +234,18 @@ const Activities = () => {
           <CTable>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">ID Actividad Primavera</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Nombre de Actividad</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Actividad Primavera</CTableHeaderCell>
+                {/* <CTableHeaderCell scope="col">Nombre de Actividad</CTableHeaderCell> */}
                 <CTableHeaderCell scope="col">Disciplina</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Cantidad Total</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Cantidad Acum Anterior</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Cantidad Real Turno</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               <CTableRow>
                 <CTableDataCell>
-                  <CFormInput
+                  {/* <CFormInput
                     type="text"
                     id="primaveraId"
                     value={activity.primaveraId || ''}
@@ -229,19 +253,27 @@ const Activities = () => {
                     onChange={(e) => {
                       onChangeData(e)
                     }}
-                  />
-                </CTableDataCell>
-                <CTableDataCell>
-                  <CFormInput
-                    type="text"
-                    id="activityName"
-                    value={activity.activityName || ''}
-                    text=""
-                    // disabled
-                    onChange={(e) => {
-                      onChangeData(e)
-                    }}
-                  />
+                  /> */}
+                  {isLoading ? (
+                    <Skeleton />
+                  ) : (
+                    <Select
+                      id="primaveraId"
+                      className="primaveraId"
+                      label="Actividad primavera"
+                      value={selectedOption}
+                      onChange={(e) => {
+                        onChangeActivity(e)
+                      }}
+                      options={options}
+                      styles={{
+                        option: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+                          ...styles,
+                          color: '#000000',
+                        }),
+                      }}
+                    />
+                  )}
                 </CTableDataCell>
                 <CTableDataCell>
                   <CFormSelect
@@ -284,15 +316,6 @@ const Activities = () => {
                     }}
                   />
                 </CTableDataCell>
-              </CTableRow>
-              <CTableRow>
-                <CTableHeaderCell scope="col">Cantidad Real Turno</CTableHeaderCell>
-                <CTableHeaderCell scope="col">% Avance Acumulado</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Unidad</CTableHeaderCell>
-                <CTableHeaderCell scope="col">HH Gastada Acumulada Anterior</CTableHeaderCell>
-                <CTableHeaderCell scope="col">HH Gastada Real Turno</CTableHeaderCell>
-              </CTableRow>
-              <CTableRow>
                 <CTableDataCell>
                   <CFormInput
                     type="text"
@@ -304,6 +327,15 @@ const Activities = () => {
                     }}
                   />
                 </CTableDataCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableHeaderCell scope="col">% Avance Acumulado</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Unidad</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH Gastada Acumulada Anterior</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH Gastada Real Turno</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH Gastada Acumulada</CTableHeaderCell>
+              </CTableRow>
+              <CTableRow>
                 <CTableDataCell>
                   <CFormInput
                     type="text"
@@ -349,11 +381,6 @@ const Activities = () => {
                     }}
                   />
                 </CTableDataCell>
-              </CTableRow>
-              <CTableRow>
-                <CTableHeaderCell scope="col">HH Gastada Acumulada</CTableHeaderCell>
-              </CTableRow>
-              <CTableRow>
                 <CTableDataCell>
                   <CFormInput
                     type="text"
