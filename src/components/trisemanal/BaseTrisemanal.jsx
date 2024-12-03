@@ -10,6 +10,8 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import React, { useEffect, useRef, useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
@@ -17,8 +19,15 @@ import useGetTrisemanalData from 'src/hooks/useGetTrisemanalData'
 import './css.scss'
 
 const BaseTrisemanal = () => {
-  const { data, isLoading, error, uploadTrisemanal, loadingPlanning, loadingTrisemanal } =
-    useGetTrisemanalData()
+  const {
+    data,
+    errorMutate,
+    isLoading,
+    error,
+    uploadTrisemanal,
+    loadingPlanning,
+    loadingTrisemanal,
+  } = useGetTrisemanalData()
 
   const [file, setFile] = useState()
 
@@ -28,11 +37,19 @@ const BaseTrisemanal = () => {
 
   const handleUploadFile = (e) => {
     const xls = e.target.files
-    setFile(xls)
+    setFile(xls[0])
   }
 
   return (
     <div className="">
+      <CToast
+        autohide={true}
+        visible={errorMutate}
+        color="danger"
+        className="text-white align-items-center"
+      >
+        <div className="d-flex">{errorMutate && <CToastBody>{errorMutate}</CToastBody>}</div>
+      </CToast>
       <CFormInput
         type="file"
         id={`trisemanal`}

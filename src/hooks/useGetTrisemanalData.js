@@ -29,50 +29,39 @@ const useGetTrisemanalData = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}api/v1/trisemanal/upload-trisemanal/${projectLS.id}/${contractLS.id}`,
-          newTodo,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+      return await axios.post(
+        `${process.env.REACT_APP_BASE_URL}api/v1/trisemanal/upload-trisemanal/${projectLS.id}/${contractLS.id}`,
+        newTodo,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
           },
-        )
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar proyecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar proyecto')
-          setIsError(true)
-          return false
-        })
+        },
+      )
     },
     onSuccess: (suc) => {
-      queryClient.invalidateQueries({ queryKey: ['technical-documentation'] })
+      queryClient.invalidateQueries({ queryKey: ['trisemanal'] })
+      queryClient.invalidateQueries({ queryKey: ['planning'] })
     },
     onError: (err) => {
-      setErrorMutate('Error al registrar proyecto')
+      queryClient.invalidateQueries({ queryKey: ['trisemanal'] })
+      queryClient.invalidateQueries({ queryKey: ['planning'] })
+      setErrorMutate('Error subir trisemanal')
       setIsError(true)
       return false
     },
   })
 
   const uploadTrisemanal = (data) => {
+    console.log('data', data)
     setIsError(false)
-    const response = registerMutation.mutate(data)
+    const response = registerMutation.mutate({ file: data })
     return response
   }
 
   return {
     data,
+    errorMutate,
     loadingTrisemanal,
     errorTrisemanal,
     uploadTrisemanal,

@@ -18,7 +18,10 @@ import { v4 as uuidv4 } from 'uuid'
 import { validate } from 'src/utils/validate'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useLocation } from 'react-router-dom'
-// FALTA VALIDAR
+import Select from 'react-select'
+import useGetActivityData from 'src/hooks/useGetActivityData'
+import Skeleton from 'react-loading-skeleton'
+
 const Activities = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
@@ -38,6 +41,7 @@ const Activities = () => {
     activityHoursSpendPrevius: undefined,
     activityHoursSpendShift: undefined,
     activityHoursAccumulated: undefined,
+    activityId: undefined,
   }
 
   const { getData } = useGetCachedQueryData()
@@ -46,12 +50,31 @@ const Activities = () => {
   const [activity, setActivity] = useState(initialState)
   const [activityList, setActivityList] = useState([])
   const [error, setError] = useState(false)
+  const [options, setOptions] = useState([])
+  const [selectedOption, setSelectedOption] = useState({ value: 0, label: 'Seleccione' })
+
+  const { data, isLoading, error: activityError } = useGetActivityData()
+
+  useEffect(() => {
+    let mapData = []
+    if (data) {
+      data.map((item) => {
+        mapData.push({ value: item.id_primavera, label: item.name })
+      })
+    }
+    setOptions(mapData)
+  }, [data])
 
   const {
     storeActivity,
     removeActivity,
     activityList: activityListContext,
   } = useRegisterDailyReportCompany()
+  // FALTA el editar la actividad, no se esta cargando la actividad primavera
+  const onChangeActivity = (e) => {
+    setSelectedOption(e)
+    setActivity({ ...activity, primaveraId: e.value, activityName: e.label })
+  }
 
   const onChangeData = (e) => {
     setError(false)
@@ -119,6 +142,10 @@ const Activities = () => {
     if (!activity.activityFrontWork || activity.activityFrontWork === '0') {
       setError(true)
     } else {
+      const activityId = data.find(
+        (item) => item.id_primavera.trim() === activity.primaveraId.trim(),
+      ).id
+
       const activityInitialState = {
         id: uuidv4(),
         activityFrontWork: activity.activityFrontWork,
@@ -133,8 +160,10 @@ const Activities = () => {
         activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
         activityHoursSpendShift: activity.activityHoursSpendShift,
         activityHoursAccumulated: activity.activityHoursAccumulated,
+        activityId: activityId, //REvisar por que no se esta enviando en el submit
       }
       setActivity(initialState) // Clear the object
+      setSelectedOption({ value: 0, label: 'Seleccione' })
       setActivityList([...activityListContext, activityInitialState])
     }
   }
@@ -161,11 +190,13 @@ const Activities = () => {
       activityHoursSpendShift: selectedActivity.activityHoursSpendShift,
       activityHoursAccumulated: selectedActivity.activityHoursAccumulated,
     })
+    setSelectedOption({ value: selectedActivity.primaveraId, label: selectedActivity.activityName })
 
     deleteActivity(id)
   }
 
   useEffect(() => {
+    console.log('activityList', activityList)
     if (!isViewMode) storeActivity(activityList)
   }, [activityList])
 
@@ -208,41 +239,42 @@ const Activities = () => {
               )
             })}
           </CFormSelect>
+          {isLoading ? (
+            <Skeleton />
+          ) : (
+            <>
+              <label className="form-label">Actividad primavera</label>
+              <Select
+                id="primaveraId"
+                className="primaveraId"
+                label="Actividad primavera"
+                placeholder="Actividad primavera"
+                value={selectedOption}
+                onChange={(e) => {
+                  onChangeActivity(e)
+                }}
+                options={options}
+                styles={{
+                  option: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+                    ...styles,
+                    color: '#000000',
+                  }),
+                }}
+              />
+            </>
+          )}
           <CTable>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">ID Actividad Primavera</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Nombre de Actividad</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Disciplina</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Cantidad Total</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Cantidad Acum Anterior</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Cantidad Real Turno</CTableHeaderCell>
+                <CTableHeaderCell scope="col">% Avance Acumulado</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               <CTableRow>
-                <CTableDataCell>
-                  <CFormInput
-                    type="text"
-                    id="primaveraId"
-                    value={activity.primaveraId || ''}
-                    text=""
-                    onChange={(e) => {
-                      onChangeData(e)
-                    }}
-                  />
-                </CTableDataCell>
-                <CTableDataCell>
-                  <CFormInput
-                    type="text"
-                    id="activityName"
-                    value={activity.activityName || ''}
-                    text=""
-                    // disabled
-                    onChange={(e) => {
-                      onChangeData(e)
-                    }}
-                  />
-                </CTableDataCell>
                 <CTableDataCell>
                   <CFormSelect
                     aria-label="Default select example"
@@ -259,7 +291,7 @@ const Activities = () => {
                           {dicipline.name}
                         </option>
                       )
-                    })}{' '}
+                    })}
                   </CFormSelect>
                 </CTableDataCell>
                 <CTableDataCell>
@@ -278,21 +310,13 @@ const Activities = () => {
                     type="text"
                     id="activityPreviousAcumulatedAmount"
                     value={activity.activityPreviousAcumulatedAmount || ''}
+                    // disabled
                     text=""
                     onChange={(e) => {
                       onChangeData(e)
                     }}
                   />
                 </CTableDataCell>
-              </CTableRow>
-              <CTableRow>
-                <CTableHeaderCell scope="col">Cantidad Real Turno</CTableHeaderCell>
-                <CTableHeaderCell scope="col">% Avance Acumulado</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Unidad</CTableHeaderCell>
-                <CTableHeaderCell scope="col">HH Gastada Acumulada Anterior</CTableHeaderCell>
-                <CTableHeaderCell scope="col">HH Gastada Real Turno</CTableHeaderCell>
-              </CTableRow>
-              <CTableRow>
                 <CTableDataCell>
                   <CFormInput
                     type="text"
@@ -316,6 +340,14 @@ const Activities = () => {
                     }}
                   />
                 </CTableDataCell>
+              </CTableRow>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Unidad</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH Gastada Acumulada Anterior</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH Gastada Real Turno</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH Gastada Acumulada</CTableHeaderCell>
+              </CTableRow>
+              <CTableRow>
                 <CTableDataCell>
                   <CFormInput
                     type="text"
@@ -349,11 +381,6 @@ const Activities = () => {
                     }}
                   />
                 </CTableDataCell>
-              </CTableRow>
-              <CTableRow>
-                <CTableHeaderCell scope="col">HH Gastada Acumulada</CTableHeaderCell>
-              </CTableRow>
-              <CTableRow>
                 <CTableDataCell>
                   <CFormInput
                     type="text"

@@ -113,9 +113,11 @@ const useRegisterDailyReport = () => {
     aljibeList.map((aljibe) => {
       aljibe.aljibeM3Accumulated = accumulatedM3
     })
+
     setLoading(true)
     setError()
     setSuccess(false)
+    console.log('activityList', activityList)
     const data = mutate({
       projectId: projectLS.id,
       contractId: contractLS.id,
