@@ -1,9 +1,10 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import { Chart } from 'react-google-charts'
 
 import Skeleton from 'react-loading-skeleton'
-import { data } from './data'
+import { datamock } from './data'
+import useGantt from 'src/hooks/useGantt'
 
 const GanttChart = () => {
   const options = {
@@ -23,25 +24,36 @@ const GanttChart = () => {
     tooltip: { isHtml: true },
   }
 
+  const { data, isLoading, error, refetch, isRefetching } = useGantt()
+
+  useEffect(() => {
+    console.log('datamock', datamock)
+    console.log('data', [data.columns, ...data.rows])
+  }, [data])
+
   return (
     <div className="proyect-administration">
       <h2>Carta Gantt</h2>
 
       <CCard className="action-buttons">
         <CCardBody>
-          <Chart
-            chartType="Gantt"
-            width="100%"
-            height="50%"
-            data={data}
-            options={options}
-            chartLanguage="es-419"
-            tooltip={{
-              trigger: 'selection',
-              showColorCode: true,
-              isHtml: true,
-            }}
-          />
+          {data.rows.length > 0 ? (
+            <Chart
+              chartType="Gantt"
+              width="100%"
+              height="50%"
+              data={[data.columns, ...data.rows]}
+              options={options}
+              chartLanguage="es-419"
+              tooltip={{
+                trigger: 'selection',
+                showColorCode: true,
+                isHtml: true,
+              }}
+            />
+          ) : (
+            <>No hay datos</>
+          )}
         </CCardBody>
       </CCard>
     </div>

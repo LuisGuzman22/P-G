@@ -69,4 +69,4 @@ const rows = [
   ['Hockey', 'Tarea 11', 'sports', new Date(2014, 9, 8), new Date(2015, 5, 21), null, 89, null],
 ]
 
-export const data = [columns, ...rows]
+export const datamock = [columns, ...rows]
