@@ -10,6 +10,7 @@ import {
   cilStorage,
   cilAlignCenter,
   cilGraph,
+  cilChart,
   cibWhenIWork,
 } from '@coreui/icons'
 import { CNavItem, CNavTitle, CNavGroup } from '@coreui/react'
@@ -66,6 +67,12 @@ const _nav = [
         name: 'Detalles de avance',
         to: '/avance',
         icon: <CIcon icon={cilGraph} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Dashboard',
+        to: '/graficos',
+        icon: <CIcon icon={cilChart} customClassName="nav-icon" />,
       },
     ],
   },

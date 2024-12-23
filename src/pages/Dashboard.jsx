@@ -25,7 +25,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { useQueryClient } from '@tanstack/react-query'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faBan,
+  faChartColumn,
   faCalendarDay,
   faCalendarDays,
   faChartGantt,
@@ -143,7 +143,6 @@ const Dashboard = () => {
       <br /> */}
 
       <CCard>
-        {/* <CCardHeader>Panel Informativo</CCardHeader> */}
         <CCardBody>
           <CCardText>
             <InformativePanel />
@@ -188,11 +187,40 @@ const Dashboard = () => {
                     </CButton>
                   </CCol>
                   <CCol sm={4}>
+                    <CButton
+                      className="dashboard-button"
+                      onClick={() => {
+                        redirectTo('/trisemanal')
+                      }}
+                    >
+                      <div className="button-container">
+                        <FontAwesomeIcon icon={faTableList} size="2xl" className="icon-button" />
+                        <div className="button-label">
+                          <label className="label">Avance del proyecto</label>
+                        </div>
+                      </div>
+                    </CButton>
                     {/* <CTooltip
                       content="Aquí encontrarás el historial de todos los reportes diarios, en donde podrás acceder a ellos para editarlos o descargar su PDF."
                       placement="top"
                       // style={customTooltipStyle}
                     > */}
+
+                    {/* </CTooltip> */}
+                  </CCol>
+                  <CCol sm={4}>
+                    <CButton className="dashboard-button" onClick={() => redirectTo('/graficos')}>
+                      <div className="button-container">
+                        <FontAwesomeIcon icon={faChartColumn} size="2xl" className="icon-button" />
+                        <div className="button-label">
+                          <label className="label">Dashboard</label>
+                        </div>
+                      </div>
+                    </CButton>
+                  </CCol>
+                </CRow>
+                <CRow>
+                  <CCol sm={4}>
                     <CButton
                       className="dashboard-button"
                       onClick={() => redirectTo('/dashboard-reportes')}
@@ -204,35 +232,7 @@ const Dashboard = () => {
                         </div>
                       </div>
                     </CButton>
-                    {/* </CTooltip> */}
                   </CCol>
-                  <CCol sm={4}>
-                    <CButton
-                      className="dashboard-button"
-                      onClick={() => {
-                        redirectTo('/trisemanal')
-                      }}
-                    >
-                      <div className="button-container">
-                        <FontAwesomeIcon icon={faTableList} size="2xl" className="icon-button" />
-                        <div className="button-label">
-                          <label className="label">Trisemanal</label>
-                        </div>
-                      </div>
-                    </CButton>
-                  </CCol>
-                </CRow>
-                <CRow>
-                  {/* <CCol sm={4}>
-                    <CButton
-                      className="dashboard-button"
-                      onClick={() => {
-                        redirectTo('/avance')
-                      }}
-                    >
-                      Avance
-                    </CButton>
-                  </CCol> */}
                   <CCol sm={4}>
                     <CButton
                       className="dashboard-button"
@@ -261,16 +261,6 @@ const Dashboard = () => {
                       </div>
                     </CButton>
                   </CCol>
-                  <CCol sm={4}>
-                    <CButton className="dashboard-button">
-                      <div className="button-container">
-                        <FontAwesomeIcon icon={faBan} size="2xl" className="icon-button" />
-                        <div className="button-label">
-                          <label className="label">TOP NO+PAPEL</label>
-                        </div>
-                      </div>
-                    </CButton>
-                  </CCol>
                 </CRow>
               </div>
             </CCardText>
@@ -281,46 +271,6 @@ const Dashboard = () => {
       </CCard>
 
       <br />
-      {/* {reportsQuery && reportsQuery.length > 0 && (
-        <>
-          <br />
-          <CCard>
-            <CCardBody>
-              {!isFetching ? (
-                <CCardText>
-                  <>
-                    <span>Tienes {reportsQuery.length} informes diarios generados.</span>
-                    <CListGroup>
-                      {reportsQuery
-                        .sort((a, b) => b.id - a.id)
-                        .map((report) => {
-                          return (
-                            <>
-                              <CListGroupItem
-                                as="a"
-                                key={report.id}
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => {
-                                  localStorage.setItem('daily_report', report.id)
-                                  redirectTo('/informe-diario/edit')
-                                }}
-                              >
-                                Reporte número {report.id}
-                              </CListGroupItem>
-                            </>
-                          )
-                        })}
-                    </CListGroup>
-                 
-                  </>
-                </CCardText>
-              ) : (
-                <Skeleton count={2} />
-              )}
-            </CCardBody>
-          </CCard>
-        </>
-      )} */}
     </div>
   )
 }

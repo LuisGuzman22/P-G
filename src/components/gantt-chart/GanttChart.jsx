@@ -26,18 +26,13 @@ const GanttChart = () => {
 
   const { data, isLoading, error, refetch, isRefetching } = useGantt()
 
-  useEffect(() => {
-    console.log('datamock', datamock)
-    console.log('data', [data.columns, ...data.rows])
-  }, [data])
-
   return (
     <div className="proyect-administration">
       <h2>Carta Gantt</h2>
 
       <CCard className="action-buttons">
         <CCardBody>
-          {data.rows.length > 0 ? (
+          {!isLoading && !isRefetching && data.rows.length > 0 ? (
             <Chart
               chartType="Gantt"
               width="100%"
@@ -52,7 +47,9 @@ const GanttChart = () => {
               }}
             />
           ) : (
-            <>No hay datos</>
+            <>
+              <Skeleton />
+            </>
           )}
         </CCardBody>
       </CCard>
