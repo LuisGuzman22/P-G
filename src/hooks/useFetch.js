@@ -200,6 +200,18 @@ const fetchCompany = async () => {
   return res.data.data
 }
 
+const fetchGantt = async () => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/activities/gantt?start_date=2024-01-01&end_date=2024-12-12`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data
+}
+
 const userType = localStorage.getItem('USER_TYPE')
 
 export const useFetchProyects = (projectId) => {
@@ -435,6 +447,18 @@ export const useFetchActiviryData = (projectId, contractId) => {
     refetchType: 'all',
     queryFn: async () => {
       return fetchActivityData(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchGant = () => {
+  return useQuery({
+    queryKey: ['gantt-chart'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchGantt()
     },
   })
 }

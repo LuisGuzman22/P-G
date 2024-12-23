@@ -28,6 +28,7 @@ const UserMaintainerPage = React.lazy(() => import('./pages/UserMaintainerPage')
 const ContractAsignPage = React.lazy(() => import('./pages/ContractAsignPage'))
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
 const ExportPage = React.lazy(() => import('./pages/ExportPage'))
+const ChartsPage = React.lazy(() => import('./pages/ChartsPage'))
 
 const routes = [
   { path: '/', name: 'Login' },
@@ -89,6 +90,11 @@ const routes = [
     path: '/maintainer/contract-asign',
     name: 'Asignar contrato',
     element: ContractAsignPage,
+  },
+  {
+    path: '/graficos',
+    name: 'Dashboard graficos',
+    element: ChartsPage,
   },
 ]
 

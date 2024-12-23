@@ -160,7 +160,7 @@ const Activities = () => {
         activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
         activityHoursSpendShift: activity.activityHoursSpendShift,
         activityHoursAccumulated: activity.activityHoursAccumulated,
-        activityId: activityId, //REvisar por que no se esta enviando en el submit
+        activityId: activityId,
       }
       setActivity(initialState) // Clear the object
       setSelectedOption({ value: 0, label: 'Seleccione' })
