@@ -212,6 +212,30 @@ const fetchGantt = async () => {
   return res.data
 }
 
+const fetchSChart = async (contractId, projectId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/projects/curvaS/${projectId}/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data
+}
+
+const fetchGeneralProgress = async (contractId, projectId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/projects/generalAdvance/${projectId}/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data
+}
+
 const userType = localStorage.getItem('USER_TYPE')
 
 export const useFetchProyects = (projectId) => {
@@ -459,6 +483,30 @@ export const useFetchGant = () => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchGantt()
+    },
+  })
+}
+
+export const useFetchSChart = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['s-chart'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchSChart(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchGeneralProgress = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['general-progress-chart'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchGeneralProgress(projectId, contractId)
     },
   })
 }
