@@ -128,7 +128,7 @@ const Activities = () => {
 
       const totalHours = activity.activityTotalAmount ? Number(activity.activityTotalAmount) : 0
 
-      const calc = (actualHours + previousHh) / totalHours
+      const calc = ((actualHours + previousHh) * 100) / totalHours
 
       setActivity({ ...activity, activityAccumulatedAdvancePercent: calc.toFixed(2) })
     }

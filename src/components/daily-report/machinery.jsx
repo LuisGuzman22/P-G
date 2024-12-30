@@ -71,11 +71,9 @@ const Machinery = () => {
       const machineryInitialState = {
         id: uuidv4(),
         machinery: machinery.machinery,
-        actions: {
-          machineryOfferedNumber: machinery.machineryOfferedNumber,
-          machineryCertifiedNumber: machinery.machineryCertifiedNumber,
-          machineryWorkNumber: machinery.machineryWorkNumber,
-        },
+        machineryOfferedNumber: machinery.machineryOfferedNumber,
+        machineryCertifiedNumber: machinery.machineryCertifiedNumber,
+        machineryWorkNumber: machinery.machineryWorkNumber,
       }
       setMachinery(initialState) // Clear the object
       setMachineryList([...machineryListContext, machineryInitialState])
@@ -93,9 +91,9 @@ const Machinery = () => {
     const selectedMachinery = machineryListContext.find((item) => item.id === id)
     setMachinery({
       machinery: selectedMachinery.machinery,
-      machineryOfferedNumber: selectedMachinery.actions.machineryOfferedNumber,
-      machineryCertifiedNumber: selectedMachinery.actions.machineryCertifiedNumber,
-      machineryWorkNumber: selectedMachinery.actions.machineryWorkNumber,
+      machineryOfferedNumber: selectedMachinery.machineryOfferedNumber,
+      machineryCertifiedNumber: selectedMachinery.machineryCertifiedNumber,
+      machineryWorkNumber: selectedMachinery.machineryWorkNumber,
     })
     deleteMachinery(id)
   }
@@ -115,13 +113,13 @@ const Machinery = () => {
       machineryTotalsCounter = {
         machineryOfferedNumber:
           Number(machineryTotalsCounter.machineryOfferedNumber) +
-          Number(data.actions.machineryOfferedNumber ?? 0),
+          Number(data.machineryOfferedNumber ?? 0),
         machineryCertifiedNumber:
           Number(machineryTotalsCounter.machineryCertifiedNumber) +
-          Number(data.actions.machineryCertifiedNumber ?? 0),
+          Number(data.machineryCertifiedNumber ?? 0),
         machineryWorkNumber:
           Number(machineryTotalsCounter.machineryWorkNumber) +
-          Number(data.actions.machineryWorkNumber ?? 0),
+          Number(data.machineryWorkNumber ?? 0),
       }
     }
     setMachineryTotals(machineryTotalsCounter)
@@ -240,9 +238,9 @@ const Machinery = () => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{charge.name}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryOfferedNumber ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryCertifiedNumber ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.machineryWorkNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.machineryOfferedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.machineryCertifiedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.machineryWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
                     {(isCreatingMode || isEditMode) && (
                       <CButton

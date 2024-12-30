@@ -83,7 +83,9 @@ const useRegisterDailyReport = () => {
   for (let eq of equipmentList) {
     equip = {}
     equip.equipment = eq.equipment
-    equip.actions = JSON.stringify(eq.actions)
+    equip.equipmentOfferedNumber = eq.equipmentOfferedNumber
+    equip.equipmentCertifiedNumber = eq.equipmentCertifiedNumber
+    equip.equipmentWorkNumber = eq.equipmentWorkNumber
     equipList.push(equip)
   }
 
@@ -92,7 +94,9 @@ const useRegisterDailyReport = () => {
   for (let ma of machineryList) {
     machin = {}
     machin.machinery = ma.machinery
-    machin.actions = JSON.stringify(ma.actions)
+    machin.machineryOfferedNumber = ma.machineryOfferedNumber
+    machin.machineryCertifiedNumber = ma.machineryCertifiedNumber
+    machin.machineryWorkNumber = ma.machineryWorkNumber
     machinList.push(machin)
   }
 
@@ -101,7 +105,9 @@ const useRegisterDailyReport = () => {
   for (let ve of vehicleList) {
     vehic = {}
     vehic.vehicle = ve.vehicle
-    vehic.actions = JSON.stringify(ve.actions)
+    vehic.vehicleOfferedNumber = ve.vehicleOfferedNumber
+    vehic.vehicleCertifiedNumber = ve.vehicleCertifiedNumber
+    vehic.vehicleWorkNumber = ve.vehicleWorkNumber
     vehicList.push(vehic)
   }
 
@@ -117,7 +123,6 @@ const useRegisterDailyReport = () => {
     setLoading(true)
     setError()
     setSuccess(false)
-    console.log('activityList', activityList)
     const data = mutate({
       projectId: projectLS.id,
       contractId: contractLS.id,
