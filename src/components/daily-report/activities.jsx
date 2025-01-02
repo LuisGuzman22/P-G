@@ -46,6 +46,7 @@ const Activities = () => {
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
+  const activitiesQuery = getData('activities')
 
   const [activity, setActivity] = useState(initialState)
   const [activityList, setActivityList] = useState([])
@@ -54,6 +55,13 @@ const Activities = () => {
   const [selectedOption, setSelectedOption] = useState({ value: 0, label: 'Seleccione' })
 
   const { data, isLoading, error: activityError } = useGetActivityData()
+
+  // useEffect(() => {
+  //   initialState.activityTotalAmount = activitiesQuery
+  //     ? activitiesQuery[0].base_line_quantity_work
+  //     : 0
+  //   setActivity(initialState)
+  // }, [activitiesQuery])
 
   useEffect(() => {
     let mapData = []
@@ -70,10 +78,18 @@ const Activities = () => {
     removeActivity,
     activityList: activityListContext,
   } = useRegisterDailyReportCompany()
-  // FALTA el editar la actividad, no se esta cargando la actividad primavera
   const onChangeActivity = (e) => {
+    const selectdActivity = activitiesQuery.find((act) => {
+      return act.id_primavera === e.value
+    })
+    const quantityWork = selectdActivity.base_line_quantity_work || 0
     setSelectedOption(e)
-    setActivity({ ...activity, primaveraId: e.value, activityName: e.label })
+    setActivity({
+      ...activity,
+      primaveraId: e.value,
+      activityName: e.label,
+      activityTotalAmount: quantityWork,
+    })
   }
 
   const onChangeData = (e) => {
@@ -196,7 +212,6 @@ const Activities = () => {
   }
 
   useEffect(() => {
-    console.log('activityList', activityList)
     if (!isViewMode) storeActivity(activityList)
   }, [activityList])
 
@@ -298,7 +313,8 @@ const Activities = () => {
                   <CFormInput
                     type="text"
                     id="activityTotalAmount"
-                    value={activity.activityTotalAmount || ''}
+                    value={activity.activityTotalAmount || '0'}
+                    disabled
                     text=""
                     onChange={(e) => {
                       onChangeData(e)
