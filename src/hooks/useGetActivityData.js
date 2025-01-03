@@ -1,4 +1,4 @@
-import { useFetchActiviryData, useFetchPlanningData } from './useFetch'
+import { useFetchActivityData } from './useFetch'
 import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useGetActivityData = () => {
@@ -7,7 +7,7 @@ const useGetActivityData = () => {
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
-  const { data, isLoading, error } = useFetchActiviryData(projectLS.id, contractLS.id)
+  const { data, isLoading, error } = useFetchActivityData(projectLS.id, contractLS.id)
 
   return {
     data,

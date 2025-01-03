@@ -53,7 +53,6 @@ const useGetTrisemanalData = () => {
   })
 
   const uploadTrisemanal = (data) => {
-    console.log('data', data)
     setIsError(false)
     const response = registerMutation.mutate({ file: data })
     return response

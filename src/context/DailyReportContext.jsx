@@ -152,7 +152,6 @@ export const DailyReportProvider = ({ children }) => {
     const maList = []
     if (selectedMachineryList)
       for (let mach of selectedMachineryList) {
-        console.log('mach', mach)
         const machMachinery = mach.machinery
         const actions = JSON.parse(mach.actions)
         maList.push({

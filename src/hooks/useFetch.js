@@ -70,6 +70,18 @@ const fetchActivityData = async (projectId, contractId) => {
   return res.data.data
 }
 
+const fetchActivityDataPerPrimaveraId = async (projectId, contractId, primaveraId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/activities/search?contract_id=${contractId}&project_id=${projectId}&id_primavera=${primaveraId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data.data
+}
+
 const testToken = async () => {
   const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/test`, {
     headers: {
@@ -463,7 +475,7 @@ export const useFetchCompany = () => {
   })
 }
 
-export const useFetchActiviryData = (projectId, contractId) => {
+export const useFetchActivityData = (projectId, contractId) => {
   return useQuery({
     queryKey: ['activities'],
     staleTime: 0,
@@ -471,6 +483,18 @@ export const useFetchActiviryData = (projectId, contractId) => {
     refetchType: 'all',
     queryFn: async () => {
       return fetchActivityData(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchActivityDataPerPrimaveraId = (projectId, contractId, primaveraId) => {
+  return useQuery({
+    queryKey: ['primavera-activity'],
+    staleTime: 0,
+    gcTime: 2147483647,
+    refetchType: 'all',
+    queryFn: async () => {
+      return fetchActivityDataPerPrimaveraId(projectId, contractId, primaveraId)
     },
   })
 }

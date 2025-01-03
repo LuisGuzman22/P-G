@@ -70,7 +70,6 @@ const DailyReportCollapse = () => {
 
   const [showError, setShowError] = useState(false)
   useEffect(() => {
-    console.log('errorMessage', errorMessage)
     if (error) setShowError(true)
   }, [error])
 

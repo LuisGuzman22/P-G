@@ -21,6 +21,7 @@ import { useLocation } from 'react-router-dom'
 import Select from 'react-select'
 import useGetActivityData from 'src/hooks/useGetActivityData'
 import Skeleton from 'react-loading-skeleton'
+import useGetActivityDataPerPrimaveraId from 'src/hooks/useGetActivityDataPerPrimaveraId'
 
 const Activities = () => {
   const currentLocation = useLocation().pathname
@@ -46,7 +47,11 @@ const Activities = () => {
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
-  const activitiesQuery = getData('activities')
+  const {
+    getActivity,
+    isLoading: activityLoading,
+    activityData,
+  } = useGetActivityDataPerPrimaveraId()
 
   const [activity, setActivity] = useState(initialState)
   const [activityList, setActivityList] = useState([])
@@ -55,13 +60,6 @@ const Activities = () => {
   const [selectedOption, setSelectedOption] = useState({ value: 0, label: 'Seleccione' })
 
   const { data, isLoading, error: activityError } = useGetActivityData()
-
-  // useEffect(() => {
-  //   initialState.activityTotalAmount = activitiesQuery
-  //     ? activitiesQuery[0].base_line_quantity_work
-  //     : 0
-  //   setActivity(initialState)
-  // }, [activitiesQuery])
 
   useEffect(() => {
     let mapData = []
@@ -78,17 +76,24 @@ const Activities = () => {
     removeActivity,
     activityList: activityListContext,
   } = useRegisterDailyReportCompany()
+
+  useEffect(() => {
+    if (activityData && activityData.data.data[0]) {
+      const quantityWork = activityData.data.data[0].base_line_quantity_work || 0
+      setActivity({
+        ...activity,
+        activityTotalAmount: quantityWork,
+      })
+    }
+  }, [activityData, activityLoading])
+
   const onChangeActivity = (e) => {
-    const selectdActivity = activitiesQuery.find((act) => {
-      return act.id_primavera === e.value
-    })
-    const quantityWork = selectdActivity.base_line_quantity_work || 0
+    getActivity(e.value)
     setSelectedOption(e)
     setActivity({
       ...activity,
       primaveraId: e.value,
       activityName: e.label,
-      activityTotalAmount: quantityWork,
     })
   }
 
@@ -310,16 +315,20 @@ const Activities = () => {
                   </CFormSelect>
                 </CTableDataCell>
                 <CTableDataCell>
-                  <CFormInput
-                    type="text"
-                    id="activityTotalAmount"
-                    value={activity.activityTotalAmount || '0'}
-                    disabled
-                    text=""
-                    onChange={(e) => {
-                      onChangeData(e)
-                    }}
-                  />
+                  {activityLoading ? (
+                    <Skeleton />
+                  ) : (
+                    <CFormInput
+                      type="text"
+                      id="activityTotalAmount"
+                      value={activity.activityTotalAmount || '0'}
+                      disabled
+                      text=""
+                      onChange={(e) => {
+                        onChangeData(e)
+                      }}
+                    />
+                  )}
                 </CTableDataCell>
                 <CTableDataCell>
                   <CFormInput
