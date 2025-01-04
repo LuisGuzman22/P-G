@@ -61,16 +61,6 @@ const Activities = () => {
 
   const { data, isLoading, error: activityError } = useGetActivityData()
 
-  useEffect(() => {
-    let mapData = []
-    if (data) {
-      data.map((item) => {
-        mapData.push({ value: item.id_primavera, label: item.name })
-      })
-    }
-    setOptions(mapData)
-  }, [data])
-
   const {
     storeActivity,
     removeActivity,
@@ -78,23 +68,37 @@ const Activities = () => {
   } = useRegisterDailyReportCompany()
 
   useEffect(() => {
-    if (activityData && activityData.data.data[0]) {
-      const quantityWork = activityData.data.data[0].base_line_quantity_work || 0
-      setActivity({
-        ...activity,
-        activityTotalAmount: quantityWork,
+    let mapData = []
+
+    if (activityData && activityData.data.data.length > 0) {
+      activityData.data.data.map((item) => {
+        mapData.push({ value: item.id_primavera, label: item.name })
       })
     }
+
+    setOptions(mapData)
   }, [activityData, activityLoading])
 
   const onChangeActivity = (e) => {
-    getActivity(e.value)
+    const selectedActivity = activityData.data.data.find((item) => item.id_primavera === e.value)
+
+    const quantityWork = selectedActivity.base_line_quantity_work || 0
+
     setSelectedOption(e)
+    setOptions([])
+
     setActivity({
       ...activity,
+      activityId: selectedActivity.id,
       primaveraId: e.value,
       activityName: e.label,
+      activityTotalAmount: quantityWork,
     })
+  }
+
+  const onChangeInputActivity = (e) => {
+    getActivity(e)
+    // 202-1-PTL3-F1-1.84
   }
 
   const onChangeData = (e) => {
@@ -160,13 +164,14 @@ const Activities = () => {
   ])
 
   const registerActivity = () => {
+    console.log('activity', activity)
+    console.log('data', data)
     if (!activity.activityFrontWork || activity.activityFrontWork === '0') {
       setError(true)
     } else {
-      const activityId = data.find(
-        (item) => item.id_primavera.trim() === activity.primaveraId.trim(),
-      ).id
-
+      // const activityId = data.find(
+      //   (item) => item.id_primavera.trim() === activity.primaveraId.trim(),
+      // ).id
       const activityInitialState = {
         id: uuidv4(),
         activityFrontWork: activity.activityFrontWork,
@@ -181,7 +186,7 @@ const Activities = () => {
         activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
         activityHoursSpendShift: activity.activityHoursSpendShift,
         activityHoursAccumulated: activity.activityHoursAccumulated,
-        activityId: activityId,
+        activityId: activity.activityId,
       }
       setActivity(initialState) // Clear the object
       setSelectedOption({ value: 0, label: 'Seleccione' })
@@ -272,6 +277,9 @@ const Activities = () => {
                 value={selectedOption}
                 onChange={(e) => {
                   onChangeActivity(e)
+                }}
+                onInputChange={(e) => {
+                  onChangeInputActivity(e)
                 }}
                 options={options}
                 styles={{
