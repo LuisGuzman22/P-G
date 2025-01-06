@@ -21,6 +21,7 @@ import { useLocation } from 'react-router-dom'
 import Select from 'react-select'
 import useGetActivityData from 'src/hooks/useGetActivityData'
 import Skeleton from 'react-loading-skeleton'
+import useGetActivityDataPerPrimaveraId from 'src/hooks/useGetActivityDataPerPrimaveraId'
 
 const Activities = () => {
   const currentLocation = useLocation().pathname
@@ -46,6 +47,11 @@ const Activities = () => {
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
+  const {
+    getActivity,
+    isLoading: activityLoading,
+    activityData,
+  } = useGetActivityDataPerPrimaveraId()
 
   const [activity, setActivity] = useState(initialState)
   const [activityList, setActivityList] = useState([])
@@ -55,25 +61,44 @@ const Activities = () => {
 
   const { data, isLoading, error: activityError } = useGetActivityData()
 
-  useEffect(() => {
-    let mapData = []
-    if (data) {
-      data.map((item) => {
-        mapData.push({ value: item.id_primavera, label: item.name })
-      })
-    }
-    setOptions(mapData)
-  }, [data])
-
   const {
     storeActivity,
     removeActivity,
     activityList: activityListContext,
   } = useRegisterDailyReportCompany()
-  // FALTA el editar la actividad, no se esta cargando la actividad primavera
+
+  useEffect(() => {
+    let mapData = []
+
+    if (activityData && activityData.data.data.length > 0) {
+      activityData.data.data.map((item) => {
+        mapData.push({ value: item.id_primavera, label: item.name })
+      })
+    }
+
+    setOptions(mapData)
+  }, [activityData, activityLoading])
+
   const onChangeActivity = (e) => {
+    const selectedActivity = activityData.data.data.find((item) => item.id_primavera === e.value)
+
+    const quantityWork = selectedActivity.material_quantity || 0
+
     setSelectedOption(e)
-    setActivity({ ...activity, primaveraId: e.value, activityName: e.label })
+    setOptions([])
+
+    setActivity({
+      ...activity,
+      activityId: selectedActivity.id,
+      primaveraId: e.value,
+      activityName: e.label,
+      activityTotalAmount: quantityWork,
+    })
+  }
+
+  const onChangeInputActivity = (e) => {
+    getActivity(e)
+    // 205-1-PTL3-F1-1.2
   }
 
   const onChangeData = (e) => {
@@ -128,7 +153,7 @@ const Activities = () => {
 
       const totalHours = activity.activityTotalAmount ? Number(activity.activityTotalAmount) : 0
 
-      const calc = (actualHours + previousHh) / totalHours
+      const calc = ((actualHours + previousHh) * 100) / totalHours
 
       setActivity({ ...activity, activityAccumulatedAdvancePercent: calc.toFixed(2) })
     }
@@ -139,13 +164,17 @@ const Activities = () => {
   ])
 
   const registerActivity = () => {
-    if (!activity.activityFrontWork || activity.activityFrontWork === '0') {
+    if (
+      !activity.activityFrontWork ||
+      activity.activityFrontWork === '0' ||
+      !activity.activityDiscipline ||
+      activity.activityDiscipline === '0'
+    ) {
       setError(true)
     } else {
-      const activityId = data.find(
-        (item) => item.id_primavera.trim() === activity.primaveraId.trim(),
-      ).id
-
+      // const activityId = data.find(
+      //   (item) => item.id_primavera.trim() === activity.primaveraId.trim(),
+      // ).id
       const activityInitialState = {
         id: uuidv4(),
         activityFrontWork: activity.activityFrontWork,
@@ -160,7 +189,7 @@ const Activities = () => {
         activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
         activityHoursSpendShift: activity.activityHoursSpendShift,
         activityHoursAccumulated: activity.activityHoursAccumulated,
-        activityId: activityId,
+        activityId: activity.activityId,
       }
       setActivity(initialState) // Clear the object
       setSelectedOption({ value: 0, label: 'Seleccione' })
@@ -196,7 +225,6 @@ const Activities = () => {
   }
 
   useEffect(() => {
-    console.log('activityList', activityList)
     if (!isViewMode) storeActivity(activityList)
   }, [activityList])
 
@@ -216,7 +244,7 @@ const Activities = () => {
             >
               <div className="d-flex">
                 <CToastBody>
-                  Debe seleccionar el frente de trabajo para generar el registro
+                  Debe seleccionar el frente de trabajo y la disciplina para generar el registro
                 </CToastBody>
               </div>
             </CToast>
@@ -252,6 +280,9 @@ const Activities = () => {
                 value={selectedOption}
                 onChange={(e) => {
                   onChangeActivity(e)
+                }}
+                onInputChange={(e) => {
+                  onChangeInputActivity(e)
                 }}
                 options={options}
                 styles={{
@@ -295,15 +326,20 @@ const Activities = () => {
                   </CFormSelect>
                 </CTableDataCell>
                 <CTableDataCell>
-                  <CFormInput
-                    type="text"
-                    id="activityTotalAmount"
-                    value={activity.activityTotalAmount || ''}
-                    text=""
-                    onChange={(e) => {
-                      onChangeData(e)
-                    }}
-                  />
+                  {activityLoading ? (
+                    <Skeleton />
+                  ) : (
+                    <CFormInput
+                      type="text"
+                      id="activityTotalAmount"
+                      value={activity.activityTotalAmount || '0'}
+                      disabled
+                      text=""
+                      onChange={(e) => {
+                        onChangeData(e)
+                      }}
+                    />
+                  )}
                 </CTableDataCell>
                 <CTableDataCell>
                   <CFormInput

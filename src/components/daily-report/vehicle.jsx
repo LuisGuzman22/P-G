@@ -70,11 +70,9 @@ const Vehicle = () => {
       const vehicleInitialState = {
         id: uuidv4(),
         vehicle: vehicle.vehicle,
-        actions: {
-          vehicleOfferedNumber: vehicle.vehicleOfferedNumber,
-          vehicleCertifiedNumber: vehicle.vehicleCertifiedNumber,
-          vehicleWorkNumber: vehicle.vehicleWorkNumber,
-        },
+        vehicleOfferedNumber: vehicle.vehicleOfferedNumber,
+        vehicleCertifiedNumber: vehicle.vehicleCertifiedNumber,
+        vehicleWorkNumber: vehicle.vehicleWorkNumber,
       }
       setVehicle(initialState) // Clear the object
       setVehicleList([...vehicleListContext, vehicleInitialState])
@@ -91,9 +89,9 @@ const Vehicle = () => {
     const selectedVehicle = vehicleListContext.find((item) => item.id === id)
     setVehicle({
       vehicle: selectedVehicle.vehicle,
-      vehicleOfferedNumber: selectedVehicle.actions.vehicleOfferedNumber,
-      vehicleCertifiedNumber: selectedVehicle.actions.vehicleCertifiedNumber,
-      vehicleWorkNumber: selectedVehicle.actions.vehicleWorkNumber,
+      vehicleOfferedNumber: selectedVehicle.vehicleOfferedNumber,
+      vehicleCertifiedNumber: selectedVehicle.vehicleCertifiedNumber,
+      vehicleWorkNumber: selectedVehicle.vehicleWorkNumber,
     })
     deletevehicle(id)
   }
@@ -112,13 +110,12 @@ const Vehicle = () => {
       vehicleTotalsCounter = {
         vehicleOfferedNumber:
           Number(vehicleTotalsCounter.vehicleOfferedNumber) +
-          Number(data.actions.vehicleOfferedNumber ?? 0),
+          Number(data.vehicleOfferedNumber ?? 0),
         vehicleCertifiedNumber:
           Number(vehicleTotalsCounter.vehicleCertifiedNumber) +
-          Number(data.actions.vehicleCertifiedNumber ?? 0),
+          Number(data.vehicleCertifiedNumber ?? 0),
         vehicleWorkNumber:
-          Number(vehicleTotalsCounter.vehicleWorkNumber) +
-          Number(data.actions.vehicleWorkNumber ?? 0),
+          Number(vehicleTotalsCounter.vehicleWorkNumber) + Number(data.vehicleWorkNumber ?? 0),
       }
     }
     setVehicleTotals(vehicleTotalsCounter)
@@ -236,9 +233,9 @@ const Vehicle = () => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{charge.name}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleOfferedNumber ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleCertifiedNumber ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.vehicleWorkNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleOfferedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleCertifiedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.vehicleWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
                     {(isCreatingMode || isEditMode) && (
                       <CButton

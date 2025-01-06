@@ -71,11 +71,9 @@ const EquipmentMachinery = () => {
       const equipmentInitialState = {
         id: uuidv4(),
         equipment: equipment.equipment,
-        actions: {
-          equipmentOfferedNumber: equipment.equipmentOfferedNumber,
-          equipmentCertifiedNumber: equipment.equipmentCertifiedNumber,
-          equipmentWorkNumber: equipment.equipmentWorkNumber,
-        },
+        equipmentOfferedNumber: equipment.equipmentOfferedNumber,
+        equipmentCertifiedNumber: equipment.equipmentCertifiedNumber,
+        equipmentWorkNumber: equipment.equipmentWorkNumber,
       }
       setEquipment(initialState) // Clear the object
       setEquipmentList([...equipmentListContext, equipmentInitialState])
@@ -92,9 +90,9 @@ const EquipmentMachinery = () => {
     const selectedEquipment = equipmentListContext.find((item) => item.id === id)
     setEquipment({
       equipment: selectedEquipment.equipment,
-      equipmentOfferedNumber: selectedEquipment.actions.equipmentOfferedNumber,
-      equipmentCertifiedNumber: selectedEquipment.actions.equipmentCertifiedNumber,
-      equipmentWorkNumber: selectedEquipment.actions.equipmentWorkNumber,
+      equipmentOfferedNumber: selectedEquipment.equipmentOfferedNumber,
+      equipmentCertifiedNumber: selectedEquipment.equipmentCertifiedNumber,
+      equipmentWorkNumber: selectedEquipment.equipmentWorkNumber,
     })
     deleteEquipment(id)
   }
@@ -114,13 +112,13 @@ const EquipmentMachinery = () => {
       equipmentTotalsInitialStateCounter = {
         equipmentOfferedNumber:
           Number(equipmentTotalsInitialStateCounter.equipmentOfferedNumber) +
-          Number(data.actions.equipmentOfferedNumber ?? 0),
+          Number(data.equipmentOfferedNumber ?? 0),
         equipmentCertifiedNumber:
           Number(equipmentTotalsInitialStateCounter.equipmentCertifiedNumber) +
-          Number(data.actions.equipmentCertifiedNumber ?? 0),
+          Number(data.equipmentCertifiedNumber ?? 0),
         equipmentWorkNumber:
           Number(equipmentTotalsInitialStateCounter.equipmentWorkNumber) +
-          Number(data.actions.equipmentWorkNumber ?? 0),
+          Number(data.equipmentWorkNumber ?? 0),
       }
     }
     setEquipmentTotals(equipmentTotalsInitialStateCounter)
@@ -238,9 +236,9 @@ const EquipmentMachinery = () => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{charge.name}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentOfferedNumber ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentCertifiedNumber ?? 0}</CTableDataCell>
-                  <CTableDataCell>{item.actions.equipmentWorkNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentOfferedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentCertifiedNumber ?? 0}</CTableDataCell>
+                  <CTableDataCell>{item.equipmentWorkNumber ?? 0}</CTableDataCell>
                   <CTableDataCell>
                     {(isCreatingMode || isEditMode) && (
                       <CButton

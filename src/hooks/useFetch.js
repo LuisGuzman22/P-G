@@ -70,6 +70,18 @@ const fetchActivityData = async (projectId, contractId) => {
   return res.data.data
 }
 
+const fetchActivityDataPerPrimaveraId = async (projectId, contractId, primaveraId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/activities/search?contract_id=${contractId}&project_id=${projectId}&id_primavera=${primaveraId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data.data
+}
+
 const testToken = async () => {
   const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/test`, {
     headers: {
@@ -203,6 +215,30 @@ const fetchCompany = async () => {
 const fetchGantt = async () => {
   const res = await axios.get(
     `${process.env.REACT_APP_BASE_URL}api/v1/activities/gantt?start_date=2024-01-01&end_date=2024-12-12`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data
+}
+
+const fetchSChart = async (contractId, projectId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/projects/curvaS/${projectId}/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data
+}
+
+const fetchGeneralProgress = async (contractId, projectId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/projects/generalAdvance/${projectId}/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -439,7 +475,7 @@ export const useFetchCompany = () => {
   })
 }
 
-export const useFetchActiviryData = (projectId, contractId) => {
+export const useFetchActivityData = (projectId, contractId) => {
   return useQuery({
     queryKey: ['activities'],
     staleTime: 0,
@@ -447,6 +483,18 @@ export const useFetchActiviryData = (projectId, contractId) => {
     refetchType: 'all',
     queryFn: async () => {
       return fetchActivityData(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchActivityDataPerPrimaveraId = (projectId, contractId, primaveraId) => {
+  return useQuery({
+    queryKey: ['primavera-activity'],
+    staleTime: 0,
+    gcTime: 2147483647,
+    refetchType: 'all',
+    queryFn: async () => {
+      return fetchActivityDataPerPrimaveraId(projectId, contractId, primaveraId)
     },
   })
 }
@@ -459,6 +507,30 @@ export const useFetchGant = () => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchGantt()
+    },
+  })
+}
+
+export const useFetchSChart = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['s-chart'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchSChart(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchGeneralProgress = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['general-progress-chart'],
+    refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchGeneralProgress(projectId, contractId)
     },
   })
 }
