@@ -108,7 +108,6 @@ const Machinery = () => {
       machineryCertifiedNumber: 0,
       machineryWorkNumber: 0,
     }
-
     for (let data of machineryListContext) {
       machineryTotalsCounter = {
         machineryOfferedNumber:

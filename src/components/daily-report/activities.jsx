@@ -82,7 +82,7 @@ const Activities = () => {
   const onChangeActivity = (e) => {
     const selectedActivity = activityData.data.data.find((item) => item.id_primavera === e.value)
 
-    const quantityWork = selectedActivity.base_line_quantity_work || 0
+    const quantityWork = selectedActivity.material_quantity || 0
 
     setSelectedOption(e)
     setOptions([])
@@ -98,7 +98,7 @@ const Activities = () => {
 
   const onChangeInputActivity = (e) => {
     getActivity(e)
-    // 202-1-PTL3-F1-1.84
+    // 205-1-PTL3-F1-1.2
   }
 
   const onChangeData = (e) => {
@@ -164,9 +164,12 @@ const Activities = () => {
   ])
 
   const registerActivity = () => {
-    console.log('activity', activity)
-    console.log('data', data)
-    if (!activity.activityFrontWork || activity.activityFrontWork === '0') {
+    if (
+      !activity.activityFrontWork ||
+      activity.activityFrontWork === '0' ||
+      !activity.activityDiscipline ||
+      activity.activityDiscipline === '0'
+    ) {
       setError(true)
     } else {
       // const activityId = data.find(
@@ -241,7 +244,7 @@ const Activities = () => {
             >
               <div className="d-flex">
                 <CToastBody>
-                  Debe seleccionar el frente de trabajo para generar el registro
+                  Debe seleccionar el frente de trabajo y la disciplina para generar el registro
                 </CToastBody>
               </div>
             </CToast>

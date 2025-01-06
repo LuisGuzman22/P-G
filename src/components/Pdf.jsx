@@ -64,7 +64,7 @@ const Pdf = (props) => {
     shifts,
     diciplines,
   } = basicQuery
-  // console.log('props', props.photoList)
+  // console.log('props', pieChartData)
 
   const [selectedWeather, setSelectedWeather] = useState('')
   const [selectedDirectStaffShift, setSelectedDirectStaffShift] = useState('')
@@ -119,9 +119,9 @@ const Pdf = (props) => {
     let macOperationalLoss = 0
     let macHorometer = 0
     machineryList.map((mac) => {
-      macOffered = macOffered + Number(mac.actions.machineryOfferedNumber)
-      macCertified = macCertified + Number(mac.actions.machineryCertifiedNumber)
-      macWork = macWork + Number(mac.actions.machineryWorkNumber)
+      macOffered = macOffered + Number(mac.machineryOfferedNumber)
+      macCertified = macCertified + Number(mac.machineryCertifiedNumber)
+      macWork = macWork + Number(mac.machineryWorkNumber)
 
       const selectedAsarco = asarcoMachineryList.find((asarco) => {
         return asarco.machinery === mac.machinery
@@ -216,9 +216,9 @@ const Pdf = (props) => {
     let equipFinalHorometer = 0
 
     equipmentList.map((equi) => {
-      equipOffered = equipOffered + Number(equi.actions.equipmentOfferedNumber)
-      equipCertified = equipCertified + Number(equi.actions.equipmentCertifiedNumber)
-      equipWork = equipWork + Number(equi.actions.equipmentWorkNumber)
+      equipOffered = equipOffered + Number(equi.equipmentOfferedNumber)
+      equipCertified = equipCertified + Number(equi.equipmentCertifiedNumber)
+      equipWork = equipWork + Number(equi.equipmentWorkNumber)
 
       const selectedEquipmentPlate = equipmentPlateList.find((equipPlate) => {
         return equipPlate.equipment === equi.equipment
@@ -277,9 +277,9 @@ const Pdf = (props) => {
     let vehicFinalHorometer = 0
 
     vehicleList.map((veh) => {
-      vehicOffered = vehicOffered + Number(veh.actions.vehicleOfferedNumber)
-      vehicCertified = vehicCertified + Number(veh.actions.vehicleCertifiedNumber)
-      vehicWork = vehicWork + Number(veh.actions.vehicleWorkNumber)
+      vehicOffered = vehicOffered + Number(veh.vehicleOfferedNumber)
+      vehicCertified = vehicCertified + Number(veh.vehicleCertifiedNumber)
+      vehicWork = vehicWork + Number(veh.vehicleWorkNumber)
 
       const selectedVehiclePlate = vehiclePlateList.find((VehicPlate) => {
         return VehicPlate.vehicle === veh.vehicle
@@ -322,6 +322,8 @@ const Pdf = (props) => {
     setImagenColumnChart(dotationChart?.value || '')
     setImagenPieChart(asarcoChart?.value || '')
   }, [graphList])
+
+  console.log('asarcoMachineryList', asarcoMachineryList)
 
   // const toDataURL = (url) =>
   //   fetch(url, { mode: 'no-cors' })
@@ -696,9 +698,9 @@ const Pdf = (props) => {
                           <tr key={data.id}>
                             <td className="">{selectedMachinery.name ?? ''}</td>
                             <td className="">{selectedPlate.label ?? ''}</td>
-                            <td className="">{data.actions.machineryOfferedNumber}</td>
-                            <td className="">{data.actions.machineryCertifiedNumber}</td>
-                            <td className="">{data.actions.machineryWorkNumber}</td>
+                            <td className="">{data.machineryOfferedNumber}</td>
+                            <td className="">{data.machineryCertifiedNumber}</td>
+                            <td className="">{data.machineryWorkNumber}</td>
                             <td className="">{selectedAsarco.asarcoMachineryEffectiveTime || 0}</td>
                             <td className="">
                               {selectedAsarco.asarcoMachineryUnscheduleMaintenance}
@@ -806,9 +808,9 @@ const Pdf = (props) => {
                           <tr key={data.id}>
                             <td className="">{selectedEquipment.name ?? ''}</td>
                             <td className="">{selectedPlate.label ?? ''}</td>
-                            <td className="">{data.actions.equipmentOfferedNumber}</td>
-                            <td className="">{data.actions.equipmentCertifiedNumber}</td>
-                            <td className="">{data.actions.equipmentWorkNumber}</td>
+                            <td className="">{data.equipmentOfferedNumber}</td>
+                            <td className="">{data.equipmentCertifiedNumber}</td>
+                            <td className="">{data.equipmentWorkNumber}</td>
                             <td className="">
                               {selectedEquipmentPlate.equipmentEffectiveTime || 0}
                             </td>
@@ -911,9 +913,9 @@ const Pdf = (props) => {
                           <tr key={data.id}>
                             <td className="">{selectedVehicle.name ?? ''}</td>
                             <td className="">{selectedPlate.label ?? ''}</td>
-                            <td className="">{data.actions.vehicleOfferedNumber}</td>
-                            <td className="">{data.actions.vehicleCertifiedNumber}</td>
-                            <td className="">{data.actions.vehicleWorkNumber}</td>
+                            <td className="">{data.vehicleOfferedNumber}</td>
+                            <td className="">{data.vehicleCertifiedNumber}</td>
+                            <td className="">{data.vehicleWorkNumber}</td>
                             <td className="">{selectedVehiclePlate.vehicleEffectiveTime || 0}</td>
                             <td className="">
                               {selectedVehiclePlate.vehicleCorrectiveMaintenance}

@@ -153,12 +153,15 @@ export const DailyReportProvider = ({ children }) => {
     if (selectedMachineryList)
       for (let mach of selectedMachineryList) {
         const machMachinery = mach.machinery
-        const actions = JSON.parse(mach.actions)
+        // const actions = JSON.parse(mach.actions)
         maList.push({
           machinery: machMachinery,
-          actions,
+          machineryOfferedNumber: mach.machineryOfferedNumber,
+          machineryCertifiedNumber: mach.machineryCertifiedNumber,
+          machineryWorkNumber: mach.machineryWorkNumber,
         })
       }
+
     setMachineryList(maList)
   }, [selectedMachineryList])
 
@@ -181,10 +184,13 @@ export const DailyReportProvider = ({ children }) => {
     if (selectedEquipmentList) {
       for (let equi of selectedEquipmentList) {
         const equipEquip = equi.equipment
-        const actions = JSON.parse(equi.actions)
+        // const actions = JSON.parse(equi.actions)
         equipList.push({
           equipment: equipEquip,
-          actions,
+          equipmentOfferedNumber: equi.equipmentOfferedNumber,
+          equipmentCertifiedNumber: equi.equipmentCertifiedNumber,
+          equipmentWorkNumber: equi.equipmentWorkNumber,
+          // actions,
         })
       }
     }
@@ -204,10 +210,13 @@ export const DailyReportProvider = ({ children }) => {
     if (selectedVehicleList) {
       for (let veh of selectedVehicleList) {
         const vehVehicle = veh.vehicle
-        const actions = JSON.parse(veh.actions)
+        // const actions = JSON.parse(veh.actions)
         vehList.push({
           vehicle: vehVehicle,
-          actions,
+          vehicleOfferedNumber: veh.vehicleOfferedNumber,
+          vehicleCertifiedNumber: veh.vehicleCertifiedNumber,
+          vehicleWorkNumber: veh.vehicleWorkNumber,
+          // actions,
         })
       }
     }
