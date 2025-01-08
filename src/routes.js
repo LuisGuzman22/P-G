@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Dashboard = React.lazy(() => import('./pages/Dashboard'))
+const HomePage = React.lazy(() => import('./pages/HomePage'))
 const DailyReport = React.lazy(() => import('./pages/DailyReportPage'))
 const DailyReportView = React.lazy(() => import('./pages/DailyReportViewPage'))
 const DailyReportEdit = React.lazy(() => import('./pages/DailyReportEditPage'))
@@ -33,7 +33,7 @@ const ChartsPage = React.lazy(() => import('./pages/ChartsPage'))
 const routes = [
   { path: '/', name: 'Login', protected: false },
   { path: '/login', name: 'Login', protected: false },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard, protected: true },
+  { path: '/inicio', name: 'Home', element: HomePage, protected: true },
   { path: '/trisemanal', name: 'Trisemanal', element: Trisemanal, protected: true },
   {
     path: '/panel-informativo',
@@ -138,7 +138,7 @@ const routes = [
     protected: true,
   },
   {
-    path: '/graficos',
+    path: '/dashboard',
     name: 'Dashboard graficos',
     element: ChartsPage,
     protected: true,

@@ -35,7 +35,7 @@ import {
   faTableList,
 } from '@fortawesome/free-solid-svg-icons'
 
-const Dashboard = () => {
+const HomePage = () => {
   const queryClient = useQueryClient()
   let navigate = useNavigate()
   const { getProject, getContract } = useRegisterGeneralData()
@@ -209,7 +209,7 @@ const Dashboard = () => {
                     {/* </CTooltip> */}
                   </CCol>
                   <CCol sm={4}>
-                    <CButton className="dashboard-button" onClick={() => redirectTo('/graficos')}>
+                    <CButton className="dashboard-button" onClick={() => redirectTo('/dashboard')}>
                       <div className="button-container">
                         <FontAwesomeIcon icon={faChartColumn} size="2xl" className="icon-button" />
                         <div className="button-label">
@@ -275,4 +275,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default HomePage
