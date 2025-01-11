@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Dashboard = React.lazy(() => import('./pages/Dashboard'))
+const HomePage = React.lazy(() => import('./pages/HomePage'))
 const DailyReport = React.lazy(() => import('./pages/DailyReportPage'))
 const DailyReportView = React.lazy(() => import('./pages/DailyReportViewPage'))
 const DailyReportEdit = React.lazy(() => import('./pages/DailyReportEditPage'))
@@ -24,6 +24,7 @@ const IndirectPersonalMaintainer = React.lazy(
 )
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDocMaintainerPage'))
+const CarouselMaintainerPage = React.lazy(() => import('./pages/CarouselMaintainerPage'))
 const UserMaintainerPage = React.lazy(() => import('./pages/UserMaintainerPage'))
 const ContractAsignPage = React.lazy(() => import('./pages/ContractAsignPage'))
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
@@ -33,7 +34,7 @@ const ChartsPage = React.lazy(() => import('./pages/ChartsPage'))
 const routes = [
   { path: '/', name: 'Login', protected: false },
   { path: '/login', name: 'Login', protected: false },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard, protected: true },
+  { path: '/inicio', name: 'Inicio', element: HomePage, protected: true },
   { path: '/trisemanal', name: 'Trisemanal', element: Trisemanal, protected: true },
   {
     path: '/panel-informativo',
@@ -120,6 +121,12 @@ const routes = [
     protected: true,
   },
   {
+    path: '/maintainer/carousel',
+    name: 'Administrar imágenes carrusel',
+    element: CarouselMaintainerPage,
+    protected: true,
+  },
+  {
     path: '/dashboard-reportes',
     name: 'Dashboard reportes',
     element: DashboardReportesPage,
@@ -138,7 +145,7 @@ const routes = [
     protected: true,
   },
   {
-    path: '/graficos',
+    path: '/dashboard',
     name: 'Dashboard graficos',
     element: ChartsPage,
     protected: true,

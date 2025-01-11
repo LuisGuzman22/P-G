@@ -310,6 +310,10 @@ export const DailyReportProvider = ({ children }) => {
     setIndirectCompanyTurnList(selectedIndirectCompanyTurnList || [])
   }, [selectedIndirectCompanyTurnList])
 
+  // useEffect(() => {
+  //   console.log('company', company)
+  // }, [company])
+
   const storeCompanyData = async (data) => {
     switch (data.target.id) {
       case 'dailyReportDate':

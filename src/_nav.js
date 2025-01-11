@@ -22,14 +22,14 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Dashboard',
+    name: 'Panel',
     to: '/base',
     icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: 'Inicio',
-        to: '/dashboard',
+        to: '/inicio',
         icon: <CIcon icon={cilHome} customClassName="nav-icon" />,
       },
       {
@@ -71,7 +71,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Dashboard',
-        to: '/graficos',
+        to: '/dashboard',
         icon: <CIcon icon={cilChart} customClassName="nav-icon" />,
       },
     ],
@@ -170,6 +170,12 @@ const _nav = [
             component: CNavItem,
             name: 'Adm. Doc. Técnica',
             to: '/maintainer/technical-doc',
+            icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+          },
+          {
+            component: CNavItem,
+            name: 'Adm. imágenes carrusel',
+            to: '/maintainer/carousel',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
         ],

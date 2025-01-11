@@ -14,9 +14,10 @@ const useGetActivityDataPerPrimaveraId = () => {
 
   const mutation = useMutation({
     mutationFn: async (primaveraId) => {
+      const primaveraIdQuery = primaveraId ? `&id_primavera=${primaveraId}` : ''
       setIsLoading(true)
       return await axios.get(
-        `${process.env.REACT_APP_BASE_URL}api/v1/activities/search?contract_id=${contractLS.id}&project_id=${projectLS.id}&id_primavera=${primaveraId}`,
+        `${process.env.REACT_APP_BASE_URL}api/v1/activities/search?contract_id=${contractLS.id}&project_id=${projectLS.id}${primaveraIdQuery}`,
       )
     },
     onSuccess: (suc) => {
