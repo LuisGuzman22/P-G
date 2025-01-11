@@ -83,7 +83,15 @@ const EquipmentPlate = () => {
       !equipmentPlate.equipment ||
       equipmentPlate.equipment === '0' ||
       !equipmentPlate.equipmentPlate ||
-      equipmentPlate.equipmentPlate === '0'
+      equipmentPlate.equipmentPlate === '0' ||
+      !equipmentPlate.equipmentEffectiveTime ||
+      !equipmentPlate.equipmentCorrectiveMaintenance ||
+      !equipmentPlate.equipmentPreventiveMaintenance ||
+      !equipmentPlate.equipmentOutOfService ||
+      !equipmentPlate.equipmentWaiting ||
+      !equipmentPlate.equipmentNoOperator ||
+      !equipmentPlate.equipmentInitialHorometer ||
+      !equipmentPlate.equipmentFinalHorometer
     ) {
       setError(true)
     } else {
@@ -155,7 +163,8 @@ const EquipmentPlate = () => {
             >
               <div className="d-flex">
                 <CToastBody>
-                  Debe seleccionar el equipo y su patente para generar el registro
+                  Debe seleccionar el equipo, su patente y llenar todos los campos para generar el
+                  registro
                 </CToastBody>
               </div>
             </CToast>

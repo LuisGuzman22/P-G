@@ -12,6 +12,7 @@ import {
   CTableDataCell,
   CToast,
   CToastBody,
+  CTooltip,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { v4 as uuidv4 } from 'uuid'
@@ -78,6 +79,10 @@ const Activities = () => {
 
     setOptions(mapData)
   }, [activityData, activityLoading])
+
+  useEffect(() => {
+    getActivity()
+  }, [])
 
   const onChangeActivity = (e) => {
     const selectedActivity = activityData.data.data.find((item) => item.id_primavera === e.value)
@@ -155,7 +160,10 @@ const Activities = () => {
 
       const calc = ((actualHours + previousHh) * 100) / totalHours
 
-      setActivity({ ...activity, activityAccumulatedAdvancePercent: calc.toFixed(2) })
+      setActivity({ ...activity, activityAccumulatedAdvancePercent: calc.toFixed(2) || 0 })
+    }
+    if (activity.activityTotalAmount === 0) {
+      setActivity({ ...activity, activityAccumulatedAdvancePercent: 0 })
     }
   }, [
     activity.activityPreviousAcumulatedAmount,
@@ -271,7 +279,13 @@ const Activities = () => {
             <Skeleton />
           ) : (
             <>
-              <label className="form-label">Actividad primavera</label>
+              <CTooltip
+                content="Comience a escribir el ID Primavera o el nombre de la actividad. Las opciones se mostrarán automáticamente para seleccionarlas."
+                placement="top"
+                style={{ width: '100%' }}
+              >
+                <label className="form-label">Actividad primavera</label>
+              </CTooltip>
               <Select
                 id="primaveraId"
                 className="primaveraId"
@@ -368,7 +382,7 @@ const Activities = () => {
                   <CFormInput
                     type="text"
                     id="activityAccumulatedAdvancePercent"
-                    value={activity.activityAccumulatedAdvancePercent || ''}
+                    value={activity.activityAccumulatedAdvancePercent || '0'}
                     disabled
                     text=""
                     onChange={(e) => {

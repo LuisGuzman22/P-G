@@ -365,6 +365,11 @@ body {
   white-space: nowrap;
 }
 
+// toast fade bg-danger border-0 show text-white align-items-center
+.toast {
+  width: 100%;
+}
+
 .form-group {
   display: block;
   overflow-x: auto;

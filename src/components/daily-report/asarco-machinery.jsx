@@ -134,7 +134,18 @@ const AsarcoMachinery = () => {
   }
 
   const registerAsarcoMachinery = () => {
-    if (!asarcoMachinery.machinery || !asarcoMachinery.machineryPlate) {
+    if (
+      !asarcoMachinery.machinery ||
+      !asarcoMachinery.machineryPlate ||
+      !asarcoMachinery.asarcoMachineryEffectiveTime ||
+      !asarcoMachinery.asarcoMachineryUnscheduleMaintenance ||
+      !asarcoMachinery.asarcoMachineryScheduleMaintenance ||
+      !asarcoMachinery.asarcoMachineryUnscheduleDelay ||
+      !asarcoMachinery.asarcoMachineryReserves ||
+      !asarcoMachinery.asarcoMachineryHorometer ||
+      !asarcoMachinery.asarcoMachineryOpperationalLoss ||
+      !asarcoMachinery.asarcoMachineryScheduleDelay
+    ) {
       setError(true)
     } else {
       setPlates()
@@ -290,11 +301,13 @@ const AsarcoMachinery = () => {
             >
               <div className="d-flex">
                 <CToastBody>
-                  Debe seleccionar la máquina y su patente para generar el registro
+                  Debe seleccionar la máquina, su patente y llenar todos los campos para generar el
+                  registro
                 </CToastBody>
               </div>
             </CToast>
           )}
+
           <CFormSelect
             aria-label="Default select example"
             label="Maquinaria"

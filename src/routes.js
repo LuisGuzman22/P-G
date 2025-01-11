@@ -24,6 +24,7 @@ const IndirectPersonalMaintainer = React.lazy(
 )
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDocMaintainerPage'))
+const CarouselMaintainerPage = React.lazy(() => import('./pages/CarouselMaintainerPage'))
 const UserMaintainerPage = React.lazy(() => import('./pages/UserMaintainerPage'))
 const ContractAsignPage = React.lazy(() => import('./pages/ContractAsignPage'))
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
@@ -33,7 +34,7 @@ const ChartsPage = React.lazy(() => import('./pages/ChartsPage'))
 const routes = [
   { path: '/', name: 'Login', protected: false },
   { path: '/login', name: 'Login', protected: false },
-  { path: '/inicio', name: 'Home', element: HomePage, protected: true },
+  { path: '/inicio', name: 'Inicio', element: HomePage, protected: true },
   { path: '/trisemanal', name: 'Trisemanal', element: Trisemanal, protected: true },
   {
     path: '/panel-informativo',
@@ -117,6 +118,12 @@ const routes = [
     path: '/maintainer/technical-doc',
     name: 'Administrar Documentación técnica',
     element: TechnicalDocMaintainerPage,
+    protected: true,
+  },
+  {
+    path: '/maintainer/carousel',
+    name: 'Administrar imágenes carrusel',
+    element: CarouselMaintainerPage,
     protected: true,
   },
   {

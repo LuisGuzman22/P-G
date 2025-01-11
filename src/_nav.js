@@ -172,6 +172,12 @@ const _nav = [
             to: '/maintainer/technical-doc',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
+          {
+            component: CNavItem,
+            name: 'Adm. imágenes carrusel',
+            to: '/maintainer/carousel',
+            icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+          },
         ],
       },
     ],
