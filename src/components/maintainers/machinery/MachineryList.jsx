@@ -16,7 +16,7 @@ import ModalAddMachinery from './ModalAddMachinery'
 import './css.scss'
 
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import { MRT_ColumnDef } from 'material-react-table'
+import { MRT_Localization_ES } from 'material-react-table/locales/es' // Importar localización en español
 
 import { MenuItem } from '@mui/material'
 
@@ -74,6 +74,29 @@ const MachineryList = () => {
       accessorKey: 'plates',
       header: 'Patentes',
     },
+    {
+      header: 'Acciones',
+      Cell: (data) => (
+        <>
+          <CButton
+            className="btn-action-edit"
+            onClick={() => {
+              handleEditMachinery(data.row.original)
+            }}
+          >
+            <CIcon icon={cilPencil} />
+          </CButton>
+          <CButton
+            className="btn-action-delete"
+            onClick={() => {
+              deleteMachinery(data.row.original.id)
+            }}
+          >
+            <CIcon icon={cilTrash} />
+          </CButton>
+        </>
+      ),
+    },
   ]
 
   const table = useMaterialReactTable({
@@ -85,6 +108,7 @@ const MachineryList = () => {
     enableDensityToggle: false,
     enableFullScreenToggle: false,
     enableHiding: false,
+    enableCellActions: false,
     // muiTableHeadCellProps: {
     //   sx: {
     //     backgroundColor: 'red',
@@ -103,7 +127,7 @@ const MachineryList = () => {
       },
     },
     paginationDisplayMode: 'pages',
-    enableRowActions: true,
+    enableRowActions: false,
     positionActionsColumn: 'last',
     renderRowActionMenuItems: ({ row }) => [
       <MenuItem
@@ -118,6 +142,7 @@ const MachineryList = () => {
         Eliminar
       </MenuItem>,
     ],
+    localization: MRT_Localization_ES,
   })
 
   return (
