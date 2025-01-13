@@ -16,7 +16,7 @@ import ModalAddMachinery from './ModalAddMachinery'
 import './css.scss'
 
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import { MRT_Localization_ES } from 'material-react-table/locales/es' // Importar localización en español
+import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
 

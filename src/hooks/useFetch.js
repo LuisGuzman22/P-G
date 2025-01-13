@@ -253,7 +253,7 @@ const userType = localStorage.getItem('USER_TYPE')
 export const useFetchProyects = (projectId) => {
   return useQuery({
     queryKey: ['projects'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -265,7 +265,7 @@ export const useFetchProyects = (projectId) => {
 export const useFetchContract = (contractId) => {
   return useQuery({
     queryKey: ['contracts'],
-    refetchType: 'all',
+    // refetchType: 'all',
     queryFn: async () => {
       return fetchContracts(contractId)
     },
@@ -275,9 +275,9 @@ export const useFetchContract = (contractId) => {
 export const useFetchBasicData = (contractId) => {
   return useQuery({
     queryKey: ['basics'],
-    staleTime: 0,
+    staleTime: 1000 * 60 * 60,
     gcTime: 2147483647,
-    refetchType: 'all',
+    // refetchType: 'all',
     queryFn: async () => {
       return fetchBasicData(contractId)
     },
@@ -287,7 +287,7 @@ export const useFetchBasicData = (contractId) => {
 export const useFetchUserList = () => {
   return useQuery({
     queryKey: ['users'],
-    refetchType: 'all',
+    // refetchType: 'all',
     queryFn: async () => {
       return fetchUsers()
     },
@@ -297,9 +297,9 @@ export const useFetchUserList = () => {
 // export const useFetchReportsData = () => {
 //   return useQuery({
 //     queryKey: ['reports'],
-//     staleTime: 0,
+//     staleTime: 1000 * 60 * 60,
 //     gcTime: 2147483647,
-//     refetchType: 'all',
+//     // refetchType: 'all',
 //     queryFn: async () => {
 //       return fetchReportsData()
 //     },
@@ -309,9 +309,9 @@ export const useFetchUserList = () => {
 export const useFetchReportsData = (contractId, projectId) => {
   return useQuery({
     queryKey: ['reports'],
-    staleTime: 0,
+    staleTime: 1000 * 60 * 60,
     gcTime: 2147483647,
-    refetchType: 'all',
+    // refetchType: 'all',
     queryFn: async () => {
       return fetchReportsData(contractId, projectId)
     },
@@ -322,9 +322,9 @@ export const useFetchReportData = () => {
   const reportId = localStorage.getItem('daily_report')
   return useQuery({
     queryKey: ['selectedReport'],
-    staleTime: 0,
+    staleTime: 1000 * 60 * 60,
     gcTime: 2147483647,
-    refetchType: 'all',
+    // refetchType: 'all',
     queryFn: async () => {
       return reportId && reportId !== 'undefined' ? fetchReportDataByReportId(reportId) : undefined
     },
@@ -334,9 +334,9 @@ export const useFetchReportData = () => {
 export const useFetchPlanningData = (projectId, contractId) => {
   return useQuery({
     queryKey: ['planning'],
-    staleTime: 0,
+    staleTime: 1000 * 60 * 60,
     gcTime: 2147483647,
-    refetchType: 'all',
+    // refetchType: 'all',
     queryFn: async () => {
       return fetchPlanninglData(projectId, contractId)
     },
@@ -346,9 +346,9 @@ export const useFetchPlanningData = (projectId, contractId) => {
 export const useFetchTrisemanalData = (planningId) => {
   return useQuery({
     queryKey: ['trisemanal'],
-    staleTime: 0,
+    staleTime: 1000 * 60 * 60,
     gcTime: 2147483647,
-    refetchType: 'all',
+    // refetchType: 'all',
     queryFn: async () => {
       return fetchTrisemanalData(planningId)
     },
@@ -358,7 +358,7 @@ export const useFetchTrisemanalData = (planningId) => {
 export const useFetchMachinery = () => {
   return useQuery({
     queryKey: ['machinery'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -370,7 +370,7 @@ export const useFetchMachinery = () => {
 export const useFetchVehicle = () => {
   return useQuery({
     queryKey: ['vehicle'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -382,7 +382,7 @@ export const useFetchVehicle = () => {
 export const useFetchEquipment = () => {
   return useQuery({
     queryKey: ['equipment'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -394,7 +394,7 @@ export const useFetchEquipment = () => {
 export const useFetchDirectPersonal = () => {
   return useQuery({
     queryKey: ['direct-personal'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -406,7 +406,7 @@ export const useFetchDirectPersonal = () => {
 export const useFetchIndirectPersonal = () => {
   return useQuery({
     queryKey: ['indirect-personal'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -418,7 +418,7 @@ export const useFetchIndirectPersonal = () => {
 export const useFetchAljibe = () => {
   return useQuery({
     queryKey: ['aljibe'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -430,7 +430,7 @@ export const useFetchAljibe = () => {
 export const useFetchGetTechnicalDocumentation = (projectId, contractId) => {
   return useQuery({
     queryKey: ['technical-documentation'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -442,7 +442,7 @@ export const useFetchGetTechnicalDocumentation = (projectId, contractId) => {
 export const useFetchGetTechnicalDocumentationCategories = (projectId, contractId) => {
   return useQuery({
     queryKey: ['technical-documentation-categories'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -454,7 +454,7 @@ export const useFetchGetTechnicalDocumentationCategories = (projectId, contractI
 export const useFetchUser = () => {
   return useQuery({
     queryKey: ['user'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -466,7 +466,7 @@ export const useFetchUser = () => {
 export const useFetchCompany = () => {
   return useQuery({
     queryKey: ['company'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -478,9 +478,9 @@ export const useFetchCompany = () => {
 export const useFetchActivityData = (projectId, contractId) => {
   return useQuery({
     queryKey: ['activities'],
-    staleTime: 0,
+    staleTime: 1000 * 60 * 60,
     gcTime: 2147483647,
-    refetchType: 'all',
+    // refetchType: 'all',
     queryFn: async () => {
       return fetchActivityData(projectId, contractId)
     },
@@ -490,9 +490,9 @@ export const useFetchActivityData = (projectId, contractId) => {
 export const useFetchActivityDataPerPrimaveraId = (projectId, contractId, primaveraId) => {
   return useQuery({
     queryKey: ['primavera-activity'],
-    staleTime: 0,
+    staleTime: 1000 * 60 * 60,
     gcTime: 2147483647,
-    refetchType: 'all',
+    // refetchType: 'all',
     queryFn: async () => {
       return fetchActivityDataPerPrimaveraId(projectId, contractId, primaveraId)
     },
@@ -502,7 +502,7 @@ export const useFetchActivityDataPerPrimaveraId = (projectId, contractId, primav
 export const useFetchGant = () => {
   return useQuery({
     queryKey: ['gantt-chart'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -514,7 +514,7 @@ export const useFetchGant = () => {
 export const useFetchSChart = (projectId, contractId) => {
   return useQuery({
     queryKey: ['s-chart'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
@@ -526,7 +526,7 @@ export const useFetchSChart = (projectId, contractId) => {
 export const useFetchGeneralProgress = (projectId, contractId) => {
   return useQuery({
     queryKey: ['general-progress-chart'],
-    refetchType: 'all',
+    // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {

@@ -33,6 +33,10 @@ export const DailyReportProvider = ({ children }) => {
     })
   }
 
+  useEffect(() => {
+    console.log('selectedReportQuery', selectedReportQuery)
+  }, [selectedReportQuery])
+
   const selectedCompany = selectedReportQuery?.company
   const selectedIndirectCompanyTurnList = selectedReportQuery?.indirectCompanyTurnList
   const selectedIndirectWorkForceList = selectedReportQuery?.indirectWorkForceList
