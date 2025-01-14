@@ -38,6 +38,7 @@ import Loading from './loading'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useFetchReportData } from 'src/hooks/useFetch'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
+import Skeleton from 'react-loading-skeleton'
 
 const DailyReportCollapse = () => {
   const { registerData, loading, error, success, clearData, errorMessage } =
@@ -63,10 +64,14 @@ const DailyReportCollapse = () => {
   //   loadData()
   // }, [localStorage.getItem('daily_report')])
 
-  // useEffect(() => {
-  //   console.log('isFetching', isFetching)
-  //   if (!isFetching) loadData()
-  // }, [isFetching])
+  useEffect(() => {
+    console.log('isFetching', isFetching)
+    if (!isFetching) loadData()
+  }, [isFetching])
+
+  useEffect(() => {
+    console.log('loading', loading)
+  }, [loading])
 
   const [showError, setShowError] = useState(false)
   useEffect(() => {
@@ -83,6 +88,7 @@ const DailyReportCollapse = () => {
 
   const handleLoadData = () => {
     setVisible(false)
+    console.log('reportsQuery[0].id', reportsQuery[0].id)
     localStorage.setItem('daily_report', reportsQuery[0].id)
     loadData()
   }
@@ -110,15 +116,19 @@ const DailyReportCollapse = () => {
           >
             No cargar
           </CButton>
-          <CButton
-            className="confirm-btn"
-            onClick={() => {
-              localStorage.removeItem('daily_report')
-              handleLoadData()
-            }}
-          >
-            Cargar
-          </CButton>
+          {!isFetching ? (
+            <CButton
+              className="confirm-btn"
+              onClick={() => {
+                localStorage.removeItem('daily_report')
+                handleLoadData()
+              }}
+            >
+              Cargar
+            </CButton>
+          ) : (
+            <Skeleton width={100} height={40} />
+          )}
         </CModalFooter>
       </CModal>
       {!visible && (

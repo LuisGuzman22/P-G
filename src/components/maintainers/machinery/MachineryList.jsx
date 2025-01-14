@@ -16,7 +16,8 @@ import ModalAddMachinery from './ModalAddMachinery'
 import './css.scss'
 
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import { columns, data } from './makeData.ts'
+import { MRT_Localization_ES } from 'material-react-table/locales/es'
+
 import { MenuItem } from '@mui/material'
 
 const MachineryList = () => {
@@ -58,15 +59,61 @@ const MachineryList = () => {
     setMachineryData(mac)
   }, [machineryQuery])
 
+  const columns = [
+    {
+      accessorKey: 'id', //access nested data with dot notation
+      header: 'ID',
+      size: 10,
+      // enableColumnFilter: false,
+    },
+    {
+      accessorKey: 'name',
+      header: 'Nombre',
+    },
+    {
+      accessorKey: 'plates',
+      header: 'Patentes',
+    },
+    {
+      header: 'Acciones',
+      Cell: (data) => (
+        <>
+          <CButton
+            className="btn-action-edit"
+            onClick={() => {
+              handleEditMachinery(data.row.original)
+            }}
+          >
+            <CIcon icon={cilPencil} />
+          </CButton>
+          <CButton
+            className="btn-action-delete"
+            onClick={() => {
+              deleteMachinery(data.row.original.id)
+            }}
+          >
+            <CIcon icon={cilTrash} />
+          </CButton>
+        </>
+      ),
+    },
+  ]
+
   const table = useMaterialReactTable({
     columns,
-    data: machineryData ? machineryData : data,
+    data: machineryData ? machineryData : [],
     enableColumnActions: false,
-    enableSorting: false,
+    enableSorting: true,
     enableColumnFilters: false,
     enableDensityToggle: false,
     enableFullScreenToggle: false,
     enableHiding: false,
+    enableCellActions: false,
+    // muiTableHeadCellProps: {
+    //   sx: {
+    //     backgroundColor: 'red',
+    //   },
+    // },
     muiPaginationProps: {
       color: 'primary',
       shape: 'rounded',
@@ -80,7 +127,7 @@ const MachineryList = () => {
       },
     },
     paginationDisplayMode: 'pages',
-    enableRowActions: true,
+    enableRowActions: false,
     positionActionsColumn: 'last',
     renderRowActionMenuItems: ({ row }) => [
       <MenuItem
@@ -95,6 +142,7 @@ const MachineryList = () => {
         Eliminar
       </MenuItem>,
     ],
+    localization: MRT_Localization_ES,
   })
 
   return (
