@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CTable,
@@ -15,6 +15,11 @@ import useEquipment from 'src/hooks/useEquipment'
 import ModalAddEquipment from './ModalAddEquipment'
 import './css.scss'
 
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
+import { MRT_Localization_ES } from 'material-react-table/locales/es'
+
+import { MenuItem } from '@mui/material'
+
 const EquipmentList = () => {
   const { getData } = useGetCachedQueryData()
   const equipmentQuery = getData('equipment')
@@ -22,6 +27,7 @@ const EquipmentList = () => {
 
   const [visibleEquipment, setVisibleEquipment] = useState(false)
   const [selectedEquipment, setSelectedEquipment] = useState()
+  const [equipmentData, setEquipmentData] = useState([])
 
   const getPlates = (plates) => {
     const platesJoin = []
@@ -37,6 +43,108 @@ const EquipmentList = () => {
     setVisibleEquipment(!visibleEquipment)
   }
 
+  useEffect(() => {
+    let equip = []
+    equipmentQuery
+      ?.filter((equipment) => equipment.deleted_at === null)
+      .map((equipment) => {
+        const plates = getPlates(equipment.plate)
+        equip.push({
+          id: equipment.id,
+          name: equipment.name,
+          plates: plates,
+          plate: equipment.plate,
+        })
+      })
+    setEquipmentData(equip)
+  }, [equipmentQuery])
+
+  const columns = [
+    {
+      accessorKey: 'id', //access nested data with dot notation
+      header: 'ID',
+      size: 10,
+      // enableColumnFilter: false,
+    },
+    {
+      accessorKey: 'name',
+      header: 'Nombre',
+    },
+    {
+      accessorKey: 'plates',
+      header: 'Patentes',
+    },
+    {
+      header: 'Acciones',
+      Cell: (data) => (
+        <>
+          <CButton
+            className="btn-action-edit"
+            onClick={() => {
+              handleEditEquipmennt(data.row.original)
+            }}
+          >
+            <CIcon icon={cilPencil} />
+          </CButton>
+          <CButton
+            className="btn-action-delete"
+            onClick={() => {
+              deleteEquipment(data.row.original.id)
+            }}
+          >
+            <CIcon icon={cilTrash} />
+          </CButton>
+        </>
+      ),
+    },
+  ]
+
+  const table = useMaterialReactTable({
+    columns,
+    data: equipmentData ? equipmentData : [],
+    enableColumnActions: false,
+    enableSorting: true,
+    enableColumnFilters: false,
+    enableDensityToggle: false,
+    enableFullScreenToggle: false,
+    enableHiding: false,
+    enableCellActions: false,
+    // muiTableHeadCellProps: {
+    //   sx: {
+    //     backgroundColor: 'red',
+    //   },
+    // },
+    muiPaginationProps: {
+      color: 'primary',
+      shape: 'rounded',
+      showRowsPerPage: false,
+      variant: 'outlined',
+    },
+    initialState: {
+      pagination: {
+        pageSize: 5,
+        pageIndex: 0,
+      },
+    },
+    paginationDisplayMode: 'pages',
+    enableRowActions: false,
+    positionActionsColumn: 'last',
+    renderRowActionMenuItems: ({ row }) => [
+      <MenuItem
+        key="edit"
+        onClick={() => {
+          handleEditEquipmennt(row.original)
+        }}
+      >
+        Editar
+      </MenuItem>,
+      <MenuItem key="delete" onClick={() => deleteEquipment(row.original.id)}>
+        Eliminar
+      </MenuItem>,
+    ],
+    localization: MRT_Localization_ES,
+  })
+
   return (
     <>
       {visibleEquipment && (
@@ -49,48 +157,7 @@ const EquipmentList = () => {
           }}
         />
       )}
-      <CTable striped>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Nombre</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Patentes</CTableHeaderCell>
-            <CTableHeaderCell scope="col"></CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          {equipmentQuery
-            ?.filter((equipment) => equipment.deleted_at === null)
-            .map((equipment, index) => {
-              const plates = getPlates(equipment.plate)
-              return (
-                <CTableRow key={equipment.id}>
-                  <CTableDataCell scope="row">{equipment.id}</CTableDataCell>
-                  <CTableDataCell>{equipment.name}</CTableDataCell>
-                  <CTableDataCell>{plates}</CTableDataCell>
-                  <CTableDataCell>
-                    <CButton
-                      className="btn-action-edit"
-                      onClick={() => {
-                        handleEditEquipmennt(equipment)
-                      }}
-                    >
-                      <CIcon icon={cilPencil} />
-                    </CButton>
-                    <CButton
-                      className="btn-action-delete"
-                      onClick={() => {
-                        deleteEquipment(equipment.id)
-                      }}
-                    >
-                      <CIcon icon={cilTrash} />
-                    </CButton>
-                  </CTableDataCell>
-                </CTableRow>
-              )
-            })}
-        </CTableBody>
-      </CTable>
+      <MaterialReactTable table={table} />
     </>
   )
 }

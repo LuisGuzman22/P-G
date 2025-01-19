@@ -58,6 +58,7 @@ const Activities = () => {
   const [activityList, setActivityList] = useState([])
   const [error, setError] = useState(false)
   const [options, setOptions] = useState([])
+  const [disableTotalAmount, setDisableTotalAmount] = useState(true)
   const [selectedOption, setSelectedOption] = useState({ value: 0, label: 'Seleccione' })
 
   const { data, isLoading, error: activityError } = useGetActivityData()
@@ -88,6 +89,7 @@ const Activities = () => {
     const selectedActivity = activityData.data.data.find((item) => item.id_primavera === e.value)
 
     const quantityWork = selectedActivity.material_quantity || 0
+    setDisableTotalAmount(quantityWork !== 0)
 
     setSelectedOption(e)
     setOptions([])
@@ -122,7 +124,11 @@ const Activities = () => {
       e.target.id === 'activityHoursAccumulated'
     ) {
       if (validate(e.target.value)) {
-        setActivity({ ...activity, [e.target.id]: e.target.value })
+        if (e.target.id === 'activityTotalAmount' && e.target.value.startsWith('0')) {
+          setActivity({ ...activity, activityTotalAmount: e.target.value.slice(1) })
+        } else {
+          setActivity({ ...activity, [e.target.id]: e.target.value })
+        }
       }
     } else {
       setActivity({ ...activity, [e.target.id]: e.target.value })
@@ -347,7 +353,7 @@ const Activities = () => {
                       type="text"
                       id="activityTotalAmount"
                       value={activity.activityTotalAmount || '0'}
-                      disabled
+                      disabled={disableTotalAmount}
                       text=""
                       onChange={(e) => {
                         onChangeData(e)

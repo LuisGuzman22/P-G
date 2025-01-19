@@ -65,13 +65,10 @@ const DailyReportCollapse = () => {
   // }, [localStorage.getItem('daily_report')])
 
   useEffect(() => {
-    console.log('isFetching', isFetching)
     if (!isFetching) loadData()
   }, [isFetching])
 
-  useEffect(() => {
-    console.log('loading', loading)
-  }, [loading])
+  useEffect(() => {}, [loading])
 
   const [showError, setShowError] = useState(false)
   useEffect(() => {
