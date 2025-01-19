@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CTable,
@@ -15,6 +15,11 @@ import './css.scss'
 import useUser from 'src/hooks/useUser'
 import ModalAddUser from './ModalAddUser'
 
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
+import { MRT_Localization_ES } from 'material-react-table/locales/es'
+
+import { MenuItem } from '@mui/material'
+
 const UserList = () => {
   const { getData } = useGetCachedQueryData()
   const userQuery = getData('user')
@@ -22,11 +27,114 @@ const UserList = () => {
 
   const [visibleUser, setVisibleUser] = useState(false)
   const [selectedUser, setSelectedUser] = useState()
+  const [userData, setUserData] = useState([])
 
   const handleEditUser = (user) => {
     setSelectedUser(user)
     setVisibleUser(!visibleUser)
   }
+
+  useEffect(() => {
+    let usr = []
+    userQuery
+      ?.filter((user) => user.deleted_at === null)
+      .map((user) => {
+        usr.push({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          company_id: user.company_id,
+          email_verified_at: user.email_verified_at,
+        })
+      })
+    setUserData(usr)
+  }, [userQuery])
+
+  const columns = [
+    {
+      accessorKey: 'id', //access nested data with dot notation
+      header: 'ID',
+      size: 10,
+      // enableColumnFilter: false,
+    },
+    {
+      accessorKey: 'name',
+      header: 'Nombre',
+    },
+    {
+      accessorKey: 'email',
+      header: 'Correo',
+    },
+    {
+      header: 'Acciones',
+      Cell: (data) => (
+        <>
+          <CButton
+            className="btn-action-edit"
+            onClick={() => {
+              handleEditUser(data.row.original)
+            }}
+          >
+            <CIcon icon={cilPencil} />
+          </CButton>
+          <CButton
+            className="btn-action-delete"
+            onClick={() => {
+              deleteUser(data.row.original.id)
+            }}
+          >
+            <CIcon icon={cilTrash} />
+          </CButton>
+        </>
+      ),
+    },
+  ]
+
+  const table = useMaterialReactTable({
+    columns,
+    data: userData ? userData : [],
+    enableColumnActions: false,
+    enableSorting: true,
+    enableColumnFilters: false,
+    enableDensityToggle: false,
+    enableFullScreenToggle: false,
+    enableHiding: false,
+    enableCellActions: false,
+    // muiTableHeadCellProps: {
+    //   sx: {
+    //     backgroundColor: 'red',
+    //   },
+    // },
+    muiPaginationProps: {
+      color: 'primary',
+      shape: 'rounded',
+      showRowsPerPage: false,
+      variant: 'outlined',
+    },
+    initialState: {
+      pagination: {
+        pageSize: 5,
+        pageIndex: 0,
+      },
+    },
+    paginationDisplayMode: 'pages',
+    enableRowActions: false,
+    positionActionsColumn: 'last',
+    renderRowActionMenuItems: ({ row }) => [
+      <MenuItem
+        key="edit"
+        onClick={() => {
+          handleEditUser(row.original)
+        }}
+      >
+        Editar
+      </MenuItem>,
+      <MenuItem key="delete" onClick={() => deleteUser(row.original.id)}>
+        Eliminar
+      </MenuItem>,
+    ],
+    localization: MRT_Localization_ES,
+  })
 
   return (
     <>
@@ -40,47 +148,7 @@ const UserList = () => {
           }}
         />
       )}
-      <CTable striped>
-        <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Nombre</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Correo</CTableHeaderCell>
-            <CTableHeaderCell scope="col"></CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          {userQuery
-            // ?.filter((user) => user.deleted_at === null)
-            .map((user, index) => {
-              return (
-                <CTableRow key={user.id}>
-                  <CTableDataCell scope="row">{user.id}</CTableDataCell>
-                  <CTableDataCell>{user.name}</CTableDataCell>
-                  <CTableDataCell>{user.email}</CTableDataCell>
-                  <CTableDataCell>
-                    <CButton
-                      className="btn-action-edit"
-                      onClick={() => {
-                        handleEditUser(user)
-                      }}
-                    >
-                      <CIcon icon={cilPencil} />
-                    </CButton>
-                    <CButton
-                      className="btn-action-delete"
-                      onClick={() => {
-                        deleteUser(user.id)
-                      }}
-                    >
-                      <CIcon icon={cilTrash} />
-                    </CButton>
-                  </CTableDataCell>
-                </CTableRow>
-              )
-            })}
-        </CTableBody>
-      </CTable>
+      <MaterialReactTable table={table} />
     </>
   )
 }

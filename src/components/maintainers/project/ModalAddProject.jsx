@@ -31,6 +31,7 @@ const ModalAddProject = (props) => {
   const [project, setProject] = useState(
     props.selectedProject ? props.selectedProject : initialState,
   )
+  console.log('props', props)
   const [errorForm, setErrorForm] = useState(0)
   const [projectNameError, setProjectNameError] = useState(false)
   const [projectManagerError, setProjectManagerError] = useState(false)
