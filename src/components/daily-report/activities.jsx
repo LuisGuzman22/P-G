@@ -124,7 +124,11 @@ const Activities = () => {
       e.target.id === 'activityHoursAccumulated'
     ) {
       if (validate(e.target.value)) {
-        setActivity({ ...activity, [e.target.id]: e.target.value })
+        if (e.target.id === 'activityTotalAmount' && e.target.value.startsWith('0')) {
+          setActivity({ ...activity, activityTotalAmount: e.target.value.slice(1) })
+        } else {
+          setActivity({ ...activity, [e.target.id]: e.target.value })
+        }
       }
     } else {
       setActivity({ ...activity, [e.target.id]: e.target.value })
