@@ -83,6 +83,7 @@ const DailyReportEditCollapse = () => {
 
   useEffect(() => {
     if (!isFetching) loadData()
+    console.log('edit', isFetching)
   }, [isFetching])
 
   const { getData } = useGetCachedQueryData()

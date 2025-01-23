@@ -200,6 +200,7 @@ export const fetchReportDataByReportId = async (reportId) => {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
   })
+  console.log('fetchReportDataByReportId', res.data.data)
   return res.data.data
 }
 

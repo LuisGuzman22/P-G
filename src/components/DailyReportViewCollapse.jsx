@@ -84,6 +84,7 @@ const DailyReportViewCollapse = () => {
 
   useEffect(() => {
     if (!isFetching) loadData()
+    console.log('view', isFetching)
   }, [isFetching])
 
   const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
