@@ -10,6 +10,8 @@ const DailyReportEditPage = () => {
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
 
+  console.log('aasdasd')
+
   useEffect(() => {
     if (!basicQuery) {
       navigate(`/dashboard`)
