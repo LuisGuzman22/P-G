@@ -321,6 +321,7 @@ export const useFetchReportsData = (contractId, projectId) => {
 
 export const useFetchReportData = () => {
   const reportId = localStorage.getItem('daily_report')
+  console.log('reportId', reportId)
   return useQuery({
     queryKey: ['selectedReport'],
     staleTime: 1000 * 60 * 60,
