@@ -83,8 +83,14 @@ const DailyReportEditCollapse = () => {
 
   useEffect(() => {
     if (!isFetching) loadData()
-    console.log('edit', isFetching)
+    console.log('cambio el efect', isFetching)
   }, [isFetching])
+
+  useEffect(() => {
+    console.log('primer effect', isFetching)
+
+    if (!isFetching) loadData()
+  }, [])
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
