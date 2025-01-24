@@ -7,6 +7,8 @@ import {
   CButton,
   CCol,
   CRow,
+  CToast,
+  CToastBody,
 } from '@coreui/react'
 import CompanyReport from './daily-report/company-report'
 import IndirectWorkForce from './daily-report/indirect-work-force'
@@ -83,19 +85,16 @@ const DailyReportEditCollapse = () => {
 
   useEffect(() => {
     if (!isFetching) loadData()
-    console.log('cambio el efect', isFetching)
   }, [isFetching])
 
   useEffect(() => {
-    console.log('primer effect', isFetching)
-
     if (!isFetching) loadData()
   }, [])
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
 
-  const { updateData } = useRegisterDailyReport()
+  const { updateData, loading, error, success, clearData, errorMessage } = useRegisterDailyReport()
 
   const registerDailyReport = () => {
     // if (isViewMode) {
@@ -104,6 +103,15 @@ const DailyReportEditCollapse = () => {
     updateData()
     // }
   }
+
+  useEffect(() => {
+    if (success) navigate(`/inicio`)
+  }, [success])
+
+  const [showError, setShowError] = useState(false)
+  useEffect(() => {
+    if (error) setShowError(true)
+  }, [error])
 
   return (
     <div className="dailyReport">
@@ -241,8 +249,30 @@ const DailyReportEditCollapse = () => {
               </CAccordionBody>
             </CAccordionItem>
           </CAccordion>
+          <CToast
+            autohide={true}
+            visible={showError}
+            color="danger"
+            onClose={() => {
+              setShowError(false)
+            }}
+            className="text-white align-items-center"
+          >
+            <div className="d-flex">
+              <CToastBody>
+                {errorMessage.map((error, index) => (
+                  <span key={index}>
+                    {error}
+                    <br />
+                  </span>
+                ))}
+              </CToastBody>
+            </div>
+          </CToast>
+          {loading && <Loading />}{' '}
           <CButton
             className="btn-project-action"
+            disabled={loading}
             onClick={() => {
               registerDailyReport()
             }}
