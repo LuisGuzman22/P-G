@@ -60,18 +60,19 @@ const useRegisterDailyReport = () => {
   })
 
   const { mutate: updateMutate } = useMutation({
-    mutationFn: async (newTodo) =>
+    mutationFn: async (updateData) => {
       axios.post(
         `${process.env.REACT_APP_BASE_URL}api/v1/reports/${localStorage.getItem(
           'daily_report',
         )}?_method=PUT`,
-        newTodo,
+        updateData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         },
-      ),
+      )
+    },
     onSuccess: () => {
       setLoading(false)
       setSuccess(true)
