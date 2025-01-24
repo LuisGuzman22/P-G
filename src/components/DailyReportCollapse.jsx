@@ -76,7 +76,7 @@ const DailyReportCollapse = () => {
   }, [error])
 
   useEffect(() => {
-    if (success) navigate(`/dashboard`)
+    if (success) navigate(`/inicio`)
   }, [success])
 
   useEffect(() => {

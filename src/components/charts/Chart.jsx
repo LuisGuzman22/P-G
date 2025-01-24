@@ -9,9 +9,7 @@ const Charts = () => {
   return (
     <div className="proyect-administration">
       <CCard className="action-buttons">
-        <CCardBody>
-          <GeneralProgressChart />
-        </CCardBody>
+        <CCardBody>{/* <GeneralProgressChart /> */}</CCardBody>
       </CCard>
       <CCard className="action-buttons">
         <CCardBody>
