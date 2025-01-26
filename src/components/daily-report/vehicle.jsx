@@ -136,7 +136,7 @@ const Vehicle = () => {
               className="text-white align-items-center"
             >
               <div className="d-flex">
-                <CToastBody>Debe seleccionar el equipo para generar el registro</CToastBody>
+                <CToastBody>Debe seleccionar el vehículo para generar el registro</CToastBody>
               </div>
             </CToast>
           )}
