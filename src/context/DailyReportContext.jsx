@@ -100,6 +100,7 @@ export const DailyReportProvider = ({ children }) => {
       dailyReportDirectPersonalJourney: selectedCompany
         ? selectedCompany.dailyReportDirectPersonalJourney
         : undefined,
+      id: selectedCompany ? selectedCompany.id : undefined,
       // dailyReportIndirectPersonalShift: selectedCompany
       //   ? selectedCompany.dailyReportIndirectPersonalShift
       //   : undefined,
@@ -124,6 +125,7 @@ export const DailyReportProvider = ({ children }) => {
         selectedTotalIndirectWorkForce?.indirectSubtotalContractedNumber,
       indirectSubtotalOfferedNumber: selectedTotalIndirectWorkForce?.indirectSubtotalOfferedNumber,
       indirectSubtotalWorkNumber: selectedTotalIndirectWorkForce?.indirectSubtotalWorkNumber,
+      id: selectedTotalIndirectWorkForce?.id,
     })
   }, [selectedTotalIndirectWorkForce])
 
@@ -139,6 +141,7 @@ export const DailyReportProvider = ({ children }) => {
       directSubtotalContractedNumber: selectedTotalDirectWorkForce?.directSubtotalContractedNumber,
       directSubtotalOfferedNumber: selectedTotalDirectWorkForce?.directSubtotalOfferedNumber,
       directSubtotalWorkNumber: selectedTotalDirectWorkForce?.directSubtotalWorkNumber,
+      id: selectedTotalDirectWorkForce?.id,
     })
   }, [selectedTotalDirectWorkForce])
 
