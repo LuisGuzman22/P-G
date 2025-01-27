@@ -293,7 +293,10 @@ export const DailyReportProvider = ({ children }) => {
   const [comment, setComment] = useState(undefined)
 
   useEffect(() => {
-    setComment({ comment: selectedComment?.comment || undefined })
+    setComment({
+      comment: selectedComment?.comment || undefined,
+      id: selectedComment?.id || undefined,
+    })
   }, [selectedComment])
 
   const [vehiclePlateList, setVehiclePlateList] = useState([])
