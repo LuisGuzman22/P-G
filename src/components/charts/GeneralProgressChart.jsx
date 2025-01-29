@@ -15,7 +15,7 @@ const GeneralProgressChart = () => {
         <Skeleton />
       ) : (
         data.length > 0 &&
-        data.slice(0, 5).map((item, index) => {
+        data.map((item, index) => {
           return <GeneralProgressChartItem data={item} key={index} />
         })
       )}
