@@ -122,6 +122,12 @@ const _nav = [
             to: '/maintainer/aljibe',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
+          {
+            component: CNavItem,
+            name: 'Motivos',
+            to: '/maintainer/restriction',
+            icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+          },
           // {
           //   component: CNavItem,
           //   name: 'Personal Directo',

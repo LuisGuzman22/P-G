@@ -267,7 +267,7 @@ const DirectDotationWorkForce = () => {
                   return (
                     <CTableRow key={item.id}>
                       <CTableDataCell>
-                        <span key={item.id}>{selectedWorkFront.name}</span>
+                        <span key={item.id}>{selectedWorkFront?.name}</span>
                       </CTableDataCell>
                       <CTableDataCell>
                         <span key={item.id}>{item.directSubWorkFront ?? 'N/A'}</span>

@@ -118,6 +118,15 @@ const fetchEquipment = async () => {
   return res.data.data
 }
 
+const fetchRestriction = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/restrictions`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 const fetchUser = async () => {
   const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/users`, {
     headers: {
@@ -389,6 +398,18 @@ export const useFetchEquipment = () => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchEquipment()
+    },
+  })
+}
+
+export const useFetchRestriction = () => {
+  return useQuery({
+    queryKey: ['restriction'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchRestriction()
     },
   })
 }
