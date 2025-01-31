@@ -302,6 +302,7 @@ const Activities = () => {
       activityHoursAccumulated: selectedActivity.activityHoursAccumulated,
       activityHoursEarnedShift: selectedActivity.activityHoursEarnedShift,
       activityRestrictionId: selectedActivity.activityRestrictionId,
+      activityId: selectedActivity.activityId,
     })
     setSelectedOption({ value: selectedActivity.primaveraId, label: selectedActivity.activityName })
 
