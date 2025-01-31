@@ -44,6 +44,8 @@ const Activities = () => {
     activityHoursSpendShift: undefined,
     activityHoursAccumulated: undefined,
     activityId: undefined,
+    activityHoursEarnedShift: undefined,
+    activityRestrictionId: undefined,
   }
 
   const { getData } = useGetCachedQueryData()
@@ -60,6 +62,7 @@ const Activities = () => {
   const [options, setOptions] = useState([])
   const [disableTotalAmount, setDisableTotalAmount] = useState(true)
   const [selectedOption, setSelectedOption] = useState({ value: 0, label: 'Seleccione' })
+  const [displayRestriction, setDisplayRestriction] = useState(false)
 
   const { data, isLoading, error: activityError } = useGetActivityData()
 
@@ -121,7 +124,8 @@ const Activities = () => {
       e.target.id === 'activityAccumulatedAdvancePercent' ||
       e.target.id === 'activityHoursSpendPrevius' ||
       e.target.id === 'activityHoursSpendShift' ||
-      e.target.id === 'activityHoursAccumulated'
+      e.target.id === 'activityHoursAccumulated' ||
+      e.target.id === 'activityHoursEarnedShift'
     ) {
       if (validate(e.target.value)) {
         if (e.target.id === 'activityTotalAmount' && e.target.value.startsWith('0')) {
@@ -177,6 +181,43 @@ const Activities = () => {
     activity.activityTotalAmount,
   ])
 
+  useEffect(() => {
+    // El primero debe llamarse "HH Ganadas Real Turno" que debe ser un campo abierto,
+    // numérico, y que se debe precalcular de la siguiente forma:
+    // ((base_line_quantity_work * "% Avance Acumulado") / 100).
+    // Esto asumiendo que tengamos algún valor en el campo "% Avance Acumulado".
+
+    if (
+      activity.activityAccumulatedAdvancePercent !== 0 &&
+      activity.activityAccumulatedAdvancePercent !== undefined
+    ) {
+      setActivity({
+        ...activity,
+        activityHoursEarnedShift:
+          (
+            (activity.activityTotalAmount * activity.activityAccumulatedAdvancePercent) /
+            100
+          ).toFixed(1) || 0,
+      })
+    } else {
+      setActivity({
+        ...activity,
+        activityHoursEarnedShift: 0,
+      })
+    }
+  }, [activity.activityAccumulatedAdvancePercent])
+
+  useEffect(() => {
+    // El segundo campo debe llamarse "Motivo" el cual debe ser un campo deshabilitado y
+    // sera un listado de una api por definir (pero que se debe asumir que existe) y que se
+    // debe "activar" cuando el valor que se esta registrando en el primer campo nuevo
+    // ("HH Ganadas Real Turno") sea cero.
+
+    setDisplayRestriction(
+      activity.activityHoursEarnedShift && activity.activityHoursEarnedShift.toString() === '0',
+    )
+  }, [activity.activityHoursEarnedShift])
+
   const registerActivity = () => {
     if (
       !activity.activityFrontWork ||
@@ -186,28 +227,55 @@ const Activities = () => {
     ) {
       setError(true)
     } else {
-      // const activityId = data.find(
-      //   (item) => item.id_primavera.trim() === activity.primaveraId.trim(),
-      // ).id
-      const activityInitialState = {
-        id: uuidv4(),
-        activityFrontWork: activity.activityFrontWork,
-        primaveraId: activity.primaveraId,
-        activityName: activity.activityName,
-        activityDiscipline: activity.activityDiscipline,
-        activityTotalAmount: activity.activityTotalAmount,
-        activityPreviousAcumulatedAmount: activity.activityPreviousAcumulatedAmount,
-        activityActualShiftQuantity: activity.activityActualShiftQuantity,
-        activityAccumulatedAdvancePercent: activity.activityAccumulatedAdvancePercent,
-        activityUnit: activity.activityUnit,
-        activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
-        activityHoursSpendShift: activity.activityHoursSpendShift,
-        activityHoursAccumulated: activity.activityHoursAccumulated,
-        activityId: activity.activityId,
+      if (activity.activityHoursEarnedShift === '0') {
+        if (!activity.activityRestrictionId || activity.activityRestrictionId === '0') {
+          setError(true)
+        } else {
+          const activityInitialState = {
+            id: uuidv4(),
+            activityFrontWork: activity.activityFrontWork,
+            primaveraId: activity.primaveraId,
+            activityName: activity.activityName,
+            activityDiscipline: activity.activityDiscipline,
+            activityTotalAmount: activity.activityTotalAmount,
+            activityPreviousAcumulatedAmount: activity.activityPreviousAcumulatedAmount,
+            activityActualShiftQuantity: activity.activityActualShiftQuantity,
+            activityAccumulatedAdvancePercent: activity.activityAccumulatedAdvancePercent,
+            activityUnit: activity.activityUnit,
+            activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
+            activityHoursSpendShift: activity.activityHoursSpendShift,
+            activityHoursAccumulated: activity.activityHoursAccumulated,
+            activityId: activity.activityId,
+            activityHoursEarnedShift: activity.activityHoursEarnedShift,
+            activityRestrictionId: activity.activityRestrictionId,
+          }
+          setActivity(initialState) // Clear the object
+          setSelectedOption({ value: 0, label: 'Seleccione' })
+          setActivityList([...activityListContext, activityInitialState])
+        }
+      } else {
+        const activityInitialState = {
+          id: uuidv4(),
+          activityFrontWork: activity.activityFrontWork,
+          primaveraId: activity.primaveraId,
+          activityName: activity.activityName,
+          activityDiscipline: activity.activityDiscipline,
+          activityTotalAmount: activity.activityTotalAmount,
+          activityPreviousAcumulatedAmount: activity.activityPreviousAcumulatedAmount,
+          activityActualShiftQuantity: activity.activityActualShiftQuantity,
+          activityAccumulatedAdvancePercent: activity.activityAccumulatedAdvancePercent,
+          activityUnit: activity.activityUnit,
+          activityHoursSpendPrevius: activity.activityHoursSpendPrevius,
+          activityHoursSpendShift: activity.activityHoursSpendShift,
+          activityHoursAccumulated: activity.activityHoursAccumulated,
+          activityId: activity.activityId,
+          activityHoursEarnedShift: activity.activityHoursEarnedShift,
+          activityRestrictionId: activity.activityRestrictionId,
+        }
+        setActivity(initialState) // Clear the object
+        setSelectedOption({ value: 0, label: 'Seleccione' })
+        setActivityList([...activityListContext, activityInitialState])
       }
-      setActivity(initialState) // Clear the object
-      setSelectedOption({ value: 0, label: 'Seleccione' })
-      setActivityList([...activityListContext, activityInitialState])
     }
   }
 
@@ -232,6 +300,8 @@ const Activities = () => {
       activityHoursSpendPrevius: selectedActivity.activityHoursSpendPrevius,
       activityHoursSpendShift: selectedActivity.activityHoursSpendShift,
       activityHoursAccumulated: selectedActivity.activityHoursAccumulated,
+      activityHoursEarnedShift: selectedActivity.activityHoursEarnedShift,
+      activityRestrictionId: selectedActivity.activityRestrictionId,
     })
     setSelectedOption({ value: selectedActivity.primaveraId, label: selectedActivity.activityName })
 
@@ -258,7 +328,8 @@ const Activities = () => {
             >
               <div className="d-flex">
                 <CToastBody>
-                  Debe seleccionar el frente de trabajo y la disciplina para generar el registro
+                  Debe seleccionar el frente de trabajo, disciplina y motivo si corresponde para
+                  generar el registro
                 </CToastBody>
               </div>
             </CToast>
@@ -281,6 +352,7 @@ const Activities = () => {
               )
             })}
           </CFormSelect>
+          <br />
           {isLoading ? (
             <Skeleton />
           ) : (
@@ -314,6 +386,7 @@ const Activities = () => {
               />
             </>
           )}
+
           <CTable>
             <CTableHead>
               <CTableRow>
@@ -401,6 +474,7 @@ const Activities = () => {
                 <CTableHeaderCell scope="col">Unidad</CTableHeaderCell>
                 <CTableHeaderCell scope="col">HH Gastada Acumulada Anterior</CTableHeaderCell>
                 <CTableHeaderCell scope="col">HH Gastada Real Turno</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HH Ganadas Real Turno</CTableHeaderCell>
                 <CTableHeaderCell scope="col">HH Gastada Acumulada</CTableHeaderCell>
               </CTableRow>
               <CTableRow>
@@ -440,6 +514,18 @@ const Activities = () => {
                 <CTableDataCell>
                   <CFormInput
                     type="text"
+                    id="activityHoursEarnedShift"
+                    value={activity.activityHoursEarnedShift || ''}
+                    // disabled
+                    text=""
+                    onChange={(e) => {
+                      onChangeData(e)
+                    }}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CFormInput
+                    type="text"
                     id="activityHoursAccumulated"
                     value={activity.activityHoursAccumulated || ''}
                     disabled
@@ -452,6 +538,26 @@ const Activities = () => {
               </CTableRow>
             </CTableBody>
           </CTable>
+          <CFormSelect
+            aria-label="Default select example"
+            id="activityRestrictionId"
+            label="Motivo"
+            disabled={!displayRestriction}
+            value={activity.activityRestrictionId ?? 0}
+            onChange={(e) => {
+              onChangeData(e)
+            }}
+          >
+            <option value={0}>Seleccione</option>
+            {basicQuery.restrictions.map((restriction) => {
+              return (
+                <option key={restriction.id} value={restriction.id}>
+                  {restriction.name}
+                </option>
+              )
+            })}
+          </CFormSelect>
+          <br />
           <CButton
             className="btn-project-action"
             onClick={() => {
@@ -478,7 +584,9 @@ const Activities = () => {
               <CTableHeaderCell scope="col">Unidad</CTableHeaderCell>
               <CTableHeaderCell scope="col">HH Gastada Acumulada Anterior</CTableHeaderCell>
               <CTableHeaderCell scope="col">HH Gastada Real Turno</CTableHeaderCell>
+              <CTableHeaderCell scope="col">HH Ganada Real Turno</CTableHeaderCell>
               <CTableHeaderCell scope="col">HH Gastada Acumulada</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Motivo</CTableHeaderCell>
               <CTableHeaderCell scope="col"></CTableHeaderCell>
             </CTableRow>
           </CTableHead>
@@ -491,6 +599,12 @@ const Activities = () => {
               const selectedDicipline = basicQuery.diciplines.find((dicipline) => {
                 return dicipline.id.toString() === item.activityDiscipline.toString()
               })
+
+              const selectedRestriction = item.activityRestrictionId
+                ? basicQuery.restrictions.find((restriction) => {
+                    return restriction.id.toString() === item.activityRestrictionId.toString()
+                  })
+                : undefined
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{charge.name}</CTableDataCell>
@@ -504,7 +618,9 @@ const Activities = () => {
                   <CTableDataCell>{item.activityUnit}</CTableDataCell>
                   <CTableDataCell>{item.activityHoursSpendPrevius}</CTableDataCell>
                   <CTableDataCell>{item.activityHoursSpendShift}</CTableDataCell>
+                  <CTableDataCell>{item.activityHoursEarnedShift}</CTableDataCell>
                   <CTableDataCell>{item.activityHoursAccumulated}</CTableDataCell>
+                  <CTableDataCell>{selectedRestriction?.name || '-'}</CTableDataCell>
                   <CTableDataCell>
                     {(isCreatingMode || isEditMode) && (
                       <CButton

@@ -160,7 +160,6 @@ const useRegisterDailyReport = () => {
   }
 
   const updateData = async () => {
-    console.log('company', company)
     aljibeList.map((aljibe) => {
       aljibe.aljibeM3Accumulated = accumulatedM3
     })

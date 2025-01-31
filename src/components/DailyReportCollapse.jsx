@@ -64,9 +64,9 @@ const DailyReportCollapse = () => {
   //   loadData()
   // }, [localStorage.getItem('daily_report')])
 
-  useEffect(() => {
-    if (!isFetching) loadData()
-  }, [isFetching])
+  // useEffect(() => {
+  //   if (!isFetching) loadData()
+  // }, [isFetching])
 
   useEffect(() => {}, [loading])
 
@@ -85,7 +85,6 @@ const DailyReportCollapse = () => {
 
   const handleLoadData = () => {
     setVisible(false)
-    console.log('reportsQuery[0].id', reportsQuery[0].id)
     localStorage.setItem('daily_report', reportsQuery[0].id)
     loadData()
   }
