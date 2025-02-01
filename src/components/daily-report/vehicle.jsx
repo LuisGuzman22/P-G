@@ -80,7 +80,9 @@ const Vehicle = () => {
   }
 
   const deletevehicle = (id) => {
-    const newData = vehicleListContext.filter((item) => item.id !== id)
+    const newData = vehicleListContext.filter((item) => {
+      return item.id !== id
+    })
     setVehicleList(newData)
     removeVehicle(id)
   }

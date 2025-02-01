@@ -162,6 +162,7 @@ export const DailyReportProvider = ({ children }) => {
         const machMachinery = mach.machinery
         // const actions = JSON.parse(mach.actions)
         maList.push({
+          id: mach.id,
           machinery: machMachinery,
           machineryOfferedNumber: mach.machineryOfferedNumber,
           machineryCertifiedNumber: mach.machineryCertifiedNumber,
@@ -193,6 +194,7 @@ export const DailyReportProvider = ({ children }) => {
         const equipEquip = equi.equipment
         // const actions = JSON.parse(equi.actions)
         equipList.push({
+          id: equi.id,
           equipment: equipEquip,
           equipmentOfferedNumber: equi.equipmentOfferedNumber,
           equipmentCertifiedNumber: equi.equipmentCertifiedNumber,
@@ -219,6 +221,7 @@ export const DailyReportProvider = ({ children }) => {
         const vehVehicle = veh.vehicle
         // const actions = JSON.parse(veh.actions)
         vehList.push({
+          id: veh.id,
           vehicle: vehVehicle,
           vehicleOfferedNumber: veh.vehicleOfferedNumber,
           vehicleCertifiedNumber: veh.vehicleCertifiedNumber,

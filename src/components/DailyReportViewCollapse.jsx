@@ -48,8 +48,9 @@ import { useFetchReportData } from 'src/hooks/useFetch'
 const DailyReportViewCollapse = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
+  const navigate = useNavigate()
 
-  const { isFetching } = useFetchReportData()
+  const { isFetching, isError } = useFetchReportData()
 
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
   const {
@@ -82,10 +83,19 @@ const DailyReportViewCollapse = () => {
   const [url, setUrl] = useState()
   const [pdfName, setPdfName] = useState('')
 
+  const redirectTo = (url) => {
+    navigate(url)
+  }
+
   useEffect(() => {
     if (!isFetching) loadData()
-    console.log('view', isFetching)
   }, [isFetching])
+
+  useEffect(() => {
+    if (isError) {
+      redirectTo(`/dashboard-reportes`)
+    }
+  }, [isError])
 
   const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
   const [totalWorkDotation, setTotalWorkDotation] = useState(0)

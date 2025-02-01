@@ -18,6 +18,7 @@ const Pdf = React.lazy(() => import('./components/Pdf'))
 const MachineryMaintainer = React.lazy(() => import('./pages/MachineryMaintainerPage'))
 const VehicleMaintainer = React.lazy(() => import('./pages/VehicleMaintainerPage'))
 const EquipmentMaintainer = React.lazy(() => import('./pages/EquipmentMaintainerPage'))
+const RestrictionMaintainer = React.lazy(() => import('./pages/RestrictionMaintainerPage'))
 const DirectPersonalMaintainer = React.lazy(() => import('./pages/DirectPersonalMaintainerPage'))
 const IndirectPersonalMaintainer = React.lazy(
   () => import('./pages/IndirectPersonalMaintainerPage'),
@@ -90,6 +91,12 @@ const routes = [
     path: '/maintainer/equipment',
     name: 'Administrar Vehículo',
     element: EquipmentMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/restriction',
+    name: 'Administrar Motivos',
+    element: RestrictionMaintainer,
     protected: true,
   },
   {
