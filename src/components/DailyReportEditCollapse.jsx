@@ -56,7 +56,7 @@ const DailyReportEditCollapse = () => {
 
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
 
-  const { isFetching } = useFetchReportData()
+  const { isFetching, isError } = useFetchReportData()
 
   const {
     company,
@@ -83,6 +83,10 @@ const DailyReportEditCollapse = () => {
 
   const [isLoading, setIsloading] = useState(false)
 
+  const redirectTo = (url) => {
+    navigate(url)
+  }
+
   useEffect(() => {
     if (!isFetching) loadData()
   }, [isFetching])
@@ -90,6 +94,12 @@ const DailyReportEditCollapse = () => {
   useEffect(() => {
     if (!isFetching) loadData()
   }, [])
+
+  useEffect(() => {
+    if (isError) {
+      redirectTo(`/dashboard-reportes`)
+    }
+  }, [isError])
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')

@@ -203,7 +203,7 @@ export const fetchReportsData = async (contractId, projectId) => {
 }
 
 export const fetchReportDataByReportId = async (reportId) => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/reports/${reportId}`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/asd/${reportId}`, {
     // const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/reports`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -321,6 +321,7 @@ export const useFetchReportsData = (contractId, projectId) => {
     queryKey: ['reports'],
     staleTime: 1000 * 60 * 60,
     gcTime: 2147483647,
+    refetchOnWindowFocus: false,
     // refetchType: 'all',
     queryFn: async () => {
       return fetchReportsData(contractId, projectId)
@@ -330,7 +331,6 @@ export const useFetchReportsData = (contractId, projectId) => {
 
 export const useFetchReportData = () => {
   const reportId = localStorage.getItem('daily_report')
-  console.log('reportId', reportId)
   return useQuery({
     queryKey: ['selectedReport'],
     staleTime: 1000 * 60 * 60,
