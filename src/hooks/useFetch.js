@@ -203,6 +203,7 @@ export const fetchReportsData = async (contractId, projectId) => {
 }
 
 export const fetchReportDataByReportId = async (reportId) => {
+  console.log('reportId', reportId)
   const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/reports/${reportId}`, {
     // const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/reports`, {
     headers: {
