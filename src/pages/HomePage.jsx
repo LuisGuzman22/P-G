@@ -171,7 +171,10 @@ const HomePage = () => {
                       className="dashboard-button"
                       onClick={() => {
                         redirectTo('/informe-diario')
-                        localStorage.setItem('daily_report', reportsQuery[0]?.id || undefined)
+                        localStorage.setItem(
+                          'daily_report',
+                          reportsQuery[reportsQuery.length - 1].id || undefined,
+                        )
                       }}
                     >
                       <div className="button-container">
