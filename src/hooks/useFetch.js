@@ -225,7 +225,7 @@ const fetchCompany = async () => {
 
 const fetchGantt = async () => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/activities/gantt?start_date=2024-01-01&end_date=2024-12-12`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/activities/gantt?start_date=2024-01-01&end_date=2025-12-12`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
