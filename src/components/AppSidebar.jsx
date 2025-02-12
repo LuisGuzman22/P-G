@@ -46,7 +46,7 @@ const AppSidebar = () => {
           <span>P&G Project Control</span>
         </CSidebarBrand>
       </CSidebarHeader>
-      <CSidebarNav>
+      <CSidebarNav className="sidebar-style">
         <SimpleBar>
           <AppSidebarNav items={navigation} />
         </SimpleBar>

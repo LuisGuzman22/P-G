@@ -4,6 +4,8 @@ body {
   background-color: #557a95;
   background-image: url('../../src/assets/images/fondo2.png');
   height: auto;
+  // font-family: 'Calibri', sans-serif !important;
+  // color: rgba(0, 0, 0, 60);
 }
 
 .project-accordion {
@@ -232,10 +234,48 @@ body {
   }
   .dailyReport-accordion {
     --cui-accordion-btn-color: white;
-    --cui-accordion-btn-bg: #019999;
+    --cui-accordion-btn-bg: #00778b;
     --cui-accordion-active-color: white;
-    --cui-accordion-active-bg: #019999;
+    --cui-accordion-active-bg: #00778b;
     background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .custom-accordion-header {
+    position: relative;
+    overflow: hidden; /* Para evitar que los colores sobresalgan */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Asegura que el contenido y los colores se alineen bien */
+
+    .corner-colors {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      width: 100px; /* Ajusta el ancho de los colores */
+      height: 10px;
+    }
+
+    .color-box {
+      flex: 1;
+      height: 100%;
+    }
+
+    .yellow {
+      background-color: #eaaa00;
+    }
+    .red {
+      background-color: #d8282f;
+    }
+    .light-blue {
+      background-color: #64ccc9;
+    }
+    .dark-blue {
+      background-color: #00778b;
+    }
+    .gray {
+      background-color: #898b8e;
+    }
   }
 
   .table {
@@ -258,10 +298,8 @@ body {
     padding: 10px;
     .dashboard-button {
       width: 100%;
-      background: linear-gradient(135deg, #019999, #1fc8db);
-      // background-color: #019999;
-      //
-      // width: 200px;
+      background: #00778b;
+
       height: 200px;
       color: white;
       font-weight: 600;
@@ -270,6 +308,38 @@ body {
         transform 0.2s,
         box-shadow 0.3s;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden; /* Evita que los colores sobresalgan */
+
+      .corner-colors {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        width: 80px; /* Ajusta según el tamaño deseado */
+        height: 15px;
+      }
+
+      .color-box {
+        flex: 1;
+        height: 100%;
+      }
+
+      .yellow {
+        background-color: #eaaa00;
+      }
+      .red {
+        background-color: #d8282f;
+      }
+      .light-blue {
+        background-color: #64ccc9;
+      }
+      .dark-blue {
+        background-color: #00778b;
+      }
+      .gray {
+        background-color: #898b8e;
+      }
 
       .button-container {
         display: flex;
@@ -401,6 +471,34 @@ body {
 .loading {
   width: 100%;
   height: 100%;
+}
+
+// .sidebar-style {
+//   background-image: url('../assets/images/menu.png');
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   height: 100%;
+// }
+
+.sidebar-style {
+  position: relative;
+  overflow: hidden; /* Evita que ::before sobresalga */
+}
+
+.sidebar-style::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/menu.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.75; /* Opacidad al 50% */
+  z-index: -1; /* Detrás del contenido */
 }
 
 .sidebar-nav .nav-group-toggle:after {

@@ -65,7 +65,7 @@ const TechnicalDocumentation = () => {
                                   return (
                                     <p key={index}>
                                       <Link
-                                        to={`https://dev.pgproject.cl${item.url}`}
+                                        to={`${process.env.REACT_APP_BASE_URL}${item.url}`}
                                         target="_blank"
                                         download
                                       >

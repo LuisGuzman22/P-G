@@ -134,111 +134,271 @@ const DailyReportCollapse = () => {
         <>
           <CAccordion className="dailyReport-accordion" activeItemKey={1}>
             <CAccordionItem itemKey={1}>
-              <CAccordionHeader>1) Empresa</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                1) Empresa
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <CompanyReport />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={2}>
-              <CAccordionHeader>2) Fuerza de trabajo personal indirecto</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                2) Fuerza de trabajo personal indirecto
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <IndirectWorkForce />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={3}>
-              <CAccordionHeader>3) Fuerza laboral total personal indirecto</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                3) Fuerza laboral total personal indirecto
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <TotalIndirectWorkForce />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={4}>
-              <CAccordionHeader>4) Fuerza laboral contratista personal directo</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                4) Fuerza laboral contratista personal directo
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <DirectWorkForce />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={5}>
-              <CAccordionHeader>5) Fuerza laboral total personal directo</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                5) Fuerza laboral total personal directo
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <TotalDirectWorkForce />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={6}>
-              <CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
                 6) Dotación por frente de trabajo personal directo
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
               </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <DirectDotationWorkForce />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={7}>
-              <CAccordionHeader>7) Maquinarias contratistas</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                7) Maquinarias contratistas
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <Machinery />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={8}>
-              <CAccordionHeader>8) Maquinarias por frente de trabajo</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                8) Maquinarias por frente de trabajo
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <MachineryWorkForce />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={9}>
-              <CAccordionHeader>9) ASARCO Maquinarias</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                9) ASARCO Maquinarias
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <AsarcoMachinery />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={10}>
-              <CAccordionHeader>10) Equipos contratistas</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                10) Equipos contratistas
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <EquipmentMachinery />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={11}>
-              <CAccordionHeader>11) Equipos con patentes contratistas</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                11) Equipos con patentes contratistas
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <EquipmentPlate />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={12}>
-              <CAccordionHeader>12) Equipos por frente de trabajo</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                12) Equipos por frente de trabajo
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <EquipmentWorkForce />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={13}>
-              <CAccordionHeader>13) Vehículos menores contratistas</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                13) Vehículos menores contratistas
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <Vehicle />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={14}>
-              <CAccordionHeader>14) Vehículos con patente menores contratistas</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                14) Vehículos con patente menores contratistas
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <VehiclePlate />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={15}>
-              <CAccordionHeader>15) Descripción de actividades desarrolladas</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                15) Descripción de actividades desarrolladas
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <Activities />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={16}>
-              <CAccordionHeader>16) Control de aguas industriales utilizadas</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                16) Control de aguas industriales utilizadas
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <IndustrialWaterControl />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={17}>
-              <CAccordionHeader>17) Comentarios y alertas en general</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                17) Comentarios y alertas en general
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <Comments />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={18}>
-              <CAccordionHeader>18) Registro fotográfico diario</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                18) Registro fotográfico diario
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <PhotoRecord />
               </CAccordionBody>
@@ -250,19 +410,44 @@ const DailyReportCollapse = () => {
             }}
           >
             19) Graficos del día
-          </CAccordionHeader>
+           <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
           <CAccordionBody className="dailyReport-accordion">
             <Graphs isOpen={chartOpen} />
           </CAccordionBody>
         </CAccordionItem> */}
             <CAccordionItem itemKey={19}>
-              <CAccordionHeader>19) Incidentes, lesiones o eventos</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                19) Incidentes, lesiones o eventos
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <Incidents />
               </CAccordionBody>
             </CAccordionItem>
             <CAccordionItem itemKey={20}>
-              <CAccordionHeader>20) Firmas</CAccordionHeader>
+              <CAccordionHeader className="custom-accordion-header">
+                20) Firmas{' '}
+                <div className="corner-colors">
+                  <div className="color-box yellow"></div>
+                  <div className="color-box red"></div>
+                  <div className="color-box light-blue"></div>
+                  <div className="color-box dark-blue"></div>
+                  <div className="color-box gray"></div>
+                </div>
+              </CAccordionHeader>
               <CAccordionBody className="dailyReport-accordion">
                 <></>
               </CAccordionBody>

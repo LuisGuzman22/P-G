@@ -3,6 +3,7 @@ import { CCarousel, CCarouselItem, CImage, CButton } from '@coreui/react'
 import organigrama_canal_contorno from 'src/assets/images/organigrama-canal-contorno.jpeg'
 import organigrama_ruta_oriente from 'src/assets/images/organigrama-ruta-oriente.jpeg'
 import organigrama_ruta_norte from 'src/assets/images/organigrama-canal-contorno-norte.jpeg'
+import img1 from 'src/assets/images/img1.jpeg'
 const InformativePanel = () => {
   return (
     <div className="carousel-container">
@@ -15,6 +16,9 @@ const InformativePanel = () => {
         </CCarouselItem>
         <CCarouselItem>
           <CImage className="d-block w-100" src={organigrama_ruta_norte} alt="slide 3" />
+        </CCarouselItem>
+        <CCarouselItem>
+          <CImage className="d-block w-100" src={img1} alt="slide 4" />
         </CCarouselItem>
       </CCarousel>
       {/* <CButton>Subir Imagen</CButton> */}
