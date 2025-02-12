@@ -33,19 +33,22 @@ const GanttChart = () => {
       <CCard className="action-buttons">
         <CCardBody>
           {!isLoading && !isRefetching && data.rows.length > 0 ? (
-            <Chart
-              chartType="Gantt"
-              width="100%"
-              height="50%"
-              data={[data.columns, ...data.rows]}
-              options={options}
-              chartLanguage="es-419"
-              tooltip={{
-                trigger: 'selection',
-                showColorCode: true,
-                isHtml: true,
-              }}
-            />
+            <>
+              asd
+              <Chart
+                chartType="Gantt"
+                width="100%"
+                height="50%"
+                data={[data.columns, ...data.rows]}
+                options={options}
+                chartLanguage="es-419"
+                tooltip={{
+                  trigger: 'selection',
+                  showColorCode: true,
+                  isHtml: true,
+                }}
+              />
+            </>
           ) : (
             <>
               <Skeleton />
