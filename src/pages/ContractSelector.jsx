@@ -106,7 +106,7 @@ const ContractSelector = () => {
                         </CRow>
                       </CContainer>
                     }
-                    style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
+                    style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
                   />
                 </CCol>
               </CRow>
@@ -137,7 +137,7 @@ const ContractSelector = () => {
                               </CRow>
                             </CContainer>
                           }
-                          style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
+                          style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
                           values={[
                             { title: 'Trisemanales', value: contract.trisemanal },
                             { title: 'Avance', value: contract.progress },
@@ -168,7 +168,7 @@ const ContractSelector = () => {
                         </CRow>
                       </CContainer>
                     }
-                    style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
+                    style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
                   />
                 </CCol>
               </CRow>

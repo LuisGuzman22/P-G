@@ -186,6 +186,13 @@ const HomePage = () => {
                         <div className="button-label">
                           <label className="label">Informe Diario</label>
                         </div>
+                        <div className="corner-colors">
+                          <div className="color-box yellow"></div>
+                          <div className="color-box red"></div>
+                          <div className="color-box light-blue"></div>
+                          <div className="color-box dark-blue"></div>
+                          <div className="color-box gray"></div>
+                        </div>
                       </div>
                     </CButton>
                   </CCol>
@@ -200,6 +207,13 @@ const HomePage = () => {
                         <FontAwesomeIcon icon={faTableList} size="2xl" className="icon-button" />
                         <div className="button-label">
                           <label className="label">Avance del proyecto</label>
+                        </div>
+                        <div className="corner-colors">
+                          <div className="color-box yellow"></div>
+                          <div className="color-box red"></div>
+                          <div className="color-box light-blue"></div>
+                          <div className="color-box dark-blue"></div>
+                          <div className="color-box gray"></div>
                         </div>
                       </div>
                     </CButton>
@@ -218,6 +232,13 @@ const HomePage = () => {
                         <div className="button-label">
                           <label className="label">Dashboard</label>
                         </div>
+                        <div className="corner-colors">
+                          <div className="color-box yellow"></div>
+                          <div className="color-box red"></div>
+                          <div className="color-box light-blue"></div>
+                          <div className="color-box dark-blue"></div>
+                          <div className="color-box gray"></div>
+                        </div>
                       </div>
                     </CButton>
                   </CCol>
@@ -232,6 +253,13 @@ const HomePage = () => {
                         <FontAwesomeIcon icon={faCalendarDays} size="2xl" className="icon-button" />
                         <div className="button-label">
                           <label className="label">Historial reportes diarios</label>
+                        </div>
+                        <div className="corner-colors">
+                          <div className="color-box yellow"></div>
+                          <div className="color-box red"></div>
+                          <div className="color-box light-blue"></div>
+                          <div className="color-box dark-blue"></div>
+                          <div className="color-box gray"></div>
                         </div>
                       </div>
                     </CButton>
@@ -248,6 +276,13 @@ const HomePage = () => {
                         <div className="button-label">
                           <label className="label"> Carta Gantt</label>
                         </div>
+                        <div className="corner-colors">
+                          <div className="color-box yellow"></div>
+                          <div className="color-box red"></div>
+                          <div className="color-box light-blue"></div>
+                          <div className="color-box dark-blue"></div>
+                          <div className="color-box gray"></div>
+                        </div>
                       </div>
                     </CButton>
                   </CCol>
@@ -260,6 +295,13 @@ const HomePage = () => {
                         <FontAwesomeIcon icon={faDownload} size="2xl" className="icon-button" />
                         <div className="button-label">
                           <label className="label">Exportar datos</label>
+                        </div>
+                        <div className="corner-colors">
+                          <div className="color-box yellow"></div>
+                          <div className="color-box red"></div>
+                          <div className="color-box light-blue"></div>
+                          <div className="color-box dark-blue"></div>
+                          <div className="color-box gray"></div>
                         </div>
                       </div>
                     </CButton>

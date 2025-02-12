@@ -127,7 +127,7 @@ const ProjectSelector = () => {
                               )}
                             </CContainer>
                           }
-                          style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
+                          style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
                           values={[{ title: 'Contratos', value: project?.contracts?.length || 0 }]}
                         />
                       </CCol>
@@ -155,7 +155,7 @@ const ProjectSelector = () => {
                         </CRow>
                       </CContainer>
                     }
-                    style={{ '--cui-card-cap-bg': '#1A4D55', cursor: 'pointer' }}
+                    style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
                   />
                 </CCol>
               </CRow>
