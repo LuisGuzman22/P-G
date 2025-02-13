@@ -31,6 +31,7 @@ const ModalAddContract = (props) => {
   }
 
   const { register, error, isError, update, errorMessage } = useContracts()
+  const { data } = useCompany()
   const { getData } = useGetCachedQueryData()
   const companyQuery = getData('company')
 
@@ -247,7 +248,7 @@ const ModalAddContract = (props) => {
                 }}
               >
                 <option value={0}>Seleccione</option>
-                {companyQuery.map((company) => {
+                {data?.map((company) => {
                   return (
                     <option key={company.id} value={company.id}>
                       {company.name}

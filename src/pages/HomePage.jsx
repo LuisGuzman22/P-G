@@ -173,7 +173,9 @@ const HomePage = () => {
                         redirectTo('/informe-diario')
                         localStorage.setItem(
                           'daily_report',
-                          reportsQuery[reportsQuery.length - 1].id || undefined,
+                          reportsQuery.length > 0
+                            ? reportsQuery[reportsQuery.length - 1].id || undefined
+                            : undefined,
                         )
                       }}
                     >

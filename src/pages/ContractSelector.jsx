@@ -65,7 +65,7 @@ const ContractSelector = () => {
         navigate(`/project_selector`)
       }
     }
-  }, [projectsQuery, projectLS])
+  }, [projectsQuery, projectLS, visibleContract])
 
   useEffect(() => {
     userType === 'admin' && contractData?.contract && setContractList(contractData.contract)

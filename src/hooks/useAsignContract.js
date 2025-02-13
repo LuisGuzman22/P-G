@@ -18,6 +18,7 @@ const useAsignContracts = () => {
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['contracts'] })
+      queryClient.invalidateQueries({ queryKey: ['projects'] })
       setErrorMessage([])
     },
     onError: (err) => {
