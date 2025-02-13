@@ -34,7 +34,6 @@ const GanttChart = () => {
         <CCardBody>
           {!isLoading && !isRefetching && data.rows.length > 0 ? (
             <>
-              asd
               <Chart
                 chartType="Gantt"
                 width="100%"
