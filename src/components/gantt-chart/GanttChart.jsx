@@ -26,6 +26,16 @@ const GanttChart = () => {
 
   const { data, isLoading, error, refetch, isRefetching } = useGantt()
 
+  const convertDatesInArray = (data) => {
+    return data.map((row) =>
+      row.map((value) =>
+        typeof value === 'string' && value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)
+          ? new Date(value)
+          : value,
+      ),
+    )
+  }
+
   return (
     <div className="proyect-administration">
       <h2>Carta Gantt</h2>
@@ -38,7 +48,8 @@ const GanttChart = () => {
                 chartType="Gantt"
                 width="100%"
                 height="50%"
-                data={[data.columns, ...data.rows]}
+                data={[data.columns, ...convertDatesInArray(data.rows)]}
+                // data={datamock}
                 options={options}
                 chartLanguage="es-419"
                 tooltip={{
