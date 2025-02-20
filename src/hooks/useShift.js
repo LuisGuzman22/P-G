@@ -1,10 +1,10 @@
-import { useFetchCompany, useFetchContract } from './useFetch'
+import { useFetchCompany, useFetchContract, useFetchShifts } from './useFetch'
 import { useEffect, useState } from 'react'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-const useCompany = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useFetchCompany()
+const useShift = () => {
+  const { data, isLoading, error, refetch, isRefetching } = useFetchShifts()
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
@@ -13,28 +13,28 @@ const useCompany = () => {
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .post(`${process.env.REACT_APP_BASE_URL}api/v1/companies`, newTodo)
+        .post(`${process.env.REACT_APP_BASE_URL}api/v1/shifts`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
             return res.ok
           } else {
-            setErrorMutate('Error al registrar la compañia')
+            setErrorMutate('Error al registrar el turno')
             setIsError(true)
             return false
           }
         })
         .catch((err) => {
-          setErrorMutate('Error al registrar la compañia')
+          setErrorMutate('Error al registrar el turno')
           setIsError(true)
           return false
         })
     },
     onSuccess: (suc) => {
-      queryClient.invalidateQueries({ queryKey: ['company'] })
+      queryClient.invalidateQueries({ queryKey: ['shifts'] })
     },
     onError: (err) => {
-      setErrorMutate('Error al registrar la compañia')
+      setErrorMutate('Error al registrar el turno')
       setIsError(true)
       return false
     },
@@ -43,28 +43,28 @@ const useCompany = () => {
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
       return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/companies/${id}`)
+        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${id}`)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
             return res.ok
           } else {
-            setErrorMutate('Error al registrar la compañia')
+            setErrorMutate('Error al registrar el turno')
             setIsError(true)
             return false
           }
         })
         .catch((err) => {
-          setErrorMutate('Error al registrar la compañia')
+          setErrorMutate('Error al registrar el turno')
           setIsError(true)
           return false
         })
     },
     onSuccess: (suc) => {
-      queryClient.invalidateQueries({ queryKey: ['company'] })
+      queryClient.invalidateQueries({ queryKey: ['shifts'] })
     },
     onError: (err) => {
-      setErrorMutate('Error al registrar la compañia')
+      setErrorMutate('Error al registrar el turno')
       setIsError(true)
       return false
     },
@@ -73,28 +73,28 @@ const useCompany = () => {
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .put(`${process.env.REACT_APP_BASE_URL}api/v1/companies/${newTodo.id}`, newTodo)
+        .put(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${newTodo.id}`, newTodo)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
             return res.ok
           } else {
-            setErrorMutate('Error al actualizar la compañia')
+            setErrorMutate('Error al actualizar el turno')
             setIsError(true)
             return false
           }
         })
         .catch((err) => {
-          setErrorMutate('Error al actualizar la compañia')
+          setErrorMutate('Error al actualizar el turno')
           setIsError(true)
           return false
         })
     },
     onSuccess: (suc) => {
-      queryClient.invalidateQueries({ queryKey: ['company'] })
+      queryClient.invalidateQueries({ queryKey: ['shifts'] })
     },
     onError: (err) => {
-      setErrorMutate('Error al actualizar la compañia')
+      setErrorMutate('Error al actualizar el turno')
       setIsError(true)
       return false
     },
@@ -103,28 +103,28 @@ const useCompany = () => {
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/companies/${newTodo}/restore`)
+        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${newTodo}/restore`)
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
             return res.ok
           } else {
-            setErrorMutate('Error al actualizar la compañia')
+            setErrorMutate('Error al actualizar el turno')
             setIsError(true)
             return false
           }
         })
         .catch((err) => {
-          setErrorMutate('Error al actualizar la compañia')
+          setErrorMutate('Error al actualizar el turno')
           setIsError(true)
           return false
         })
     },
     onSuccess: (suc) => {
-      queryClient.invalidateQueries({ queryKey: ['company'] })
+      queryClient.invalidateQueries({ queryKey: ['shifts'] })
     },
     onError: (err) => {
-      setErrorMutate('Error al actualizar la compañia')
+      setErrorMutate('Error al actualizar el turno')
       setIsError(true)
       return false
     },
@@ -136,19 +136,19 @@ const useCompany = () => {
     return response
   }
 
-  const deleteCompany = (id) => {
+  const deleteShift = (id) => {
     setIsError(false)
     const response = deleteMutation.mutate(id)
     return response
   }
 
-  const updateCompany = (data) => {
+  const updateShift = (data) => {
     setIsError(false)
     const response = mutationUpdate.mutate(data)
     return response
   }
 
-  const restoreCompany = (data) => {
+  const restoreShift = (data) => {
     setIsError(false)
     const response = mutationRestore.mutate(data)
     return response
@@ -163,10 +163,10 @@ const useCompany = () => {
     register,
     errorMutate,
     isError,
-    deleteCompany,
-    updateCompany,
-    restoreCompany,
+    deleteShift,
+    updateShift,
+    restoreShift,
   }
 }
 
-export default useCompany
+export default useShift

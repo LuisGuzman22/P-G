@@ -23,6 +23,9 @@ const DirectPersonalMaintainer = React.lazy(() => import('./pages/DirectPersonal
 const IndirectPersonalMaintainer = React.lazy(
   () => import('./pages/IndirectPersonalMaintainerPage'),
 )
+const CompanyMaintainer = React.lazy(() => import('./pages/CompanyMaintainerPage'))
+const ShiftMaintainer = React.lazy(() => import('./pages/ShiftMaintainerPage'))
+
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDocMaintainerPage'))
 const CarouselMaintainerPage = React.lazy(() => import('./pages/CarouselMaintainerPage'))
@@ -105,16 +108,30 @@ const routes = [
     element: UserMaintainerPage,
     protected: true,
   },
-  // {
-  //   path: '/maintainer/direct-personal',
-  //   name: 'Administrar Vehículo',
-  //   element: DirectPersonalMaintainer,
-  // ,protected: true },
-  // {
-  //   path: '/maintainer/indirect-personal',
-  //   name: 'Administrar Vehículo',
-  //   element: IndirectPersonalMaintainer,
-  // ,protected: true },
+  {
+    path: '/maintainer/direct-personal',
+    name: 'Administrar Personal directo',
+    element: DirectPersonalMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/indirect-personal',
+    name: 'Administrar Personal Indirecto',
+    element: IndirectPersonalMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/company',
+    name: 'Administrar Empresas',
+    element: CompanyMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/shifts',
+    name: 'Administrar Turnos',
+    element: ShiftMaintainer,
+    protected: true,
+  },
   {
     path: '/maintainer/aljibe',
     name: 'Administrar Aljibes',
