@@ -45,7 +45,7 @@ const DirectStaffShiftList = () => {
         })
       })
     setDirectStaffShiftData(shif)
-  }, [directStaffShiftData])
+  }, [directStaffShiftQuery])
 
   const columns = [
     {

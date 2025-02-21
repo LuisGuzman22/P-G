@@ -13,14 +13,13 @@ import {
   CCol,
   CToast,
   CToastBody,
-  CFormCheck,
 } from '@coreui/react'
 import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
-import useWorkFront from 'src/hooks/useWorkFront'
+import useWeather from 'src/hooks/useWeather'
 
-const ModalAddWorkFront = (props) => {
+const ModalAddWeather = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
@@ -29,33 +28,24 @@ const ModalAddWorkFront = (props) => {
     props.sendDataToParent(false)
   }
 
-  const [workFrontName, setWorkFrontName] = useState(props?.selectedWorkFront?.name || undefined)
-  const [workFrontHasSubWorkFront, setWorkFrontHasSubWorkFront] = useState(
-    props?.selectedWorkFront?.hasSubFront ?? false,
-  )
-  const [workFrontError, setWorkFrontError] = useState(false)
+  const [weatherName, setWeatherName] = useState(props?.selectedWeather?.name || undefined)
+  const [weatherError, setWeatherError] = useState(false)
   const [errorForm, setErrorForm] = useState(0)
 
-  const { register, errorShift: error, isError, updateWorkFront, errorMessage } = useWorkFront()
+  const { register, errorShift: error, isError, updateWeather, errorMessage } = useWeather()
 
   const onChangeData = (e) => {
-    setWorkFrontName(e.target.value)
+    setWeatherName(e.target.value)
   }
 
-  const onChangeHasSubWorkFront = (e) => {
-    setWorkFrontHasSubWorkFront(e.target.checked)
-  }
-
-  useEffect(() => {}, [workFrontHasSubWorkFront])
-
-  const handleRegisterWorkFront = () => {
-    if (!workFrontName || workFrontName === '') {
-      setWorkFrontError(true)
+  const handleRegisterWeather = () => {
+    if (!weatherName || weatherName === '') {
+      setWeatherError(true)
     } else {
-      setWorkFrontError(false)
+      setWeatherError(false)
     }
 
-    if (!workFrontName || workFrontName === '') {
+    if (!weatherName || weatherName === '') {
       setErrorForm(1)
     } else {
       setErrorForm(3)
@@ -64,17 +54,15 @@ const ModalAddWorkFront = (props) => {
 
   useEffect(() => {
     if (errorForm === 3) {
-      if (props?.selectedWorkFront?.name) {
-        updateWorkFront({
-          id: props.selectedWorkFront.id,
-          name: workFrontName,
-          hasSubFront: workFrontHasSubWorkFront,
+      if (props?.selectedWeather?.name) {
+        updateWeather({
+          id: props.selectedWeather.id,
+          name: weatherName,
         })
         // props.sendDataToParent(false)
       } else {
         register({
-          name: workFrontName,
-          hasSubFront: workFrontHasSubWorkFront,
+          name: weatherName,
         })
         // props.sendDataToParent(false)
       }
@@ -111,9 +99,7 @@ const ModalAddWorkFront = (props) => {
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">
-          {props?.selectedWorkFront?.name
-            ? 'Editar Frente de trabajo'
-            : 'Registrar Frente de trabajo'}
+          {props?.selectedWeather?.name ? 'Editar Clima' : 'Registrar Clima'}
         </CModalTitle>
       </CModalHeader>
       <CModalBody>
@@ -138,9 +124,7 @@ const ModalAddWorkFront = (props) => {
           className="text-white align-items-center"
         >
           <div className="d-flex">
-            <CToastBody>
-              Debe completar todos los datos para registrar el frente de trabajo
-            </CToastBody>
+            <CToastBody>Debe completar todos los datos para registrar el clima</CToastBody>
           </div>
         </CToast>
         <CForm>
@@ -148,35 +132,23 @@ const ModalAddWorkFront = (props) => {
             <CCol sm={6}>
               <CFormInput
                 type="text"
-                id="workFrontName"
-                label="Nombre del frente de trabajo"
-                placeholder="Nombre del frente de trabajo"
-                invalid={workFrontError}
-                value={workFrontName || ''}
+                id="weatherName"
+                label="Nombre clima"
+                placeholder="Nombre clima"
+                invalid={weatherError}
+                value={weatherName || ''}
                 text=""
                 onBlur={(e) => {
                   if (e.target.value !== '') {
-                    setWorkFrontError(false)
+                    setWeatherError(false)
                   } else {
-                    setWorkFrontError(true)
+                    setWeatherError(true)
                   }
                 }}
                 onChange={(e) => {
                   onChangeData(e)
                 }}
               />
-            </CCol>
-            <CCol>
-              <div>
-                <CFormCheck
-                  id="hasSubFront"
-                  label="¿Posee Sub frente de trabajo?"
-                  checked={!!workFrontHasSubWorkFront || false}
-                  onChange={(e) => {
-                    onChangeHasSubWorkFront(e)
-                  }}
-                />
-              </div>
             </CCol>
           </CRow>
         </CForm>
@@ -185,7 +157,7 @@ const ModalAddWorkFront = (props) => {
         <CButton color="secondary" onClick={() => handleClick()}>
           Cerrar
         </CButton>
-        <CButton className="btn-add" onClick={() => handleRegisterWorkFront()}>
+        <CButton className="btn-add" onClick={() => handleRegisterWeather()}>
           Guardar
         </CButton>
       </CModalFooter>
@@ -193,4 +165,4 @@ const ModalAddWorkFront = (props) => {
   )
 }
 
-export default ModalAddWorkFront
+export default ModalAddWeather

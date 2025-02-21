@@ -166,8 +166,8 @@ const _nav = [
           },
           {
             component: CNavItem,
-            name: 'Frentes de trabajo',
-            to: '/maintainer/indirect-personal',
+            name: 'Clima',
+            to: '/maintainer/weather',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
         ],

@@ -1,44 +1,29 @@
-import {
-  useFetchCompany,
-  useFetchContract,
-  useFetchIndirectStaffShifts,
-  useFetchShifts,
-} from './useFetch'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useFetchIndirectStaffShifts } from './useFetch'
 
 const useIndirectStaffShift = () => {
   const { data, isLoading, error, refetch, isRefetching } = useFetchIndirectStaffShifts()
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState()
   const queryClient = useQueryClient()
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .post(`${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar el turno')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar el turno')
-          setIsError(true)
-          return false
-        })
+      return await axios.post(
+        `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts`,
+        newTodo,
+      )
     },
     onSuccess: (suc) => {
+      setErrorMessage([])
       queryClient.invalidateQueries({ queryKey: ['indirect_staff_shift'] })
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al registrar el turno')
       setIsError(true)
       return false
@@ -47,28 +32,14 @@ const useIndirectStaffShift = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${id}`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar el turno')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar el turno')
-          setIsError(true)
-          return false
-        })
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${id}`)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['indirect_staff_shift'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al registrar el turno')
       setIsError(true)
       return false
@@ -77,28 +48,17 @@ const useIndirectStaffShift = () => {
 
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .put(`${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${newTodo.id}`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar el turno')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar el turno')
-          setIsError(true)
-          return false
-        })
+      return await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${newTodo.id}`,
+        newTodo,
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['indirect_staff_shift'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar el turno')
       setIsError(true)
       return false
@@ -107,28 +67,16 @@ const useIndirectStaffShift = () => {
 
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${newTodo}/restore`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar el turno')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar el turno')
-          setIsError(true)
-          return false
-        })
+      return await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${newTodo}/restore`,
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['indirect_staff_shift'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar el turno')
       setIsError(true)
       return false
@@ -171,6 +119,7 @@ const useIndirectStaffShift = () => {
     deleteIndirectStaffShift,
     updateIndirectStaffShift,
     restoreIndirectStaffShift,
+    errorMessage,
   }
 }
 

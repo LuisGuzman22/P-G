@@ -30,6 +30,7 @@ const WorkFrontList = () => {
   const [workFrontData, setWorkFrontData] = useState([])
 
   const handleEditWorkFront = (workFront) => {
+    console.log('workFront', workFront)
     setSelectedWorkFront(workFront)
     setVisibleWorkFront(!visibleWorkFront)
   }
@@ -42,10 +43,11 @@ const WorkFrontList = () => {
         wf.push({
           id: work.id,
           name: work.name,
+          hasSubFront: work.hasSubFront,
         })
       })
     setWorkFrontData(wf)
-  }, [workFrontData])
+  }, [workFrontQuery])
 
   const columns = [
     {
@@ -58,6 +60,10 @@ const WorkFrontList = () => {
       accessorKey: 'name',
       header: 'Nombre',
     },
+    // {
+    //   accessorKey: 'hasSubFront',
+    //   header: 'Sub frente de trabajo',
+    // },
     {
       header: 'Acciones',
       Cell: (data) => (

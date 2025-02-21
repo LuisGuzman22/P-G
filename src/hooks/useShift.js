@@ -8,32 +8,19 @@ const useShift = () => {
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState()
   const queryClient = useQueryClient()
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .post(`${process.env.REACT_APP_BASE_URL}api/v1/shifts`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar el turno')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar el turno')
-          setIsError(true)
-          return false
-        })
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/shifts`, newTodo)
     },
     onSuccess: (suc) => {
+      setErrorMessage([])
       queryClient.invalidateQueries({ queryKey: ['shifts'] })
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al registrar el turno')
       setIsError(true)
       return false
@@ -42,28 +29,14 @@ const useShift = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${id}`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar el turno')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar el turno')
-          setIsError(true)
-          return false
-        })
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${id}`)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['shifts'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al registrar el turno')
       setIsError(true)
       return false
@@ -72,28 +45,17 @@ const useShift = () => {
 
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .put(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${newTodo.id}`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar el turno')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar el turno')
-          setIsError(true)
-          return false
-        })
+      return await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/shifts/${newTodo.id}`,
+        newTodo,
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['shifts'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar el turno')
       setIsError(true)
       return false
@@ -102,28 +64,14 @@ const useShift = () => {
 
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${newTodo}/restore`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar el turno')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar el turno')
-          setIsError(true)
-          return false
-        })
+      return await axios.patch(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${newTodo}/restore`)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['shifts'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar el turno')
       setIsError(true)
       return false
@@ -166,6 +114,7 @@ const useShift = () => {
     deleteShift,
     updateShift,
     restoreShift,
+    errorMessage,
   }
 }
 

@@ -38,7 +38,7 @@ const ShiftMaintainer = () => {
       <CCard className="action-buttons">
         <CCardBody>
           <CButton className="btn-modal" onClick={() => setVisibleShift(!visibleShift)}>
-            Añadir Turno
+            Añadir Jornada
           </CButton>
           <CButton
             className="btn-modal"

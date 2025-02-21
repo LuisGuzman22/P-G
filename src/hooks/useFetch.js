@@ -299,6 +299,15 @@ const fetchWorkFront = async () => {
   return res.data.data
 }
 
+const fetchWeather = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/weathers-with-trashed`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 const userType = localStorage.getItem('USER_TYPE')
 
 export const useFetchProyects = (projectId) => {
@@ -643,6 +652,18 @@ export const useFetchWorkFront = (projectId, contractId) => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchWorkFront(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchWeather = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['weather'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchWeather(projectId, contractId)
     },
   })
 }

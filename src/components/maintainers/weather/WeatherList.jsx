@@ -17,36 +17,35 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
-import useShift from 'src/hooks/useShift'
-import ModalAddIndirectStaffShift from './ModalAddIndirectStaffShift'
-import useIndirectStaffShift from 'src/hooks/useIndirectStaffShift'
+import useWeather from 'src/hooks/useWeather'
+import ModalAddWeather from './ModalAddWeather'
 
-const IndirectStaffShiftList = () => {
+const WeatherList = () => {
   const { getData } = useGetCachedQueryData()
-  const indirectStaffShiftQuery = getData('indirect_staff_shift')
-  const { deleteIndirectStaffShift } = useIndirectStaffShift()
+  const weatherQuery = getData('weather')
+  const { deleteWeather } = useWeather()
 
-  const [visibleIndirectStaffShift, setVisibleIndirectStaffShift] = useState(false)
-  const [selectedIndirectStaffShift, setSelectedIndirectStaffShift] = useState()
-  const [indirectStaffShiftData, setIndirectStaffShiftData] = useState([])
+  const [visibleWeather, setVisibleWeather] = useState(false)
+  const [selectedWeather, setSelectedWeather] = useState()
+  const [weatherData, setWeatherData] = useState([])
 
-  const handleEditIndirectStaffShift = (indirectStaffShift) => {
-    setSelectedIndirectStaffShift(indirectStaffShift)
-    setVisibleIndirectStaffShift(!visibleIndirectStaffShift)
+  const handleEditWeather = (weather) => {
+    setSelectedWeather(weather)
+    setVisibleWeather(!visibleWeather)
   }
 
   useEffect(() => {
-    let shif = []
-    indirectStaffShiftQuery
-      ?.filter((shift) => shift.deleted_at === null)
-      .map((shift) => {
-        shif.push({
-          id: shift.id,
-          name: shift.name,
+    let wea = []
+    weatherQuery
+      ?.filter((weather) => weather.deleted_at === null)
+      .map((weather) => {
+        wea.push({
+          id: weather.id,
+          name: weather.name,
         })
       })
-    setIndirectStaffShiftData(shif)
-  }, [indirectStaffShiftQuery])
+    setWeatherData(wea)
+  }, [weatherQuery])
 
   const columns = [
     {
@@ -66,7 +65,7 @@ const IndirectStaffShiftList = () => {
           <CButton
             className="btn-action-edit"
             onClick={() => {
-              handleEditIndirectStaffShift(data.row.original)
+              handleEditWeather(data.row.original)
             }}
           >
             <CIcon icon={cilPencil} />
@@ -74,7 +73,7 @@ const IndirectStaffShiftList = () => {
           <CButton
             className="btn-action-delete"
             onClick={() => {
-              deleteIndirectStaffShift(data.row.original.id)
+              deleteWeather(data.row.original.id)
             }}
           >
             <CIcon icon={cilTrash} />
@@ -86,7 +85,7 @@ const IndirectStaffShiftList = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: indirectStaffShiftData ? indirectStaffShiftData : [],
+    data: weatherData ? weatherData : [],
     enableColumnActions: false,
     enableSorting: true,
     enableColumnFilters: false,
@@ -118,12 +117,12 @@ const IndirectStaffShiftList = () => {
       <MenuItem
         key="edit"
         onClick={() => {
-          handleEditIndirectStaffShift(row.original)
+          handleEditWeather(row.original)
         }}
       >
         Editar
       </MenuItem>,
-      <MenuItem key="delete" onClick={() => deleteIndirectStaffShift(row.original.id)}>
+      <MenuItem key="delete" onClick={() => deleteWeather(row.original.id)}>
         Eliminar
       </MenuItem>,
     ],
@@ -132,13 +131,13 @@ const IndirectStaffShiftList = () => {
 
   return (
     <>
-      {visibleIndirectStaffShift && (
-        <ModalAddIndirectStaffShift
+      {visibleWeather && (
+        <ModalAddWeather
           visible={true}
-          selectedIndirectStaffShift={selectedIndirectStaffShift}
+          selectedWeather={selectedWeather}
           sendDataToParent={async (data) => {
             // await refetch()
-            setVisibleIndirectStaffShift(data)
+            setVisibleWeather(data)
           }}
         />
       )}
@@ -147,4 +146,4 @@ const IndirectStaffShiftList = () => {
   )
 }
 
-export default IndirectStaffShiftList
+export default WeatherList

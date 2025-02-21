@@ -33,6 +33,7 @@ const WorkFrontMaintainer = React.lazy(() => import('./pages/WorkFrontMaintainer
 const DirectStaffShiftMaintainer = React.lazy(
   () => import('./pages/DirectStaffShiftMaintainerPage'),
 )
+const WeatherMaintainer = React.lazy(() => import('./pages/WeatherMaintainerPage'))
 
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDocMaintainerPage'))
@@ -156,6 +157,12 @@ const routes = [
     path: '/maintainer/work-front',
     name: 'Administrar Frentes de trabajo',
     element: WorkFrontMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/weather',
+    name: 'Administrar Clima',
+    element: WeatherMaintainer,
     protected: true,
   },
   {

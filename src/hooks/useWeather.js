@@ -1,10 +1,10 @@
-import { useFetchWorkFront } from './useFetch'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useFetchWeather } from './useFetch'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-const useWorkFront = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useFetchWorkFront()
+const useWeather = () => {
+  const { data, isLoading, error, refetch, isRefetching } = useFetchWeather()
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
@@ -13,15 +13,15 @@ const useWorkFront = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/workFronts`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/weathers`, newTodo)
     },
     onSuccess: (suc) => {
       setErrorMessage([])
-      queryClient.invalidateQueries({ queryKey: ['workFront'] })
+      queryClient.invalidateQueries({ queryKey: ['wheather'] })
     },
     onError: (err) => {
       setErrorMessage(Object.values(err.response.data.errors).flat())
-      setErrorMutate('Error al registrar el frente de trabajo')
+      setErrorMutate('Error al registrar clima')
       setIsError(true)
       return false
     },
@@ -29,15 +29,15 @@ const useWorkFront = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/workFronts/${id}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/weathers/${id}`)
     },
     onSuccess: (suc) => {
-      queryClient.invalidateQueries({ queryKey: ['workFront'] })
+      queryClient.invalidateQueries({ queryKey: ['weather'] })
       setErrorMessage([])
     },
     onError: (err) => {
       setErrorMessage(Object.values(err.response.data.errors).flat())
-      setErrorMutate('Error al registrar el frente de trabajo')
+      setErrorMutate('Error al registrar clima')
       setIsError(true)
       return false
     },
@@ -46,17 +46,17 @@ const useWorkFront = () => {
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
       return await axios.put(
-        `${process.env.REACT_APP_BASE_URL}api/v1/workFronts/${newTodo.id}`,
+        `${process.env.REACT_APP_BASE_URL}api/v1/weathers/${newTodo.id}`,
         newTodo,
       )
     },
     onSuccess: (suc) => {
-      queryClient.invalidateQueries({ queryKey: ['workFront'] })
+      queryClient.invalidateQueries({ queryKey: ['weather'] })
       setErrorMessage([])
     },
     onError: (err) => {
       setErrorMessage(Object.values(err.response.data.errors).flat())
-      setErrorMutate('Error al actualizar el frente de trabajo')
+      setErrorMutate('Error al actualizar clima')
       setIsError(true)
       return false
     },
@@ -65,16 +65,16 @@ const useWorkFront = () => {
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
       return await axios.patch(
-        `${process.env.REACT_APP_BASE_URL}api/v1/workFronts/${newTodo}/restore`,
+        `${process.env.REACT_APP_BASE_URL}api/v1/weathers/${newTodo}/restore`,
       )
     },
     onSuccess: (suc) => {
-      queryClient.invalidateQueries({ queryKey: ['workFront'] })
+      queryClient.invalidateQueries({ queryKey: ['weather'] })
       setErrorMessage([])
     },
     onError: (err) => {
       setErrorMessage(Object.values(err.response.data.errors).flat())
-      setErrorMutate('Error al actualizar el frente de trabajo')
+      setErrorMutate('Error al actualizar personal indirecto')
       setIsError(true)
       return false
     },
@@ -86,19 +86,19 @@ const useWorkFront = () => {
     return response
   }
 
-  const deleteWorkFront = (id) => {
+  const deleteWeather = (id) => {
     setIsError(false)
     const response = deleteMutation.mutate(id)
     return response
   }
 
-  const updateWorkFront = (data) => {
+  const updateWeather = (data) => {
     setIsError(false)
     const response = mutationUpdate.mutate(data)
     return response
   }
 
-  const restoreWorkFront = (data) => {
+  const restoreWeather = (data) => {
     setIsError(false)
     const response = mutationRestore.mutate(data)
     return response
@@ -113,11 +113,11 @@ const useWorkFront = () => {
     register,
     errorMutate,
     isError,
-    deleteWorkFront,
-    updateWorkFront,
-    restoreWorkFront,
+    deleteWeather,
+    updateWeather,
+    restoreWeather,
     errorMessage,
   }
 }
 
-export default useWorkFront
+export default useWeather

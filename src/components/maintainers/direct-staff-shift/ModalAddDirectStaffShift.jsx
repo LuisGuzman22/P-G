@@ -17,8 +17,7 @@ import {
 import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
-import useShift from 'src/hooks/useShift'
-import useIndirectStaffShift from 'src/hooks/useIndirectStaffShift'
+import useDirectStaffShift from 'src/hooks/useDirectStaffShift'
 
 const ModalAddDirectStaffShift = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
@@ -29,32 +28,32 @@ const ModalAddDirectStaffShift = (props) => {
     props.sendDataToParent(false)
   }
 
-  const [indirectStaffShiftName, setIndirectStaffShiftName] = useState(
-    props?.selectedIndirectStaffShift?.name || undefined,
+  const [directStaffShiftName, setDirectStaffShiftName] = useState(
+    props?.selectedDirectStaffShift?.name || undefined,
   )
-  const [indirectStaffShiftError, setIndirectStaffShiftError] = useState(false)
+  const [directStaffShiftError, setDirectStaffShiftError] = useState(false)
   const [errorForm, setErrorForm] = useState(0)
 
   const {
     register,
     errorShift: error,
     isError,
-    updateIndirectStaffShift,
+    updateDirectStaffShift,
     errorMessage,
-  } = useIndirectStaffShift()
+  } = useDirectStaffShift()
 
   const onChangeData = (e) => {
-    setIndirectStaffShiftName(e.target.value)
+    setDirectStaffShiftName(e.target.value)
   }
 
-  const handleRegisterIndirectStaffShift = () => {
-    if (!indirectStaffShiftName || indirectStaffShiftName === '') {
-      setIndirectStaffShiftError(true)
+  const handleRegisterDirectStaffShift = () => {
+    if (!directStaffShiftName || directStaffShiftName === '') {
+      setDirectStaffShiftError(true)
     } else {
-      setIndirectStaffShiftError(false)
+      setDirectStaffShiftError(false)
     }
 
-    if (!indirectStaffShiftName || indirectStaffShiftName === '') {
+    if (!directStaffShiftName || directStaffShiftName === '') {
       setErrorForm(1)
     } else {
       setErrorForm(3)
@@ -63,15 +62,15 @@ const ModalAddDirectStaffShift = (props) => {
 
   useEffect(() => {
     if (errorForm === 3) {
-      if (props?.selectedIndirectStaffShift?.name) {
-        updateIndirectStaffShift({
-          id: props.selectedIndirectStaffShift.id,
-          name: indirectStaffShiftName,
+      if (props?.selectedDirectStaffShift?.name) {
+        updateDirectStaffShift({
+          id: props.selectedDirectStaffShift.id,
+          name: directStaffShiftName,
         })
         // props.sendDataToParent(false)
       } else {
         register({
-          name: indirectStaffShiftName,
+          name: directStaffShiftName,
         })
         // props.sendDataToParent(false)
       }
@@ -108,7 +107,7 @@ const ModalAddDirectStaffShift = (props) => {
     >
       <CModalHeader>
         <CModalTitle id="ScrollingLongContentExampleLabel2">
-          {props?.selectedIndirectStaffShif?.name ? 'Editar Turno' : 'Registrar Turno'}
+          {props?.selectedDirectStaffShif?.name ? 'Editar Turno' : 'Registrar Turno'}
         </CModalTitle>
       </CModalHeader>
       <CModalBody>
@@ -144,14 +143,14 @@ const ModalAddDirectStaffShift = (props) => {
                 id="indirectStaffShiftName"
                 label="Nombre jornada"
                 placeholder="Nombre jornada"
-                invalid={indirectStaffShiftError}
-                value={indirectStaffShiftName || ''}
+                invalid={directStaffShiftError}
+                value={directStaffShiftName || ''}
                 text=""
                 onBlur={(e) => {
                   if (e.target.value !== '') {
-                    setIndirectStaffShiftError(false)
+                    setDirectStaffShiftError(false)
                   } else {
-                    setIndirectStaffShiftError(true)
+                    setDirectStaffShiftError(true)
                   }
                 }}
                 onChange={(e) => {
@@ -166,7 +165,7 @@ const ModalAddDirectStaffShift = (props) => {
         <CButton color="secondary" onClick={() => handleClick()}>
           Cerrar
         </CButton>
-        <CButton className="btn-add" onClick={() => handleRegisterIndirectStaffShift()}>
+        <CButton className="btn-add" onClick={() => handleRegisterDirectStaffShift()}>
           Guardar
         </CButton>
       </CModalFooter>
