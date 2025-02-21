@@ -142,26 +142,26 @@ const _nav = [
           },
           {
             component: CNavItem,
-            name: 'Turnos',
+            name: 'Turno Per. Indirecto',
+            to: '/maintainer/indirect-staff-shift',
+            icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+          },
+          {
+            component: CNavItem,
+            name: 'Turno Per. Directo',
+            to: '/maintainer/direct-staff-shift',
+            icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+          },
+          {
+            component: CNavItem,
+            name: 'Jornada',
             to: '/maintainer/shifts',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
           {
             component: CNavItem,
-            name: 'Jornada Per. Directo',
-            to: '/maintainer/indirect-personal',
-            icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-          },
-          {
-            component: CNavItem,
-            name: 'Jornada Per. Indirecto',
-            to: '/maintainer/indirect-personal',
-            icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-          },
-          {
-            component: CNavItem,
             name: 'Frentes de trabajo',
-            to: '/maintainer/indirect-personal',
+            to: '/maintainer/work-front',
             icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
           },
           {

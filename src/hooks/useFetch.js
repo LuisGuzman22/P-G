@@ -266,6 +266,39 @@ const fetchShifts = async () => {
   return res.data.data
 }
 
+const fetchIndirectStaffShifts = async () => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts-with-trashed`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data.data
+}
+
+const fetchDirectStaffShifts = async () => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/directStaffShifts-with-trashed`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data.data
+}
+
+const fetchWorkFront = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/workFronts-with-trashed`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
 const userType = localStorage.getItem('USER_TYPE')
 
 export const useFetchProyects = (projectId) => {
@@ -574,6 +607,42 @@ export const useFetchShifts = (projectId, contractId) => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchShifts(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchIndirectStaffShifts = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['indirect_staff_shift'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchIndirectStaffShifts(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchDirectStaffShifts = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['direct_staff_shift'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchDirectStaffShifts(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchWorkFront = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['workFront'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchWorkFront(projectId, contractId)
     },
   })
 }

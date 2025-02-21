@@ -25,6 +25,14 @@ const IndirectPersonalMaintainer = React.lazy(
 )
 const CompanyMaintainer = React.lazy(() => import('./pages/CompanyMaintainerPage'))
 const ShiftMaintainer = React.lazy(() => import('./pages/ShiftMaintainerPage'))
+const IndirectStaffShiftMaintainer = React.lazy(
+  () => import('./pages/IndirectStaffShiftMaintainerPage'),
+)
+const WorkFrontMaintainer = React.lazy(() => import('./pages/WorkFrontMaintainerPage'))
+
+const DirectStaffShiftMaintainer = React.lazy(
+  () => import('./pages/DirectStaffShiftMaintainerPage'),
+)
 
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDocMaintainerPage'))
@@ -127,9 +135,27 @@ const routes = [
     protected: true,
   },
   {
+    path: '/maintainer/indirect-staff-shift',
+    name: 'Administrar Turno Per. Indirecto',
+    element: IndirectStaffShiftMaintainer,
+    protected: true,
+  },
+  {
     path: '/maintainer/shifts',
-    name: 'Administrar Turnos',
+    name: 'Administrar Jornada',
     element: ShiftMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/direct-staff-shift',
+    name: 'Administrar Turno Per. Directo',
+    element: DirectStaffShiftMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/work-front',
+    name: 'Administrar Frentes de trabajo',
+    element: WorkFrontMaintainer,
     protected: true,
   },
   {

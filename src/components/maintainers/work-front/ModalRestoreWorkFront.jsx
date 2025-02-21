@@ -18,12 +18,14 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import './css.scss'
 import useShift from 'src/hooks/useShift'
+import useIndirectStaffShift from 'src/hooks/useIndirectStaffShift'
+import useWorkFront from 'src/hooks/useWorkFront'
 
-const ModalRestoreShift = (props) => {
+const ModalRestoreWorkFront = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
-  const shiftQuery = getData('shifts')
-  const { restoreShift } = useShift()
+  const workFrontQuery = getData('workFront')
+  const { restoreWorkFront } = useWorkFront()
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
@@ -42,11 +44,13 @@ const ModalRestoreShift = (props) => {
       className="restore-modal"
     >
       <CModalHeader>
-        <CModalTitle id="ScrollingLongContentExampleLabel2">Restaurar Turno</CModalTitle>
+        <CModalTitle id="ScrollingLongContentExampleLabel2">
+          Restaurar Frente de trabajo
+        </CModalTitle>
       </CModalHeader>
       <CModalBody>
-        {shiftQuery?.filter((shift) => shift.deleted_at !== null).length === 0 ? (
-          <>No hay turnos eliminados</>
+        {workFrontQuery?.filter((wf) => wf.deleted_at !== null).length === 0 ? (
+          <>No hay frentes de trabajo eliminados</>
         ) : (
           <CTable striped>
             <CTableHead>
@@ -56,17 +60,17 @@ const ModalRestoreShift = (props) => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {shiftQuery
-                ?.filter((shift) => shift.deleted_at !== null)
-                .map((shift, index) => {
+              {workFrontQuery
+                ?.filter((wf) => wf.deleted_at !== null)
+                .map((wf, index) => {
                   return (
-                    <CTableRow key={shift.id}>
-                      <CTableDataCell>{shift.name}</CTableDataCell>
+                    <CTableRow key={wf.id}>
+                      <CTableDataCell>{wf.name}</CTableDataCell>
                       <CTableDataCell>
                         <CButton
                           className="btn-action-restore"
                           onClick={() => {
-                            restoreShift(shift.id)
+                            restoreWorkFront(wf.id)
                           }}
                         >
                           Restaurar
@@ -88,4 +92,4 @@ const ModalRestoreShift = (props) => {
   )
 }
 
-export default ModalRestoreShift
+export default ModalRestoreWorkFront

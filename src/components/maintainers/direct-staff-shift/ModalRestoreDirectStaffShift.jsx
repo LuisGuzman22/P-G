@@ -18,12 +18,14 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import './css.scss'
 import useShift from 'src/hooks/useShift'
+import useIndirectStaffShift from 'src/hooks/useIndirectStaffShift'
+import useDirectStaffShift from 'src/hooks/useDirectStaffShift'
 
-const ModalRestoreShift = (props) => {
+const ModalRestoreDirectStaffShift = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
-  const shiftQuery = getData('shifts')
-  const { restoreShift } = useShift()
+  const directStaffShiftQuery = getData('direct_staff_shift')
+  const { restoreDirectStaffShift } = useDirectStaffShift()
 
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
@@ -45,7 +47,7 @@ const ModalRestoreShift = (props) => {
         <CModalTitle id="ScrollingLongContentExampleLabel2">Restaurar Turno</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        {shiftQuery?.filter((shift) => shift.deleted_at !== null).length === 0 ? (
+        {directStaffShiftQuery?.filter((shift) => shift.deleted_at !== null).length === 0 ? (
           <>No hay turnos eliminados</>
         ) : (
           <CTable striped>
@@ -56,7 +58,7 @@ const ModalRestoreShift = (props) => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {shiftQuery
+              {directStaffShiftQuery
                 ?.filter((shift) => shift.deleted_at !== null)
                 .map((shift, index) => {
                   return (
@@ -66,7 +68,7 @@ const ModalRestoreShift = (props) => {
                         <CButton
                           className="btn-action-restore"
                           onClick={() => {
-                            restoreShift(shift.id)
+                            restoreDirectStaffShift(shift.id)
                           }}
                         >
                           Restaurar
@@ -88,4 +90,4 @@ const ModalRestoreShift = (props) => {
   )
 }
 
-export default ModalRestoreShift
+export default ModalRestoreDirectStaffShift

@@ -15,7 +15,7 @@ const ShiftMaintainer = () => {
 
   return (
     <div className="shift-maintainer">
-      <h2 className="title">Administrar Turnos</h2>
+      <h2 className="title">Administrar Jornada</h2>
       {visibleShift && (
         <ModalAddShift
           visible={true}
