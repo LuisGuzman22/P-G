@@ -11,38 +11,41 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import ModalAddIndirectPersonal from './ModalAddIndirectPersonal'
-import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
+import './css.scss'
+
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import { MenuItem } from '@mui/material'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
-const IndirectPersonalList = () => {
+import { MenuItem } from '@mui/material'
+import useCompany from 'src/hooks/useCompany'
+import ModalAddCompany from './ModalAddCompany'
+
+const CompanyList = () => {
   const { getData } = useGetCachedQueryData()
-  const indirectPersonalQuery = getData('indirect-personal')
-  const { deleteIndirectPersonal } = useIndirectPersonal()
+  const companyQuery = getData('company')
+  const { deleteCompany } = useCompany()
 
-  const [visibleIndirectPersonal, setVisibleIndirectPersonal] = useState(false)
-  const [selectedIndirectPersonal, setSelectedIndirectPersonal] = useState()
-  const [indirectPersonalData, setIndirectPersonalData] = useState([])
+  const [visibleCompany, setVisibleCompany] = useState(false)
+  const [selectedCompany, setSelectedCompany] = useState()
+  const [companyData, setCompanyData] = useState([])
 
-  const handleEditIndirectPersonal = (indirectPersonal) => {
-    setSelectedIndirectPersonal(indirectPersonal)
-    setVisibleIndirectPersonal(!visibleIndirectPersonal)
+  const handleEditCompany = (company) => {
+    setSelectedCompany(company)
+    setVisibleCompany(!visibleCompany)
   }
 
   useEffect(() => {
-    let ind = []
-    indirectPersonalQuery
-      ?.filter((idp) => idp.deleted_at === null)
-      .map((idp) => {
-        ind.push({
-          id: idp.id,
-          name: idp.name,
+    let comp = []
+    companyQuery
+      ?.filter((company) => company.deleted_at === null)
+      .map((company) => {
+        comp.push({
+          id: company.id,
+          name: company.name,
         })
       })
-    setIndirectPersonalData(ind)
-  }, [indirectPersonalQuery])
+    setCompanyData(comp)
+  }, [companyQuery])
 
   const columns = [
     {
@@ -62,7 +65,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-edit"
             onClick={() => {
-              handleEditIndirectPersonal(data.row.original)
+              handleEditCompany(data.row.original)
             }}
           >
             <CIcon icon={cilPencil} />
@@ -70,7 +73,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-delete"
             onClick={() => {
-              deleteIndirectPersonal(data.row.original.id)
+              deleteCompany(data.row.original.id)
             }}
           >
             <CIcon icon={cilTrash} />
@@ -82,7 +85,7 @@ const IndirectPersonalList = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: indirectPersonalData ? indirectPersonalData : [],
+    data: companyData ? companyData : [],
     enableColumnActions: false,
     enableSorting: true,
     enableColumnFilters: false,
@@ -114,12 +117,12 @@ const IndirectPersonalList = () => {
       <MenuItem
         key="edit"
         onClick={() => {
-          handleEditIndirectPersonal(row.original)
+          handleEditCompany(row.original)
         }}
       >
         Editar
       </MenuItem>,
-      <MenuItem key="delete" onClick={() => deleteIndirectPersonal(row.original.id)}>
+      <MenuItem key="delete" onClick={() => deleteCompany(row.original.id)}>
         Eliminar
       </MenuItem>,
     ],
@@ -128,13 +131,13 @@ const IndirectPersonalList = () => {
 
   return (
     <>
-      {visibleIndirectPersonal && (
-        <ModalAddIndirectPersonal
+      {visibleCompany && (
+        <ModalAddCompany
           visible={true}
-          selectedIndirectPersonal={selectedIndirectPersonal}
+          selectedCompany={selectedCompany}
           sendDataToParent={async (data) => {
             // await refetch()
-            setVisibleIndirectPersonal(data)
+            setVisibleCompany(data)
           }}
         />
       )}
@@ -143,4 +146,4 @@ const IndirectPersonalList = () => {
   )
 }
 
-export default IndirectPersonalList
+export default CompanyList

@@ -11,38 +11,41 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import ModalAddIndirectPersonal from './ModalAddIndirectPersonal'
-import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
+import './css.scss'
+
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import { MenuItem } from '@mui/material'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
-const IndirectPersonalList = () => {
+import { MenuItem } from '@mui/material'
+import useWeather from 'src/hooks/useWeather'
+import ModalAddWeather from './ModalAddWeather'
+
+const WeatherList = () => {
   const { getData } = useGetCachedQueryData()
-  const indirectPersonalQuery = getData('indirect-personal')
-  const { deleteIndirectPersonal } = useIndirectPersonal()
+  const weatherQuery = getData('weather')
+  const { deleteWeather } = useWeather()
 
-  const [visibleIndirectPersonal, setVisibleIndirectPersonal] = useState(false)
-  const [selectedIndirectPersonal, setSelectedIndirectPersonal] = useState()
-  const [indirectPersonalData, setIndirectPersonalData] = useState([])
+  const [visibleWeather, setVisibleWeather] = useState(false)
+  const [selectedWeather, setSelectedWeather] = useState()
+  const [weatherData, setWeatherData] = useState([])
 
-  const handleEditIndirectPersonal = (indirectPersonal) => {
-    setSelectedIndirectPersonal(indirectPersonal)
-    setVisibleIndirectPersonal(!visibleIndirectPersonal)
+  const handleEditWeather = (weather) => {
+    setSelectedWeather(weather)
+    setVisibleWeather(!visibleWeather)
   }
 
   useEffect(() => {
-    let ind = []
-    indirectPersonalQuery
-      ?.filter((idp) => idp.deleted_at === null)
-      .map((idp) => {
-        ind.push({
-          id: idp.id,
-          name: idp.name,
+    let wea = []
+    weatherQuery
+      ?.filter((weather) => weather.deleted_at === null)
+      .map((weather) => {
+        wea.push({
+          id: weather.id,
+          name: weather.name,
         })
       })
-    setIndirectPersonalData(ind)
-  }, [indirectPersonalQuery])
+    setWeatherData(wea)
+  }, [weatherQuery])
 
   const columns = [
     {
@@ -62,7 +65,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-edit"
             onClick={() => {
-              handleEditIndirectPersonal(data.row.original)
+              handleEditWeather(data.row.original)
             }}
           >
             <CIcon icon={cilPencil} />
@@ -70,7 +73,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-delete"
             onClick={() => {
-              deleteIndirectPersonal(data.row.original.id)
+              deleteWeather(data.row.original.id)
             }}
           >
             <CIcon icon={cilTrash} />
@@ -82,7 +85,7 @@ const IndirectPersonalList = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: indirectPersonalData ? indirectPersonalData : [],
+    data: weatherData ? weatherData : [],
     enableColumnActions: false,
     enableSorting: true,
     enableColumnFilters: false,
@@ -114,12 +117,12 @@ const IndirectPersonalList = () => {
       <MenuItem
         key="edit"
         onClick={() => {
-          handleEditIndirectPersonal(row.original)
+          handleEditWeather(row.original)
         }}
       >
         Editar
       </MenuItem>,
-      <MenuItem key="delete" onClick={() => deleteIndirectPersonal(row.original.id)}>
+      <MenuItem key="delete" onClick={() => deleteWeather(row.original.id)}>
         Eliminar
       </MenuItem>,
     ],
@@ -128,13 +131,13 @@ const IndirectPersonalList = () => {
 
   return (
     <>
-      {visibleIndirectPersonal && (
-        <ModalAddIndirectPersonal
+      {visibleWeather && (
+        <ModalAddWeather
           visible={true}
-          selectedIndirectPersonal={selectedIndirectPersonal}
+          selectedWeather={selectedWeather}
           sendDataToParent={async (data) => {
             // await refetch()
-            setVisibleIndirectPersonal(data)
+            setVisibleWeather(data)
           }}
         />
       )}
@@ -143,4 +146,4 @@ const IndirectPersonalList = () => {
   )
 }
 
-export default IndirectPersonalList
+export default WeatherList

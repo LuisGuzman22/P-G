@@ -11,38 +11,41 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import ModalAddIndirectPersonal from './ModalAddIndirectPersonal'
-import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
+import './css.scss'
+
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import { MenuItem } from '@mui/material'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
-const IndirectPersonalList = () => {
+import { MenuItem } from '@mui/material'
+import useShift from 'src/hooks/useShift'
+import ModalAddShift from './ModalAddShift'
+
+const ShiftList = () => {
   const { getData } = useGetCachedQueryData()
-  const indirectPersonalQuery = getData('indirect-personal')
-  const { deleteIndirectPersonal } = useIndirectPersonal()
+  const shiftQuery = getData('shifts')
+  const { deleteShift } = useShift()
 
-  const [visibleIndirectPersonal, setVisibleIndirectPersonal] = useState(false)
-  const [selectedIndirectPersonal, setSelectedIndirectPersonal] = useState()
-  const [indirectPersonalData, setIndirectPersonalData] = useState([])
+  const [visibleShift, setVisibleShift] = useState(false)
+  const [selectedShift, setSelectedShift] = useState()
+  const [shiftData, setShiftData] = useState([])
 
-  const handleEditIndirectPersonal = (indirectPersonal) => {
-    setSelectedIndirectPersonal(indirectPersonal)
-    setVisibleIndirectPersonal(!visibleIndirectPersonal)
+  const handleEditShift = (shift) => {
+    setSelectedShift(shift)
+    setVisibleShift(!visibleShift)
   }
 
   useEffect(() => {
-    let ind = []
-    indirectPersonalQuery
-      ?.filter((idp) => idp.deleted_at === null)
-      .map((idp) => {
-        ind.push({
-          id: idp.id,
-          name: idp.name,
+    let shif = []
+    shiftQuery
+      ?.filter((shift) => shift.deleted_at === null)
+      .map((shift) => {
+        shif.push({
+          id: shift.id,
+          name: shift.name,
         })
       })
-    setIndirectPersonalData(ind)
-  }, [indirectPersonalQuery])
+    setShiftData(shif)
+  }, [shiftQuery])
 
   const columns = [
     {
@@ -62,7 +65,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-edit"
             onClick={() => {
-              handleEditIndirectPersonal(data.row.original)
+              handleEditShift(data.row.original)
             }}
           >
             <CIcon icon={cilPencil} />
@@ -70,7 +73,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-delete"
             onClick={() => {
-              deleteIndirectPersonal(data.row.original.id)
+              deleteShift(data.row.original.id)
             }}
           >
             <CIcon icon={cilTrash} />
@@ -82,7 +85,7 @@ const IndirectPersonalList = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: indirectPersonalData ? indirectPersonalData : [],
+    data: shiftData ? shiftData : [],
     enableColumnActions: false,
     enableSorting: true,
     enableColumnFilters: false,
@@ -114,12 +117,12 @@ const IndirectPersonalList = () => {
       <MenuItem
         key="edit"
         onClick={() => {
-          handleEditIndirectPersonal(row.original)
+          handleEditShift(row.original)
         }}
       >
         Editar
       </MenuItem>,
-      <MenuItem key="delete" onClick={() => deleteIndirectPersonal(row.original.id)}>
+      <MenuItem key="delete" onClick={() => deleteShift(row.original.id)}>
         Eliminar
       </MenuItem>,
     ],
@@ -128,13 +131,13 @@ const IndirectPersonalList = () => {
 
   return (
     <>
-      {visibleIndirectPersonal && (
-        <ModalAddIndirectPersonal
+      {visibleShift && (
+        <ModalAddShift
           visible={true}
-          selectedIndirectPersonal={selectedIndirectPersonal}
+          selectedShift={selectedShift}
           sendDataToParent={async (data) => {
             // await refetch()
-            setVisibleIndirectPersonal(data)
+            setVisibleShift(data)
           }}
         />
       )}
@@ -143,4 +146,4 @@ const IndirectPersonalList = () => {
   )
 }
 
-export default IndirectPersonalList
+export default ShiftList

@@ -5,6 +5,7 @@ import IndirectPersonalList from './IndirectPersonalList'
 import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
 import ModalAddIndirectPersonal from './ModalAddIndirectPersonal'
 import ModalRestoreIndirectPersonal from './ModalRestoreIndirectPersonal'
+import './css.scss'
 
 const IndirectPersonalMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useIndirectPersonal()
@@ -13,7 +14,7 @@ const IndirectPersonalMaintainer = () => {
   const [visibleRestoreIndirectPersonal, setVisibleRestoreIndirectPersonal] = useState(false)
 
   return (
-    <div className="proyect-administration">
+    <div className="indirect-staff-maintainer">
       <h2>Administrar Personal Indirecto</h2>
       {visibleIndirectPersonal && (
         <ModalAddIndirectPersonal
@@ -35,10 +36,14 @@ const IndirectPersonalMaintainer = () => {
       )}
       <CCard className="action-buttons">
         <CCardBody>
-          <CButton onClick={() => setVisibleIndirectPersonal(!visibleIndirectPersonal)}>
+          <CButton
+            className="btn-modal"
+            onClick={() => setVisibleIndirectPersonal(!visibleIndirectPersonal)}
+          >
             Añadir personal indirecto
           </CButton>
           <CButton
+            className="btn-modal"
             onClick={() => setVisibleRestoreIndirectPersonal(!visibleRestoreIndirectPersonal)}
           >
             Ver eliminados

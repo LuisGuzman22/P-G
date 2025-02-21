@@ -22,6 +22,8 @@ import useRestriction from 'src/hooks/useRestriction'
 import ModalAddRestriction from './ModalAddRestriction'
 
 const RestrictionList = () => {
+  console.log('restriction')
+
   const { getData } = useGetCachedQueryData()
   const restrictionQuery = getData('restriction')
   const { deleteRestriction } = useRestriction()

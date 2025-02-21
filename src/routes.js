@@ -23,6 +23,18 @@ const DirectPersonalMaintainer = React.lazy(() => import('./pages/DirectPersonal
 const IndirectPersonalMaintainer = React.lazy(
   () => import('./pages/IndirectPersonalMaintainerPage'),
 )
+const CompanyMaintainer = React.lazy(() => import('./pages/CompanyMaintainerPage'))
+const ShiftMaintainer = React.lazy(() => import('./pages/ShiftMaintainerPage'))
+const IndirectStaffShiftMaintainer = React.lazy(
+  () => import('./pages/IndirectStaffShiftMaintainerPage'),
+)
+const WorkFrontMaintainer = React.lazy(() => import('./pages/WorkFrontMaintainerPage'))
+
+const DirectStaffShiftMaintainer = React.lazy(
+  () => import('./pages/DirectStaffShiftMaintainerPage'),
+)
+const WeatherMaintainer = React.lazy(() => import('./pages/WeatherMaintainerPage'))
+
 const AljibeMaintainerPage = React.lazy(() => import('./pages/AljibeMaintainerPage'))
 const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDocMaintainerPage'))
 const CarouselMaintainerPage = React.lazy(() => import('./pages/CarouselMaintainerPage'))
@@ -105,16 +117,54 @@ const routes = [
     element: UserMaintainerPage,
     protected: true,
   },
-  // {
-  //   path: '/maintainer/direct-personal',
-  //   name: 'Administrar Vehículo',
-  //   element: DirectPersonalMaintainer,
-  // ,protected: true },
-  // {
-  //   path: '/maintainer/indirect-personal',
-  //   name: 'Administrar Vehículo',
-  //   element: IndirectPersonalMaintainer,
-  // ,protected: true },
+  {
+    path: '/maintainer/direct-personal',
+    name: 'Administrar Personal directo',
+    element: DirectPersonalMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/indirect-personal',
+    name: 'Administrar Personal Indirecto',
+    element: IndirectPersonalMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/company',
+    name: 'Administrar Empresas',
+    element: CompanyMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/indirect-staff-shift',
+    name: 'Administrar Turno Per. Indirecto',
+    element: IndirectStaffShiftMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/shifts',
+    name: 'Administrar Jornada',
+    element: ShiftMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/direct-staff-shift',
+    name: 'Administrar Turno Per. Directo',
+    element: DirectStaffShiftMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/work-front',
+    name: 'Administrar Frentes de trabajo',
+    element: WorkFrontMaintainer,
+    protected: true,
+  },
+  {
+    path: '/maintainer/weather',
+    name: 'Administrar Clima',
+    element: WeatherMaintainer,
+    protected: true,
+  },
   {
     path: '/maintainer/aljibe',
     name: 'Administrar Aljibes',

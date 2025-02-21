@@ -11,38 +11,43 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import ModalAddIndirectPersonal from './ModalAddIndirectPersonal'
-import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
+import './css.scss'
+
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import { MenuItem } from '@mui/material'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
-const IndirectPersonalList = () => {
+import { MenuItem } from '@mui/material'
+import useWorkFront from 'src/hooks/useWorkFront'
+import ModalAddWorkFront from './ModalAddWorkFront'
+
+const WorkFrontList = () => {
   const { getData } = useGetCachedQueryData()
-  const indirectPersonalQuery = getData('indirect-personal')
-  const { deleteIndirectPersonal } = useIndirectPersonal()
+  const workFrontQuery = getData('workFront')
+  const { deleteWorkFront } = useWorkFront()
 
-  const [visibleIndirectPersonal, setVisibleIndirectPersonal] = useState(false)
-  const [selectedIndirectPersonal, setSelectedIndirectPersonal] = useState()
-  const [indirectPersonalData, setIndirectPersonalData] = useState([])
+  const [visibleWorkFront, setVisibleWorkFront] = useState(false)
+  const [selectedWorkFront, setSelectedWorkFront] = useState()
+  const [workFrontData, setWorkFrontData] = useState([])
 
-  const handleEditIndirectPersonal = (indirectPersonal) => {
-    setSelectedIndirectPersonal(indirectPersonal)
-    setVisibleIndirectPersonal(!visibleIndirectPersonal)
+  const handleEditWorkFront = (workFront) => {
+    console.log('workFront', workFront)
+    setSelectedWorkFront(workFront)
+    setVisibleWorkFront(!visibleWorkFront)
   }
 
   useEffect(() => {
-    let ind = []
-    indirectPersonalQuery
-      ?.filter((idp) => idp.deleted_at === null)
-      .map((idp) => {
-        ind.push({
-          id: idp.id,
-          name: idp.name,
+    let wf = []
+    workFrontQuery
+      ?.filter((work) => work.deleted_at === null)
+      .map((work) => {
+        wf.push({
+          id: work.id,
+          name: work.name,
+          hasSubFront: work.hasSubFront,
         })
       })
-    setIndirectPersonalData(ind)
-  }, [indirectPersonalQuery])
+    setWorkFrontData(wf)
+  }, [workFrontQuery])
 
   const columns = [
     {
@@ -55,6 +60,10 @@ const IndirectPersonalList = () => {
       accessorKey: 'name',
       header: 'Nombre',
     },
+    // {
+    //   accessorKey: 'hasSubFront',
+    //   header: 'Sub frente de trabajo',
+    // },
     {
       header: 'Acciones',
       Cell: (data) => (
@@ -62,7 +71,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-edit"
             onClick={() => {
-              handleEditIndirectPersonal(data.row.original)
+              handleEditWorkFront(data.row.original)
             }}
           >
             <CIcon icon={cilPencil} />
@@ -70,7 +79,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-delete"
             onClick={() => {
-              deleteIndirectPersonal(data.row.original.id)
+              deleteWorkFront(data.row.original.id)
             }}
           >
             <CIcon icon={cilTrash} />
@@ -82,7 +91,7 @@ const IndirectPersonalList = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: indirectPersonalData ? indirectPersonalData : [],
+    data: workFrontData ? workFrontData : [],
     enableColumnActions: false,
     enableSorting: true,
     enableColumnFilters: false,
@@ -114,12 +123,12 @@ const IndirectPersonalList = () => {
       <MenuItem
         key="edit"
         onClick={() => {
-          handleEditIndirectPersonal(row.original)
+          handleEditWorkFront(row.original)
         }}
       >
         Editar
       </MenuItem>,
-      <MenuItem key="delete" onClick={() => deleteIndirectPersonal(row.original.id)}>
+      <MenuItem key="delete" onClick={() => deleteWorkFront(row.original.id)}>
         Eliminar
       </MenuItem>,
     ],
@@ -128,13 +137,13 @@ const IndirectPersonalList = () => {
 
   return (
     <>
-      {visibleIndirectPersonal && (
-        <ModalAddIndirectPersonal
+      {visibleWorkFront && (
+        <ModalAddWorkFront
           visible={true}
-          selectedIndirectPersonal={selectedIndirectPersonal}
+          selectedWorkFront={selectedWorkFront}
           sendDataToParent={async (data) => {
             // await refetch()
-            setVisibleIndirectPersonal(data)
+            setVisibleWorkFront(data)
           }}
         />
       )}
@@ -143,4 +152,4 @@ const IndirectPersonalList = () => {
   )
 }
 
-export default IndirectPersonalList
+export default WorkFrontList

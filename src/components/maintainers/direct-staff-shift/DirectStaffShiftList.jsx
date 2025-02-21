@@ -11,38 +11,41 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import ModalAddIndirectPersonal from './ModalAddIndirectPersonal'
-import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
+import './css.scss'
+
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import { MenuItem } from '@mui/material'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
-const IndirectPersonalList = () => {
+import { MenuItem } from '@mui/material'
+import useDirectStaffShift from 'src/hooks/useDirectStaffShift'
+import ModalAddDirectStaffShift from './ModalAddDirectStaffShift'
+
+const DirectStaffShiftList = () => {
   const { getData } = useGetCachedQueryData()
-  const indirectPersonalQuery = getData('indirect-personal')
-  const { deleteIndirectPersonal } = useIndirectPersonal()
+  const directStaffShiftQuery = getData('direct_staff_shift')
+  const { deleteDirectStaffShift } = useDirectStaffShift()
 
-  const [visibleIndirectPersonal, setVisibleIndirectPersonal] = useState(false)
-  const [selectedIndirectPersonal, setSelectedIndirectPersonal] = useState()
-  const [indirectPersonalData, setIndirectPersonalData] = useState([])
+  const [visibleDirectStaffShift, setVisibleDirectStaffShift] = useState(false)
+  const [selectedDirectStaffShift, setSelectedDirectStaffShift] = useState()
+  const [directStaffShiftData, setDirectStaffShiftData] = useState([])
 
-  const handleEditIndirectPersonal = (indirectPersonal) => {
-    setSelectedIndirectPersonal(indirectPersonal)
-    setVisibleIndirectPersonal(!visibleIndirectPersonal)
+  const handleEditDirectStaffShift = (directStaffShift) => {
+    setSelectedDirectStaffShift(directStaffShift)
+    setVisibleDirectStaffShift(!visibleDirectStaffShift)
   }
 
   useEffect(() => {
-    let ind = []
-    indirectPersonalQuery
-      ?.filter((idp) => idp.deleted_at === null)
-      .map((idp) => {
-        ind.push({
-          id: idp.id,
-          name: idp.name,
+    let shif = []
+    directStaffShiftQuery
+      ?.filter((shift) => shift.deleted_at === null)
+      .map((shift) => {
+        shif.push({
+          id: shift.id,
+          name: shift.name,
         })
       })
-    setIndirectPersonalData(ind)
-  }, [indirectPersonalQuery])
+    setDirectStaffShiftData(shif)
+  }, [directStaffShiftQuery])
 
   const columns = [
     {
@@ -62,7 +65,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-edit"
             onClick={() => {
-              handleEditIndirectPersonal(data.row.original)
+              handleEditDirectStaffShift(data.row.original)
             }}
           >
             <CIcon icon={cilPencil} />
@@ -70,7 +73,7 @@ const IndirectPersonalList = () => {
           <CButton
             className="btn-action-delete"
             onClick={() => {
-              deleteIndirectPersonal(data.row.original.id)
+              deleteDirectStaffShift(data.row.original.id)
             }}
           >
             <CIcon icon={cilTrash} />
@@ -82,7 +85,7 @@ const IndirectPersonalList = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: indirectPersonalData ? indirectPersonalData : [],
+    data: directStaffShiftData ? directStaffShiftData : [],
     enableColumnActions: false,
     enableSorting: true,
     enableColumnFilters: false,
@@ -114,12 +117,12 @@ const IndirectPersonalList = () => {
       <MenuItem
         key="edit"
         onClick={() => {
-          handleEditIndirectPersonal(row.original)
+          handleEditDirectStaffShift(row.original)
         }}
       >
         Editar
       </MenuItem>,
-      <MenuItem key="delete" onClick={() => deleteIndirectPersonal(row.original.id)}>
+      <MenuItem key="delete" onClick={() => deleteDirectStaffShift(row.original.id)}>
         Eliminar
       </MenuItem>,
     ],
@@ -128,13 +131,13 @@ const IndirectPersonalList = () => {
 
   return (
     <>
-      {visibleIndirectPersonal && (
-        <ModalAddIndirectPersonal
+      {visibleDirectStaffShift && (
+        <ModalAddDirectStaffShift
           visible={true}
-          selectedIndirectPersonal={selectedIndirectPersonal}
+          selectedDirectStaffShift={selectedDirectStaffShift}
           sendDataToParent={async (data) => {
             // await refetch()
-            setVisibleIndirectPersonal(data)
+            setVisibleDirectStaffShift(data)
           }}
         />
       )}
@@ -143,4 +146,4 @@ const IndirectPersonalList = () => {
   )
 }
 
-export default IndirectPersonalList
+export default DirectStaffShiftList

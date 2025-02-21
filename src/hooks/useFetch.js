@@ -138,7 +138,7 @@ const fetchUser = async () => {
 
 const fetchDirectPersonal = async () => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals-with-trashed`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/direct-personals-with-trashed`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -203,19 +203,17 @@ export const fetchReportsData = async (contractId, projectId) => {
 }
 
 export const fetchReportDataByReportId = async (reportId) => {
-  console.log('reportId', reportId)
   const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/reports/${reportId}`, {
     // const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/reports`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
   })
-  console.log('fetchReportDataByReportId', res.data.data)
   return res.data.data
 }
 
 const fetchCompany = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/companies`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/companies-with-trashed`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -257,6 +255,57 @@ const fetchGeneralProgress = async (contractId, projectId) => {
     },
   )
   return res.data
+}
+
+const fetchShifts = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/shifts-with-trashed`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
+const fetchIndirectStaffShifts = async () => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts-with-trashed`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data.data
+}
+
+const fetchDirectStaffShifts = async () => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/directStaffShifts-with-trashed`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data.data
+}
+
+const fetchWorkFront = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/workFronts-with-trashed`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
+}
+
+const fetchWeather = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/weathers-with-trashed`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+  return res.data.data
 }
 
 const userType = localStorage.getItem('USER_TYPE')
@@ -555,6 +604,66 @@ export const useFetchGeneralProgress = (projectId, contractId) => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchGeneralProgress(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchShifts = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['shifts'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchShifts(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchIndirectStaffShifts = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['indirect_staff_shift'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchIndirectStaffShifts(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchDirectStaffShifts = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['direct_staff_shift'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchDirectStaffShifts(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchWorkFront = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['workFront'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchWorkFront(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchWeather = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['weather'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchWeather(projectId, contractId)
     },
   })
 }
