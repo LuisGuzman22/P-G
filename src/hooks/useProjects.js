@@ -12,7 +12,7 @@ const useProjects = () => {
   const projectLS = JSON.parse(getProject())
 
   const { data, isLoading, error, refetch, isRefetching } = useFetchProyects(1)
-  const { data: projectData } = useFetchProjectPerId(projectLS?.id)
+  const { data: projectData, isLoading: projectLoading } = useFetchProjectPerId(projectLS?.id)
 
   const [errorMessage, setErrorMessage] = useState()
 
@@ -104,6 +104,7 @@ const useProjects = () => {
     deleteProject,
     errorMessage,
     projectData,
+    projectLoading,
   }
 }
 
