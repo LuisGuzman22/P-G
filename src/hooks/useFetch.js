@@ -25,6 +25,11 @@ const fetchContracts = async (contractId) => {
   return res.data.data
 }
 
+const fetchProjectPerId = async (projectId) => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/projects/${projectId}`)
+  return res.data.data
+}
+
 const fetchBasicData = async (contractId) => {
   const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/basicData`, {
     headers: {
@@ -328,6 +333,16 @@ export const useFetchContract = (contractId) => {
     // refetchType: 'all',
     queryFn: async () => {
       return fetchContracts(contractId)
+    },
+  })
+}
+
+export const useFetchProjectPerId = (projectId) => {
+  return useQuery({
+    queryKey: ['project'],
+    // refetchType: 'all',
+    queryFn: async () => {
+      return fetchProjectPerId(projectId)
     },
   })
 }

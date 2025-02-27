@@ -12,7 +12,7 @@ const useContracts = (contractId) => {
   const queryClient = useQueryClient()
 
   const { register: asignContract } = useAsignContracts()
-  const { getProject } = useRegisterGeneralData()
+  const { getProject, getContract } = useRegisterGeneralData()
   const projectLS = JSON.parse(getProject())
 
   const { data, isLoading, error, refetch, isRefetching } = useFetchContract(contractId)
@@ -20,21 +20,6 @@ const useContracts = (contractId) => {
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
       return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/contracts`, newTodo)
-      // .then((res) => {
-      //   if (res.status === HttpStatusCode.Created) {
-      //     setIsError(false)
-      //     return res.ok
-      //   } else {
-      //     setErrorMutate('Error al registrar proyecto')
-      //     setIsError(true)
-      //     return false
-      //   }
-      // })
-      // .catch((err) => {
-      //   setErrorMutate('Error al registrar proyecto')
-      //   setIsError(true)
-      //   return false
-      // })
     },
     onSuccess: (suc) => {
       const contractData = {
@@ -61,21 +46,6 @@ const useContracts = (contractId) => {
         `${process.env.REACT_APP_BASE_URL}api/v1/contracts/${newTodo.id}`,
         newTodo,
       )
-      // .then((res) => {
-      //   if (res.status === HttpStatusCode.Created) {
-      //     setIsError(false)
-      //     return res.ok
-      //   } else {
-      //     setErrorMutate('Error al actualizar contrato')
-      //     setIsError(true)
-      //     return false
-      //   }
-      // })
-      // .catch((err) => {
-      //   setErrorMutate('Error al actualizar contrato')
-      //   setIsError(true)
-      //   return false
-      // })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['contracts'] })
@@ -91,23 +61,7 @@ const useContracts = (contractId) => {
 
   const mutationDelete = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/contracts/${newTodo}`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar contrato')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar contrato')
-          setIsError(true)
-          return false
-        })
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/contracts/${newTodo}`)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['contracts'] })
