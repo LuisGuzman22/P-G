@@ -20,6 +20,7 @@ import {
 import useContracts from 'src/hooks/useContracts'
 import useCompany from 'src/hooks/useCompany'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import ModalAddCompany from '../company/ModalAddCompany'
 const ModalAddContract = (props) => {
   const initialState = {
     name: undefined,
@@ -50,6 +51,12 @@ const ModalAddContract = (props) => {
   const handleClick = () => {
     props.sendDataToParent(false)
   }
+
+  // const [visiblePrueba, setVisiblePrueba] = useState(false)
+
+  // const prueba = () => {
+  //   setVisiblePrueba(!visiblePrueba)
+  // }
 
   const onChangeData = (e) => {
     setContract({ ...contract, [e.target.id]: e.target.value })
@@ -159,6 +166,16 @@ const ModalAddContract = (props) => {
         </CModalTitle>
       </CModalHeader>
       <CModalBody>
+        {/* {visiblePrueba && (
+          <div style={{ 'z-index': 1000 }}>
+            <ModalAddCompany
+              visible={true}
+              sendDataToParent={(data) => {
+                setVisiblePrueba(data)
+              }}
+            />
+          </div>
+        )} */}
         <CToast
           autohide={true}
           visible={isError}
@@ -323,6 +340,13 @@ const ModalAddContract = (props) => {
               />
             </CCol>
           </CRow>
+          {/* <CRow>
+            <CCol sm={12}>
+              <label onClick={() => prueba()} style={{ cursor: 'pointer' }}>
+                Puedes registrar una nueva empresa desde aquí
+              </label>
+            </CCol>
+          </CRow> */}
         </CForm>
       </CModalBody>
       <CModalFooter>

@@ -8,32 +8,19 @@ const useCompany = () => {
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState()
   const queryClient = useQueryClient()
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .post(`${process.env.REACT_APP_BASE_URL}api/v1/companies`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar la compañia')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar la compañia')
-          setIsError(true)
-          return false
-        })
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/companies`, newTodo)
     },
     onSuccess: (suc) => {
+      setErrorMessage([])
       queryClient.invalidateQueries({ queryKey: ['company'] })
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al registrar la compañia')
       setIsError(true)
       return false
@@ -42,28 +29,14 @@ const useCompany = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/companies/${id}`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar la compañia')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar la compañia')
-          setIsError(true)
-          return false
-        })
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/companies/${id}`)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['company'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al registrar la compañia')
       setIsError(true)
       return false
@@ -72,28 +45,17 @@ const useCompany = () => {
 
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .put(`${process.env.REACT_APP_BASE_URL}api/v1/companies/${newTodo.id}`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar la compañia')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar la compañia')
-          setIsError(true)
-          return false
-        })
+      return await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/companies/${newTodo.id}`,
+        newTodo,
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['company'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar la compañia')
       setIsError(true)
       return false
@@ -102,28 +64,16 @@ const useCompany = () => {
 
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/companies/${newTodo}/restore`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar la compañia')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar la compañia')
-          setIsError(true)
-          return false
-        })
+      return await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}api/v1/companies/${newTodo}/restore`,
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['company'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar la compañia')
       setIsError(true)
       return false
@@ -166,6 +116,7 @@ const useCompany = () => {
     deleteCompany,
     updateCompany,
     restoreCompany,
+    errorMessage,
   }
 }
 

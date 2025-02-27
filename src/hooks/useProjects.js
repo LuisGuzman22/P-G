@@ -1,34 +1,24 @@
 import { useState } from 'react'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useFetchProyects } from './useFetch'
+import { useFetchProjectPerId, useFetchProyects } from './useFetch'
+import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useProjects = () => {
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
   const queryClient = useQueryClient()
+  const { getProject, getContract } = useRegisterGeneralData()
+  const projectLS = JSON.parse(getProject())
 
   const { data, isLoading, error, refetch, isRefetching } = useFetchProyects(1)
+  const { data: projectData, isLoading: projectLoading } = useFetchProjectPerId(projectLS?.id)
+
   const [errorMessage, setErrorMessage] = useState()
 
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
       return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/projects`, newTodo)
-      // .then((res) => {
-      //   if (res.status === HttpStatusCode.Created) {
-      //     setIsError(false)
-      //     return res.ok
-      //   } else {
-      //     setErrorMutate('Error al registrar proyecto')
-      //     setIsError(true)
-      //     return false
-      //   }
-      // })
-      // .catch((err) => {
-      //   setErrorMutate('Error al registrar proyecto')
-      //   setIsError(true)
-      //   return false
-      // })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
@@ -48,21 +38,6 @@ const useProjects = () => {
         `${process.env.REACT_APP_BASE_URL}api/v1/projects/${newTodo.id}`,
         newTodo,
       )
-      // .then((res) => {
-      //   if (res.status === HttpStatusCode.Created) {
-      //     setIsError(false)
-      //     return res.ok
-      //   } else {
-      //     setErrorMutate('Error al actualizar proyecto')
-      //     setIsError(true)
-      //     return false
-      //   }
-      // })
-      // .catch((err) => {
-      //   setErrorMutate('Error al actualizar proyecto')
-      //   setIsError(true)
-      //   return false
-      // })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
@@ -78,23 +53,7 @@ const useProjects = () => {
 
   const mutationDelete = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/projects/${newTodo}`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar proyecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar proyecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/projects/${newTodo}`)
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
@@ -144,6 +103,8 @@ const useProjects = () => {
     update,
     deleteProject,
     errorMessage,
+    projectData,
+    projectLoading,
   }
 }
 
