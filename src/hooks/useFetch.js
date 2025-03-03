@@ -195,6 +195,18 @@ const fetchTechnicalDocumentationCategories = async (projectId, contractId) => {
   return res.data.data
 }
 
+const fetchCarousel = async (projectId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/carrusel/getCarouselUrls/${projectId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data.data
+}
+
 export const fetchReportsData = async (contractId, projectId) => {
   const res = await axios.get(
     `${process.env.REACT_APP_BASE_URL}api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
@@ -535,6 +547,18 @@ export const useFetchGetTechnicalDocumentationCategories = (projectId, contractI
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchTechnicalDocumentationCategories(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchGetCarousel = (projectId) => {
+  return useQuery({
+    queryKey: ['carousel'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchCarousel(projectId)
     },
   })
 }

@@ -20,17 +20,15 @@ import {
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import useCarousel from 'src/hooks/useCarousel'
 
 const ModalAddImage = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
-  const techDocCatQuery = getData('technical-documentation-categories')
 
-  const { register } = useTechnicalDoc()
-  const [categoryError, setCategoryError] = useState(false)
+  const { register } = useCarousel()
   const [documentError, setDocumentError] = useState(false)
 
-  const [category, setCategory] = useState('')
   const [docs, setDocs] = useState([])
 
   const handleClick = () => {
@@ -38,20 +36,9 @@ const ModalAddImage = (props) => {
   }
 
   const handleUploadTechicalDoc = () => {
-    if (category === '' || category === '-1') {
-      setCategoryError(true)
-    } else if (docs.length === 0) {
-      setDocumentError(true)
-    } else {
-      if (!categoryError) {
-        register({ category, docs })
-        props.sendDataToParent(false)
-      }
-    }
-  }
-
-  const handleRegisterCategory = (id) => {
-    setCategory(id)
+    console.log('file', docs)
+    register({ images: docs })
+    props.sendDataToParent(false)
   }
 
   const handleUploadFile = (e) => {
