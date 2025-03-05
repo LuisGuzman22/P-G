@@ -96,12 +96,15 @@ const testToken = async () => {
   return res.data.data
 }
 
-const fetchMachinery = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/machineries-with-trashed`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+const fetchMachinery = async (contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/machineries/byContract/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
@@ -165,12 +168,15 @@ const fetchIndirectPersonal = async () => {
   return res.data.data
 }
 
-const fetchAljibe = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/waterTrucks-with-trashed`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+const fetchAljibe = async (contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/waterTrucks/byContract/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
@@ -443,14 +449,14 @@ export const useFetchTrisemanalData = (planningId) => {
   })
 }
 
-export const useFetchMachinery = () => {
+export const useFetchMachinery = (contractId) => {
   return useQuery({
     queryKey: ['machinery'],
     // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      return fetchMachinery()
+      return fetchMachinery(contractId)
     },
   })
 }
@@ -515,14 +521,14 @@ export const useFetchIndirectPersonal = () => {
   })
 }
 
-export const useFetchAljibe = () => {
+export const useFetchAljibe = (contractId) => {
   return useQuery({
     queryKey: ['aljibe'],
     // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      return fetchAljibe()
+      return fetchAljibe(contractId)
     },
   })
 }

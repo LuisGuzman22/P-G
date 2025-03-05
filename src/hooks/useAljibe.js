@@ -2,9 +2,13 @@ import { useState } from 'react'
 import { useFetchAljibe } from './useFetch'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useAljibe = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useFetchAljibe()
+  const { getProject, getContract } = useRegisterGeneralData()
+  const contractLS = JSON.parse(getContract())
+
+  const { data, isLoading, error, refetch, isRefetching } = useFetchAljibe(contractLS.id)
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
