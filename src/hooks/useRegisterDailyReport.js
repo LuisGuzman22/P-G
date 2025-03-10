@@ -61,7 +61,7 @@ const useRegisterDailyReport = () => {
 
   const { mutate: updateMutate } = useMutation({
     mutationFn: async (updateData) => {
-      axios.post(
+      return axios.post(
         `${process.env.REACT_APP_BASE_URL}api/v1/reports/${localStorage.getItem(
           'daily_report',
         )}?_method=PUT`,
@@ -73,12 +73,13 @@ const useRegisterDailyReport = () => {
         },
       )
     },
-    onSuccess: () => {
+    onSuccess: (suc) => {
       setLoading(false)
       setSuccess(true)
       clearContext()
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setLoading(false)
       setSuccess(false)
       setError('Recuerda rellenar todos los campos')
