@@ -6,6 +6,9 @@ import useSCurveChart from 'src/hooks/useSCurveChart'
 
 const SCurveChart = () => {
   const { data, isLoading, error, refetch, isRefetching } = useSCurveChart()
+  const replaceNullWithZero = (data) => {
+    return data.map((row) => row.map((value) => (value === null ? 0 : value)))
+  }
 
   const options = {
     title: 'Avance General',
@@ -35,7 +38,8 @@ const SCurveChart = () => {
           chartType="LineChart"
           width="100%"
           height="100%"
-          data={data?.data}
+          data={replaceNullWithZero(data?.data)}
+          // data={data?.data}
           options={options}
         />
       )}
