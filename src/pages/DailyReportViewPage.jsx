@@ -12,7 +12,7 @@ const DailyReportPage = () => {
 
   useEffect(() => {
     if (!basicQuery) {
-      navigate(`/dashboard`)
+      navigate(`/inicio`)
     }
   }, [basicQuery])
 
