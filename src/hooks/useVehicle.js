@@ -4,7 +4,10 @@ import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const useVehicle = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useFetchVehicle()
+  const { getProject, getContract } = useRegisterGeneralData()
+  const contractLS = JSON.parse(getContract())
+
+  const { data, isLoading, error, refetch, isRefetching } = useFetchVehicle(contractLS?.id)
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)

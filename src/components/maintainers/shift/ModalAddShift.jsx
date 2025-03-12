@@ -58,11 +58,13 @@ const ModalAddShift = (props) => {
         updateShift({
           id: props.selectedShift.id,
           name: shiftName,
+          contract_id: contractLS.id,
         })
         // props.sendDataToParent(false)
       } else {
         register({
           name: shiftName,
+          contract_id: contractLS.id,
         })
         // props.sendDataToParent(false)
       }

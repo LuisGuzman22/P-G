@@ -108,12 +108,15 @@ const fetchMachinery = async (contractId) => {
   return res.data.data
 }
 
-const fetchVehicle = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/vehicles-with-trashed`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+const fetchVehicle = async (contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/vehicles/byContract/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
@@ -144,9 +147,9 @@ const fetchUser = async () => {
   return res.data.data
 }
 
-const fetchDirectPersonal = async () => {
+const fetchDirectPersonal = async (contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/direct-personals-with-trashed`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/direct-personals/by-contract/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -156,9 +159,9 @@ const fetchDirectPersonal = async () => {
   return res.data.data
 }
 
-const fetchIndirectPersonal = async () => {
+const fetchIndirectPersonal = async (contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals-with-trashed`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/by-contract/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -280,18 +283,9 @@ const fetchGeneralProgress = async (contractId, projectId) => {
   return res.data
 }
 
-const fetchShifts = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/shifts-with-trashed`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    },
-  })
-  return res.data.data
-}
-
-const fetchIndirectStaffShifts = async () => {
+const fetchShifts = async (projectId, contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts-with-trashed`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/shifts/by-contract/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -301,9 +295,21 @@ const fetchIndirectStaffShifts = async () => {
   return res.data.data
 }
 
-const fetchDirectStaffShifts = async () => {
+const fetchIndirectStaffShifts = async (projectId, contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/directStaffShifts-with-trashed`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/by-contract/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+  return res.data.data
+}
+
+const fetchDirectStaffShifts = async (projectId, contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/directStaffShifts/by-contract/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -461,14 +467,14 @@ export const useFetchMachinery = (contractId) => {
   })
 }
 
-export const useFetchVehicle = () => {
+export const useFetchVehicle = (contractId) => {
   return useQuery({
     queryKey: ['vehicle'],
     // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      return fetchVehicle()
+      return fetchVehicle(contractId)
     },
   })
 }
@@ -497,26 +503,26 @@ export const useFetchRestriction = () => {
   })
 }
 
-export const useFetchDirectPersonal = () => {
+export const useFetchDirectPersonal = (contractId) => {
   return useQuery({
     queryKey: ['direct-personal'],
     // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      return fetchDirectPersonal()
+      return fetchDirectPersonal(contractId)
     },
   })
 }
 
-export const useFetchIndirectPersonal = () => {
+export const useFetchIndirectPersonal = (contractId) => {
   return useQuery({
     queryKey: ['indirect-personal'],
     // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      return fetchIndirectPersonal()
+      return fetchIndirectPersonal(contractId)
     },
   })
 }

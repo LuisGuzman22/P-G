@@ -2,9 +2,13 @@ import { useState } from 'react'
 import { useFetchDirectPersonal } from './useFetch'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useDirectPersonal = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useFetchDirectPersonal()
+  const { getProject, getContract } = useRegisterGeneralData()
+  const contractLS = JSON.parse(getContract())
+
+  const { data, isLoading, error, refetch, isRefetching } = useFetchDirectPersonal(contractLS?.id)
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
