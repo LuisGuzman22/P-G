@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useFetchVehicle } from './useFetch'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useVehicle = () => {
   const { getProject, getContract } = useRegisterGeneralData()
