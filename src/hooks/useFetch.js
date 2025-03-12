@@ -149,7 +149,7 @@ const fetchUser = async () => {
 
 const fetchDirectPersonal = async (contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/direct-personals/by-contract/${contractId}`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/direct-personals/byContract/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -161,7 +161,7 @@ const fetchDirectPersonal = async (contractId) => {
 
 const fetchIndirectPersonal = async (contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/by-contract/${contractId}`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/byContract/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -285,7 +285,7 @@ const fetchGeneralProgress = async (contractId, projectId) => {
 
 const fetchShifts = async (projectId, contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/shifts/by-contract/${contractId}`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/shifts/byContract/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -297,7 +297,7 @@ const fetchShifts = async (projectId, contractId) => {
 
 const fetchIndirectStaffShifts = async (projectId, contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/by-contract/${contractId}`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/byContract/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -309,7 +309,7 @@ const fetchIndirectStaffShifts = async (projectId, contractId) => {
 
 const fetchDirectStaffShifts = async (projectId, contractId) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/directStaffShifts/by-contract/${contractId}`,
+    `${process.env.REACT_APP_BASE_URL}api/v1/directStaffShifts/byContract/${contractId}`,
     {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -319,12 +319,15 @@ const fetchDirectStaffShifts = async (projectId, contractId) => {
   return res.data.data
 }
 
-const fetchWorkFront = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/workFronts-with-trashed`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+const fetchWorkFront = async (projectId, contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/workFronts/byContract/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
