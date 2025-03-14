@@ -31,7 +31,7 @@ const fetchProjectPerId = async (projectId) => {
 }
 
 const fetchBasicData = async (contractId) => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/basicData`, {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/basicData/${contractId}`, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     },
@@ -120,21 +120,27 @@ const fetchVehicle = async (contractId) => {
   return res.data.data
 }
 
-const fetchEquipment = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/equipments-with-trashed`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+const fetchEquipment = async (contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/equipments/byContract/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
-const fetchRestriction = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/restrictions`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+const fetchRestriction = async (contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/restrictions/byContract/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
@@ -331,12 +337,15 @@ const fetchWorkFront = async (projectId, contractId) => {
   return res.data.data
 }
 
-const fetchWeather = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/weathers-with-trashed`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+const fetchWeather = async (projectId, contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/weathers/byContract/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
@@ -482,26 +491,26 @@ export const useFetchVehicle = (contractId) => {
   })
 }
 
-export const useFetchEquipment = () => {
+export const useFetchEquipment = (contractId) => {
   return useQuery({
     queryKey: ['equipment'],
     // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      return fetchEquipment()
+      return fetchEquipment(contractId)
     },
   })
 }
 
-export const useFetchRestriction = () => {
+export const useFetchRestriction = (contractId) => {
   return useQuery({
     queryKey: ['restriction'],
     // refetchType: 'all',
     // refetchInterval: 10000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      return fetchRestriction()
+      return fetchRestriction(contractId)
     },
   })
 }

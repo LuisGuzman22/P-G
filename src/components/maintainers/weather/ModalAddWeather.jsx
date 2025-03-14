@@ -58,11 +58,13 @@ const ModalAddWeather = (props) => {
         updateWeather({
           id: props.selectedWeather.id,
           name: weatherName,
+          contract_id: contractLS?.id,
         })
         // props.sendDataToParent(false)
       } else {
         register({
           name: weatherName,
+          contract_id: contractLS?.id,
         })
         // props.sendDataToParent(false)
       }

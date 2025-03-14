@@ -60,6 +60,7 @@ const useLogin = () => {
       password,
     }
     const response = await mutation.mutate(loginData)
+    console.log('response', response)
     return response
   }
 

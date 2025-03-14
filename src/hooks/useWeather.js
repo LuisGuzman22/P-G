@@ -2,9 +2,17 @@ import { useState } from 'react'
 import { useFetchWeather } from './useFetch'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useWeather = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useFetchWeather()
+  const { getProject, getContract } = useRegisterGeneralData()
+  const contractLS = JSON.parse(getContract())
+  const projectLS = JSON.parse(getProject())
+
+  const { data, isLoading, error, refetch, isRefetching } = useFetchWeather(
+    projectLS?.id,
+    contractLS?.id,
+  )
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
