@@ -30,8 +30,6 @@ const ModalAddMachinery = (props) => {
     props.sendDataToParent(false)
   }
 
-  console.log('props?.selectedMachinery', props?.selectedMachinery)
-
   const [machineryName, setMachineryName] = useState(props?.selectedMachinery?.name || undefined)
   const [machineryError, setMachineryError] = useState(false)
   const [plate, setPlate] = useState()
@@ -46,7 +44,7 @@ const ModalAddMachinery = (props) => {
   }
 
   const onChangePlate = (e) => {
-    setPlate({ id: uuidv4(), label: e.target.value, contract_id: contractLS.contractId })
+    setPlate({ id: uuidv4(), label: e.target.value, contract_id: contractLS.id })
   }
 
   const handleRegisterPlate = () => {

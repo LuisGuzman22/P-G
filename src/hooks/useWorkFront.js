@@ -2,9 +2,17 @@ import { useFetchWorkFront } from './useFetch'
 import { useEffect, useState } from 'react'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useWorkFront = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useFetchWorkFront()
+  const { getProject, getContract } = useRegisterGeneralData()
+  const contractLS = JSON.parse(getContract())
+  const projectLS = JSON.parse(getProject())
+
+  const { data, isLoading, error, refetch, isRefetching } = useFetchWorkFront(
+    projectLS?.id,
+    contractLS?.id,
+  )
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)

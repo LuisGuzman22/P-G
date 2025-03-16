@@ -42,7 +42,7 @@ const ModalAddAljibe = (props) => {
   }
 
   const onChangePlate = (e) => {
-    setPlate({ id: uuidv4(), label: e.target.value, contract_id: contractLS.contractId })
+    setPlate({ id: uuidv4(), label: e.target.value, contract_id: contractLS.id })
   }
 
   const handleRegisterPlate = () => {

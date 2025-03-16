@@ -67,11 +67,13 @@ const ModalAddIndirectPersonal = (props) => {
         updateIndirectPersonal({
           id: props.selectedIndirectPersonal.id,
           name: indirectPersonalName,
+          contract_id: contractLS.id,
         })
         props.sendDataToParent(false)
       } else {
         register({
           name: indirectPersonalName,
+          contract_id: contractLS.id,
         })
         props.sendDataToParent(false)
       }

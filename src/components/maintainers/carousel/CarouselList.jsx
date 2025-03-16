@@ -12,11 +12,12 @@ import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
+import useCarousel from 'src/hooks/useCarousel'
 
 const CarouselList = () => {
   const { getData } = useGetCachedQueryData()
-  const techDocQuery = getData('technical-documentation')
-  const { deleteDoc } = useTechnicalDoc()
+  const carouselQuery = getData('carousel')
+  const { deleteDoc } = useCarousel()
 
   return (
     <>
@@ -28,10 +29,14 @@ const CarouselList = () => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {techDocQuery?.map((doc, index) => {
+          {carouselQuery?.map((doc, index) => {
             return (
               <CTableRow key={doc.id}>
-                <CTableDataCell> {doc.url.split('/')[4]}</CTableDataCell>
+                <CTableDataCell>
+                  <a href={doc.url} target="_blank" rel="noreferrer">
+                    {doc.name}
+                  </a>
+                </CTableDataCell>
                 <CTableDataCell>
                   <CButton
                     className="btn-action-delete"

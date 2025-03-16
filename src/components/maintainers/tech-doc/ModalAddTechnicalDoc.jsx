@@ -91,7 +91,7 @@ const ModalAddTechnicalDoc = (props) => {
                 }}
               >
                 <option value={'-1'}>Seleccione</option>
-                {techDocCatQuery.map((doc) => {
+                {techDocCatQuery?.map((doc) => {
                   return (
                     <option key={doc.id} value={doc.id}>
                       {doc.name}

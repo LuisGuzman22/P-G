@@ -66,11 +66,13 @@ const ModalAddRestriction = (props) => {
         updateRestriction({
           id: props.selectedRestriction.id,
           name: restrictionName,
+          contract_id: contractLS.id,
         })
         // props.sendDataToParent(false)
       } else {
         register({
           name: restrictionName,
+          contract_id: contractLS.id,
         })
         // props.sendDataToParent(false)
       }

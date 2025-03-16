@@ -2,9 +2,17 @@ import { useState } from 'react'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useFetchIndirectStaffShifts } from './useFetch'
+import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useIndirectStaffShift = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useFetchIndirectStaffShifts()
+  const { getProject, getContract } = useRegisterGeneralData()
+  const contractLS = JSON.parse(getContract())
+  const projectLS = JSON.parse(getProject())
+
+  const { data, isLoading, error, refetch, isRefetching } = useFetchIndirectStaffShifts(
+    projectLS?.id,
+    contractLS?.id,
+  )
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)

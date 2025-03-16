@@ -25,6 +25,8 @@ const ContractSelector = () => {
 
   const projectsQuery = getData('projects')
   const userType = localStorage.getItem('USER_TYPE')
+  const companyUser = localStorage.getItem('company_user')
+
   const { data: contractData } = useGetContracts(1)
   const projectLS = JSON.parse(getProject())
 
@@ -84,7 +86,7 @@ const ContractSelector = () => {
       <CCol sm={6} className="contract-selector-container">
         <CCard>
           <CCardTitle>
-            <h3>Seleccion de Contrato</h3>
+            <h3>Selección de Contrato</h3>
           </CCardTitle>
           <CCardBody>
             <CCardText>
@@ -147,31 +149,37 @@ const ContractSelector = () => {
                     </CRow>
                   )
                 })}
-              <CRow key={0}>
-                <CCol>
-                  <CWidgetStatsD
-                    onClick={() => {
-                      onClickNewContract()
-                    }}
-                    className="mb-3"
-                    icon={
-                      <CIcon
-                        className="my-4 text-white"
-                        icon={'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'}
-                        height={52}
+              {companyUser === 'null' && (
+                <>
+                  <CRow key={0}>
+                    <CCol>
+                      <CWidgetStatsD
+                        onClick={() => {
+                          onClickNewContract()
+                        }}
+                        className="mb-3"
+                        icon={
+                          <CIcon
+                            className="my-4 text-white"
+                            icon={
+                              'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'
+                            }
+                            height={52}
+                          />
+                        }
+                        chart={
+                          <CContainer className="project-selector-container">
+                            <CRow>
+                              <span className="project-title">Crear nuevo contrato</span>
+                            </CRow>
+                          </CContainer>
+                        }
+                        style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
                       />
-                    }
-                    chart={
-                      <CContainer className="project-selector-container">
-                        <CRow>
-                          <span className="project-title">Crear nuevo contrato</span>
-                        </CRow>
-                      </CContainer>
-                    }
-                    style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
-                  />
-                </CCol>
-              </CRow>
+                    </CCol>
+                  </CRow>
+                </>
+              )}
             </CCardText>
           </CCardBody>
         </CCard>

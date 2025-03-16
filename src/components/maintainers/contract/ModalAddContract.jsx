@@ -52,11 +52,11 @@ const ModalAddContract = (props) => {
     props.sendDataToParent(false)
   }
 
-  // const [visiblePrueba, setVisiblePrueba] = useState(false)
+  const [visibleCompany, setVisibleCompany] = useState(false)
 
-  // const prueba = () => {
-  //   setVisiblePrueba(!visiblePrueba)
-  // }
+  const handleAddCompany = () => {
+    setVisibleCompany(!visibleCompany)
+  }
 
   const onChangeData = (e) => {
     setContract({ ...contract, [e.target.id]: e.target.value })
@@ -166,16 +166,16 @@ const ModalAddContract = (props) => {
         </CModalTitle>
       </CModalHeader>
       <CModalBody>
-        {/* {visiblePrueba && (
+        {visibleCompany && (
           <div style={{ 'z-index': 1000 }}>
             <ModalAddCompany
               visible={true}
               sendDataToParent={(data) => {
-                setVisiblePrueba(data)
+                setVisibleCompany(data)
               }}
             />
           </div>
-        )} */}
+        )}
         <CToast
           autohide={true}
           visible={isError}
@@ -340,13 +340,13 @@ const ModalAddContract = (props) => {
               />
             </CCol>
           </CRow>
-          {/* <CRow>
+          <CRow>
             <CCol sm={12}>
-              <label onClick={() => prueba()} style={{ cursor: 'pointer' }}>
+              <label onClick={() => handleAddCompany()} style={{ cursor: 'pointer' }}>
                 Puedes registrar una nueva empresa desde aquí
               </label>
             </CCol>
-          </CRow> */}
+          </CRow>
         </CForm>
       </CModalBody>
       <CModalFooter>

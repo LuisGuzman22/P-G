@@ -5,9 +5,10 @@ import './css.scss'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import CarouselList from './CarouselList'
 import ModalAddImage from './ModalAddImage'
+import useCarousel from 'src/hooks/useCarousel'
 
 const CarouselMaintainer = () => {
-  const { isLoading, refetch, isRefetching, categoryRefetch } = useTechnicalDoc()
+  const { isLoading, refetch, isRefetching } = useCarousel()
 
   const [visibleCategory, setVisibleCategory] = useState(false)
 
@@ -20,7 +21,7 @@ const CarouselMaintainer = () => {
           visible={true}
           sendDataToParent={async (data) => {
             setVisibleCategory(data)
-            await categoryRefetch()
+            // await categoryRefetch()
           }}
         />
       )}

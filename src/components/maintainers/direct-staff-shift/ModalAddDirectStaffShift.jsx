@@ -66,11 +66,13 @@ const ModalAddDirectStaffShift = (props) => {
         updateDirectStaffShift({
           id: props.selectedDirectStaffShift.id,
           name: directStaffShiftName,
+          contract_id: contractLS?.id,
         })
         // props.sendDataToParent(false)
       } else {
         register({
           name: directStaffShiftName,
+          contract_id: contractLS?.id,
         })
         // props.sendDataToParent(false)
       }
