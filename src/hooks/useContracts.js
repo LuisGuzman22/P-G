@@ -15,7 +15,7 @@ const useContracts = (contractId) => {
   const { getProject, getContract } = useRegisterGeneralData()
   const projectLS = JSON.parse(getProject())
 
-  const { data, isLoading, error, refetch, isRefetching } = useFetchContract(contractId)
+  const { data, isLoading, error, refetch, isRefetching } = useFetchContract(projectLS.id)
 
   const mutation = useMutation({
     mutationFn: async (newTodo) => {

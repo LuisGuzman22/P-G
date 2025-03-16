@@ -3,10 +3,11 @@ import axios from 'axios'
 
 const fetchProyects = async (projectId) => {
   let url = `${process.env.REACT_APP_BASE_URL}api/v1/projects`
-  // const company_id = localStorage.getItem('company_user')
-  // if (company_id !== undefined && company_id !== null && company_id !== 'null') {
-  //   url = url + `/search?company_id=${company_id}`
-  // }
+  const company_id = localStorage.getItem('company_user')
+  console.log('company_id', company_id)
+  if (company_id !== undefined && company_id !== null && company_id !== 'null') {
+    url = url + `/search?company_id=${company_id}`
+  }
   const res = await axios.get(url, {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -20,8 +21,10 @@ const fetchUsers = async () => {
   return res.data.data
 }
 
-const fetchContracts = async (contractId) => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/contracts`)
+const fetchContracts = async (projectId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/contracts/byProject/${projectId}`,
+  )
   return res.data.data
 }
 
@@ -202,11 +205,14 @@ const fetchTechnicalDocumentation = async (projectId, contractId) => {
 }
 
 const fetchTechnicalDocumentationCategories = async (projectId, contractId) => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/categories`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/categories/byContract/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     },
-  })
+  )
   return res.data.data
 }
 
@@ -363,12 +369,12 @@ export const useFetchProyects = (projectId) => {
   })
 }
 
-export const useFetchContract = (contractId) => {
+export const useFetchContract = (projectId) => {
   return useQuery({
     queryKey: ['contracts'],
     // refetchType: 'all',
     queryFn: async () => {
-      return fetchContracts(contractId)
+      return fetchContracts(projectId)
     },
   })
 }

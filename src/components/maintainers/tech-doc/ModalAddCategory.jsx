@@ -25,6 +25,10 @@ import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 
 const ModalAddCategory = (props) => {
+  const { getProject, getContract } = useRegisterGeneralData()
+  const projectLS = JSON.parse(getProject())
+  const contractLS = JSON.parse(getContract())
+
   const { getData } = useGetCachedQueryData()
   const techDocCatQuery = getData('technical-documentation-categories')
   const initialStateCategory = {
@@ -58,9 +62,10 @@ const ModalAddCategory = (props) => {
         editCategory({
           id: editCategoryId,
           name: category.name,
+          contract_id: contractLS.id,
         })
       } else {
-        registerCategory(category)
+        registerCategory({ name: category.name, contract_id: contractLS.id })
       }
       props.sendDataToParent(false)
     } else {
@@ -129,7 +134,7 @@ const ModalAddCategory = (props) => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {techDocCatQuery.map((doc, index) => {
+              {techDocCatQuery?.map((doc, index) => {
                 return (
                   <CTableRow key={doc.id}>
                     <CTableDataCell>{doc.name}</CTableDataCell>

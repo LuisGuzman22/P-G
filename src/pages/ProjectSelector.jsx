@@ -21,6 +21,7 @@ import ModalAddProject from 'src/components/maintainers/project/ModalAddProject'
 const ProjectSelector = () => {
   const navigate = useNavigate()
   const userType = localStorage.getItem('USER_TYPE')
+  const companyUser = localStorage.getItem('company_user')
   const { getData } = useGetCachedQueryData()
 
   const contractsQuery = getData('contracts')
@@ -88,7 +89,7 @@ const ProjectSelector = () => {
       <CCol sm={6} className="project-selector-container">
         <CCard>
           <CCardTitle>
-            <h3>Seleccion de Proyecto</h3>
+            <h3>Selección de Proyecto</h3>
           </CCardTitle>
           <CCardBody>
             <CCardText>
@@ -134,31 +135,37 @@ const ProjectSelector = () => {
                     </CRow>
                   )
                 })}
-              <CRow key={0}>
-                <CCol>
-                  <CWidgetStatsD
-                    onClick={() => {
-                      onClickNewProject()
-                    }}
-                    className="mb-3"
-                    icon={
-                      <CIcon
-                        className="my-4 text-white"
-                        icon={'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'}
-                        height={52}
+              {companyUser === 'null' && (
+                <>
+                  <CRow key={0}>
+                    <CCol>
+                      <CWidgetStatsD
+                        onClick={() => {
+                          onClickNewProject()
+                        }}
+                        className="mb-3"
+                        icon={
+                          <CIcon
+                            className="my-4 text-white"
+                            icon={
+                              'https://pgproject.cl/uploads/1705996608_a41c61e65ecf2a35c699.jpg'
+                            }
+                            height={52}
+                          />
+                        }
+                        chart={
+                          <CContainer className="project-selector-container">
+                            <CRow>
+                              <span className="project-title">Crear nuevo proyecto</span>
+                            </CRow>
+                          </CContainer>
+                        }
+                        style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
                       />
-                    }
-                    chart={
-                      <CContainer className="project-selector-container">
-                        <CRow>
-                          <span className="project-title">Crear nuevo proyecto</span>
-                        </CRow>
-                      </CContainer>
-                    }
-                    style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
-                  />
-                </CCol>
-              </CRow>
+                    </CCol>
+                  </CRow>
+                </>
+              )}
             </CCardText>
           </CCardBody>
         </CCard>
