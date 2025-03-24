@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const useLogin = () => {
   const [error, setError] = useState()
@@ -9,6 +10,7 @@ const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const { updatePermissions } = usePermissions()
 
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
@@ -20,8 +22,10 @@ const useLogin = () => {
           if (res.status === HttpStatusCode.Ok) {
             localStorage.setItem('token', res.data.data.token)
             localStorage.setItem('company_user', res.data.data.user.company_id)
+            // localStorage.setItem('userPermissions', JSON.stringify(res.data.data.permissions))
             setIsLoading(false)
             setIsError(false)
+            updatePermissions(res.data.data.permissions)
             navigate(`/project_selector`)
             return res.ok
           } else {
@@ -60,7 +64,6 @@ const useLogin = () => {
       password,
     }
     const response = await mutation.mutate(loginData)
-    console.log('response', response)
     return response
   }
 

@@ -132,6 +132,9 @@ const fetchEquipment = async (contractId) => {
       },
     },
   )
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -165,6 +168,10 @@ const fetchDirectPersonal = async (contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -177,6 +184,10 @@ const fetchIndirectPersonal = async (contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -500,9 +511,10 @@ export const useFetchVehicle = (contractId) => {
 export const useFetchEquipment = (contractId) => {
   return useQuery({
     queryKey: ['equipment'],
-    // refetchType: 'all',
-    // refetchInterval: 10000,
     refetchOnWindowFocus: true,
+    retry: (failureCount, error) => {
+      return failureCount < 2 && error.message !== 'No Content' // 🔹 Solo reintenta 2 veces si no es 204
+    },
     queryFn: async () => {
       return fetchEquipment(contractId)
     },

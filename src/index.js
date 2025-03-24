@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { DailyReportProvider } from './context/DailyReportContext'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { PermissionsProvider } from './providers/PermissionsProvider'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,7 +38,9 @@ createRoot(document.getElementById('root')).render(
       <ReactQueryDevtools initialIsOpen={false} />
       <DailyReportProvider>
         <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
-          <App />
+          <PermissionsProvider userPermissions={[]}>
+            <App />
+          </PermissionsProvider>
         </PersistQueryClientProvider>
       </DailyReportProvider>
     </QueryClientProvider>

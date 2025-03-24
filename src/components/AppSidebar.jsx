@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -17,7 +18,7 @@ import SimpleBar from 'simplebar-react'
 import 'simplebar-react/dist/simplebar.min.css'
 
 // sidebar nav config
-import navigation from '../_nav'
+import useNavItems from '../_nav'
 import CIcon from '@coreui/icons-react'
 import { cilExitToApp } from '@coreui/icons'
 import { useNavigate } from 'react-router-dom'
@@ -27,6 +28,8 @@ const AppSidebar = () => {
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
   let navigate = useNavigate()
+
+  const navItems = useNavItems()
 
   return (
     <CSidebar
@@ -48,7 +51,7 @@ const AppSidebar = () => {
       </CSidebarHeader>
       <CSidebarNav className="sidebar-style">
         <SimpleBar>
-          <AppSidebarNav items={navigation} />
+          <AppSidebarNav items={navItems} />
         </SimpleBar>
       </CSidebarNav>
       <CSidebarFooter

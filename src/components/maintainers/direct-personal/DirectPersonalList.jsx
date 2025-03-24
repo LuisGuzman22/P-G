@@ -16,9 +16,9 @@ import ModalAddDirectPersonal from './ModalAddDirectPersonal'
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MenuItem } from '@mui/material'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const DirectPersonalList = () => {
-  console.log('direct')
   const { getData } = useGetCachedQueryData()
   const directPersonalQuery = getData('direct-personal')
   const { deleteDirectPersonal } = useDirectPersonal()
@@ -26,6 +26,8 @@ const DirectPersonalList = () => {
   const [visibleDirectPersonal, setVisibleDirectPersonal] = useState(false)
   const [selectedDirectPersonal, setSelectedDirectPersonal] = useState()
   const [directPersonalData, setDirectPersonalData] = useState([])
+
+  const { hasPermission } = usePermissions()
 
   const handleEditDirectPersonal = (directPersonal) => {
     setSelectedDirectPersonal(directPersonal)
@@ -60,22 +62,30 @@ const DirectPersonalList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditDirectPersonal(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteDirectPersonal(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission('directPersonal_update') && (
+            <>
+              <CButton
+                className="btn-action-edit"
+                onClick={() => {
+                  handleEditDirectPersonal(data.row.original)
+                }}
+              >
+                <CIcon icon={cilPencil} />
+              </CButton>
+            </>
+          )}
+          {hasPermission('directPersonal_delete') && (
+            <>
+              <CButton
+                className="btn-action-delete"
+                onClick={() => {
+                  deleteDirectPersonal(data.row.original.id)
+                }}
+              >
+                <CIcon icon={cilTrash} />
+              </CButton>
+            </>
+          )}
         </>
       ),
     },
