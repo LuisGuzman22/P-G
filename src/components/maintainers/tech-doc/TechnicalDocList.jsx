@@ -12,12 +12,15 @@ import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const TechnicalDocList = () => {
   const { getData } = useGetCachedQueryData()
   const techDocQuery = getData('technical-documentation')
   const techDocCatQuery = getData('technical-documentation-categories')
   const { deleteDoc } = useTechnicalDoc()
+
+  const { hasPermission } = usePermissions()
 
   return (
     <>
@@ -37,14 +40,16 @@ const TechnicalDocList = () => {
                 <CTableDataCell> {doc.url.split('/')[4]}</CTableDataCell>
                 <CTableDataCell>{catName?.name || 'Sin categoría'}</CTableDataCell>
                 <CTableDataCell>
-                  <CButton
-                    className="btn-action-delete"
-                    onClick={() => {
-                      deleteDoc(doc.id)
-                    }}
-                  >
-                    <CIcon icon={cilTrash} />
-                  </CButton>
+                  {hasPermission('technicalDocumentation_delete') && (
+                    <CButton
+                      className="btn-action-delete"
+                      onClick={() => {
+                        deleteDoc(doc.id)
+                      }}
+                    >
+                      <CIcon icon={cilTrash} />
+                    </CButton>
+                  )}
                 </CTableDataCell>
               </CTableRow>
             )

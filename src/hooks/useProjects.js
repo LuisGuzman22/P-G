@@ -18,7 +18,11 @@ const useProjects = () => {
 
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/projects`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/projects`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })
@@ -37,6 +41,11 @@ const useProjects = () => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/projects/${newTodo.id}`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -53,7 +62,11 @@ const useProjects = () => {
 
   const mutationDelete = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/projects/${newTodo}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/projects/${newTodo}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] })

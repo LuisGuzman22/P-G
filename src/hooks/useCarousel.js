@@ -23,12 +23,12 @@ const useCarousel = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
           },
         },
       )
     },
     onSuccess: (suc) => {
-      console.log('suc', suc)
       queryClient.invalidateQueries({ queryKey: ['carousel'] })
     },
     onError: (err) => {
@@ -44,6 +44,11 @@ const useCarousel = () => {
       return await axios.delete(
         `${process.env.REACT_APP_BASE_URL}api/v1/carrusel/deleteCarousel/${projectLS.id}`,
         { data: { media_ids: [id] } },
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {

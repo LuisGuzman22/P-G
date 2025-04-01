@@ -19,11 +19,13 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 import { MenuItem } from '@mui/material'
 import useWeather from 'src/hooks/useWeather'
 import ModalAddWeather from './ModalAddWeather'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const WeatherList = () => {
   const { getData } = useGetCachedQueryData()
   const weatherQuery = getData('weather')
   const { deleteWeather } = useWeather()
+  const { hasPermission } = usePermissions()
 
   const [visibleWeather, setVisibleWeather] = useState(false)
   const [selectedWeather, setSelectedWeather] = useState()
@@ -62,22 +64,26 @@ const WeatherList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditWeather(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteWeather(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission('weather_update') && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditWeather(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+          {hasPermission('weather_delete') && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteWeather(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

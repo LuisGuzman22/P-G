@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import IndirectPersonalList from './IndirectPersonalList'
@@ -6,12 +6,27 @@ import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
 import ModalAddIndirectPersonal from './ModalAddIndirectPersonal'
 import ModalRestoreIndirectPersonal from './ModalRestoreIndirectPersonal'
 import './css.scss'
+import { useNavigate } from 'react-router-dom'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const IndirectPersonalMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useIndirectPersonal()
+  let navigate = useNavigate()
 
   const [visibleIndirectPersonal, setVisibleIndirectPersonal] = useState(false)
   const [visibleRestoreIndirectPersonal, setVisibleRestoreIndirectPersonal] = useState(false)
+
+  const { hasPermission } = usePermissions()
+
+  const redirectTo = (url) => {
+    navigate(url)
+  }
+
+  useEffect(() => {
+    if (!hasPermission('indirectPersonal_create')) {
+      redirectTo('/inicio')
+    }
+  }, [])
 
   return (
     <div className="indirect-staff-maintainer">
@@ -34,22 +49,26 @@ const IndirectPersonalMaintainer = () => {
           }}
         />
       )}
-      <CCard className="action-buttons">
-        <CCardBody>
-          <CButton
-            className="btn-modal"
-            onClick={() => setVisibleIndirectPersonal(!visibleIndirectPersonal)}
-          >
-            Añadir personal indirecto
-          </CButton>
-          <CButton
-            className="btn-modal"
-            onClick={() => setVisibleRestoreIndirectPersonal(!visibleRestoreIndirectPersonal)}
-          >
-            Ver eliminados
-          </CButton>
-        </CCardBody>
-      </CCard>
+
+      {hasPermission('indirectPersonal_create') && (
+        <CCard className="action-buttons">
+          <CCardBody>
+            <CButton
+              className="btn-modal"
+              onClick={() => setVisibleIndirectPersonal(!visibleIndirectPersonal)}
+            >
+              Añadir personal indirecto
+            </CButton>
+            <CButton
+              className="btn-modal"
+              onClick={() => setVisibleRestoreIndirectPersonal(!visibleRestoreIndirectPersonal)}
+            >
+              Ver eliminados
+            </CButton>
+          </CCardBody>
+        </CCard>
+      )}
+
       <CCard>
         <CCardBody>
           {isLoading || isRefetching ? <Skeleton count={5} /> : <IndirectPersonalList />}

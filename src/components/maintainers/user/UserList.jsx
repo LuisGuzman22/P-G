@@ -19,11 +19,14 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const UserList = () => {
   const { getData } = useGetCachedQueryData()
   const userQuery = getData('user')
   const { deleteUser } = useUser()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleUser, setVisibleUser] = useState(false)
   const [selectedUser, setSelectedUser] = useState()
@@ -69,22 +72,27 @@ const UserList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditUser(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteUser(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission('user_update') && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditUser(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission('user_delete') && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteUser(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

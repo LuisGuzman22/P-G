@@ -17,7 +17,11 @@ const useMachinery = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/machineries`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/machineries`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['machinery'] })
@@ -33,7 +37,11 @@ const useMachinery = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/machineries/${id}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/machineries/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['machinery'] })
@@ -52,6 +60,11 @@ const useMachinery = () => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/machineries/${newTodo.id}`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -70,6 +83,12 @@ const useMachinery = () => {
     mutationFn: async (newTodo) => {
       return await axios.patch(
         `${process.env.REACT_APP_BASE_URL}api/v1/machineries/${newTodo}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {

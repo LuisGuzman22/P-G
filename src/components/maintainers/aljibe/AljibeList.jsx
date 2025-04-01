@@ -19,6 +19,7 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const AljibeList = () => {
   const { getData } = useGetCachedQueryData()
@@ -28,6 +29,8 @@ const AljibeList = () => {
   const [visibleAljibe, setVisibleAljibe] = useState(false)
   const [selectedAljibe, setSelectedAljibe] = useState()
   const [aljibeData, setAljibeData] = useState([])
+
+  const { hasPermission } = usePermissions()
 
   const getPlates = (plates) => {
     const platesJoin = []
@@ -78,22 +81,27 @@ const AljibeList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditAljibe(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteAljibe(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission('aljibe_update') && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditAljibe(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission('aljibe_delete') && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteAljibe(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

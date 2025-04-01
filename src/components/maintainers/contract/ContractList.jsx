@@ -18,10 +18,13 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const ContractList = () => {
   const { getData } = useGetCachedQueryData()
   const contractsQuery = getData('contracts')
+
+  const { hasPermission } = usePermissions()
 
   const { deleteContract } = useContracts()
 
@@ -72,22 +75,27 @@ const ContractList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditContract(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteContract(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission('contract_update') && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditContract(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission('contract_delete') && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteContract(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

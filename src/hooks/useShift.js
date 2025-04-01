@@ -21,7 +21,11 @@ const useShift = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/shifts`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/shifts`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       setErrorMessage([])
@@ -37,7 +41,11 @@ const useShift = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${id}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['shifts'] })
@@ -56,6 +64,11 @@ const useShift = () => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/shifts/${newTodo.id}`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -72,7 +85,15 @@ const useShift = () => {
 
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.patch(`${process.env.REACT_APP_BASE_URL}api/v1/shifts/${newTodo}/restore`)
+      return await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}api/v1/shifts/${newTodo}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['shifts'] })

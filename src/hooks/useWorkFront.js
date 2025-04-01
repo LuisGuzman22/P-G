@@ -21,7 +21,11 @@ const useWorkFront = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/workFronts`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/workFronts`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       setErrorMessage([])
@@ -37,7 +41,11 @@ const useWorkFront = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/workFronts/${id}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/workFronts/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['workFront'] })
@@ -56,6 +64,11 @@ const useWorkFront = () => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/workFronts/${newTodo.id}`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -74,6 +87,12 @@ const useWorkFront = () => {
     mutationFn: async (newTodo) => {
       return await axios.patch(
         `${process.env.REACT_APP_BASE_URL}api/v1/workFronts/${newTodo}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {

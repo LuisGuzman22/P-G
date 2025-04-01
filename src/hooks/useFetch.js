@@ -200,6 +200,10 @@ const fetchAljibe = async (contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -212,6 +216,10 @@ const fetchTechnicalDocumentation = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -224,6 +232,10 @@ const fetchTechnicalDocumentationCategories = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -236,6 +248,10 @@ const fetchCarousel = async (projectId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -248,6 +264,10 @@ export const fetchReportsData = async (contractId, projectId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -315,6 +335,10 @@ const fetchShifts = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -327,6 +351,10 @@ const fetchIndirectStaffShifts = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -339,6 +367,10 @@ const fetchDirectStaffShifts = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -351,6 +383,10 @@ const fetchWorkFront = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -363,6 +399,10 @@ const fetchWeather = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 

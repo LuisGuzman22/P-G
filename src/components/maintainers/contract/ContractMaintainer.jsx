@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import './css.scss'
@@ -6,12 +6,27 @@ import useContracts from 'src/hooks/useContracts'
 import ContractList from './ContractList'
 import ModalAddContract from './ModalAddContract'
 import useCompany from 'src/hooks/useCompany'
+import { useNavigate } from 'react-router-dom'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const ContractMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useContracts()
   const { data } = useCompany()
+  let navigate = useNavigate()
 
   const [visibleContract, setVisibleContract] = useState(false)
+
+  const { hasPermission } = usePermissions()
+
+  const redirectTo = (url) => {
+    navigate(url)
+  }
+
+  useEffect(() => {
+    if (!hasPermission('contract_create')) {
+      redirectTo('/inicio')
+    }
+  }, [])
 
   return (
     <div className="contract-maintainer">

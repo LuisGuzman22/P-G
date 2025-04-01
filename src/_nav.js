@@ -95,74 +95,7 @@ const useNavItems = () => {
           name: 'Informe Diario',
           to: '/base',
           icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
-          items: [
-            {
-              component: CNavItem,
-              name: 'Maquinaria',
-              to: '/maintainer/machinery',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Vehículo',
-              to: '/maintainer/vehicle',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Equipo',
-              to: '/maintainer/equipment',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Aljibe',
-              to: '/maintainer/aljibe',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Motivos',
-              to: '/maintainer/restriction',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Personal Indirecto',
-              to: '/maintainer/indirect-personal',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Turno Per. Indirecto',
-              to: '/maintainer/indirect-staff-shift',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Turno Per. Directo',
-              to: '/maintainer/direct-staff-shift',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Jornada',
-              to: '/maintainer/shifts',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Frentes de trabajo',
-              to: '/maintainer/work-front',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Clima',
-              to: '/maintainer/weather',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-          ],
+          items: [],
         },
         {
           component: CNavGroup,
@@ -172,44 +105,8 @@ const useNavItems = () => {
           items: [
             {
               component: CNavItem,
-              name: 'Administrar Proyectos',
-              to: '/maintainer/project',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Administrar Contratos',
-              to: '/maintainer/contract',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
               name: 'Asignar contrato',
               to: '/maintainer/contract-asign',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Administrar usuarios',
-              to: '/maintainer/users',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Adm. Doc. Técnica',
-              to: '/maintainer/technical-doc',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Adm. imágenes carrusel',
-              to: '/maintainer/carousel',
-              icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-            },
-            {
-              component: CNavItem,
-              name: 'Adm. Empresas',
-              to: '/maintainer/company',
               icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
             },
           ],
@@ -223,6 +120,159 @@ const useNavItems = () => {
       component: CNavItem,
       name: 'Personal Directo',
       to: '/maintainer/direct-personal',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('indirectPersonal_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Personal Indirecto',
+      to: '/maintainer/indirect-personal',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('directStaffShift_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Turno Per. Directo',
+      to: '/maintainer/direct-staff-shift',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('indirectStaffShift_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Turno Per. Indirecto',
+      to: '/maintainer/indirect-staff-shift',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('equipment_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Equipo',
+      to: '/maintainer/equipment',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('machinery_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Maquinaria',
+      to: '/maintainer/machinery',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('vehicle_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Vehículo',
+      to: '/maintainer/vehicle',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('aljibe_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Aljibe',
+      to: '/maintainer/aljibe',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('restrictions_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Motivos',
+      to: '/maintainer/restriction',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('shift_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Jornada',
+      to: '/maintainer/shifts',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('workFront_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Frentes de trabajo',
+      to: '/maintainer/work-front',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('weather_view')) {
+    navItems[3].items[0].items.push({
+      component: CNavItem,
+      name: 'Clima',
+      to: '/maintainer/weather',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('company_view')) {
+    navItems[3].items[1].items.push({
+      component: CNavItem,
+      name: 'Adm. Empresas',
+      to: '/maintainer/company',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('contract_view')) {
+    navItems[3].items[1].items.push({
+      component: CNavItem,
+      name: 'Administrar Contratos',
+      to: '/maintainer/contract',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('user_view')) {
+    navItems[3].items[1].items.push({
+      component: CNavItem,
+      name: 'Administrar usuarios',
+      to: '/maintainer/users',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('project_view')) {
+    navItems[3].items[1].items.push({
+      component: CNavItem,
+      name: 'Administrar Proyectos',
+      to: '/maintainer/project',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('technicalDocumentation_view')) {
+    navItems[3].items[1].items.push({
+      component: CNavItem,
+      name: 'Adm. Doc. Técnica',
+      to: '/maintainer/technical-doc',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('carousel_view')) {
+    navItems[3].items[1].items.push({
+      component: CNavItem,
+      name: 'Adm. imágenes carrusel',
+      to: '/maintainer/carousel',
       icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
     })
   }

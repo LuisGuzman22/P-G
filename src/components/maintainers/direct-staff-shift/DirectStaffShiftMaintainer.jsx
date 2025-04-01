@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import './css.scss'
@@ -6,12 +6,27 @@ import useDirectStaffShift from 'src/hooks/useDirectStaffShift'
 import DirectStaffShiftList from './DirectStaffShiftList'
 import ModalAddDirectStaffShift from './ModalAddDirectStaffShift'
 import ModalRestoreDirectStaffShift from './ModalRestoreDirectStaffShift'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { useNavigate } from 'react-router-dom'
 
 const DirectStaffShiftMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useDirectStaffShift()
+  let navigate = useNavigate()
 
   const [visibleDirectStaffShift, setVisibleDirectStaffShift] = useState(false)
   const [visibleRestoreDirectStaffShift, setVisibleRestoreDirectStaffShift] = useState(false)
+
+  const { hasPermission } = usePermissions()
+
+  const redirectTo = (url) => {
+    navigate(url)
+  }
+
+  useEffect(() => {
+    if (!hasPermission('directStaffShift_view')) {
+      redirectTo('/inicio')
+    }
+  }, [])
 
   return (
     <div className="direct-staff-shift-maintainer">
@@ -35,22 +50,25 @@ const DirectStaffShiftMaintainer = () => {
           }}
         />
       )}
-      <CCard className="action-buttons">
-        <CCardBody>
-          <CButton
-            className="btn-modal"
-            onClick={() => setVisibleDirectStaffShift(!visibleDirectStaffShift)}
-          >
-            Añadir Turno
-          </CButton>
-          <CButton
-            className="btn-modal"
-            onClick={() => setVisibleRestoreDirectStaffShift(!visibleRestoreDirectStaffShift)}
-          >
-            Ver eliminados
-          </CButton>
-        </CCardBody>
-      </CCard>
+      {hasPermission('directStaffShift_create') && (
+        <CCard className="action-buttons">
+          <CCardBody>
+            <CButton
+              className="btn-modal"
+              onClick={() => setVisibleDirectStaffShift(!visibleDirectStaffShift)}
+            >
+              Añadir Turno
+            </CButton>
+            <CButton
+              className="btn-modal"
+              onClick={() => setVisibleRestoreDirectStaffShift(!visibleRestoreDirectStaffShift)}
+            >
+              Ver eliminados
+            </CButton>
+          </CCardBody>
+        </CCard>
+      )}
+
       <CCard>
         <CCardBody>
           {isLoading || isRefetching ? <Skeleton count={5} /> : <DirectStaffShiftList />}

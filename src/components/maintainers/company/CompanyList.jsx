@@ -19,11 +19,13 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 import { MenuItem } from '@mui/material'
 import useCompany from 'src/hooks/useCompany'
 import ModalAddCompany from './ModalAddCompany'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const CompanyList = () => {
   const { getData } = useGetCachedQueryData()
   const companyQuery = getData('company')
   const { deleteCompany } = useCompany()
+  const { hasPermission } = usePermissions()
 
   const [visibleCompany, setVisibleCompany] = useState(false)
   const [selectedCompany, setSelectedCompany] = useState()
@@ -62,22 +64,26 @@ const CompanyList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditCompany(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteCompany(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission('company_update') && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditCompany(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+          {hasPermission('company_delete') && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteCompany(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

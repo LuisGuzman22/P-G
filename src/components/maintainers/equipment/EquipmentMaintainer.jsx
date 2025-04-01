@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import useEquipment from 'src/hooks/useEquipment'
@@ -7,30 +7,38 @@ import ModalAddEquipment from './ModalAddEquipment'
 import ModalRestoreEquipment from './ModalRestoreEquipment'
 import './css.scss'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { useNavigate } from 'react-router-dom'
 
 const EquipmentMaintainer = () => {
   const { isLoading, refetch, isRefetching, data } = useEquipment()
+  let navigate = useNavigate()
 
   const [visibleEquipment, setVisibleEquipment] = useState(false)
   const [visibleRestoreEquipment, setVisibleRestoreEquipment] = useState(false)
 
   const { hasPermission } = usePermissions()
 
+  const redirectTo = (url) => {
+    navigate(url)
+  }
+
+  useEffect(() => {
+    if (!hasPermission('equipment_create')) {
+      redirectTo('/inicio')
+    }
+  }, [])
+
   return (
     <div className="equipment-maintainer">
       <h2 className="title">Administrar Equipos</h2>
-      {hasPermission('equipment_create') === true && (
-        <>
-          {visibleEquipment && (
-            <ModalAddEquipment
-              visible={true}
-              sendDataToParent={async (data) => {
-                setVisibleEquipment(data)
-                await refetch()
-              }}
-            />
-          )}
-        </>
+      {visibleEquipment && (
+        <ModalAddEquipment
+          visible={true}
+          sendDataToParent={async (data) => {
+            setVisibleEquipment(data)
+            await refetch()
+          }}
+        />
       )}
 
       {visibleRestoreEquipment && (

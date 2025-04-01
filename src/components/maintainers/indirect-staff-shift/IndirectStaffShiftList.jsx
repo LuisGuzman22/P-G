@@ -20,11 +20,14 @@ import { MenuItem } from '@mui/material'
 import useShift from 'src/hooks/useShift'
 import ModalAddIndirectStaffShift from './ModalAddIndirectStaffShift'
 import useIndirectStaffShift from 'src/hooks/useIndirectStaffShift'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const IndirectStaffShiftList = () => {
   const { getData } = useGetCachedQueryData()
   const indirectStaffShiftQuery = getData('indirect_staff_shift')
   const { deleteIndirectStaffShift } = useIndirectStaffShift()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleIndirectStaffShift, setVisibleIndirectStaffShift] = useState(false)
   const [selectedIndirectStaffShift, setSelectedIndirectStaffShift] = useState()
@@ -63,22 +66,27 @@ const IndirectStaffShiftList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditIndirectStaffShift(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteIndirectStaffShift(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission('indirectStaffShift_update') && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditIndirectStaffShift(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission('indirectStaffShift_delete') && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteIndirectStaffShift(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

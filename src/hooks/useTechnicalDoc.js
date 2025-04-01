@@ -39,6 +39,7 @@ const useTechnicalDoc = () => {
           {
             headers: {
               'Content-Type': 'multipart/form-data',
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
             },
           },
         )
@@ -74,6 +75,11 @@ const useTechnicalDoc = () => {
         .delete(
           `${process.env.REACT_APP_BASE_URL}api/v1/documentation/deleteTechnicalDocumentation/${projectLS.id}/${contractLS.id}`,
           { data: { media_ids: [id] } },
+          {
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+          },
         )
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
@@ -103,7 +109,11 @@ const useTechnicalDoc = () => {
 
   const registerCategoryMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/categories`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/categories`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['technical-documentation-categories'] })
@@ -117,7 +127,11 @@ const useTechnicalDoc = () => {
 
   const deleteCategoryMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/categories/${id}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/categories/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['technical-documentation-categories'] })
@@ -134,6 +148,11 @@ const useTechnicalDoc = () => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/categories/${category.id}`,
         category,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {

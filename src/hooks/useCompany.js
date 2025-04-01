@@ -13,7 +13,11 @@ const useCompany = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/companies`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/companies`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       setErrorMessage([])
@@ -29,7 +33,11 @@ const useCompany = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/companies/${id}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/companies/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['company'] })
@@ -48,6 +56,11 @@ const useCompany = () => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/companies/${newTodo.id}`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -66,6 +79,12 @@ const useCompany = () => {
     mutationFn: async (newTodo) => {
       return await axios.patch(
         `${process.env.REACT_APP_BASE_URL}api/v1/companies/${newTodo}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {

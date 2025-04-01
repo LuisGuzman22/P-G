@@ -44,6 +44,7 @@ const useRegisterDailyReport = () => {
       axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/reports`, newTodo, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
       }),
     onSuccess: () => {
@@ -69,6 +70,7 @@ const useRegisterDailyReport = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
           },
         },
       )

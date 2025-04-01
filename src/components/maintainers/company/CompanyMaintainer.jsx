@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import './css.scss'
@@ -6,12 +6,27 @@ import useCompany from 'src/hooks/useCompany'
 import CompanyList from './CompanyList'
 import ModalAddCompany from './ModalAddCompany'
 import ModalRestoreCompany from './ModalRestoreCompany'
+import { useNavigate } from 'react-router-dom'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const CompanyMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useCompany()
+  let navigate = useNavigate()
 
   const [visibleCompany, setVisibleCompany] = useState(false)
   const [visibleRestoreCompany, setVisibleRestoreCompany] = useState(false)
+
+  const { hasPermission } = usePermissions()
+
+  const redirectTo = (url) => {
+    navigate(url)
+  }
+
+  useEffect(() => {
+    if (!hasPermission('company_create')) {
+      redirectTo('/inicio')
+    }
+  }, [])
 
   return (
     <div className="company-maintainer">

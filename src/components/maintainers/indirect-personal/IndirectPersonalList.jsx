@@ -16,11 +16,14 @@ import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MenuItem } from '@mui/material'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const IndirectPersonalList = () => {
   const { getData } = useGetCachedQueryData()
   const indirectPersonalQuery = getData('indirect-personal')
   const { deleteIndirectPersonal } = useIndirectPersonal()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleIndirectPersonal, setVisibleIndirectPersonal] = useState(false)
   const [selectedIndirectPersonal, setSelectedIndirectPersonal] = useState()
@@ -59,22 +62,26 @@ const IndirectPersonalList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditIndirectPersonal(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteIndirectPersonal(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission('indirectPersonal_update') && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditIndirectPersonal(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+          {hasPermission('indirectPersonal_delete') && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteIndirectPersonal(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

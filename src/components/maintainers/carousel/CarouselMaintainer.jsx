@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import './css.scss'
@@ -6,11 +6,26 @@ import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import CarouselList from './CarouselList'
 import ModalAddImage from './ModalAddImage'
 import useCarousel from 'src/hooks/useCarousel'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { useNavigate } from 'react-router-dom'
 
 const CarouselMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useCarousel()
+  let navigate = useNavigate()
 
   const [visibleCategory, setVisibleCategory] = useState(false)
+
+  const { hasPermission } = usePermissions()
+
+  const redirectTo = (url) => {
+    navigate(url)
+  }
+
+  useEffect(() => {
+    if (!hasPermission('carousel_create')) {
+      redirectTo('/inicio')
+    }
+  }, [])
 
   return (
     <div className="technical-doc-maintainer">

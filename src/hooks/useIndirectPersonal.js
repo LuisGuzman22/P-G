@@ -12,32 +12,28 @@ const useIndirectPersonal = () => {
 
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState()
+
   const queryClient = useQueryClient()
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .post(`${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar personal indirecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar personal indirecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.post(
+        `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals`,
+        newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
+      )
     },
     onSuccess: (suc) => {
+      setErrorMessage([])
       queryClient.invalidateQueries({ queryKey: ['indirect-personal'] })
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al registrar personal indirecto')
       setIsError(true)
       return false
@@ -46,28 +42,21 @@ const useIndirectPersonal = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/${id}`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al registrar personal indirecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al registrar personal indirecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/${id}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['indirect-personal'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al registrar personal indirecto')
       setIsError(true)
       return false
@@ -76,28 +65,22 @@ const useIndirectPersonal = () => {
 
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .put(`${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/${newTodo.id}`, newTodo)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar personal indirecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar personal indirecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/${newTodo.id}`,
+        newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['indirect-personal'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar personal indirecto')
       setIsError(true)
       return false
@@ -106,28 +89,22 @@ const useIndirectPersonal = () => {
 
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios
-        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/${newTodo}/restore`)
-        .then((res) => {
-          if (res.status === HttpStatusCode.Created) {
-            setIsError(false)
-            return res.ok
-          } else {
-            setErrorMutate('Error al actualizar personal indirecto')
-            setIsError(true)
-            return false
-          }
-        })
-        .catch((err) => {
-          setErrorMutate('Error al actualizar personal indirecto')
-          setIsError(true)
-          return false
-        })
+      return await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}api/v1/indirect-personals/${newTodo}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['indirect-personal'] })
+      setErrorMessage([])
     },
     onError: (err) => {
+      setErrorMessage(Object.values(err.response.data.errors).flat())
       setErrorMutate('Error al actualizar personal indirecto')
       setIsError(true)
       return false
@@ -170,6 +147,7 @@ const useIndirectPersonal = () => {
     deleteIndirectPersonal,
     updateIndirectPersonal,
     restoreIndirectPersonal,
+    errorMessage,
   }
 }
 
