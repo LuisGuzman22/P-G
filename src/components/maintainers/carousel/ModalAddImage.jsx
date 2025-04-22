@@ -66,6 +66,7 @@ const ModalAddImage = (props) => {
                 type="file"
                 id={`doc`}
                 invalid={documentError}
+                accept="image/png, image/jpeg"
                 text={documentError && 'Debe seleccionar un documento'}
                 aria-describedby="inputGroupFileAddon03"
                 onChange={(e) => {

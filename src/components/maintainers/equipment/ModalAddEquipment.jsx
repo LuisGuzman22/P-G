@@ -42,7 +42,7 @@ const ModalAddEquipment = (props) => {
   }
 
   const onChangePlate = (e) => {
-    setPlate({ id: uuidv4(), label: e.target.value, contract_id: contractLS.id })
+    setPlate({ id: uuidv4(), label: e.target.value, contract_id: contractLS.id, status: 'new' })
   }
 
   const handleRegisterPlate = () => {
@@ -75,10 +75,19 @@ const ModalAddEquipment = (props) => {
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedEquipment?.name) {
+        let plateFiltered = plateList.map((plate) => {
+          if (plate.status === 'new') {
+            return {
+              label: plate.label,
+              contract_id: plate.contract_id,
+            }
+          }
+          return plate
+        })
         updateEquipment({
           id: props.selectedEquipment.id,
           name: equipmentName,
-          plates: plateList,
+          plates: plateFiltered,
         })
         // props.sendDataToParent(false)
       } else {

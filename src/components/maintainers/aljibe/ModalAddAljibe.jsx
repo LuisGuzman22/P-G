@@ -42,7 +42,7 @@ const ModalAddAljibe = (props) => {
   }
 
   const onChangePlate = (e) => {
-    setPlate({ id: uuidv4(), label: e.target.value, contract_id: contractLS.id })
+    setPlate({ id: uuidv4(), label: e.target.value, contract_id: contractLS.id, status: 'new' })
   }
 
   const handleRegisterPlate = () => {
@@ -75,18 +75,25 @@ const ModalAddAljibe = (props) => {
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedAljibe?.name) {
+        let plateFiltered = plateList.map((plate) => {
+          if (plate.status === 'new') {
+            return {
+              label: plate.label,
+              contract_id: plate.contract_id,
+            }
+          }
+          return plate
+        })
         updateAljibe({
           id: props.selectedAljibe.id,
           name: aljibeName,
-          plates: plateList,
+          plates: plateFiltered,
         })
-        // props.sendDataToParent(false)
       } else {
         register({
           name: aljibeName,
           plates: plateList,
         })
-        // props.sendDataToParent(false)
       }
     }
   }, [errorForm])
