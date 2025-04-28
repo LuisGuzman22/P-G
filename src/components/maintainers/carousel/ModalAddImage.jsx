@@ -75,7 +75,7 @@ const ModalAddImage = (props) => {
                 }}
                 label="Documentación"
                 aria-label="Upload"
-                //   accept="image/png, image/jpeg"
+                accept="image/png, image/jpeg"
               />
             </CCol>
           </CRow>

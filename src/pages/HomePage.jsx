@@ -267,26 +267,28 @@ const HomePage = () => {
                     </CButton>
                   </CCol>
                   <CCol sm={4}>
-                    <CButton
-                      className="dashboard-button"
-                      onClick={() => {
-                        redirectTo('/carta-gantt')
-                      }}
-                    >
-                      <div className="button-container">
-                        <FontAwesomeIcon icon={faChartGantt} size="2xl" className="icon-button" />
-                        <div className="button-label">
-                          <label className="label"> Carta Gantt</label>
+                    <a href="https://chatgpt.com/" rel="noreferrer">
+                      <CButton
+                        className="dashboard-button"
+                        onClick={() => {
+                          // redirectTo('/carta-gantt')
+                        }}
+                      >
+                        <div className="button-container">
+                          <FontAwesomeIcon icon={faChartGantt} size="2xl" className="icon-button" />
+                          <div className="button-label">
+                            <label className="label"> Inteligencia Artificial</label>
+                          </div>
+                          <div className="corner-colors">
+                            <div className="color-box yellow"></div>
+                            <div className="color-box red"></div>
+                            <div className="color-box light-blue"></div>
+                            <div className="color-box dark-blue"></div>
+                            <div className="color-box gray"></div>
+                          </div>
                         </div>
-                        <div className="corner-colors">
-                          <div className="color-box yellow"></div>
-                          <div className="color-box red"></div>
-                          <div className="color-box light-blue"></div>
-                          <div className="color-box dark-blue"></div>
-                          <div className="color-box gray"></div>
-                        </div>
-                      </div>
-                    </CButton>
+                      </CButton>{' '}
+                    </a>
                   </CCol>
                   <CCol sm={4}>
                     <CButton
