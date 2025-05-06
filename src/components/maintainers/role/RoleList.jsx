@@ -1,58 +1,52 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CButton,
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
-} from '@coreui/react'
+import { CButton } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import useMachinery from 'src/hooks/useMachinery'
+import ModalAddMachinery from './ModalAddRole'
 import './css.scss'
-import useUser from 'src/hooks/useUser'
-import ModalAddUser from './ModalAddUser'
 
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import ModalAddRole from './ModalAddRole'
+import useRole from 'src/hooks/useRole'
 
-const UserList = () => {
+const RoleList = () => {
   const { getData } = useGetCachedQueryData()
-  const userQuery = getData('user')
-  const { deleteUser } = useUser()
-
+  const roleQuery = getData('role')
+  const { deleteRole } = useRole()
   const { hasPermission } = usePermissions()
 
-  const [visibleUser, setVisibleUser] = useState(false)
-  const [selectedUser, setSelectedUser] = useState()
-  const [userData, setUserData] = useState([])
+  const [visibleRole, setVisibleRole] = useState(false)
+  const [selectedRole, setSelectedRole] = useState()
+  const [roleData, setRoleData] = useState([])
 
-  const handleEditUser = (user) => {
-    setSelectedUser(user)
-    setVisibleUser(!visibleUser)
+  const handleEditRole = (role) => {
+    setSelectedRole(role)
+    setVisibleRole(!visibleRole)
   }
 
   useEffect(() => {
-    let usr = []
-    userQuery
-      ?.filter((user) => user.deleted_at === null)
-      .map((user) => {
-        usr.push({
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          company_id: user.company_id,
-          email_verified_at: user.email_verified_at,
-          roles: user.roles,
+    let rol = []
+    roleQuery
+      // ?.filter((role) => role.deleted_at === null)
+      .map((role) => {
+        rol.push({
+          id: role.id,
+          name: role.name,
+          permissions: role.permissions,
         })
       })
-    setUserData(usr)
-  }, [userQuery])
+    setRoleData(rol)
+  }, [roleQuery])
+
+  useEffect(() => {
+    console.log('roleData', roleData)
+  }, [roleData])
 
   const columns = [
     {
@@ -66,34 +60,30 @@ const UserList = () => {
       header: 'Nombre',
     },
     {
-      accessorKey: 'email',
-      header: 'Correo',
-    },
-    {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('user_update') && (
-            <CButton
-              className="btn-action-edit"
-              onClick={() => {
-                handleEditUser(data.row.original)
-              }}
-            >
-              <CIcon icon={cilPencil} />
-            </CButton>
-          )}
+          {/* {hasPermission('role_update') && ( */}
+          <CButton
+            className="btn-action-edit"
+            onClick={() => {
+              handleEditRole(data.row.original)
+            }}
+          >
+            <CIcon icon={cilPencil} />
+          </CButton>
+          {/* )} */}
 
-          {hasPermission('user_delete') && (
-            <CButton
-              className="btn-action-delete"
-              onClick={() => {
-                deleteUser(data.row.original.id)
-              }}
-            >
-              <CIcon icon={cilTrash} />
-            </CButton>
-          )}
+          {/* {hasPermission('role_delete') && ( */}
+          <CButton
+            className="btn-action-delete"
+            onClick={() => {
+              deleteRole(data.row.original.id)
+            }}
+          >
+            <CIcon icon={cilTrash} />
+          </CButton>
+          {/* )} */}
         </>
       ),
     },
@@ -101,7 +91,7 @@ const UserList = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: userData ? userData : [],
+    data: roleData ? roleData : [],
     enableColumnActions: false,
     enableSorting: true,
     enableColumnFilters: false,
@@ -133,12 +123,12 @@ const UserList = () => {
       <MenuItem
         key="edit"
         onClick={() => {
-          handleEditUser(row.original)
+          handleEditRole(row.original)
         }}
       >
         Editar
       </MenuItem>,
-      <MenuItem key="delete" onClick={() => deleteUser(row.original.id)}>
+      <MenuItem key="delete" onClick={() => deleteRole(row.original.id)}>
         Eliminar
       </MenuItem>,
     ],
@@ -147,13 +137,13 @@ const UserList = () => {
 
   return (
     <>
-      {visibleUser && (
-        <ModalAddUser
+      {visibleRole && (
+        <ModalAddRole
           visible={true}
-          selectedUser={selectedUser}
+          selectedRole={selectedRole}
           sendDataToParent={async (data) => {
             // await refetch()
-            setVisibleUser(data)
+            setVisibleRole(data)
           }}
         />
       )}
@@ -162,4 +152,4 @@ const UserList = () => {
   )
 }
 
-export default UserList
+export default RoleList

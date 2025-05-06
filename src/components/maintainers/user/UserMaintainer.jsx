@@ -8,9 +8,11 @@ import UserList from './UserList'
 import useCompany from 'src/hooks/useCompany'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import { useNavigate } from 'react-router-dom'
+import useRole from 'src/hooks/useRole'
 
 const UserMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useUser()
+  const { isLoading: roleLoading, refetch: roleRefetch, isRefetching: roleIsRefetching } = useRole()
   const { data } = useCompany()
   let navigate = useNavigate()
 
@@ -53,21 +55,21 @@ const UserMaintainer = () => {
         />
       )} */}
 
-      {hasPermission('user_create') && (
-        <CCard className="action-buttons">
-          <CCardBody>
-            <CButton className="btn-modal" onClick={() => setVisibleUser(!visibleUser)}>
-              Añadir usuario
-            </CButton>
-            {/* <CButton
+      {/* {hasPermission('user_create') && ( */}
+      <CCard className="action-buttons">
+        <CCardBody>
+          <CButton className="btn-modal" onClick={() => setVisibleUser(!visibleUser)}>
+            Añadir usuario
+          </CButton>
+          {/* <CButton
             className="btn-modal"
             onClick={() => setVisibleRestoreMachinery(!visibleRestoreMachinery)}
           >
             Ver eliminados
           </CButton> */}
-          </CCardBody>
-        </CCard>
-      )}
+        </CCardBody>
+      </CCard>
+      {/* )} */}
 
       <CCard>
         <CCardBody>{isLoading || isRefetching ? <Skeleton count={5} /> : <UserList />}</CCardBody>

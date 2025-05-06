@@ -406,6 +406,32 @@ const fetchWeather = async (projectId, contractId) => {
   return res.data.data
 }
 
+const fetchRole = async (projectId, contractId) => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/roles`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+
+  if (res.status === 204) {
+    return []
+  }
+  return res.data.data
+}
+
+const fetchPermissions = async (projectId, contractId) => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/permissions`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+
+  if (res.status === 204) {
+    return []
+  }
+  return res.data.data
+}
+
 const userType = localStorage.getItem('USER_TYPE')
 
 export const useFetchProyects = (projectId) => {
@@ -785,6 +811,30 @@ export const useFetchWeather = (projectId, contractId) => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchWeather(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchRole = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['role'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchRole(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchPermissions = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['permission'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchPermissions(projectId, contractId)
     },
   })
 }

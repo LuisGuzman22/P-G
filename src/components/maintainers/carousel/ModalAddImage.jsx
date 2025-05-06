@@ -36,7 +36,6 @@ const ModalAddImage = (props) => {
   }
 
   const handleUploadTechicalDoc = () => {
-    console.log('file', docs)
     register({ images: docs })
     props.sendDataToParent(false)
   }
@@ -75,7 +74,6 @@ const ModalAddImage = (props) => {
                 }}
                 label="Documentación"
                 aria-label="Upload"
-                accept="image/png, image/jpeg"
               />
             </CCol>
           </CRow>
