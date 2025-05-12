@@ -23,9 +23,9 @@ const RoleMaintainer = () => {
   }
 
   useEffect(() => {
-    // if (!hasPermission('role_create')) {
-    // redirectTo('/inicio')
-    // }
+    if (!hasPermission('role_create')) {
+      redirectTo('/inicio')
+    }
   }, [])
 
   return (

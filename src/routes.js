@@ -41,6 +41,9 @@ const CarouselMaintainerPage = React.lazy(() => import('./pages/CarouselMaintain
 const UserMaintainerPage = React.lazy(() => import('./pages/UserMaintainerPage'))
 const ContractAsignPage = React.lazy(() => import('./pages/ContractAsignPage'))
 const RolePage = React.lazy(() => import('./pages/RoleMaintainerPage'))
+const PermissionAssignMaintainerPage = React.lazy(
+  () => import('./pages/PermissionAssignMaintainerPage'),
+)
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
 const ExportPage = React.lazy(() => import('./pages/ExportPage'))
 const ChartsPage = React.lazy(() => import('./pages/ChartsPage'))
@@ -206,6 +209,12 @@ const routes = [
     path: '/maintainer/role',
     name: 'Asignar Roles',
     element: RolePage,
+    protected: true,
+  },
+  {
+    path: '/maintainer/permissions-assign',
+    name: 'Asignar Permisos',
+    element: PermissionAssignMaintainerPage,
     protected: true,
   },
   {

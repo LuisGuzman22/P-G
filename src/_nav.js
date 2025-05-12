@@ -241,14 +241,23 @@ const useNavItems = () => {
     })
   }
 
-  // if (hasPermission('contract_view')) {
-  navItems[3].items[1].items.push({
-    component: CNavItem,
-    name: 'Asignar Roles',
-    to: '/maintainer/role',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-  })
-  // }
+  if (hasPermission('roles_view')) {
+    navItems[3].items[1].items.push({
+      component: CNavItem,
+      name: 'Asignar Roles',
+      to: '/maintainer/role',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
+
+  if (hasPermission('user_view')) {
+    navItems[3].items[1].items.push({
+      component: CNavItem,
+      name: 'Asignar Permisos',
+      to: '/maintainer/permissions-assign',
+      icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    })
+  }
 
   if (hasPermission('user_view')) {
     navItems[3].items[1].items.push({
