@@ -8,6 +8,7 @@ import ModalAddWeather from './ModalAddWeather'
 import ModalRestoreWeather from './ModalRestoreWeather'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const WeatherMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useWeather()
@@ -23,7 +24,7 @@ const WeatherMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('weather_create')) {
+    if (!hasPermission(PERMISSIONS.WEATHER.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -50,7 +51,7 @@ const WeatherMaintainer = () => {
           }}
         />
       )}
-      {hasPermission('weather_create') && (
+      {hasPermission(PERMISSIONS.WEATHER.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton className="btn-modal" onClick={() => setVisibleWeather(!visibleWeather)}>

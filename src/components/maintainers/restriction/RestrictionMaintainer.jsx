@@ -7,6 +7,7 @@ import ModalAddRestriction from './ModalAddRestriction'
 import RestrictionList from './RestrictionList'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const RestrictionMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useRestriction()
@@ -21,7 +22,7 @@ const RestrictionMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('restriction_create')) {
+    if (!hasPermission(PERMISSIONS.RESTRICTIONS.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -39,7 +40,7 @@ const RestrictionMaintainer = () => {
         />
       )}
 
-      {hasPermission('restriction_create') && (
+      {hasPermission(PERMISSIONS.RESTRICTIONS.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton

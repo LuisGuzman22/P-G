@@ -8,6 +8,7 @@ import ModalRestoreEquipment from './ModalRestoreEquipment'
 import './css.scss'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import { useNavigate } from 'react-router-dom'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const EquipmentMaintainer = () => {
   const { isLoading, refetch, isRefetching, data } = useEquipment()
@@ -23,7 +24,7 @@ const EquipmentMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('equipment_create')) {
+    if (!hasPermission(PERMISSIONS.EQUIPMENT.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -50,7 +51,7 @@ const EquipmentMaintainer = () => {
           }}
         />
       )}
-      {hasPermission('equipment_create') === true && (
+      {hasPermission(PERMISSIONS.EQUIPMENT.CREATE) === true && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton className="btn-modal" onClick={() => setVisibleEquipment(!visibleEquipment)}>

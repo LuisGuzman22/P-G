@@ -8,6 +8,7 @@ import ModalAddWorkFront from './ModalAddWorkFront'
 import ModalRestoreWorkFront from './ModalRestoreWorkFront'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const WorkFrontMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useWorkFront()
@@ -23,7 +24,7 @@ const WorkFrontMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('workFront_create')) {
+    if (!hasPermission(PERMISSIONS.WORK_FRONT.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -49,7 +50,7 @@ const WorkFrontMaintainer = () => {
           }}
         />
       )}
-      {hasPermission('workFront_create') && (
+      {hasPermission(PERMISSIONS.WORK_FRONT.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton className="btn-modal" onClick={() => setVisibleWorkFront(!visibleWorkFront)}>

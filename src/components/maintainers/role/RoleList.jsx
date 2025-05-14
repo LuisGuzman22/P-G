@@ -14,6 +14,7 @@ import { MenuItem } from '@mui/material'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import ModalAddRole from './ModalAddRole'
 import useRole from 'src/hooks/useRole'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const RoleList = () => {
   const { getData } = useGetCachedQueryData()
@@ -63,27 +64,27 @@ const RoleList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {/* {hasPermission('role_update') && ( */}
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditRole(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          {/* )} */}
+          {hasPermission(PERMISSIONS.ROLES.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditRole(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
 
-          {/* {hasPermission('role_delete') && ( */}
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteRole(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
-          {/* )} */}
+          {hasPermission(PERMISSIONS.ROLES.DELETE) && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteRole(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

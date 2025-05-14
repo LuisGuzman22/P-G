@@ -8,6 +8,7 @@ import RoleList from './RoleList'
 import ModalAddRole from './ModalAddRole'
 import ModalRestoreRole from './ModalRestoreRole'
 import useRole from 'src/hooks/useRole'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const RoleMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useRole()
@@ -23,7 +24,7 @@ const RoleMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('role_create')) {
+    if (!hasPermission(PERMISSIONS.ROLES.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -51,18 +52,21 @@ const RoleMaintainer = () => {
           }}
         />
       )}
-      {/* {hasPermission('role_create') && ( */}
-      <CCard className="action-buttons">
-        <CCardBody>
-          <CButton className="btn-modal" onClick={() => setVisibleRole(!visibleRole)}>
-            Añadir rol
-          </CButton>
-          <CButton className="btn-modal" onClick={() => setVisibleRestoreRole(!visibleRestoreRole)}>
-            Ver eliminados
-          </CButton>
-        </CCardBody>
-      </CCard>
-      {/* )} */}
+      {hasPermission(PERMISSIONS.ROLES.CREATE) && (
+        <CCard className="action-buttons">
+          <CCardBody>
+            <CButton className="btn-modal" onClick={() => setVisibleRole(!visibleRole)}>
+              Añadir rol
+            </CButton>
+            <CButton
+              className="btn-modal"
+              onClick={() => setVisibleRestoreRole(!visibleRestoreRole)}
+            >
+              Ver eliminados
+            </CButton>
+          </CCardBody>
+        </CCard>
+      )}
 
       <CCard>
         <CCardBody>{isLoading || isRefetching ? <Skeleton count={5} /> : <RoleList />}</CCardBody>

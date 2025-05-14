@@ -8,6 +8,7 @@ import usePermission from 'src/hooks/usePermission'
 import useUser from 'src/hooks/useUser'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import PermissionAssignList from './PermissionAssignList'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const PermissionAssignMaintainer = () => {
   const { isLoading, refetch, isRefetching } = usePermission()
@@ -21,9 +22,9 @@ const PermissionAssignMaintainer = () => {
   }
 
   useEffect(() => {
-    // if (!hasPermission('role_create')) {
-    // redirectTo('/inicio')
-    // }
+    if (!hasPermission(PERMISSIONS.USER.VIEW)) {
+      redirectTo('/inicio')
+    }
   }, [])
 
   return (

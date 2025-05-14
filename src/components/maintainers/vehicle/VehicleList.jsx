@@ -20,6 +20,7 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 // import ModalAddMachinery from './ModalAddMachinery'
 
@@ -83,7 +84,7 @@ const VehicleList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('vehicle_update') && (
+          {hasPermission(PERMISSIONS.VEHICLE.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -94,7 +95,7 @@ const VehicleList = () => {
             </CButton>
           )}
 
-          {hasPermission('vehicle_delete') && (
+          {hasPermission(PERMISSIONS.VEHICLE.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

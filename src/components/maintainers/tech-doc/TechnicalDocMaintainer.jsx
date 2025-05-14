@@ -8,6 +8,7 @@ import ModalAddTechnicalDoc from './ModalAddTechnicalDoc'
 import ModalAddCategory from './ModalAddCategory'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import { useNavigate } from 'react-router-dom'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const TechnicalDocMaintainer = () => {
   const { isLoading, refetch, isRefetching, categoryRefetch } = useTechnicalDoc()
@@ -23,7 +24,7 @@ const TechnicalDocMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('technicalDocumentation_create')) {
+    if (!hasPermission(PERMISSIONS.TECHNICAL_DOCUMENTATION.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -52,13 +53,13 @@ const TechnicalDocMaintainer = () => {
           />
         )}
       </>
-      {hasPermission('technicalDocumentation_create') && (
+      {hasPermission(PERMISSIONS.TECHNICAL_DOCUMENTATION.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton className="btn-modal" onClick={() => setVisibleTecDoc(!visibleTechDoc)}>
               Añadir Documento
             </CButton>
-            {hasPermission('category_create') && (
+            {hasPermission(PERMISSIONS.CATEGORY.CREATE) && (
               <CButton className="btn-modal" onClick={() => setVisibleCategory(!visibleCategory)}>
                 Añadir Categoría
               </CButton>

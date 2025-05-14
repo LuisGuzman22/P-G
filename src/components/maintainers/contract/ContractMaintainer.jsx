@@ -8,6 +8,7 @@ import ModalAddContract from './ModalAddContract'
 import useCompany from 'src/hooks/useCompany'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const ContractMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useContracts()
@@ -23,7 +24,7 @@ const ContractMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('contract_create')) {
+    if (!hasPermission(PERMISSIONS.CONTRACT.CREATE)) {
       redirectTo('/inicio')
     }
   }, [])

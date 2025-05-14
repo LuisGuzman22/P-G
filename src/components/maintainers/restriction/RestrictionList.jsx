@@ -21,6 +21,7 @@ import { MenuItem } from '@mui/material'
 import useRestriction from 'src/hooks/useRestriction'
 import ModalAddRestriction from './ModalAddRestriction'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const RestrictionList = () => {
   const { getData } = useGetCachedQueryData()
@@ -64,7 +65,7 @@ const RestrictionList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('restriction_update') && (
+          {hasPermission(PERMISSIONS.RESTRICTIONS.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -75,7 +76,7 @@ const RestrictionList = () => {
             </CButton>
           )}
 
-          {hasPermission('restriction_delete') && (
+          {hasPermission(PERMISSIONS.RESTRICTIONS.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

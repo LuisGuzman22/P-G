@@ -35,6 +35,7 @@ import {
   faTableList,
 } from '@fortawesome/free-solid-svg-icons'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const HomePage = () => {
   const queryClient = useQueryClient()
@@ -89,13 +90,13 @@ const HomePage = () => {
             : undefined,
         )
       },
-      visible: hasPermission('reports_create'),
+      visible: hasPermission(PERMISSIONS.REPORTS.CREATE),
     },
     {
       label: 'Listado de Actividades',
       icon: faTableList,
       onClick: () => redirectTo('/trisemanal'),
-      visible: hasPermission('activity_list'),
+      visible: hasPermission(PERMISSIONS.ACTIVITY.VIEW),
       // visible: true,
     },
     {
@@ -108,7 +109,7 @@ const HomePage = () => {
       label: 'Historial reportes diarios',
       icon: faCalendarDays,
       onClick: () => redirectTo('/dashboard-reportes'),
-      visible: hasPermission('reports_create'),
+      visible: hasPermission(PERMISSIONS.REPORTS.CREATE),
     },
     {
       label: 'Carta Gantt',
@@ -121,7 +122,7 @@ const HomePage = () => {
       label: 'Exportar datos',
       icon: faDownload,
       onClick: () => redirectTo('/exportar-datos'),
-      visible: hasPermission('export_data'),
+      visible: hasPermission(PERMISSIONS.EXPORT.DATA),
     },
   ]
 

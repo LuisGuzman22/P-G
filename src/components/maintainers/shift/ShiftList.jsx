@@ -20,6 +20,7 @@ import { MenuItem } from '@mui/material'
 import useShift from 'src/hooks/useShift'
 import ModalAddShift from './ModalAddShift'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const ShiftList = () => {
   const { getData } = useGetCachedQueryData()
@@ -65,7 +66,7 @@ const ShiftList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('shift_update') && (
+          {hasPermission(PERMISSIONS.SHIFT.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -76,7 +77,7 @@ const ShiftList = () => {
             </CButton>
           )}
 
-          {hasPermission('shift_delete') && (
+          {hasPermission(PERMISSIONS.SHIFT.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

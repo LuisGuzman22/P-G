@@ -8,6 +8,7 @@ import ModalAddShift from './ModalAddShift'
 import ModalRestoreShift from './ModalRestoreShift'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const ShiftMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useShift()
@@ -23,7 +24,7 @@ const ShiftMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('shift_create')) {
+    if (!hasPermission(PERMISSIONS.SHIFT.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -51,7 +52,7 @@ const ShiftMaintainer = () => {
         />
       )}
 
-      {hasPermission('shift_create') && (
+      {hasPermission(PERMISSIONS.SHIFT.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton className="btn-modal" onClick={() => setVisibleShift(!visibleShift)}>

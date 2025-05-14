@@ -8,6 +8,7 @@ import ModalRestoreMachinery from './ModalRestoreMachinery'
 import './css.scss'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const MachineryMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useMachinery()
@@ -23,7 +24,7 @@ const MachineryMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('machinery_create')) {
+    if (!hasPermission(PERMISSIONS.MACHINERY.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -51,7 +52,7 @@ const MachineryMaintainer = () => {
           }}
         />
       )}
-      {hasPermission('machinery_create') && (
+      {hasPermission(PERMISSIONS.MACHINERY.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton className="btn-modal" onClick={() => setVisibleMachinery(!visibleMachinery)}>

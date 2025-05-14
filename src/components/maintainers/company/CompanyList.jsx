@@ -20,6 +20,7 @@ import { MenuItem } from '@mui/material'
 import useCompany from 'src/hooks/useCompany'
 import ModalAddCompany from './ModalAddCompany'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const CompanyList = () => {
   const { getData } = useGetCachedQueryData()
@@ -64,7 +65,7 @@ const CompanyList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('company_update') && (
+          {hasPermission(PERMISSIONS.COMPANY.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -74,7 +75,7 @@ const CompanyList = () => {
               <CIcon icon={cilPencil} />
             </CButton>
           )}
-          {hasPermission('company_delete') && (
+          {hasPermission(PERMISSIONS.COMPANY.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

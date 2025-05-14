@@ -14,6 +14,7 @@ import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import useCarousel from 'src/hooks/useCarousel'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const CarouselList = () => {
   const { getData } = useGetCachedQueryData()
@@ -40,7 +41,7 @@ const CarouselList = () => {
                   </a>
                 </CTableDataCell>
                 <CTableDataCell>
-                  {hasPermission('directPersonal_update') && (
+                  {hasPermission(PERMISSIONS.CAROUSEL.DELETE) && (
                     <CButton
                       className="btn-action-delete"
                       onClick={() => {

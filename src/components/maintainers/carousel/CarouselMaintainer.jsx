@@ -8,6 +8,7 @@ import ModalAddImage from './ModalAddImage'
 import useCarousel from 'src/hooks/useCarousel'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import { useNavigate } from 'react-router-dom'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const CarouselMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useCarousel()
@@ -22,7 +23,7 @@ const CarouselMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('carousel_create')) {
+    if (!hasPermission(PERMISSIONS.CAROUSEL.CREATE)) {
       redirectTo('/inicio')
     }
   }, [])

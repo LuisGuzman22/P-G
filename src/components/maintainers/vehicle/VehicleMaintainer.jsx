@@ -8,6 +8,7 @@ import ModalRestoreVehicle from './ModalRestoreVehicle'
 import './css.scss'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const VehicleMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useVehicle()
@@ -23,7 +24,7 @@ const VehicleMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('vehicle_create')) {
+    if (!hasPermission(PERMISSIONS.VEHICLE.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -51,7 +52,7 @@ const VehicleMaintainer = () => {
         />
       )}
 
-      {hasPermission('vehicle_create') && (
+      {hasPermission(PERMISSIONS.VEHICLE.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton className="btn-modal" onClick={() => setVisibleVehicle(!visibleVehicle)}>

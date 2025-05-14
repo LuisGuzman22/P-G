@@ -8,6 +8,7 @@ import ModalAddCompany from './ModalAddCompany'
 import ModalRestoreCompany from './ModalRestoreCompany'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const CompanyMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useCompany()
@@ -23,7 +24,7 @@ const CompanyMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('company_create')) {
+    if (!hasPermission(PERMISSIONS.COMPANY.CREATE)) {
       redirectTo('/inicio')
     }
   }, [])

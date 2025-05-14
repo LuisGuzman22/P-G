@@ -15,6 +15,7 @@ import {
 } from '@coreui/icons'
 import { CNavItem, CNavTitle, CNavGroup } from '@coreui/react'
 import { usePermissions } from './providers/PermissionsProvider'
+import { PERMISSIONS } from './utils/contant'
 
 const useNavItems = () => {
   const { hasPermission } = usePermissions()
@@ -115,7 +116,7 @@ const useNavItems = () => {
     },
   ]
 
-  if (hasPermission('directPersonal_view')) {
+  if (hasPermission(PERMISSIONS.DIRECT_PERSONAL.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Personal Directo',
@@ -124,7 +125,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('indirectPersonal_view')) {
+  if (hasPermission(PERMISSIONS.INDIRECT_PERSONAL.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Personal Indirecto',
@@ -133,7 +134,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('directStaffShift_view')) {
+  if (hasPermission(PERMISSIONS.DIRECT_STAFF_SHIFT.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Turno Per. Directo',
@@ -142,7 +143,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('indirectStaffShift_view')) {
+  if (hasPermission(PERMISSIONS.INDIRECT_STAFF_SHIFT.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Turno Per. Indirecto',
@@ -151,7 +152,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('equipment_view')) {
+  if (hasPermission(PERMISSIONS.EQUIPMENT.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Equipo',
@@ -160,7 +161,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('machinery_view')) {
+  if (hasPermission(PERMISSIONS.MACHINERY.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Maquinaria',
@@ -169,7 +170,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('vehicle_view')) {
+  if (hasPermission(PERMISSIONS.VEHICLE.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Vehículo',
@@ -178,7 +179,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('aljibe_view')) {
+  if (hasPermission(PERMISSIONS.ALJIBE.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Aljibe',
@@ -187,7 +188,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('restrictions_view')) {
+  if (hasPermission(PERMISSIONS.RESTRICTIONS.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Motivos',
@@ -196,7 +197,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('shift_view')) {
+  if (hasPermission(PERMISSIONS.SHIFT.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Jornada',
@@ -205,7 +206,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('workFront_view')) {
+  if (hasPermission(PERMISSIONS.WORK_FRONT.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Frentes de trabajo',
@@ -214,7 +215,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('weather_view')) {
+  if (hasPermission(PERMISSIONS.WEATHER.VIEW)) {
     navItems[3].items[0].items.push({
       component: CNavItem,
       name: 'Clima',
@@ -223,7 +224,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('company_view')) {
+  if (hasPermission(PERMISSIONS.COMPANY.VIEW)) {
     navItems[3].items[1].items.push({
       component: CNavItem,
       name: 'Adm. Empresas',
@@ -232,7 +233,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('contract_view')) {
+  if (hasPermission(PERMISSIONS.CONTRACT.VIEW)) {
     navItems[3].items[1].items.push({
       component: CNavItem,
       name: 'Administrar Contratos',
@@ -241,7 +242,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('roles_view')) {
+  if (hasPermission(PERMISSIONS.ROLES.VIEW)) {
     navItems[3].items[1].items.push({
       component: CNavItem,
       name: 'Asignar Roles',
@@ -250,7 +251,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('user_view')) {
+  if (hasPermission(PERMISSIONS.USER.VIEW)) {
     navItems[3].items[1].items.push({
       component: CNavItem,
       name: 'Asignar Permisos',
@@ -259,7 +260,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('user_view')) {
+  if (hasPermission(PERMISSIONS.USER.VIEW)) {
     navItems[3].items[1].items.push({
       component: CNavItem,
       name: 'Administrar usuarios',
@@ -268,7 +269,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('project_view')) {
+  if (hasPermission(PERMISSIONS.PROJECT.VIEW)) {
     navItems[3].items[1].items.push({
       component: CNavItem,
       name: 'Administrar Proyectos',
@@ -277,7 +278,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('technicalDocumentation_view')) {
+  if (hasPermission(PERMISSIONS.TECHNICAL_DOCUMENTATION.VIEW)) {
     navItems[3].items[1].items.push({
       component: CNavItem,
       name: 'Adm. Doc. Técnica',
@@ -286,7 +287,7 @@ const useNavItems = () => {
     })
   }
 
-  if (hasPermission('carousel_view')) {
+  if (hasPermission(PERMISSIONS.CAROUSEL.VIEW)) {
     navItems[3].items[1].items.push({
       component: CNavItem,
       name: 'Adm. imágenes carrusel',

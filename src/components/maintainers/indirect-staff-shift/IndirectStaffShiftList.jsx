@@ -21,6 +21,7 @@ import useShift from 'src/hooks/useShift'
 import ModalAddIndirectStaffShift from './ModalAddIndirectStaffShift'
 import useIndirectStaffShift from 'src/hooks/useIndirectStaffShift'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const IndirectStaffShiftList = () => {
   const { getData } = useGetCachedQueryData()
@@ -66,7 +67,7 @@ const IndirectStaffShiftList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('indirectStaffShift_update') && (
+          {hasPermission(PERMISSIONS.INDIRECT_STAFF_SHIFT.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -77,7 +78,7 @@ const IndirectStaffShiftList = () => {
             </CButton>
           )}
 
-          {hasPermission('indirectStaffShift_delete') && (
+          {hasPermission(PERMISSIONS.INDIRECT_STAFF_SHIFT.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

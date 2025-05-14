@@ -20,6 +20,7 @@ import { MenuItem } from '@mui/material'
 import useWeather from 'src/hooks/useWeather'
 import ModalAddWeather from './ModalAddWeather'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const WeatherList = () => {
   const { getData } = useGetCachedQueryData()
@@ -64,7 +65,7 @@ const WeatherList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('weather_update') && (
+          {hasPermission(PERMISSIONS.WEATHER.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -74,7 +75,7 @@ const WeatherList = () => {
               <CIcon icon={cilPencil} />
             </CButton>
           )}
-          {hasPermission('weather_delete') && (
+          {hasPermission(PERMISSIONS.WEATHER.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

@@ -19,6 +19,7 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const ContractList = () => {
   const { getData } = useGetCachedQueryData()
@@ -75,7 +76,7 @@ const ContractList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('contract_update') && (
+          {hasPermission(PERMISSIONS.CONTRACT.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -86,7 +87,7 @@ const ContractList = () => {
             </CButton>
           )}
 
-          {hasPermission('contract_delete') && (
+          {hasPermission(PERMISSIONS.CONTRACT.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

@@ -20,6 +20,7 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const AljibeList = () => {
   const { getData } = useGetCachedQueryData()
@@ -81,7 +82,7 @@ const AljibeList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('aljibe_update') && (
+          {hasPermission(PERMISSIONS.ALJIBE.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -92,7 +93,7 @@ const AljibeList = () => {
             </CButton>
           )}
 
-          {hasPermission('aljibe_delete') && (
+          {hasPermission(PERMISSIONS.ALJIBE.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

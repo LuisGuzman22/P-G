@@ -8,6 +8,7 @@ import ModalRestoreAljibe from './ModalRestoreAljibe'
 import './css.scss'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const AljibeMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useAljibe()
@@ -23,7 +24,7 @@ const AljibeMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('aljibe_create')) {
+    if (!hasPermission(PERMISSIONS.ALJIBE.CREATE)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -50,7 +51,7 @@ const AljibeMaintainer = () => {
           }}
         />
       )}
-      {hasPermission('directPersonal_create') && (
+      {hasPermission(PERMISSIONS.ALJIBE.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton className="btn-modal" onClick={() => setVisibleAljibe(!visibleAljibe)}>

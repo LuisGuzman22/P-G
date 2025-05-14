@@ -7,6 +7,7 @@ import ProjectList from './ProjectList'
 import ModalAddProject from 'src/components/maintainers/project/ModalAddProject'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const ProjectMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useProjects()
@@ -21,7 +22,7 @@ const ProjectMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('project_create')) {
+    if (!hasPermission(PERMISSIONS.PROJECT.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -39,7 +40,7 @@ const ProjectMaintainer = () => {
         />
       )}
 
-      {hasPermission('project_create') && (
+      {hasPermission(PERMISSIONS.PROJECT.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton className="btn-modal" onClick={() => setVisibleProject(!visibleProject)}>

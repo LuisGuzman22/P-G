@@ -17,6 +17,7 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MenuItem } from '@mui/material'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const DirectPersonalList = () => {
   const { getData } = useGetCachedQueryData()
@@ -62,7 +63,7 @@ const DirectPersonalList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('directPersonal_update') && (
+          {hasPermission(PERMISSIONS.DIRECT_PERSONAL.UPDATE) && (
             <>
               <CButton
                 className="btn-action-edit"
@@ -74,7 +75,7 @@ const DirectPersonalList = () => {
               </CButton>
             </>
           )}
-          {hasPermission('directPersonal_delete') && (
+          {hasPermission(PERMISSIONS.DIRECT_PERSONAL.DELETE) && (
             <>
               <CButton
                 className="btn-action-delete"

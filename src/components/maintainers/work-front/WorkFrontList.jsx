@@ -20,6 +20,7 @@ import { MenuItem } from '@mui/material'
 import useWorkFront from 'src/hooks/useWorkFront'
 import ModalAddWorkFront from './ModalAddWorkFront'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const WorkFrontList = () => {
   const { getData } = useGetCachedQueryData()
@@ -71,7 +72,7 @@ const WorkFrontList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('workFront_update') && (
+          {hasPermission(PERMISSIONS.WORK_FRONT.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -82,7 +83,7 @@ const WorkFrontList = () => {
             </CButton>
           )}
 
-          {hasPermission('workFront_delete') && (
+          {hasPermission(PERMISSIONS.WORK_FRONT.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

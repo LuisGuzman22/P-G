@@ -8,6 +8,7 @@ import ModalRestoreIndirectPersonal from './ModalRestoreIndirectPersonal'
 import './css.scss'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const IndirectPersonalMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useIndirectPersonal()
@@ -23,7 +24,7 @@ const IndirectPersonalMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('indirectPersonal_create')) {
+    if (!hasPermission(PERMISSIONS.INDIRECT_PERSONAL.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -50,7 +51,7 @@ const IndirectPersonalMaintainer = () => {
         />
       )}
 
-      {hasPermission('indirectPersonal_create') && (
+      {hasPermission(PERMISSIONS.INDIRECT_PERSONAL.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton

@@ -9,6 +9,7 @@ import useCompany from 'src/hooks/useCompany'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import { useNavigate } from 'react-router-dom'
 import useRole from 'src/hooks/useRole'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const UserMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useUser()
@@ -26,7 +27,7 @@ const UserMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('user_create')) {
+    if (!hasPermission(PERMISSIONS.USER.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -55,21 +56,21 @@ const UserMaintainer = () => {
         />
       )} */}
 
-      {/* {hasPermission('user_create') && ( */}
-      <CCard className="action-buttons">
-        <CCardBody>
-          <CButton className="btn-modal" onClick={() => setVisibleUser(!visibleUser)}>
-            Añadir usuario
-          </CButton>
-          {/* <CButton
+      {hasPermission(PERMISSIONS.USER.CREATE) && (
+        <CCard className="action-buttons">
+          <CCardBody>
+            <CButton className="btn-modal" onClick={() => setVisibleUser(!visibleUser)}>
+              Añadir usuario
+            </CButton>
+            {/* <CButton
             className="btn-modal"
             onClick={() => setVisibleRestoreMachinery(!visibleRestoreMachinery)}
           >
             Ver eliminados
           </CButton> */}
-        </CCardBody>
-      </CCard>
-      {/* )} */}
+          </CCardBody>
+        </CCard>
+      )}
 
       <CCard>
         <CCardBody>{isLoading || isRefetching ? <Skeleton count={5} /> : <UserList />}</CCardBody>

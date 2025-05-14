@@ -13,6 +13,7 @@ import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const TechnicalDocList = () => {
   const { getData } = useGetCachedQueryData()
@@ -40,7 +41,7 @@ const TechnicalDocList = () => {
                 <CTableDataCell> {doc.url.split('/')[4]}</CTableDataCell>
                 <CTableDataCell>{catName?.name || 'Sin categoría'}</CTableDataCell>
                 <CTableDataCell>
-                  {hasPermission('technicalDocumentation_delete') && (
+                  {hasPermission(PERMISSIONS.TECHNICAL_DOCUMENTATION.DELETE) && (
                     <CButton
                       className="btn-action-delete"
                       onClick={() => {

@@ -8,6 +8,7 @@ import ModalAddDirectStaffShift from './ModalAddDirectStaffShift'
 import ModalRestoreDirectStaffShift from './ModalRestoreDirectStaffShift'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import { useNavigate } from 'react-router-dom'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const DirectStaffShiftMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useDirectStaffShift()
@@ -23,7 +24,7 @@ const DirectStaffShiftMaintainer = () => {
   }
 
   useEffect(() => {
-    if (!hasPermission('directStaffShift_view')) {
+    if (!hasPermission(PERMISSIONS.DIRECT_STAFF_SHIFT.VIEW)) {
       redirectTo('/inicio')
     }
   }, [])
@@ -50,7 +51,7 @@ const DirectStaffShiftMaintainer = () => {
           }}
         />
       )}
-      {hasPermission('directStaffShift_create') && (
+      {hasPermission(PERMISSIONS.DIRECT_STAFF_SHIFT.CREATE) && (
         <CCard className="action-buttons">
           <CCardBody>
             <CButton

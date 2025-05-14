@@ -12,6 +12,7 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const MachineryList = () => {
   const { getData } = useGetCachedQueryData()
@@ -72,7 +73,7 @@ const MachineryList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('machinery_update') && (
+          {hasPermission(PERMISSIONS.MACHINERY.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -83,7 +84,7 @@ const MachineryList = () => {
             </CButton>
           )}
 
-          {hasPermission('machinery_delete') && (
+          {hasPermission(PERMISSIONS.MACHINERY.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

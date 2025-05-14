@@ -20,6 +20,7 @@ import { MenuItem } from '@mui/material'
 import useDirectStaffShift from 'src/hooks/useDirectStaffShift'
 import ModalAddDirectStaffShift from './ModalAddDirectStaffShift'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const DirectStaffShiftList = () => {
   const { getData } = useGetCachedQueryData()
@@ -65,7 +66,7 @@ const DirectStaffShiftList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('directStaffShift_update') && (
+          {hasPermission(PERMISSIONS.DIRECT_STAFF_SHIFT.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -76,7 +77,7 @@ const DirectStaffShiftList = () => {
             </CButton>
           )}
 
-          {hasPermission('directStaffShift_delete') && (
+          {hasPermission(PERMISSIONS.DIRECT_STAFF_SHIFT.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

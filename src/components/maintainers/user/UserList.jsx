@@ -20,6 +20,7 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const UserList = () => {
   const { getData } = useGetCachedQueryData()
@@ -73,7 +74,7 @@ const UserList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {hasPermission('user_update') && (
+          {hasPermission(PERMISSIONS.USER.UPDATE) && (
             <CButton
               className="btn-action-edit"
               onClick={() => {
@@ -84,7 +85,7 @@ const UserList = () => {
             </CButton>
           )}
 
-          {hasPermission('user_delete') && (
+          {hasPermission(PERMISSIONS.USER.DELETE) && (
             <CButton
               className="btn-action-delete"
               onClick={() => {

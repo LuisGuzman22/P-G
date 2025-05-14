@@ -15,6 +15,7 @@ import { usePermissions } from 'src/providers/PermissionsProvider'
 import ModalAddRole from './ModalAssignPermission'
 import useRole from 'src/hooks/useRole'
 import ModalAssignPermission from './ModalAssignPermission'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const PermissionAssignList = () => {
   const { getData } = useGetCachedQueryData()
@@ -59,16 +60,16 @@ const PermissionAssignList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          {/* {hasPermission('role_update') && ( */}
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditPermission(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          {/* )} */}
+          {hasPermission(PERMISSIONS.USER.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditPermission(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
         </>
       ),
     },
