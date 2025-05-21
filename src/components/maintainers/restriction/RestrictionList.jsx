@@ -20,13 +20,15 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 import { MenuItem } from '@mui/material'
 import useRestriction from 'src/hooks/useRestriction'
 import ModalAddRestriction from './ModalAddRestriction'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const RestrictionList = () => {
-  console.log('restriction')
-
   const { getData } = useGetCachedQueryData()
   const restrictionQuery = getData('restriction')
   const { deleteRestriction } = useRestriction()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleRestriction, setVisibleRestriction] = useState(false)
   const [selectedRestriction, setSelectedRestriction] = useState()
@@ -63,22 +65,27 @@ const RestrictionList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditRestriction(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteRestriction(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission(PERMISSIONS.RESTRICTIONS.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditRestriction(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission(PERMISSIONS.RESTRICTIONS.DELETE) && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteRestriction(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

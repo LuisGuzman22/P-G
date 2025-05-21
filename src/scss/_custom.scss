@@ -294,86 +294,98 @@ body {
   width: 100%;
   height: 100%;
 
-  .row {
-    padding: 10px;
-    .dashboard-button {
-      width: 100%;
-      background: #00778b;
+  // .row {
+  //   padding: 10px;
 
-      height: 200px;
-      color: white;
-      font-weight: 600;
-      font-size: 1.5rem;
-      transition:
-        transform 0.2s,
-        box-shadow 0.3s;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      position: relative;
-      overflow: hidden; /* Evita que los colores sobresalgan */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
 
-      .corner-colors {
-        position: absolute;
-        top: 0;
-        left: 0;
+  .dashboard-card {
+    display: flex;
+    justify-content: center;
+  }
+
+  .dashboard-button {
+    width: 100%;
+    background: #00778b;
+
+    height: 200px;
+    color: white;
+    font-weight: 600;
+    font-size: 1.5rem;
+    transition:
+      transform 0.2s,
+      box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden; /* Evita que los colores sobresalgan */
+
+    .corner-colors {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      width: 80px; /* Ajusta según el tamaño deseado */
+      height: 15px;
+    }
+
+    .color-box {
+      flex: 1;
+      height: 100%;
+    }
+
+    .yellow {
+      background-color: #eaaa00;
+    }
+    .red {
+      background-color: #d8282f;
+    }
+    .light-blue {
+      background-color: #64ccc9;
+    }
+    .dark-blue {
+      background-color: #00778b;
+    }
+    .gray {
+      background-color: #898b8e;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: row;
+      .button-label {
         display: flex;
-        width: 80px; /* Ajusta según el tamaño deseado */
-        height: 15px;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10%;
       }
 
-      .color-box {
-        flex: 1;
-        height: 100%;
-      }
-
-      .yellow {
-        background-color: #eaaa00;
-      }
-      .red {
-        background-color: #d8282f;
-      }
-      .light-blue {
-        background-color: #64ccc9;
-      }
-      .dark-blue {
-        background-color: #00778b;
-      }
-      .gray {
-        background-color: #898b8e;
-      }
-
-      .button-container {
-        display: flex;
-        flex-direction: row;
-        .button-label {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-left: 10%;
-        }
-
-        .icon-button {
-          opacity: 0.5;
-          height: 3em;
-        }
+      .icon-button {
+        opacity: 0.5;
+        height: 3em;
       }
     }
   }
+  // }
 
-  .col {
-    padding: 10px;
-    .dashboard-button {
-      background: linear-gradient(135deg, #019999, #1fc8db);
-      width: 200px;
-      height: 200px;
-      color: white;
-      font-weight: 600;
-      font-size: 1.5rem;
-      transition:
-        transform 0.2s,
-        box-shadow 0.3s;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-  }
+  // .col {
+  //   padding: 10px;
+  //   .dashboard-button {
+  //     background: linear-gradient(135deg, #019999, #1fc8db);
+  //     width: 200px;
+  //     height: 200px;
+  //     color: white;
+  //     font-weight: 600;
+  //     font-size: 1.5rem;
+  //     transition:
+  //       transform 0.2s,
+  //       box-shadow 0.3s;
+  //     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  //   }
+  // }
 
   @media only screen and (max-width: 800px) {
     .row {

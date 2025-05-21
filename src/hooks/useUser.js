@@ -14,7 +14,11 @@ const useUser = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/users`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/users`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['user'] })
@@ -31,7 +35,11 @@ const useUser = () => {
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
       return await axios
-        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/users/${id}`)
+        .delete(`${process.env.REACT_APP_BASE_URL}api/v1/users/${id}`, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        })
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)
@@ -60,7 +68,15 @@ const useUser = () => {
 
   const mutationUpdate = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.put(`${process.env.REACT_APP_BASE_URL}api/v1/users/${newTodo.id}`, newTodo)
+      return await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/users/${newTodo.id}`,
+        newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['user'] })
@@ -77,7 +93,15 @@ const useUser = () => {
   const mutationRestore = useMutation({
     mutationFn: async (newTodo) => {
       return await axios
-        .patch(`${process.env.REACT_APP_BASE_URL}api/v1/users/${newTodo}/restore`)
+        .patch(
+          `${process.env.REACT_APP_BASE_URL}api/v1/users/${newTodo}/restore`,
+          {},
+          {
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+          },
+        )
         .then((res) => {
           if (res.status === HttpStatusCode.Created) {
             setIsError(false)

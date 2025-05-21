@@ -24,6 +24,11 @@ const useIndirectStaffShift = () => {
       return await axios.post(
         `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -40,7 +45,14 @@ const useIndirectStaffShift = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${id}`)
+      return await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${id}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
+      )
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['indirect_staff_shift'] })
@@ -59,6 +71,11 @@ const useIndirectStaffShift = () => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${newTodo.id}`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -77,6 +94,12 @@ const useIndirectStaffShift = () => {
     mutationFn: async (newTodo) => {
       return await axios.patch(
         `${process.env.REACT_APP_BASE_URL}api/v1/indirectStaffShifts/${newTodo}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {

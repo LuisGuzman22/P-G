@@ -18,6 +18,11 @@ const useGetActivityDataPerPrimaveraId = () => {
       setIsLoading(true)
       return await axios.get(
         `${process.env.REACT_APP_BASE_URL}api/v1/activities/search?contract_id=${contractLS.id}&project_id=${projectLS.id}${primaveraIdQuery}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {

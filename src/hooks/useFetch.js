@@ -132,6 +132,9 @@ const fetchEquipment = async (contractId) => {
       },
     },
   )
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -165,6 +168,10 @@ const fetchDirectPersonal = async (contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -177,6 +184,10 @@ const fetchIndirectPersonal = async (contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -189,6 +200,10 @@ const fetchAljibe = async (contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -201,6 +216,10 @@ const fetchTechnicalDocumentation = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -213,6 +232,10 @@ const fetchTechnicalDocumentationCategories = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -225,6 +248,26 @@ const fetchCarousel = async (projectId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
+  return res.data.data
+}
+
+const fetchGantt = async (projectId, contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/gantt/getGanttUrls/${projectId}/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -237,6 +280,10 @@ export const fetchReportsData = async (contractId, projectId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -257,18 +304,6 @@ const fetchCompany = async () => {
     },
   })
   return res.data.data
-}
-
-const fetchGantt = async () => {
-  const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/activities/gantt?start_date=2024-01-01&end_date=2025-12-12`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      },
-    },
-  )
-  return res.data
 }
 
 const fetchSChart = async (contractId, projectId) => {
@@ -304,6 +339,10 @@ const fetchShifts = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -316,6 +355,10 @@ const fetchIndirectStaffShifts = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -328,6 +371,10 @@ const fetchDirectStaffShifts = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -340,6 +387,10 @@ const fetchWorkFront = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -352,6 +403,36 @@ const fetchWeather = async (projectId, contractId) => {
       },
     },
   )
+
+  if (res.status === 204) {
+    return []
+  }
+  return res.data.data
+}
+
+const fetchRole = async (projectId, contractId) => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/roles`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+
+  if (res.status === 204) {
+    return []
+  }
+  return res.data.data
+}
+
+const fetchPermissions = async (projectId, contractId) => {
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/permissions`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
+
+  if (res.status === 204) {
+    return []
+  }
   return res.data.data
 }
 
@@ -500,9 +581,10 @@ export const useFetchVehicle = (contractId) => {
 export const useFetchEquipment = (contractId) => {
   return useQuery({
     queryKey: ['equipment'],
-    // refetchType: 'all',
-    // refetchInterval: 10000,
     refetchOnWindowFocus: true,
+    retry: (failureCount, error) => {
+      return failureCount < 2 && error.message !== 'No Content' // 🔹 Solo reintenta 2 veces si no es 204
+    },
     queryFn: async () => {
       return fetchEquipment(contractId)
     },
@@ -593,6 +675,18 @@ export const useFetchGetCarousel = (projectId) => {
   })
 }
 
+export const useFetchGetGantt = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['gantt'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchGantt(projectId, contractId)
+    },
+  })
+}
+
 export const useFetchUser = () => {
   return useQuery({
     queryKey: ['user'],
@@ -637,18 +731,6 @@ export const useFetchActivityDataPerPrimaveraId = (projectId, contractId, primav
     // refetchType: 'all',
     queryFn: async () => {
       return fetchActivityDataPerPrimaveraId(projectId, contractId, primaveraId)
-    },
-  })
-}
-
-export const useFetchGant = () => {
-  return useQuery({
-    queryKey: ['gantt-chart'],
-    // refetchType: 'all',
-    // refetchInterval: 10000,
-    refetchOnWindowFocus: true,
-    queryFn: async () => {
-      return fetchGantt()
     },
   })
 }
@@ -733,6 +815,30 @@ export const useFetchWeather = (projectId, contractId) => {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       return fetchWeather(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchRole = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['role'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchRole(projectId, contractId)
+    },
+  })
+}
+
+export const useFetchPermissions = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['permission'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchPermissions(projectId, contractId)
     },
   })
 }

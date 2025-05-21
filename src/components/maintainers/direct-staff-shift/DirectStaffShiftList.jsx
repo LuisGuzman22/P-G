@@ -19,11 +19,15 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 import { MenuItem } from '@mui/material'
 import useDirectStaffShift from 'src/hooks/useDirectStaffShift'
 import ModalAddDirectStaffShift from './ModalAddDirectStaffShift'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const DirectStaffShiftList = () => {
   const { getData } = useGetCachedQueryData()
   const directStaffShiftQuery = getData('direct_staff_shift')
   const { deleteDirectStaffShift } = useDirectStaffShift()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleDirectStaffShift, setVisibleDirectStaffShift] = useState(false)
   const [selectedDirectStaffShift, setSelectedDirectStaffShift] = useState()
@@ -62,22 +66,27 @@ const DirectStaffShiftList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditDirectStaffShift(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteDirectStaffShift(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission(PERMISSIONS.DIRECT_STAFF_SHIFT.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditDirectStaffShift(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission(PERMISSIONS.DIRECT_STAFF_SHIFT.DELETE) && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteDirectStaffShift(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

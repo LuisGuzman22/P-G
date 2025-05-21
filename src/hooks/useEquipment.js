@@ -17,7 +17,11 @@ const useEquipment = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/equipments`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/equipments`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       setErrorMessage([])
@@ -33,7 +37,11 @@ const useEquipment = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/equipments/${id}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/equipments/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['equipment'] })
@@ -52,6 +60,11 @@ const useEquipment = () => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/equipments/${newTodo.id}`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -70,6 +83,12 @@ const useEquipment = () => {
     mutationFn: async (newTodo) => {
       return await axios.patch(
         `${process.env.REACT_APP_BASE_URL}api/v1/equipments/${newTodo}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {

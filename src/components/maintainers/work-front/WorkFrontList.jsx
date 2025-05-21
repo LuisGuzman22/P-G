@@ -19,11 +19,15 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 import { MenuItem } from '@mui/material'
 import useWorkFront from 'src/hooks/useWorkFront'
 import ModalAddWorkFront from './ModalAddWorkFront'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const WorkFrontList = () => {
   const { getData } = useGetCachedQueryData()
   const workFrontQuery = getData('workFront')
   const { deleteWorkFront } = useWorkFront()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleWorkFront, setVisibleWorkFront] = useState(false)
   const [selectedWorkFront, setSelectedWorkFront] = useState()
@@ -68,22 +72,27 @@ const WorkFrontList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditWorkFront(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteWorkFront(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission(PERMISSIONS.WORK_FRONT.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditWorkFront(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission(PERMISSIONS.WORK_FRONT.DELETE) && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteWorkFront(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

@@ -19,12 +19,16 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const ProjectList = () => {
   const { getData } = useGetCachedQueryData()
   const projectsQuery = getData('projects')
 
   const { deleteProject } = useProjects()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleProject, setVisibleProject] = useState(false)
   const [selectedProject, setSelectedProject] = useState()
@@ -69,22 +73,27 @@ const ProjectList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditProject(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteProject(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission(PERMISSIONS.PROJECT.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditProject(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission(PERMISSIONS.PROJECT.DELETE) && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteProject(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

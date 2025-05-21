@@ -36,7 +36,6 @@ const ModalAddImage = (props) => {
   }
 
   const handleUploadTechicalDoc = () => {
-    console.log('file', docs)
     register({ images: docs })
     props.sendDataToParent(false)
   }
@@ -66,6 +65,7 @@ const ModalAddImage = (props) => {
                 type="file"
                 id={`doc`}
                 invalid={documentError}
+                accept="image/png, image/jpeg"
                 text={documentError && 'Debe seleccionar un documento'}
                 aria-describedby="inputGroupFileAddon03"
                 onChange={(e) => {
@@ -74,7 +74,6 @@ const ModalAddImage = (props) => {
                 }}
                 label="Documentación"
                 aria-label="Upload"
-                accept="image/png, image/jpeg"
               />
             </CCol>
           </CRow>

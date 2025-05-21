@@ -11,11 +11,14 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const MachineryList = () => {
   const { getData } = useGetCachedQueryData()
   const machineryQuery = getData('machinery')
   const { deleteMachinery } = useMachinery()
+  const { hasPermission } = usePermissions()
 
   const [visibleMachinery, setVisibleMachinery] = useState(false)
   const [selectedMachinery, setSelectedMachinery] = useState()
@@ -70,22 +73,27 @@ const MachineryList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditMachinery(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteMachinery(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission(PERMISSIONS.MACHINERY.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditMachinery(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission(PERMISSIONS.MACHINERY.DELETE) && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteMachinery(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

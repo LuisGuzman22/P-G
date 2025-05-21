@@ -19,6 +19,8 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 // import ModalAddMachinery from './ModalAddMachinery'
 
@@ -26,6 +28,8 @@ const VehicleList = () => {
   const { getData } = useGetCachedQueryData()
   const vehicleQuery = getData('vehicle')
   const { deleteVehicle } = useVehicle()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleVehicle, setVisibleVehicle] = useState(false)
   const [selectedVehicle, setSelectedVehicle] = useState()
@@ -80,22 +84,27 @@ const VehicleList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditVehicle(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteVehicle(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission(PERMISSIONS.VEHICLE.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditVehicle(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission(PERMISSIONS.VEHICLE.DELETE) && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteVehicle(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

@@ -42,10 +42,12 @@ const ModalAddUser = (props) => {
   const [userEmailError, setUserEmailError] = useState(false)
   const [userPasswordError, setUserPasswordError] = useState(false)
   const [userCompanyError, setUserCompanyError] = useState(false)
+  const [userRoleError, setUserRoleError] = useState(false)
   const [userJobPositionError, setUserJobPositionError] = useState(false)
 
   const { getData } = useGetCachedQueryData()
   const companyQuery = getData('company')
+  const roleQuery = getData('role')
 
   const handleClick = () => {
     props.sendDataToParent(false)
@@ -65,7 +67,11 @@ const ModalAddUser = (props) => {
 
   const onChangeData = (e) => {
     setErrorForm(0)
-    setUser({ ...user, [e.target.id]: e.target.value })
+    if (e.target.id === 'roles') {
+      setUser({ ...user, roles: [e.target.value] })
+    } else {
+      setUser({ ...user, [e.target.id]: e.target.value })
+    }
   }
 
   const handleRegisterUser = () => {
@@ -99,6 +105,12 @@ const ModalAddUser = (props) => {
       setUserJobPositionError(false)
     }
 
+    if (!user.roles || user.roles === '0' || user.roles === '') {
+      setUserRoleError(true)
+    } else {
+      setUserRoleError(false)
+    }
+
     if (
       !user.name ||
       user.name === '' ||
@@ -112,7 +124,10 @@ const ModalAddUser = (props) => {
       user.company_id === '0' ||
       user.company_id === '' ||
       !user.job_position ||
-      user.job_position === ''
+      user.job_position === '' ||
+      !user.roles ||
+      user.roles === '0' ||
+      user.roles === ''
     ) {
       setErrorForm(1)
     } else {
@@ -130,6 +145,7 @@ const ModalAddUser = (props) => {
           password: user.password,
           company_id: user.company_id,
           job_position: user.job_position,
+          roles: user.roles,
         })
         // props.sendDataToParent(false)
       } else {
@@ -139,6 +155,7 @@ const ModalAddUser = (props) => {
           password: user.password,
           company_id: user.company_id,
           job_position: user.job_position,
+          roles: user.roles,
         })
         // props.sendDataToParent(false)
       }
@@ -285,6 +302,34 @@ const ModalAddUser = (props) => {
                   onChangeData(e)
                 }}
               />
+            </CCol>
+            <CCol sm={6}>
+              <CFormSelect
+                aria-label="Default select example"
+                id="roles"
+                label="Rol"
+                value={user.roles[0] ?? 0}
+                invalid={userRoleError}
+                onChange={(e) => {
+                  onChangeData(e)
+                }}
+                onBlur={(e) => {
+                  if (e.target.value !== '' || e.target.value === '0') {
+                    setUserRoleError(false)
+                  } else {
+                    setUserRoleError(true)
+                  }
+                }}
+              >
+                <option value={0}>Seleccione</option>
+                {roleQuery.map((role) => {
+                  return (
+                    <option key={role.id} value={role.name}>
+                      {role.name}
+                    </option>
+                  )
+                })}
+              </CFormSelect>
             </CCol>
           </CRow>
           <CRow>

@@ -21,7 +21,11 @@ const useWeather = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/weathers`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/weathers`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       setErrorMessage([])
@@ -37,7 +41,11 @@ const useWeather = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/weathers/${id}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/weathers/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['weather'] })
@@ -56,6 +64,11 @@ const useWeather = () => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/weathers/${newTodo.id}`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -74,6 +87,12 @@ const useWeather = () => {
     mutationFn: async (newTodo) => {
       return await axios.patch(
         `${process.env.REACT_APP_BASE_URL}api/v1/weathers/${newTodo}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {

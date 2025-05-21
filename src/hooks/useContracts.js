@@ -19,7 +19,11 @@ const useContracts = (contractId) => {
 
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/contracts`, newTodo)
+      return await axios.post(`${process.env.REACT_APP_BASE_URL}api/v1/contracts`, newTodo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       const contractData = {
@@ -45,6 +49,11 @@ const useContracts = (contractId) => {
       return await axios.put(
         `${process.env.REACT_APP_BASE_URL}api/v1/contracts/${newTodo.id}`,
         newTodo,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
       )
     },
     onSuccess: (suc) => {
@@ -61,7 +70,11 @@ const useContracts = (contractId) => {
 
   const mutationDelete = useMutation({
     mutationFn: async (newTodo) => {
-      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/contracts/${newTodo}`)
+      return await axios.delete(`${process.env.REACT_APP_BASE_URL}api/v1/contracts/${newTodo}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
     },
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['contracts'] })

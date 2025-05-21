@@ -19,11 +19,15 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 import { MenuItem } from '@mui/material'
 import useShift from 'src/hooks/useShift'
 import ModalAddShift from './ModalAddShift'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const ShiftList = () => {
   const { getData } = useGetCachedQueryData()
   const shiftQuery = getData('shifts')
   const { deleteShift } = useShift()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleShift, setVisibleShift] = useState(false)
   const [selectedShift, setSelectedShift] = useState()
@@ -62,22 +66,27 @@ const ShiftList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditShift(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteShift(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission(PERMISSIONS.SHIFT.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditShift(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission(PERMISSIONS.SHIFT.DELETE) && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteShift(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },

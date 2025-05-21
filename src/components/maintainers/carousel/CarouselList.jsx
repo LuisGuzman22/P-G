@@ -13,11 +13,14 @@ import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import useCarousel from 'src/hooks/useCarousel'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const CarouselList = () => {
   const { getData } = useGetCachedQueryData()
   const carouselQuery = getData('carousel')
   const { deleteDoc } = useCarousel()
+  const { hasPermission } = usePermissions()
 
   return (
     <>
@@ -38,14 +41,16 @@ const CarouselList = () => {
                   </a>
                 </CTableDataCell>
                 <CTableDataCell>
-                  <CButton
-                    className="btn-action-delete"
-                    onClick={() => {
-                      deleteDoc(doc.id)
-                    }}
-                  >
-                    <CIcon icon={cilTrash} />
-                  </CButton>
+                  {hasPermission(PERMISSIONS.CAROUSEL.DELETE) && (
+                    <CButton
+                      className="btn-action-delete"
+                      onClick={() => {
+                        deleteDoc(doc.id)
+                      }}
+                    >
+                      <CIcon icon={cilTrash} />
+                    </CButton>
+                  )}
                 </CTableDataCell>
               </CTableRow>
             )

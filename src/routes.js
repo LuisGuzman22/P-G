@@ -40,9 +40,14 @@ const TechnicalDocMaintainerPage = React.lazy(() => import('./pages/TechnicalDoc
 const CarouselMaintainerPage = React.lazy(() => import('./pages/CarouselMaintainerPage'))
 const UserMaintainerPage = React.lazy(() => import('./pages/UserMaintainerPage'))
 const ContractAsignPage = React.lazy(() => import('./pages/ContractAsignPage'))
+const RolePage = React.lazy(() => import('./pages/RoleMaintainerPage'))
+const PermissionAssignMaintainerPage = React.lazy(
+  () => import('./pages/PermissionAssignMaintainerPage'),
+)
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
 const ExportPage = React.lazy(() => import('./pages/ExportPage'))
 const ChartsPage = React.lazy(() => import('./pages/ChartsPage'))
+const GantMaintainerPage = React.lazy(() => import('./pages/GanttMaintainerPage'))
 
 const routes = [
   { path: '/', name: 'Login', protected: false },
@@ -184,6 +189,12 @@ const routes = [
     protected: true,
   },
   {
+    path: '/maintainer/gantt',
+    name: 'Subir Gantt',
+    element: GantMaintainerPage,
+    protected: true,
+  },
+  {
     path: '/dashboard-reportes',
     name: 'Dashboard reportes',
     element: DashboardReportesPage,
@@ -199,6 +210,18 @@ const routes = [
     path: '/maintainer/contract-asign',
     name: 'Asignar contrato',
     element: ContractAsignPage,
+    protected: true,
+  },
+  {
+    path: '/maintainer/role',
+    name: 'Asignar Roles',
+    element: RolePage,
+    protected: true,
+  },
+  {
+    path: '/maintainer/permissions-assign',
+    name: 'Asignar Permisos',
+    element: PermissionAssignMaintainerPage,
     protected: true,
   },
   {

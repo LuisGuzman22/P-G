@@ -19,11 +19,15 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const UserList = () => {
   const { getData } = useGetCachedQueryData()
   const userQuery = getData('user')
   const { deleteUser } = useUser()
+
+  const { hasPermission } = usePermissions()
 
   const [visibleUser, setVisibleUser] = useState(false)
   const [selectedUser, setSelectedUser] = useState()
@@ -45,6 +49,7 @@ const UserList = () => {
           email: user.email,
           company_id: user.company_id,
           email_verified_at: user.email_verified_at,
+          roles: user.roles,
         })
       })
     setUserData(usr)
@@ -69,22 +74,27 @@ const UserList = () => {
       header: 'Acciones',
       Cell: (data) => (
         <>
-          <CButton
-            className="btn-action-edit"
-            onClick={() => {
-              handleEditUser(data.row.original)
-            }}
-          >
-            <CIcon icon={cilPencil} />
-          </CButton>
-          <CButton
-            className="btn-action-delete"
-            onClick={() => {
-              deleteUser(data.row.original.id)
-            }}
-          >
-            <CIcon icon={cilTrash} />
-          </CButton>
+          {hasPermission(PERMISSIONS.USER.UPDATE) && (
+            <CButton
+              className="btn-action-edit"
+              onClick={() => {
+                handleEditUser(data.row.original)
+              }}
+            >
+              <CIcon icon={cilPencil} />
+            </CButton>
+          )}
+
+          {hasPermission(PERMISSIONS.USER.DELETE) && (
+            <CButton
+              className="btn-action-delete"
+              onClick={() => {
+                deleteUser(data.row.original.id)
+              }}
+            >
+              <CIcon icon={cilTrash} />
+            </CButton>
+          )}
         </>
       ),
     },
