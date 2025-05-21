@@ -47,6 +47,7 @@ const PermissionAssignMaintainerPage = React.lazy(
 const DashboardReportesPage = React.lazy(() => import('./pages/DashboardReportesPage'))
 const ExportPage = React.lazy(() => import('./pages/ExportPage'))
 const ChartsPage = React.lazy(() => import('./pages/ChartsPage'))
+const GantMaintainerPage = React.lazy(() => import('./pages/GanttMaintainerPage'))
 
 const routes = [
   { path: '/', name: 'Login', protected: false },
@@ -185,6 +186,12 @@ const routes = [
     path: '/maintainer/carousel',
     name: 'Administrar imágenes carrusel',
     element: CarouselMaintainerPage,
+    protected: true,
+  },
+  {
+    path: '/maintainer/gantt',
+    name: 'Subir Gantt',
+    element: GantMaintainerPage,
     protected: true,
   },
   {

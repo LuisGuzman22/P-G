@@ -123,4 +123,9 @@ export const PERMISSIONS = {
   CATEGORY: {
     CREATE: 'category_create',
   },
+  GANTT: {
+    VIEW: 'gantt_view',
+    DELETE: 'gantt_delete',
+    CREATE: 'gantt_create',
+  },
 }

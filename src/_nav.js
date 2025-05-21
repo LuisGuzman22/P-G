@@ -296,6 +296,15 @@ const useNavItems = () => {
     })
   }
 
+  // if (hasPermission(PERMISSIONS.PROJECT.VIEW)) {
+  navItems[3].items[1].items.push({
+    component: CNavItem,
+    name: 'Subir Gantt',
+    to: '/maintainer/gantt',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  })
+  // }
+
   return navItems
 }
 

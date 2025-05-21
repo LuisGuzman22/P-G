@@ -255,6 +255,22 @@ const fetchCarousel = async (projectId) => {
   return res.data.data
 }
 
+const fetchGantt = async (projectId, contractId) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}api/v1/gantt/getGanttUrls/${projectId}/${contractId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    },
+  )
+
+  if (res.status === 204) {
+    return []
+  }
+  return res.data.data
+}
+
 export const fetchReportsData = async (contractId, projectId) => {
   const res = await axios.get(
     `${process.env.REACT_APP_BASE_URL}api/v1/reports/search?contract_id=${contractId}&project_id=${projectId}`,
@@ -288,18 +304,6 @@ const fetchCompany = async () => {
     },
   })
   return res.data.data
-}
-
-const fetchGantt = async () => {
-  const res = await axios.get(
-    `${process.env.REACT_APP_BASE_URL}api/v1/activities/gantt?start_date=2024-01-01&end_date=2025-12-12`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      },
-    },
-  )
-  return res.data
 }
 
 const fetchSChart = async (contractId, projectId) => {
@@ -671,6 +675,18 @@ export const useFetchGetCarousel = (projectId) => {
   })
 }
 
+export const useFetchGetGantt = (projectId, contractId) => {
+  return useQuery({
+    queryKey: ['gantt'],
+    // refetchType: 'all',
+    // refetchInterval: 10000,
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      return fetchGantt(projectId, contractId)
+    },
+  })
+}
+
 export const useFetchUser = () => {
   return useQuery({
     queryKey: ['user'],
@@ -715,18 +731,6 @@ export const useFetchActivityDataPerPrimaveraId = (projectId, contractId, primav
     // refetchType: 'all',
     queryFn: async () => {
       return fetchActivityDataPerPrimaveraId(projectId, contractId, primaveraId)
-    },
-  })
-}
-
-export const useFetchGant = () => {
-  return useQuery({
-    queryKey: ['gantt-chart'],
-    // refetchType: 'all',
-    // refetchInterval: 10000,
-    refetchOnWindowFocus: true,
-    queryFn: async () => {
-      return fetchGantt()
     },
   })
 }
