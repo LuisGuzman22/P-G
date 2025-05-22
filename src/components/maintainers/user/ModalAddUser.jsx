@@ -308,7 +308,7 @@ const ModalAddUser = (props) => {
                 aria-label="Default select example"
                 id="roles"
                 label="Rol"
-                value={user.roles[0] ?? 0}
+                value={user?.roles?.length > 0 ? user.roles[0] : 0}
                 invalid={userRoleError}
                 onChange={(e) => {
                   onChangeData(e)
