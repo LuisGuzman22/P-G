@@ -245,7 +245,7 @@ const useNavItems = () => {
   if (hasPermission(PERMISSIONS.ROLES.VIEW)) {
     navItems[3].items[1].items.push({
       component: CNavItem,
-      name: 'Asignar Roles',
+      name: 'Administrar Roles',
       to: '/maintainer/role',
       icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
     })

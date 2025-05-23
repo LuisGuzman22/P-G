@@ -214,7 +214,7 @@ const routes = [
   },
   {
     path: '/maintainer/role',
-    name: 'Asignar Roles',
+    name: 'Administrar Roles',
     element: RolePage,
     protected: true,
   },
