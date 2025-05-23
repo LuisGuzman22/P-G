@@ -85,9 +85,9 @@ export const PERMISSIONS = {
   },
   ROLES: {
     VIEW: 'roles_view',
-    UPDATE: 'role_update',
-    DELETE: 'role_delete',
-    CREATE: 'role_create',
+    UPDATE: 'roles_update',
+    DELETE: 'roles_delete',
+    CREATE: 'roles_create',
   },
   USER: {
     VIEW: 'user_view',
