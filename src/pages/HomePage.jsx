@@ -103,7 +103,7 @@ const HomePage = () => {
       label: 'Dashboard',
       icon: faChartColumn,
       onClick: () => redirectTo('/dashboard'),
-      visible: true,
+      visible: hasPermission(PERMISSIONS.DASHBOARD.VIEW),
     },
     {
       label: 'Historial reportes diarios',
@@ -116,7 +116,7 @@ const HomePage = () => {
       icon: faChartGantt,
       // onClick: () => window.open('https://chatgpt.com/', '_blank'),
       onClick: () => redirectTo('/carta-gantt'),
-      visible: true,
+      visible: hasPermission(PERMISSIONS.GANTT.VIEW),
     },
     {
       label: 'Exportar datos',

@@ -116,6 +116,7 @@ export const PERMISSIONS = {
   },
   ACTIVITY: {
     VIEW: 'activity_view',
+    CREATE: 'activity_create',
   },
   EXPORT: {
     DATA: 'export_data',
@@ -127,5 +128,8 @@ export const PERMISSIONS = {
     VIEW: 'gantt_view',
     DELETE: 'gantt_delete',
     CREATE: 'gantt_create',
+  },
+  DASHBOARD: {
+    VIEW: 'dashboard_view',
   },
 }
