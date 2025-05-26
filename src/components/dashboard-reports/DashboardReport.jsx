@@ -20,11 +20,14 @@ import './css.scss'
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 import { MenuItem } from '@mui/material'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const DashboardReport = () => {
   const { getData } = useGetCachedQueryData()
   const reportsQuery = getData('reports')
   let navigate = useNavigate()
+  const { hasPermission } = usePermissions()
   const [reportsData, setReportsData] = useState([])
 
   const redirectTo = (url) => {
@@ -35,6 +38,12 @@ const DashboardReport = () => {
     localStorage.setItem('daily_report', report.id)
     redirectTo(`/informe-diario/${action}`)
   }
+
+  useEffect(() => {
+    if (!hasPermission(PERMISSIONS.REPORTS.CREATE)) {
+      redirectTo('/inicio')
+    }
+  }, [])
 
   useEffect(() => {
     let rep = []

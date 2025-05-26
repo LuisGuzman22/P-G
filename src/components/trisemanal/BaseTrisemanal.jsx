@@ -17,6 +17,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import useGetTrisemanalData from 'src/hooks/useGetTrisemanalData'
 import './css.scss'
+import { useNavigate } from 'react-router-dom'
+import { PERMISSIONS } from 'src/utils/contant'
+import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const BaseTrisemanal = () => {
   const {
@@ -28,6 +31,8 @@ const BaseTrisemanal = () => {
     loadingPlanning,
     loadingTrisemanal,
   } = useGetTrisemanalData()
+  let navigate = useNavigate()
+  const { hasPermission } = usePermissions()
 
   const [file, setFile] = useState()
 
@@ -40,6 +45,16 @@ const BaseTrisemanal = () => {
     setFile(xls[0])
   }
 
+  const redirectTo = (url) => {
+    navigate(url)
+  }
+
+  useEffect(() => {
+    if (!hasPermission(PERMISSIONS.ACTIVITY.VIEW)) {
+      redirectTo('/inicio')
+    }
+  }, [])
+
   return (
     <div className="">
       <CToast
@@ -50,25 +65,30 @@ const BaseTrisemanal = () => {
       >
         <div className="d-flex">{errorMutate && <CToastBody>{errorMutate}</CToastBody>}</div>
       </CToast>
-      <CFormInput
-        type="file"
-        id={`trisemanal`}
-        aria-describedby="inputGroupFileAddon03"
-        onChange={(e) => {
-          handleUploadFile(e)
-        }}
-        label="Cargar trisemanal"
-        aria-label="Upload"
-        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      />
-      <CButton
-        className="confirm-btn"
-        onClick={() => {
-          onHandleSubmit()
-        }}
-      >
-        Subir Trisemanal
-      </CButton>
+      {hasPermission(PERMISSIONS.ACTIVITY.CREATE) && (
+        <>
+          <CFormInput
+            type="file"
+            id={`trisemanal`}
+            aria-describedby="inputGroupFileAddon03"
+            onChange={(e) => {
+              handleUploadFile(e)
+            }}
+            label="Cargar trisemanal"
+            aria-label="Upload"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          />
+          <CButton
+            className="confirm-btn"
+            onClick={() => {
+              onHandleSubmit()
+            }}
+          >
+            Subir Trisemanal
+          </CButton>
+        </>
+      )}
+
       {isLoading || loadingPlanning || loadingTrisemanal ? (
         <Skeleton count={5} />
       ) : (
