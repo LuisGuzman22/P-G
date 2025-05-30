@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import {
+  CAlert,
   CButton,
   CCol,
   CFormInput,
@@ -20,10 +21,13 @@ import './css.scss'
 import { useNavigate } from 'react-router-dom'
 import { PERMISSIONS } from 'src/utils/contant'
 import { usePermissions } from 'src/providers/PermissionsProvider'
+import CIcon from '@coreui/icons-react'
+import { cilCheckCircle, cilInfo } from '@coreui/icons'
 
 const BaseTrisemanal = () => {
   const {
     data,
+    success,
     errorMutate,
     isLoading,
     error,
@@ -37,7 +41,7 @@ const BaseTrisemanal = () => {
   const [file, setFile] = useState()
 
   const onHandleSubmit = () => {
-    uploadTrisemanal(file)
+    const data = uploadTrisemanal(file)
   }
 
   const handleUploadFile = (e) => {
@@ -71,6 +75,7 @@ const BaseTrisemanal = () => {
             type="file"
             id={`trisemanal`}
             aria-describedby="inputGroupFileAddon03"
+            disabled={isLoading}
             onChange={(e) => {
               handleUploadFile(e)
             }}
@@ -80,12 +85,36 @@ const BaseTrisemanal = () => {
           />
           <CButton
             className="confirm-btn"
+            disabled={isLoading}
             onClick={() => {
               onHandleSubmit()
             }}
           >
             Subir Trisemanal
           </CButton>
+          {isLoading && (
+            <>
+              <br />
+              <CAlert color="primary" className="d-flex align-items-center">
+                <CIcon icon={cilInfo} className="flex-shrink-0 me-2" width={24} height={24} />
+                <div>Subiendo listado de actividades</div>
+              </CAlert>
+            </>
+          )}
+          {success && (
+            <>
+              <br />
+              <CAlert color="success">
+                <CIcon
+                  icon={cilCheckCircle}
+                  className="flex-shrink-0 me-2"
+                  width={24}
+                  height={24}
+                />
+                <div>{success}</div>
+              </CAlert>
+            </>
+          )}
         </>
       )}
 
@@ -93,7 +122,7 @@ const BaseTrisemanal = () => {
         <Skeleton count={5} />
       ) : (
         <CTable className="trisemanal-table">
-          <CTableHead>
+          {/* <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">RUTA ORIENTE</CTableHeaderCell>
               <CTableHeaderCell scope="col">Activity Name</CTableHeaderCell>
@@ -106,7 +135,7 @@ const BaseTrisemanal = () => {
               <CTableHeaderCell scope="col">Finish</CTableHeaderCell>
               <CTableHeaderCell scope="col">Q total</CTableHeaderCell>
             </CTableRow>
-          </CTableHead>
+          </CTableHead> */}
           <CTableBody>
             {data &&
               !isLoading &&

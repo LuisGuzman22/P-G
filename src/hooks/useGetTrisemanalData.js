@@ -6,6 +6,7 @@ import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useGetTrisemanalData = () => {
   const [error, setError] = useState()
+  const [success, setSuccess] = useState()
   const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errorMutate, setErrorMutate] = useState()
@@ -43,18 +44,25 @@ const useGetTrisemanalData = () => {
     onSuccess: (suc) => {
       queryClient.invalidateQueries({ queryKey: ['trisemanal'] })
       queryClient.invalidateQueries({ queryKey: ['planning'] })
+      setSuccess(suc.data.message)
+      setIsLoading(false)
+
+      return suc
     },
     onError: (err) => {
       queryClient.invalidateQueries({ queryKey: ['trisemanal'] })
       queryClient.invalidateQueries({ queryKey: ['planning'] })
       setErrorMutate('Error subir trisemanal')
       setIsError(true)
+      setIsLoading(false)
+
       return false
     },
   })
 
   const uploadTrisemanal = (data) => {
     setIsError(false)
+    setIsLoading(true)
     const response = registerMutation.mutate({ file: data })
     return response
   }
@@ -62,6 +70,8 @@ const useGetTrisemanalData = () => {
   return {
     data,
     errorMutate,
+    success,
+    isLoading,
     loadingTrisemanal,
     errorTrisemanal,
     uploadTrisemanal,
