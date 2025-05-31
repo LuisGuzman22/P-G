@@ -19,9 +19,12 @@ import TechnicalDocumentation from './tabs/technical-doc/TechnicalDocumentation'
 import TurnOverPackage from './TurnOverPackage'
 import TeamChat from './TeamChat'
 import PIE from './PIE'
+import { usePermissions } from 'src/providers/PermissionsProvider'
+import { PERMISSIONS } from 'src/utils/contant'
 
 const ProjectCollapse = () => {
   const [activeKey, setActiveKey] = useState(2)
+  const { hasPermission } = usePermissions()
 
   return (
     <>
@@ -53,15 +56,17 @@ const ProjectCollapse = () => {
         >
           SKYNAV
         </CNavLink> */}
-        <CNavLink
-          active={activeKey === 4}
-          aria-selected={activeKey === 4}
-          onClick={() => {
-            setActiveKey(4)
-          }}
-        >
-          Documentación técnica
-        </CNavLink>
+        {hasPermission(PERMISSIONS.TECHNICAL_DOCUMENTATION.VIEW_HOME) && (
+          <CNavLink
+            active={activeKey === 4}
+            aria-selected={activeKey === 4}
+            onClick={() => {
+              setActiveKey(4)
+            }}
+          >
+            Documentación técnica
+          </CNavLink>
+        )}
         {/* <CNavLink
           active={activeKey === 5}
           aria-selected={activeKey === 5}

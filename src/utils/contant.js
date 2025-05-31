@@ -49,9 +49,9 @@ export const PERMISSIONS = {
   },
   RESTRICTIONS: {
     VIEW: 'restrictions_view',
-    UPDATE: 'restriction_update',
-    DELETE: 'restriction_delete',
-    CREATE: 'restriction_create',
+    UPDATE: 'restrictions_update',
+    DELETE: 'restrictions_delete',
+    CREATE: 'restrictions_create',
   },
   SHIFT: {
     VIEW: 'shift_view',
@@ -103,6 +103,7 @@ export const PERMISSIONS = {
   },
   TECHNICAL_DOCUMENTATION: {
     VIEW: 'technicalDocumentation_view',
+    VIEW_HOME: 'technicalDocumentation_view_home',
     DELETE: 'technicalDocumentation_delete',
     CREATE: 'technicalDocumentation_create',
   },
