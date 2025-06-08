@@ -14,7 +14,7 @@ const GanttChart = () => {
 
       <CCard className="action-buttons">
         <CCardBody>
-          {ganttQuery ? (
+          {ganttQuery && ganttQuery.length > 0 ? (
             <>
               <object data={ganttQuery[0].url} type="application/pdf" width="100%" height="500px">
                 <iframe
