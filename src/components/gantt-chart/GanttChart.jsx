@@ -9,7 +9,7 @@ const GanttChart = () => {
   const ganttQuery = getData('gantt')
 
   return (
-    <div className="proyect-administration">
+    <div className="proyect-administration gantt-chart">
       <h2>Carta Gantt</h2>
 
       <CCard className="action-buttons">

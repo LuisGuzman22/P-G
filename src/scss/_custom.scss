@@ -88,6 +88,84 @@ body {
       margin-left: 10px;
     }
   }
+
+  // Media query para pantallas mayores a 1300px
+  @media (min-width: 1300px) {
+    width: 100%; // o cualquier valor mayor al actual
+    max-width: 2000px; // opcional, si quieres limitarlo
+  }
+
+  @media (min-width: 1400px) {
+    max-width: 3000px; // opcional, si quieres limitarlo
+  }
+
+  @media (min-width: 1600px) {
+    width: 100%; // o cualquier valor mayor al actual
+    max-width: 3000px; // opcional, si quieres limitarlo
+  }
+
+  @media (min-width: 1700px) {
+    width: 100%; // o cualquier valor mayor al actual
+    max-width: 3000px; // opcional, si quieres limitarlo
+  }
+
+  @media (min-width: 1800px) {
+    width: 100%; // o cualquier valor mayor al actual
+    max-width: 3000px; // opcional, si quieres limitarlo
+  }
+
+  @media (min-width: 1900px) {
+    width: 100%; // o cualquier valor mayor al actual
+    max-width: 3000px; // opcional, si quieres limitarlo
+  }
+}
+
+.gantt-chart {
+  width: 100%;
+  @media (min-width: 1300px) {
+    width: 100%; // o cualquier valor mayor al actual
+    max-width: 2000px; // opcional, si quieres limitarlo
+  }
+  @media (min-width: 1700px) {
+    width: 110%; // o cualquier valor mayor al actual
+    max-width: 2000px; // opcional, si quieres limitarlo
+  }
+
+  @media (min-width: 1700px) {
+    width: 110%;
+    max-width: 2000px;
+    margin-left: -5%;
+  }
+
+  @media (min-width: 2000px) {
+    width: 120%;
+    max-width: 2000px;
+    margin-left: -5%;
+  }
+
+  @media (min-width: 2200px) {
+    width: 130%;
+    max-width: 2000px;
+    margin-left: -10%;
+  }
+
+  @media (min-width: 2400px) {
+    width: 140%;
+    max-width: 2000px;
+    margin-left: -15%;
+  }
+
+  @media (min-width: 2600px) {
+    width: 150%;
+    max-width: 2000px;
+    margin-left: -15%;
+  }
+
+  @media (min-width: 2800px) {
+    width: 160%;
+    max-width: 2000px;
+    margin-left: -20%;
+  }
 }
 
 .contract-administration {
