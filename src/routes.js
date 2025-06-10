@@ -53,7 +53,7 @@ const routes = [
   { path: '/', name: 'Login', protected: false },
   { path: '/login', name: 'Login', protected: false },
   { path: '/inicio', name: 'Inicio', element: HomePage, protected: true },
-  { path: '/trisemanal', name: 'Trisemanal', element: Trisemanal, protected: true },
+  { path: '/actividades', name: 'Actividades', element: Trisemanal, protected: true },
   {
     path: '/panel-informativo',
     name: 'Panel Informativo',
@@ -76,7 +76,7 @@ const routes = [
   },
   { path: '/informe-diario/pdf', name: 'Informe Diario', element: Pdf, protected: true },
 
-  { path: '/trisemanal', name: 'Actividades Trisemanal', element: Trisemanal, protected: true },
+  { path: '/actividades', name: 'Listado de actividades', element: Trisemanal, protected: true },
   { path: '/carta-gantt', name: 'Carta Gantt', element: Gantt, protected: true },
   { path: '/avance', name: 'Detalles de avance', element: Detail, protected: true },
   {

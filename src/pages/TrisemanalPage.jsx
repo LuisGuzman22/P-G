@@ -6,7 +6,7 @@ const TrisemanalPage = () => {
   return (
     <>
       <CCard>
-        <CCardHeader>Trisemanal</CCardHeader>
+        <CCardHeader>Listado de actividades</CCardHeader>
         <CCardBody>
           <CCardText>
             <BaseTrisemanal />

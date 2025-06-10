@@ -33,7 +33,7 @@ const Project = () => {
         </CAccordionBody>
       </CAccordionItem>
       <CAccordionItem itemKey={4}>
-        <CAccordionHeader>Actividades Trisemanal</CAccordionHeader>
+        <CAccordionHeader>Listado de actividades </CAccordionHeader>
         <CAccordionBody>
           <>
             <CRow>

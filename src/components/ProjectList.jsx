@@ -54,8 +54,8 @@ const ProjectList = () => {
                   </CContainer>
                 </CAccordionHeader>
                 <CAccordionBody>
-                  <CButton className="btn-project-action">Subir Trisemanal</CButton>
-                  <CButton className="btn-project-action">Ver Trisemanales</CButton>
+                  <CButton className="btn-project-action">Subir Archivo</CButton>
+                  <CButton className="btn-project-action">Ver Actividades</CButton>
                   <CButton className="btn-project-action">Documentos</CButton>
                   <CButton className="btn-project-action">Archivos</CButton>
                   <CButton
