@@ -57,8 +57,8 @@ const useNavItems = () => {
         },
         {
           component: CNavItem,
-          name: 'Actividades Trisemanal',
-          to: '/trisemanal',
+          name: 'Listado de actividades',
+          to: '/actividades',
           icon: <CIcon icon={cilAlignCenter} customClassName="nav-icon" />,
         },
         {
@@ -67,12 +67,12 @@ const useNavItems = () => {
           to: '/carta-gantt',
           icon: <CIcon icon={cilBarChart} customClassName="nav-icon" />,
         },
-        {
-          component: CNavItem,
-          name: 'Detalles de avance',
-          to: '/avance',
-          icon: <CIcon icon={cilGraph} customClassName="nav-icon" />,
-        },
+        // {
+        //   component: CNavItem,
+        //   name: 'Detalles de avance',
+        //   to: '/avance',
+        //   icon: <CIcon icon={cilGraph} customClassName="nav-icon" />,
+        // },
         {
           component: CNavItem,
           name: 'Dashboard',

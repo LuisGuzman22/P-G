@@ -79,7 +79,7 @@ const BaseTrisemanal = () => {
             onChange={(e) => {
               handleUploadFile(e)
             }}
-            label="Cargar trisemanal"
+            label="Cargar Actividades"
             aria-label="Upload"
             accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           />
@@ -90,7 +90,7 @@ const BaseTrisemanal = () => {
               onHandleSubmit()
             }}
           >
-            Subir Trisemanal
+            Subir Actividades
           </CButton>
           {isLoading && (
             <>
