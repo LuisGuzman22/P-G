@@ -145,7 +145,9 @@ const BaseTrisemanal = () => {
                 return (
                   <>
                     <CTableRow key={index} className="node">
-                      <CTableDataCell>{item.name}</CTableDataCell>
+                      <CTableDataCell style={{ whiteSpace: 'normal', maxWidth: '200px' }}>
+                        {item.name}
+                      </CTableDataCell>
                       <CTableDataCell></CTableDataCell>
                       <CTableDataCell></CTableDataCell>
                       <CTableDataCell></CTableDataCell>
@@ -160,7 +162,9 @@ const BaseTrisemanal = () => {
                       return (
                         <CTableRow key={index}>
                           <CTableDataCell>{activity.id}</CTableDataCell>
-                          <CTableDataCell>{activity.name}</CTableDataCell>
+                          <CTableDataCell style={{ whiteSpace: 'normal', maxWidth: '200px' }}>
+                            {activity.name}
+                          </CTableDataCell>
                           <CTableDataCell>{activity.hh}</CTableDataCell>
                           <CTableDataCell></CTableDataCell>
                           <CTableDataCell></CTableDataCell>
