@@ -95,7 +95,7 @@ const HomePage = () => {
     {
       label: 'Listado de Actividades',
       icon: faTableList,
-      onClick: () => redirectTo('/trisemanal'),
+      onClick: () => redirectTo('/actividades'),
       visible: hasPermission(PERMISSIONS.ACTIVITY.VIEW),
       // visible: true,
     },
