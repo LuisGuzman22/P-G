@@ -34,11 +34,11 @@ const Charts = () => {
           <SCurveChart />
         </CCardBody>
       </CCard>
-      <CCard className="action-buttons">
+      {/* <CCard className="action-buttons">
         <CCardBody>
           <HitosTable />
         </CCardBody>
-      </CCard>
+      </CCard> */}
     </div>
   )
 }
