@@ -4,7 +4,6 @@ import axios from 'axios'
 const fetchProyects = async (projectId) => {
   let url = `${process.env.REACT_APP_BASE_URL}api/v1/projects`
   const company_id = localStorage.getItem('company_user')
-  console.log('company_id', company_id)
   if (company_id !== undefined && company_id !== null && company_id !== 'null') {
     url = url + `/search?company_id=${company_id}`
   }
@@ -29,7 +28,11 @@ const fetchContracts = async (projectId) => {
 }
 
 const fetchProjectPerId = async (projectId) => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/projects/${projectId}`)
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/projects/${projectId}`, {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    },
+  })
   return res.data.data
 }
 
