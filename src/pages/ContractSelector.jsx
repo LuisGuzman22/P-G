@@ -140,10 +140,12 @@ const ContractSelector = () => {
                             </CContainer>
                           }
                           style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
-                          values={[
-                            { title: 'Trisemanales', value: contract.trisemanal },
-                            { title: 'Avance', value: contract.progress },
-                          ]}
+                          values={
+                            [
+                              // { title: 'Trisemanales', value: contract.trisemanal },
+                              // { title: 'Avance', value: contract.progress },
+                            ]
+                          }
                         />
                       </CCol>
                     </CRow>
