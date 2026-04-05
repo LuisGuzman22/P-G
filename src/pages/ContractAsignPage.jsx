@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import ContractAsignMaintainer from 'src/components/maintainers/contract-asign/ContractAsignMaintainer'
 
 const ContractAsignPage = () => {

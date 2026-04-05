@@ -20,7 +20,6 @@ const queryClient = new QueryClient({
       retry: 3,
       retryDelay: 1000,
       cacheTime: 60000 * 60 * 24,
-      cacheTime: 60000 * 60 * 24,
       refetchInterval: 60000 * 60,
       staleTime: 60000 * 60,
       refetchType: 'all',

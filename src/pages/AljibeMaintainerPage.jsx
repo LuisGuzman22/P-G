@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import AljibeMaintainer from 'src/components/maintainers/aljibe/AljibeMaintainer'
 
 const AljibeMaintainerPage = () => {

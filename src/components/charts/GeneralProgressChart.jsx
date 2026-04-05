@@ -1,13 +1,11 @@
-import { React, useEffect, useState } from 'react'
-import { CCard, CCardBody, CButton } from '@coreui/react'
-import { Chart } from 'react-google-charts'
+import { React } from 'react'
 
 import Skeleton from 'react-loading-skeleton'
 import useGeneralProgressChart from 'src/hooks/useGeneralProgressChart'
 import GeneralProgressChartItem from './GeneralProgressChartItem'
 
 const GeneralProgressChart = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useGeneralProgressChart()
+  const { data, isLoading } = useGeneralProgressChart()
   // const options = {
   //   title: 'Monthly Coffee Production by Country',
   //   vAxis: { title: 'Cups' },

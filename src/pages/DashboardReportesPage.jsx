@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import DashboardReport from 'src/components/dashboard-reports/DashboardReport'
 
 const DashboardReportesPage = () => {

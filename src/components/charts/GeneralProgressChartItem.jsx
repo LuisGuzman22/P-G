@@ -1,25 +1,12 @@
 /* eslint-disable react/prop-types */
 
-import { React, useEffect, useState } from 'react'
+import { React } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import { Chart } from 'react-google-charts'
-import { bottom } from '@popperjs/core'
 
 const GeneralProgressChartItem = (props) => {
   const replaceNullWithZero = (data) => {
     return data.map((row) => row.map((value) => (value === null ? 0 : value)))
-  }
-
-  const replaceNullWithZeroAndFormatDate = (data) => {
-    return data.map((row, index) =>
-      row.map((value, colIndex) => {
-        if (value === null) return 0
-        if (index > 0 && colIndex === 0 && typeof value === 'string') {
-          return new Date(value) // Convierte la primera columna de cada fila en Date
-        }
-        return value
-      }),
-    )
   }
 
   return (

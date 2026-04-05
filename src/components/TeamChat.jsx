@@ -1,17 +1,4 @@
 import React from 'react'
-import {
-  CRow,
-  CCol,
-  CCard,
-  CCardBody,
-  CCardTitle,
-  CCardText,
-  CButton,
-  CAccordion,
-  CAccordionItem,
-  CAccordionHeader,
-  CAccordionBody,
-} from '@coreui/react'
 
 const TeamChat = () => {
   return (

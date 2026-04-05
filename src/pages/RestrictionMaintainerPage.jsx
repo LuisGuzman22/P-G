@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import RestrictionMaintainer from 'src/components/maintainers/restriction/RestrictionMaintainer'
 
 const RestrictionMaintainerPage = () => {

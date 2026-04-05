@@ -1,12 +1,5 @@
-import React, { useState } from 'react'
-import {
-  CAccordion,
-  CAccordionBody,
-  CAccordionHeader,
-  CAccordionItem,
-  CRow,
-  CCol,
-} from '@coreui/react'
+import React from 'react'
+import { CAccordion, CAccordionBody, CAccordionHeader, CAccordionItem } from '@coreui/react'
 import InformativePanel from 'src/components/InformativePanel'
 import ProjectCollapse from 'src/components/ProjectCollapse'
 import DailyReportCollapse from 'src/components/DailyReportCollapse'

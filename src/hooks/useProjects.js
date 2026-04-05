@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios, { HttpStatusCode } from 'axios'
+import axios from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useFetchProjectPerId, useFetchProyects } from './useFetch'
 import useRegisterGeneralData from './useRegisterGeneralData'
@@ -8,7 +8,7 @@ const useProjects = () => {
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
   const queryClient = useQueryClient()
-  const { getProject, getContract } = useRegisterGeneralData()
+  const { getProject } = useRegisterGeneralData()
   const projectLS = JSON.parse(getProject())
 
   const { data, isLoading, error, refetch, isRefetching } = useFetchProyects(1)

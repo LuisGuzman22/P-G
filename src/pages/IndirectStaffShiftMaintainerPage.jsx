@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import IndirectStaffShiftMaintainer from 'src/components/maintainers/indirect-staff-shift/IndirectStaffShiftMaintainer'
 
 const IndirectStaffShiftMaintainerPage = () => {

@@ -1,6 +1,6 @@
 import { useFetchContract } from './useFetch'
-import { useEffect, useState } from 'react'
-import axios, { HttpStatusCode } from 'axios'
+import { useState } from 'react'
+import axios from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import useAsignContracts from './useAsignContract'
 import useRegisterGeneralData from './useRegisterGeneralData'
@@ -12,7 +12,7 @@ const useContracts = (contractId) => {
   const queryClient = useQueryClient()
 
   const { register: asignContract } = useAsignContracts()
-  const { getProject, getContract } = useRegisterGeneralData()
+  const { getProject } = useRegisterGeneralData()
   const projectLS = JSON.parse(getProject())
 
   const { data, isLoading, error, refetch, isRefetching } = useFetchContract(projectLS.id)

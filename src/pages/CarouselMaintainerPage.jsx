@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import CarouselMaintainer from 'src/components/maintainers/carousel/CarouselMaintainer'
 
 const CarouselMaintainerPage = () => {

@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import CompanyMaintainer from 'src/components/maintainers/company/CompanyMaintainer'
 
 const CompanyMaintainerPage = () => {

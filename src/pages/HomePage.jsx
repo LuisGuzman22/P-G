@@ -1,17 +1,6 @@
 import React, { useEffect } from 'react'
 import InformativePanel from 'src/components/InformativePanel'
-import {
-  CCard,
-  CCardHeader,
-  CButton,
-  CCardBody,
-  CCardText,
-  CRow,
-  CCol,
-  CListGroupItem,
-  CListGroup,
-  CTooltip,
-} from '@coreui/react'
+import { CCard, CButton, CCardBody, CCardText } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
 import ProjectCollapse from 'src/components/ProjectCollapse'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
@@ -26,10 +15,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faChartColumn,
-  faCalendarDay,
   faCalendarDays,
   faChartGantt,
-  faCoffee,
   faDownload,
   faRectangleList,
   faTableList,
@@ -46,7 +33,7 @@ const HomePage = () => {
   const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
-  const { data, isLoading, error } = useGetBasicData(contractLS.id)
+  useGetBasicData(contractLS.id)
   const { getData } = useGetCachedQueryData()
 
   const { isFetching } = useFetchReportsData(contractLS.id, projectLS.id)

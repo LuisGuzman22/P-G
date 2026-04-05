@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import TechnicalDocMaintainer from 'src/components/maintainers/tech-doc/TechnicalDocMaintainer'
 
 const TechnicalDocMaintainerPage = () => {

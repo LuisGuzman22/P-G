@@ -22,7 +22,6 @@ const useRegisterDailyReport = () => {
     directDotationWorkForceList,
     machineryWorkForceList,
     equipmentWorkForceList,
-    vehicleWorkForceList,
     incident,
     comment,
     machineryList,
@@ -126,7 +125,7 @@ const useRegisterDailyReport = () => {
   }
 
   const registerData = async () => {
-    aljibeList.map((aljibe) => {
+    aljibeList.forEach((aljibe) => {
       aljibe.aljibeM3Accumulated = accumulatedM3
     })
 
@@ -163,7 +162,7 @@ const useRegisterDailyReport = () => {
   }
 
   const updateData = async () => {
-    aljibeList.map((aljibe) => {
+    aljibeList.forEach((aljibe) => {
       aljibe.aljibeM3Accumulated = accumulatedM3
     })
     setLoading(true)

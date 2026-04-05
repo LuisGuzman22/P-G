@@ -1,12 +1,10 @@
 import React from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { CBadge, CNavLink, CSidebarNav } from '@coreui/react'
 import SimpleBar from 'simplebar-react'
 
 export const AppSidebarNav = ({ items }) => {
-  const location = useLocation()
-  const navigate = useNavigate()
 
   const navLink = (name, icon, badge, indent = false) => {
     return (

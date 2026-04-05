@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CAccordion,
   CAccordionBody,
   CAccordionHeader,
   CAccordionItem,
   CButton,
-  CCol,
-  CRow,
   CToast,
   CToastBody,
 } from '@coreui/react'
@@ -14,18 +12,14 @@ import CompanyReport from './daily-report/company-report'
 import IndirectWorkForce from './daily-report/indirect-work-force'
 import TotalIndirectWorkForce from './daily-report/total-indirect-work-force'
 import TotalDirectWorkForce from './daily-report/total-direct-work-force'
-import IndirectDotationWorkForce from './daily-report/indirect-dotation-work-force'
 import DirectDotationWorkForce from './daily-report/direct-dotation-work-force'
-import DotationWorkForce from './daily-report/dotation-work-force'
 import Machinery from './daily-report/machinery'
 import MachineryWorkForce from './daily-report/machinery-work-force'
 import EquipmentMachinery from './daily-report/equipment-machinery'
 import EquipmentWorkForce from './daily-report/equipment-work-force'
 import Vehicle from './daily-report/vehicle'
-import VehicleWorkForce from './daily-report/vehicle-work-force'
 import Activities from './daily-report/activities'
 import Comments from './daily-report/comments'
-import Graphs from './daily-report/graphs'
 import Incidents from './daily-report/incidents'
 import DirectWorkForce from './daily-report/direct-work-force'
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
@@ -34,77 +28,49 @@ import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import ModalSendDailyReport from './ModalSendDailyReport'
-import { PDFDownloadLink } from '@react-pdf/renderer'
-import Pdf from './Pdf'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
-import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import Loading from './loading'
 import Skeleton from 'react-loading-skeleton'
 
-import { Chart } from 'react-google-charts'
-import { toPng } from 'html-to-image'
 import { useFetchReportData } from 'src/hooks/useFetch'
 
 const DailyReportEditCollapse = () => {
-  const currentLocation = useLocation().pathname
-  const isViewMode = currentLocation.includes('/view')
   const navigate = useNavigate()
-  const columnChartElement = useRef(null)
-  const pieChartElement = useRef(null)
 
   const [visibleSendDailyReportModal, setVisibleSendDailyReportModal] = useState(false)
 
   const { isFetching, isError } = useFetchReportData()
 
   const {
-    company,
-    indirectWorkForceList,
-    totalIndirectWorkForce,
-    directWorkForceList,
-    totalDirectWorkForce,
-    asarcoMachineryList,
-    machineryList,
-    equipmentList,
-    equipmentPlateList,
-    vehicleList,
-    vehiclePlateList,
-    activityList,
-    aljibeList,
-    comment,
-    incident,
-    directDotationWorkForceList,
-    machineryWorkForceList,
-    equipmentWorkForceList,
-    graphList,
     loadData,
   } = useRegisterDailyReportCompany()
 
-  const [isLoading, setIsloading] = useState(false)
+  const [isLoading] = useState(false)
 
   const redirectTo = (url) => {
     navigate(url)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isFetching) loadData()
   }, [isFetching])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isFetching) loadData()
   }, [])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isError) {
       redirectTo(`/dashboard-reportes`)
     }
   }, [isError])
 
-  const { getData } = useGetCachedQueryData()
-  const basicQuery = getData('basics')
-
-  const { updateData, loading, error, success, clearData, errorMessage } = useRegisterDailyReport()
+  const { updateData, loading, error, success, errorMessage } = useRegisterDailyReport()
 
   const registerDailyReport = () => {
     // if (isViewMode) {
@@ -114,6 +80,7 @@ const DailyReportEditCollapse = () => {
     // }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (success) navigate(`/inicio`)
   }, [success])

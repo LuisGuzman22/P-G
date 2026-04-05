@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import ContractMaintainer from 'src/components/maintainers/contract/ContractMaintainer'
 
 const ContractAdministrationPage = () => {

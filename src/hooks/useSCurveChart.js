@@ -1,4 +1,4 @@
-import { useFetchGant, useFetchSChart } from './useFetch'
+import { useFetchSChart } from './useFetch'
 import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useSCurveChart = () => {

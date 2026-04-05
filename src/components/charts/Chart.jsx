@@ -3,7 +3,6 @@ import { CCard, CCardBody } from '@coreui/react'
 
 import GeneralProgressChart from './GeneralProgressChart'
 import SCurveChart from './SCurveChart'
-import HitosTable from './HitosTable'
 import { useNavigate } from 'react-router-dom'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import { PERMISSIONS } from 'src/utils/contant'
@@ -16,6 +15,7 @@ const Charts = () => {
     navigate(url)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.DASHBOARD.VIEW)) {
       redirectTo('/inicio')

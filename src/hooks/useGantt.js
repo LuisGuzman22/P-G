@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useFetchGetCarousel, useFetchGetGantt } from './useFetch'
-import axios, { HttpStatusCode } from 'axios'
+import { useFetchGetGantt } from './useFetch'
+import axios from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import useRegisterGeneralData from './useRegisterGeneralData'
 

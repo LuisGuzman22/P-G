@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CAccordion,
   CAccordionBody,
@@ -24,7 +24,6 @@ import EquipmentWorkForce from './daily-report/equipment-work-force'
 import Vehicle from './daily-report/vehicle'
 import Activities from './daily-report/activities'
 import Comments from './daily-report/comments'
-import Graphs from './daily-report/graphs'
 import Incidents from './daily-report/incidents'
 import DirectWorkForce from './daily-report/direct-work-force'
 import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
@@ -33,7 +32,7 @@ import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Loading from './loading'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useFetchReportData } from 'src/hooks/useFetch'
@@ -41,15 +40,13 @@ import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompa
 import Skeleton from 'react-loading-skeleton'
 
 const DailyReportCollapse = () => {
-  const { registerData, loading, error, success, clearData, errorMessage } =
-    useRegisterDailyReport()
+  const { registerData, loading, error, success, errorMessage } = useRegisterDailyReport()
   const { loadData } = useRegisterDailyReportCompany()
   const navigate = useNavigate()
   const { getData } = useGetCachedQueryData()
   const reportsQuery = getData('reports')
   const [visible, setVisible] = useState(false)
   const currentLocation = useLocation().pathname
-  const isCreatingMode = currentLocation === '/informe-diario'
   const { isFetching } = useFetchReportData()
 
   // useEffect(() => {
@@ -79,6 +76,7 @@ const DailyReportCollapse = () => {
     if (success) navigate(`/inicio`)
   }, [success])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setVisible(reportsQuery !== undefined && reportsQuery.length > 0)
   }, [reportsQuery])

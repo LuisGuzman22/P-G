@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios, { HttpStatusCode } from 'axios'
+import axios from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useFetchIndirectStaffShifts } from './useFetch'
 import useRegisterGeneralData from './useRegisterGeneralData'

@@ -51,7 +51,7 @@ const AljibeList = () => {
     let alj = []
     aljibeQuery
       ?.filter((aljibe) => aljibe.deleted_at === null)
-      .map((aljibe) => {
+      .forEach((aljibe) => {
         const plates = getPlates(aljibe.plate)
         alj.push({
           id: aljibe.id,

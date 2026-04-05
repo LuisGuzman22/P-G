@@ -1,10 +1,10 @@
-import { React, useEffect, useState } from 'react'
-import { CCard, CCardBody, CButton } from '@coreui/react'
+import { React } from 'react'
+import { CCard, CCardBody } from '@coreui/react'
 import useGantt from 'src/hooks/useGantt'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const GanttChart = () => {
-  const { isLoading, refetch, isRefetching } = useGantt()
+  const {} = useGantt()
   const { getData } = useGetCachedQueryData()
   const ganttQuery = getData('gantt')
 
@@ -18,6 +18,7 @@ const GanttChart = () => {
             <>
               <object data={ganttQuery[0].url} type="application/pdf" width="100%" height="500px">
                 <iframe
+                  title="Gantt Chart"
                   src={ganttQuery[0].url}
                   width="100%"
                   height="100%"

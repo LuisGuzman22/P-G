@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useFetchGetCarousel } from './useFetch'
-import axios, { HttpStatusCode } from 'axios'
+import axios from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import useRegisterGeneralData from './useRegisterGeneralData'
 
@@ -8,10 +8,9 @@ const useCarousel = () => {
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
   const queryClient = useQueryClient()
-  const { getProject, getContract } = useRegisterGeneralData()
+  const { getProject } = useRegisterGeneralData()
 
   const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
 
   const { data, isLoading, error, refetch, isRefetching } = useFetchGetCarousel(projectLS.id)
 

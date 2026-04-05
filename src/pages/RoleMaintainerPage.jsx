@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import RoleMaintainer from 'src/components/maintainers/role/RoleMaintainer'
 
 const RoleMaintainerPage = () => {

@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import MachineryMaintainer from 'src/components/maintainers/machinery/MachineryMaintainer'
 
 const MachineryMaintainerPage = () => {

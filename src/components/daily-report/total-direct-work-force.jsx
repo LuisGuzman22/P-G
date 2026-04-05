@@ -1,9 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import {
-  CForm,
   CFormInput,
-  CRow,
-  CCol,
   CTable,
   CTableHead,
   CTableHeaderCell,

@@ -26,7 +26,7 @@ const Login = () => {
   const [errorUser, setErrorUser] = useState(false)
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
-  const { login, error, trueLogin, isLoading } = useLogin()
+  const { error, trueLogin, isLoading } = useLogin()
 
   const onChangeData = (e) => {
     switch (e.target.id) {

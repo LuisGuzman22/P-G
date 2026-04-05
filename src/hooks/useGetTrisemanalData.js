@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { useFetchPlanningData, useFetchTrisemanalData } from './useFetch'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import axios, { HttpStatusCode } from 'axios'
+import axios from 'axios'
 import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useGetTrisemanalData = () => {
-  const [error, setError] = useState()
   const [success, setSuccess] = useState()
-  const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errorMutate, setErrorMutate] = useState()
   const queryClient = useQueryClient()
@@ -53,7 +51,6 @@ const useGetTrisemanalData = () => {
       queryClient.invalidateQueries({ queryKey: ['trisemanal'] })
       queryClient.invalidateQueries({ queryKey: ['planning'] })
       setErrorMutate('Error subir trisemanal')
-      setIsError(true)
       setIsLoading(false)
 
       return false
@@ -61,7 +58,6 @@ const useGetTrisemanalData = () => {
   })
 
   const uploadTrisemanal = (data) => {
-    setIsError(false)
     setIsLoading(true)
     const response = registerMutation.mutate({ file: data })
     return response

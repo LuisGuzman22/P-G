@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import GanttMaintainer from 'src/components/maintainers/gantt/GanttMaintainer'
 
 const GanttMaintainerPage = () => {

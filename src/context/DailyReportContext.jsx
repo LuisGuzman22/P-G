@@ -654,7 +654,6 @@ export const DailyReportProvider = ({ children }) => {
         storeCompanyData,
         storeIndirectWorkForceData,
         storeTotalIndirectWorkForce,
-        totalIndirectWorkForce,
         storeDirectWorkForce,
         removeDirectWorkForce,
         indirectWorkForceList,

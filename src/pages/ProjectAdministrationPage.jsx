@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import ProjectMaintainer from 'src/components/maintainers/project/ProjectMaintainer'
 
 const ProjectAdministrationPage = () => {

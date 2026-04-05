@@ -1,10 +1,9 @@
 import React from 'react'
-import { CCarousel, CCarouselItem, CImage, CButton } from '@coreui/react'
-import useCarousel from 'src/hooks/useCarousel'
+import { CCarousel, CCarouselItem, CImage } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 const InformativePanel = () => {
-  const { isLoading, refetch, isRefetching } = useCarousel()
+  const { isLoading, isRefetching } = useCarousel()
   const { getData } = useGetCachedQueryData()
   const carouselQuery = getData('carousel')
 

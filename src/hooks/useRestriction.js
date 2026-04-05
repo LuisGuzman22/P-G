@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useFetchRestriction } from './useFetch'
-import axios, { HttpStatusCode } from 'axios'
+import axios from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import useRegisterGeneralData from './useRegisterGeneralData'
 
 const useRestriction = () => {
-  const { getProject, getContract } = useRegisterGeneralData()
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
   const { data, isLoading, error, refetch, isRefetching } = useFetchRestriction(contractLS?.id)
 

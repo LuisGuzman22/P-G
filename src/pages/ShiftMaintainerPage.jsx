@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import ShiftMaintainer from 'src/components/maintainers/shift/ShiftMaintainer'
 
 const ShiftMaintainerPage = () => {

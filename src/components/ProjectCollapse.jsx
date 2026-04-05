@@ -1,24 +1,13 @@
 import React, { useState } from 'react'
 import {
-  CAccordion,
-  CAccordionBody,
-  CAccordionHeader,
-  CAccordionItem,
   CNav,
-  CNavItem,
   CNavLink,
   CTabContent,
   CTabPane,
 } from '@coreui/react'
 
-import DashboardPanel from './DashboardPanel'
-import Page404 from 'src/views/pages/page404/Page404'
 import ProjectDescription from './ProjectDescription'
-import Skynav from './Skynav'
 import TechnicalDocumentation from './tabs/technical-doc/TechnicalDocumentation'
-import TurnOverPackage from './TurnOverPackage'
-import TeamChat from './TeamChat'
-import PIE from './PIE'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import { PERMISSIONS } from 'src/utils/contant'
 

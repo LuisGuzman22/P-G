@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import DirectPersonalMaintainer from 'src/components/maintainers/direct-personal/DirectPersonalMaintainer'
 
 const DirectPersonalMaintainerPage = () => {

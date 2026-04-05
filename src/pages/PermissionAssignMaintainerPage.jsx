@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import PermissionAssignMaintainer from 'src/components/maintainers/permission-assign/PermissionAssignMaintainer'
 
 const PermissionAssignMaintainerPage = () => {

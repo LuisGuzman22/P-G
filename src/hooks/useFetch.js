@@ -93,15 +93,6 @@ const fetchActivityDataPerPrimaveraId = async (projectId, contractId, primaveraI
   return res.data.data
 }
 
-const testToken = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}api/v1/test`, {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    },
-  })
-  return res.data.data
-}
-
 const fetchMachinery = async (contractId) => {
   const res = await axios.get(
     `${process.env.REACT_APP_BASE_URL}api/v1/machineries/byContract/${contractId}`,
@@ -438,8 +429,6 @@ const fetchPermissions = async (projectId, contractId) => {
   }
   return res.data.data
 }
-
-const userType = localStorage.getItem('USER_TYPE')
 
 export const useFetchProyects = (projectId) => {
   return useQuery({

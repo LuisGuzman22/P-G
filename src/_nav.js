@@ -9,8 +9,6 @@ import {
   cilBriefcase,
   cilStorage,
   cilAlignCenter,
-  cilGraph,
-  cilChart,
   cibWhenIWork,
 } from '@coreui/icons'
 import { CNavItem, CNavTitle, CNavGroup } from '@coreui/react'

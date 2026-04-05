@@ -7,7 +7,6 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
-  CFormSelect,
   CButton,
   CToast,
   CToastBody,

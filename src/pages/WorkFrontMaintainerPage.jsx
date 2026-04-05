@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import WorkFrontMaintainer from 'src/components/maintainers/work-front/WorkFrontMaintainer'
 
 const WorkFrontMaintainerPage = () => {

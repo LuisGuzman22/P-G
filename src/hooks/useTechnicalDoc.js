@@ -2,7 +2,6 @@ import { useState } from 'react'
 import {
   useFetchGetTechnicalDocumentation,
   useFetchGetTechnicalDocumentationCategories,
-  useFetchVehicle,
 } from './useFetch'
 import axios, { HttpStatusCode } from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'

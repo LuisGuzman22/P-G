@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react'
-import { CFormInput, CFormTextarea, CRow, CCol } from '@coreui/react'
+import { CFormTextarea } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { useLocation } from 'react-router-dom'
 

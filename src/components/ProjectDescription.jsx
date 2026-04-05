@@ -1,5 +1,5 @@
 import React from 'react'
-import { CCallout, CImage } from '@coreui/react'
+import { CCallout } from '@coreui/react'
 import useProjects from 'src/hooks/useProjects'
 import Skeleton from 'react-loading-skeleton'
 const ProjectDescription = () => {

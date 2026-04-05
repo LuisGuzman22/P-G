@@ -5,7 +5,7 @@ import Skeleton from 'react-loading-skeleton'
 import useSCurveChart from 'src/hooks/useSCurveChart'
 
 const SCurveChart = () => {
-  const { data, isLoading, error, refetch, isRefetching } = useSCurveChart()
+  const { data, isLoading } = useSCurveChart()
   const replaceNullWithZero = (data) => {
     return data.map((row) => row.map((value) => (value === null ? 0 : value)))
   }
