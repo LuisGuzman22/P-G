@@ -467,6 +467,7 @@ export const useFetchProjectPerId = (projectId) => {
   return useQuery({
     queryKey: ['project'],
     // refetchType: 'all',
+    enabled: !!projectId,
     queryFn: async () => {
       return fetchProjectPerId(projectId)
     },

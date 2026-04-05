@@ -76,6 +76,12 @@ const ProjectSelector = () => {
     userType !== 'admin' && projectData && setProjectList(projectData)
   }, [projectData])
 
+  useEffect(() => {
+    if (!isLoading && projectList && projectList.length === 0) {
+      setVisibleProject(true)
+    }
+  }, [isLoading, projectList])
+
   return (
     <>
       {visibleProject && (
@@ -94,6 +100,15 @@ const ProjectSelector = () => {
           <CCardBody>
             <CCardText>
               {isLoading && <Loading />}
+              {!isLoading && projectList && projectList.length === 0 && (
+                <CRow className="mb-3">
+                  <CCol>
+                    <p className="text-muted text-center">
+                      No hay proyectos registrados. Crea el primero para comenzar.
+                    </p>
+                  </CCol>
+                </CRow>
+              )}
               {!isLoading &&
                 projectList &&
                 projectList.map((project, index) => {
