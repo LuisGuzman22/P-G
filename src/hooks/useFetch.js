@@ -21,6 +21,7 @@ const fetchUsers = async () => {
 }
 
 const fetchContracts = async (projectId) => {
+  console.log('fetchContracts - projectId:', projectId)
   const res = await axios.get(
     `${process.env.REACT_APP_BASE_URL}api/v1/contracts/byProject/${projectId}`,
   )
