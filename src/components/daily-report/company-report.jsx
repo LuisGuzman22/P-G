@@ -14,7 +14,6 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
-import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import { useLocation } from 'react-router-dom'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'

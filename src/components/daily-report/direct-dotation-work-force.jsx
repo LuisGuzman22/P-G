@@ -31,7 +31,6 @@ const DirectDotationWorkForce = () => {
     directSubWorkFront: undefined,
     directWorkFrontCharge: undefined,
     directWorkFrontQuantity: undefined,
-    directDotationWorkForceObservation: undefined,
   }
 
   const { getData } = useGetCachedQueryData()

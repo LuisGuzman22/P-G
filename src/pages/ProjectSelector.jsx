@@ -70,11 +70,11 @@ const ProjectSelector = () => {
       })
       setProjectList(contractFinded.project)
     }
-  }, [contractsQuery, contractLS])
+  }, [contractsQuery, contractLS, navigate, userType])
 
   useEffect(() => {
     userType !== 'admin' && projectData && setProjectList(projectData)
-  }, [projectData])
+  }, [projectData, userType])
 
   useEffect(() => {
     if (!isLoading && projectList && projectList.length === 0) {

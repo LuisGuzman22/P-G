@@ -11,7 +11,6 @@ import {
   CCardTitle,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useCompany from 'src/hooks/useCompany'
 import ModalAddCompany from 'src/components/maintainers/company/ModalAddCompany'
 

@@ -1,15 +1,13 @@
 import { React, useEffect, useState } from 'react'
-import { CFormInput, CFormTextarea, CRow, CCol } from '@coreui/react'
+import { CFormInput, CRow, CCol } from '@coreui/react'
 import useRegisterDailyReportCompany from 'src/hooks/useRegisterDailyReportCompany'
 import { useLocation } from 'react-router-dom'
-import firma2 from 'src/assets/images/firma2.png'
 import { v4 as uuidv4 } from 'uuid'
 
 const PhotoRecord = () => {
   const MAX_IMAGES = 5
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
-  const isCreatingMode = currentLocation === '/informe-diario'
 
   const { photoList: photoListContext, storePhoto, removePhoto } = useRegisterDailyReportCompany()
 
@@ -85,7 +83,7 @@ const PhotoRecord = () => {
               />
             </CCol>
             <CCol>
-              <img src={items[i].urlImg} style={{ width: '70%' }} />
+              <img src={items[i].urlImg} alt="" style={{ width: '70%' }} />
             </CCol>
           </CRow>
         ))}

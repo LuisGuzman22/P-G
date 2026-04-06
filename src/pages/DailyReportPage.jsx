@@ -5,12 +5,11 @@ import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useNavigate } from 'react-router-dom'
 import useGetBasicData from 'src/hooks/useGetBasicData'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 
 const DailyReportPage = () => {
   let navigate = useNavigate()
 
-  const { getProject, getContract } = useRegisterGeneralData()
+  const { getContract } = useRegisterGeneralData()
 
   const contractLS = JSON.parse(getContract())
 
