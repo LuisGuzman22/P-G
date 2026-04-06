@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CButton,
-} from '@coreui/react'
+import { CButton } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
