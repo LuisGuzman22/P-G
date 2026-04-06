@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useColorModes } from '@coreui/react'
 
 import './scss/style.scss'
 import Skeleton from 'react-loading-skeleton'

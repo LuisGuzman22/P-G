@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   CAccordion,
   CAccordionBody,
@@ -32,7 +32,7 @@ import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Loading from './loading'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useFetchReportData } from 'src/hooks/useFetch'

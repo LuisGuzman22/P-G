@@ -19,7 +19,7 @@ const useLogin = () => {
       return await axios
         .post(`${process.env.REACT_APP_BASE_URL}api/v1/login`, newTodo)
         .then((res) => {
-          if (res.status === HttpStatusCode.Ok) {
+          if (res.status === 200) {
             localStorage.setItem('token', res.data.data.token)
             localStorage.setItem('company_user', res.data.data.user.company_id)
             // localStorage.setItem('userPermissions', JSON.stringify(res.data.data.permissions))

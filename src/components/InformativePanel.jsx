@@ -2,6 +2,7 @@ import React from 'react'
 import { CCarousel, CCarouselItem, CImage } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import useCarousel from 'src/hooks/useCarousel'
 const InformativePanel = () => {
   const { isLoading, isRefetching } = useCarousel()
   const { getData } = useGetCachedQueryData()
