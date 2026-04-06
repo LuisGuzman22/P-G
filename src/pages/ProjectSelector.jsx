@@ -48,7 +48,7 @@ const ProjectSelector = () => {
     console.log('data:', data)
     console.log('companyData:', companyData)
     console.log('companyUser:', companyUser)
-    if (companyData && companyUser) {
+    if (companyData && companyData.length > 0 && companyUser) {
       navigate(`/contrato`)
     } else if (companyData && companyData.length === 0) {
       navigate(`/empresa`)
@@ -60,7 +60,7 @@ const ProjectSelector = () => {
   }
 
   useEffect(() => {
-    if (companyData && companyUser) {
+    if (companyData && companyData.length > 0 && companyUser) {
       navigate(`/contrato`)
     } else if (companyData && companyData.length === 0) {
       navigate(`/empresa`)
