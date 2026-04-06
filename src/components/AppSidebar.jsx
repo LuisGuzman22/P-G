@@ -2,13 +2,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import {
-  CSidebar,
-  CSidebarBrand,
-  CSidebarFooter,
-  CSidebarHeader,
-  CSidebarNav,
-} from '@coreui/react'
+import { CSidebar, CSidebarBrand, CSidebarFooter, CSidebarHeader, CSidebarNav } from '@coreui/react'
 
 import { AppSidebarNav } from './AppSidebarNav'
 

@@ -43,9 +43,7 @@ const DailyReportEditCollapse = () => {
 
   const { isFetching, isError } = useFetchReportData()
 
-  const {
-    loadData,
-  } = useRegisterDailyReportCompany()
+  const { loadData } = useRegisterDailyReportCompany()
 
   const [isLoading] = useState(false)
 

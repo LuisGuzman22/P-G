@@ -1,10 +1,5 @@
 import React, { useState } from 'react'
-import {
-  CNav,
-  CNavLink,
-  CTabContent,
-  CTabPane,
-} from '@coreui/react'
+import { CNav, CNavLink, CTabContent, CTabPane } from '@coreui/react'
 
 import ProjectDescription from './ProjectDescription'
 import TechnicalDocumentation from './tabs/technical-doc/TechnicalDocumentation'

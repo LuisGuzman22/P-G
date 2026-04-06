@@ -5,7 +5,6 @@ import { CBadge, CNavLink, CSidebarNav } from '@coreui/react'
 import SimpleBar from 'simplebar-react'
 
 export const AppSidebarNav = ({ items }) => {
-
   const navLink = (name, icon, badge, indent = false) => {
     return (
       <>
