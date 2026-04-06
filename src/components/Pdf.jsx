@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { Page, Document } from '@react-pdf/renderer'
+import ReactDOMServer from 'react-dom/server'
 import { Html } from 'react-pdf-html'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
