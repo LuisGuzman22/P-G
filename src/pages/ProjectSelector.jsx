@@ -45,6 +45,9 @@ const ProjectSelector = () => {
       manager: project.manager || '',
     }
     saveProject(data)
+    console.log('data:', data)
+    console.log('companyData:', companyData)
+    console.log('companyUser:', companyUser)
     if (companyData && companyUser) {
       navigate(`/contrato`)
     } else if (companyData && companyData.length === 0) {
