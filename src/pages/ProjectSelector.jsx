@@ -39,28 +39,25 @@ const ProjectSelector = () => {
   const [visibleProject, setVisibleProject] = useState(false)
 
   const onClickHandler = (project) => {
-    if (userType !== 'admin') {
-      const data = {
-        name: project.name,
-        id: project.id,
-        manager: project.manager || '',
-      }
-      saveProject(data)
-      navigate(`/contrato`)
-    } else {
-      const data = {
-        name: project.name,
-        id: project.id,
-        manager: project.manager || '',
-      }
-      saveProject(data)
-      navigate(`/empresa`)
+    const data = {
+      name: project.name,
+      id: project.id,
+      manager: project.manager || '',
     }
+    saveProject(data)
   }
 
   const onClickNewProject = () => {
     setVisibleProject(!visibleProject)
   }
+
+  useEffect(() => {
+    if (companyData && companyUser) {
+      navigate(`/contrato`)
+    } else if (companyData && companyData.length === 0) {
+      navigate(`/empresa`)
+    }
+  }, [companyData, companyUser, navigate])
 
   useEffect(() => {
     if (userType !== 'admin') {
@@ -69,10 +66,12 @@ const ProjectSelector = () => {
         navigate(`/project_selector`)
       }
     } else {
-      const contractFinded = contractsQuery.contract.find((contractData) => {
-        return contractData.id === contractLS.id
+      const contractFinded = contractsQuery?.contract?.find((contractData) => {
+        return contractData.id === contractLS?.id
       })
-      setProjectList(contractFinded.project)
+      if (contractFinded?.project) {
+        setProjectList(contractFinded.project)
+      }
     }
   }, [contractsQuery, contractLS, navigate, userType])
 
@@ -85,15 +84,6 @@ const ProjectSelector = () => {
       setVisibleProject(true)
     }
   }, [isLoading, projectList])
-
-  useEffect(() => {
-    if (userType === 'admin' && !companyLoading && companyData) {
-      setCompanyList(companyData)
-      if (companyData.length === 0) {
-        navigate(`/empresa`)
-      }
-    }
-  }, [companyData, companyLoading, navigate, userType])
 
   return (
     <>
