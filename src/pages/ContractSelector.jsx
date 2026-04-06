@@ -28,7 +28,7 @@ const ContractSelector = () => {
   const companyUser = localStorage.getItem('company_user')
 
   const { data: contractData } = useGetContracts(1)
-  const projectLS = JSON.parse(getProject())
+  const projectLS = getProject() ? JSON.parse(getProject()) : null
 
   const [visibleContract, setVisibleContract] = useState(false)
 
