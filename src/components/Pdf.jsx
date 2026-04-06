@@ -1105,7 +1105,7 @@ const Pdf = (props) => {
                     <div style={{ textAlign: 'center', width: '100%' }}>
                       <img
                         src={photo.base64}
-                        alt=""
+                        alt={`Fotografía ${i + 1}`}
                         style={{ width: '500px', height: '500px', textAlign: 'center' }}
                       />
                       <label style={{ textAlign: 'justify' }}>{photo.description}</label>
@@ -1150,7 +1150,7 @@ const Pdf = (props) => {
                 </table>
                 <img
                   src={imagenColumnChart}
-                  alt=""
+                  alt="Gráfico de barras de dotación"
                   style={{ width: '100%', textAlign: 'center' }}
                 />
               </td>
@@ -1185,7 +1185,11 @@ const Pdf = (props) => {
                     <td>{pieChartData?.reserves || 0}</td>
                   </tr>
                 </table>
-                <img src={imagenPieChart} alt="" style={{ width: '100%', textAlign: 'center' }} />
+                <img
+                  src={imagenPieChart}
+                  alt="Gráfico circular de tiempos"
+                  style={{ width: '100%', textAlign: 'center' }}
+                />
               </td>
             </tr>
           </tbody>

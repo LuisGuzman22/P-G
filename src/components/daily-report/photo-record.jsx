@@ -83,7 +83,7 @@ const PhotoRecord = () => {
               />
             </CCol>
             <CCol>
-              <img src={items[i].urlImg} alt="" style={{ width: '70%' }} />
+              <img src={items[i].urlImg} alt={`Fotografía ${i + 1}`} style={{ width: '70%' }} />
             </CCol>
           </CRow>
         ))}
