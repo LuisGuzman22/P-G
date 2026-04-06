@@ -17,6 +17,7 @@ import Loading from 'src/components/loading'
 import useGetProjects from 'src/hooks/useProjects'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import ModalAddProject from 'src/components/maintainers/project/ModalAddProject'
+import useCompany from 'src/hooks/useCompany'
 
 const ProjectSelector = () => {
   const navigate = useNavigate()
@@ -29,6 +30,9 @@ const ProjectSelector = () => {
   const contractLS = JSON.parse(getContract())
 
   const { data: projectData, isLoading } = useGetProjects(1)
+
+  const { data: companyData, isLoading: companyLoading } = useCompany()
+  const [companyList, setCompanyList] = useState()
 
   const [projectList, setProjectList] = useState()
 
@@ -81,6 +85,15 @@ const ProjectSelector = () => {
       setVisibleProject(true)
     }
   }, [isLoading, projectList])
+
+  useEffect(() => {
+    if (userType === 'admin' && !companyLoading && companyData) {
+      setCompanyList(companyData)
+      if (companyData.length === 0) {
+        navigate(`/empresa`)
+      }
+    }
+  }, [companyData, companyLoading, navigate, userType])
 
   return (
     <>
