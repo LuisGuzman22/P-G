@@ -45,6 +45,11 @@ const ProjectSelector = () => {
       manager: project.manager || '',
     }
     saveProject(data)
+    if (companyData && companyUser) {
+      navigate(`/contrato`)
+    } else if (companyData && companyData.length === 0) {
+      navigate(`/empresa`)
+    }
   }
 
   const onClickNewProject = () => {

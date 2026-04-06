@@ -445,10 +445,10 @@ export const useFetchProyects = (projectId) => {
 export const useFetchContract = (projectId) => {
   return useQuery({
     queryKey: ['contracts'],
-    // refetchType: 'all',
     queryFn: async () => {
       return fetchContracts(projectId)
     },
+    enabled: !!projectId,
   })
 }
 
