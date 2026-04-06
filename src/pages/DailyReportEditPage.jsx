@@ -14,7 +14,7 @@ const DailyReportEditPage = () => {
     if (!basicQuery) {
       navigate(`/inicio`)
     }
-  }, [basicQuery])
+  }, [basicQuery, navigate])
 
   return (
     <div className="daily-report">

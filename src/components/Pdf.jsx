@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { Page, Document } from '@react-pdf/renderer'
-import ReactDOMServer from 'react-dom/server'
 import { Html } from 'react-pdf-html'
+import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 
 /**
  * 
@@ -14,8 +14,7 @@ import { Html } from 'react-pdf-html'
         </View>
  */
 const Pdf = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  JSON.parse(getProject())
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
   const {
@@ -112,7 +111,7 @@ const Pdf = (props) => {
     let macReserves = 0
     let macOperationalLoss = 0
     let macHorometer = 0
-    machineryList.map((mac) => {
+    machineryList.forEach((mac) => {
       macOffered = macOffered + Number(mac.machineryOfferedNumber)
       macCertified = macCertified + Number(mac.machineryCertifiedNumber)
       macWork = macWork + Number(mac.machineryWorkNumber)
@@ -147,7 +146,7 @@ const Pdf = (props) => {
     setTotalMacReserves(macReserves)
     setTotalMacOpperationalLoss(macOperationalLoss)
     setTotalMacHorometer(macHorometer)
-  }, [machineryList])
+  }, [machineryList, asarcoMachineryList])
 
   const concatWithPipe = (arr) => {
     return arr
@@ -163,7 +162,7 @@ const Pdf = (props) => {
     let shiftList = []
     let journeyList = []
     let hourList = []
-    indirectCompanyTurnList.map((indirect) => {
+    indirectCompanyTurnList.forEach((indirect) => {
       const indirectStaffShiftSel = indirect_staff_shift.find(
         (iss) => iss.id.toString() === indirect.dailyReportIndirectPersonalShift.toString(),
       )
@@ -182,7 +181,7 @@ const Pdf = (props) => {
     setSelectedIndirectStaffShift(concatWithPipe(shiftList))
     setSelectedIndirectShift(concatWithPipe(journeyList))
     setSelectedIndirectHours(concatWithPipe(hourList))
-  }, [indirectCompanyTurnList])
+  }, [indirectCompanyTurnList, indirect_staff_shift, shifts])
 
   const [totalEquipOffered, setTotalEquipOffered] = useState(0)
   const [totalEquipCertified, setTotalEquipCertified] = useState(0)
@@ -209,7 +208,7 @@ const Pdf = (props) => {
     let equipInitialHorometer = 0
     let equipFinalHorometer = 0
 
-    equipmentList.map((equi) => {
+    equipmentList.forEach((equi) => {
       equipOffered = equipOffered + Number(equi.equipmentOfferedNumber)
       equipCertified = equipCertified + Number(equi.equipmentCertifiedNumber)
       equipWork = equipWork + Number(equi.equipmentWorkNumber)
@@ -243,7 +242,7 @@ const Pdf = (props) => {
     setTotalEquipNoOperator(equipNoOperator)
     setTotalEquipInitialHorometer(equipInitialHorometer)
     setTotalEquipFinalHorometer(equipFinalHorometer)
-  }, [equipmentList])
+  }, [equipmentList, equipmentPlateList])
 
   const [totalVehicOffered, setTotalVehicOffered] = useState(0)
   const [totalVehicCertified, setTotalVehicCertified] = useState(0)
@@ -270,7 +269,7 @@ const Pdf = (props) => {
     let vehicInitialHorometer = 0
     let vehicFinalHorometer = 0
 
-    vehicleList.map((veh) => {
+    vehicleList.forEach((veh) => {
       vehicOffered = vehicOffered + Number(veh.vehicleOfferedNumber)
       vehicCertified = vehicCertified + Number(veh.vehicleCertifiedNumber)
       vehicWork = vehicWork + Number(veh.vehicleWorkNumber)
@@ -305,7 +304,7 @@ const Pdf = (props) => {
     setTotalVehicNoOperator(vehicNoOperator)
     setTotalVehicInitialHorometer(vehicInitialHorometer)
     setTotalVehicFinalHorometer(vehicFinalHorometer)
-  }, [vehicleList])
+  }, [vehicleList, vehiclePlateList])
 
   const [imagenColumnChart, setImagenColumnChart] = useState('')
   const [imagenPieChart, setImagenPieChart] = useState('')
@@ -1105,8 +1104,7 @@ const Pdf = (props) => {
                     <div style={{ textAlign: 'center', width: '100%' }}>
                       <img
                         src={photo.base64}
-                        // src={`https://mpm.pgproject.cl${photo.url}`}
-                        // src={not_found}
+                        alt=""
                         style={{ width: '500px', height: '500px', textAlign: 'center' }}
                       />
                       <label style={{ textAlign: 'justify' }}>{photo.description}</label>
@@ -1149,7 +1147,11 @@ const Pdf = (props) => {
                     <td>{barChartData?.totalWorkDotation || 0}</td>
                   </tr>
                 </table>
-                <img src={imagenColumnChart} style={{ width: '100%', textAlign: 'center' }} />
+                <img
+                  src={imagenColumnChart}
+                  alt=""
+                  style={{ width: '100%', textAlign: 'center' }}
+                />
               </td>
               <td className="" style={{ textAlign: 'center' }}>
                 <table>
@@ -1182,7 +1184,7 @@ const Pdf = (props) => {
                     <td>{pieChartData?.reserves || 0}</td>
                   </tr>
                 </table>
-                <img src={imagenPieChart} style={{ width: '100%', textAlign: 'center' }} />
+                <img src={imagenPieChart} alt="" style={{ width: '100%', textAlign: 'center' }} />
               </td>
             </tr>
           </tbody>

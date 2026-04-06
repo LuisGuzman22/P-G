@@ -51,17 +51,10 @@ const DailyReportEditCollapse = () => {
     navigate(url)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isFetching) loadData()
-  }, [isFetching])
+  }, [isFetching, loadData])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (!isFetching) loadData()
-  }, [])
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isError) {
       redirectTo(`/dashboard-reportes`)
@@ -78,7 +71,6 @@ const DailyReportEditCollapse = () => {
     // }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (success) navigate(`/inicio`)
   }, [success, navigate])

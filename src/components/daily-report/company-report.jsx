@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CForm,
   CFormInput,
@@ -18,7 +18,6 @@ import useRegisterDailyReport from 'src/hooks/useRegisterDailyReport'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import { useLocation } from 'react-router-dom'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import { Button } from '@coreui/coreui'
 import { validate } from 'src/utils/validate'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -34,7 +33,6 @@ const CompanyReport = () => {
     removeIndirectCompanyTurn,
     indirectCompanyTurnList: indirectCompanyTurnListContext,
   } = useRegisterDailyReportCompany()
-  const { registerData } = useRegisterDailyReport()
   const { getProject, getContract } = useRegisterGeneralData()
 
   const projectLS = JSON.parse(getProject())
@@ -84,7 +82,7 @@ const CompanyReport = () => {
 
   useEffect(() => {
     if (!isViewMode) storeIndirectCompanyTurn(indirectPersonalList)
-  }, [indirectPersonalList])
+  }, [isViewMode, storeIndirectCompanyTurn, indirectPersonalList])
 
   const deleteIndirectCompanyTurn = (id) => {
     const newData = indirectCompanyTurnListContext.filter((item) => item.id !== id)

@@ -21,7 +21,7 @@ const Comments = () => {
 
   useEffect(() => {
     if (!isViewMode) storeComment(comment)
-  }, [comment])
+  }, [isViewMode, storeComment, comment])
 
   return (
     <div className="work-force-report">

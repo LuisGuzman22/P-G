@@ -15,12 +15,11 @@ const Charts = () => {
     navigate(url)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.DASHBOARD.VIEW)) {
       redirectTo('/inicio')
     }
-  }, [])
+  }, [hasPermission, redirectTo])
 
   return (
     <div className="proyect-administration">

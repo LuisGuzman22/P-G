@@ -32,7 +32,7 @@ import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Loading from './loading'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useFetchReportData } from 'src/hooks/useFetch'
@@ -75,7 +75,6 @@ const DailyReportCollapse = () => {
     if (success) navigate(`/inicio`)
   }, [success, navigate])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setVisible(reportsQuery !== undefined && reportsQuery.length > 0)
   }, [reportsQuery])

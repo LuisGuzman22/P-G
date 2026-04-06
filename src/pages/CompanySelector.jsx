@@ -17,10 +17,7 @@ import ModalAddCompany from 'src/components/maintainers/company/ModalAddCompany'
 
 const CompanySelector = () => {
   const navigate = useNavigate()
-  const { getProject } = useRegisterGeneralData()
   const [companyList, setCompanyList] = useState()
-
-  const userType = localStorage.getItem('USER_TYPE')
 
   const { data: companyData, isLoading: companyLoading, refetch, createdCompanyId } = useCompany()
 
@@ -56,7 +53,7 @@ const CompanySelector = () => {
     } else if (!companyLoading && companyData && companyData.length === 0) {
       setVisibleCompany(true)
     }
-  }, [companyData, companyLoading])
+  }, [companyData, companyLoading, navigate])
 
   return (
     <>

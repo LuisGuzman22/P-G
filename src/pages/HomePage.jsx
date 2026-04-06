@@ -44,13 +44,13 @@ const HomePage = () => {
     localStorage.removeItem('daily_report')
     clearData()
     queryClient.removeQueries('selectedReport')
-  }, [])
+  }, [clearData, queryClient])
 
   useEffect(() => {
     if (!projectLS || !contractLS) {
       navigate(`/project_selector`)
     }
-  }, [projectLS, contractLS])
+  }, [projectLS, contractLS, navigate])
 
   const redirectTo = (url) => {
     navigate(url)

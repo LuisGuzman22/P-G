@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 
 import { React } from 'react'
-import { CCard, CCardBody, CButton } from '@coreui/react'
 import { Chart } from 'react-google-charts'
 
 const GeneralProgressChartItem = (props) => {

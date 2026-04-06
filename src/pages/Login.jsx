@@ -17,7 +17,6 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import useLogin from 'src/hooks/useLogin'
 import { useQueryClient } from '@tanstack/react-query'
 import { regex } from 'src/utils/regex'
-import Loading from 'src/components/loading'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -52,7 +51,7 @@ const Login = () => {
 
     // localStorage.clear()
     queryClient.clear()
-  }, [])
+  }, [queryClient])
 
   const onClickHandler = async () => {
     await trueLogin({ user, password })

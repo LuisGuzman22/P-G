@@ -63,7 +63,7 @@ const Activities = () => {
   const [selectedOption, setSelectedOption] = useState({ value: 0, label: 'Seleccione' })
   const [displayRestriction, setDisplayRestriction] = useState(false)
 
-  const { data, isLoading, error: activityError } = useGetActivityData()
+  const { isLoading } = useGetActivityData()
 
   const {
     storeActivity,
@@ -75,7 +75,7 @@ const Activities = () => {
     let mapData = []
 
     if (activityData && activityData.data.data.length > 0) {
-      activityData.data.data.map((item) => {
+      activityData.data.data.forEach((item) => {
         mapData.push({ value: item.id_primavera, label: item.name })
       })
     }
@@ -85,7 +85,7 @@ const Activities = () => {
 
   useEffect(() => {
     getActivity()
-  }, [])
+  }, [getActivity])
 
   const onChangeActivity = (e) => {
     const selectedActivity = activityData.data.data.find((item) => item.id_primavera === e.value)
@@ -169,10 +169,10 @@ const Activities = () => {
 
       const calc = ((actualHours + previousHh) * 100) / totalHours
 
-      setActivity({ ...activity, activityAccumulatedAdvancePercent: calc.toFixed(2) || 0 })
+      setActivity((prev) => ({ ...prev, activityAccumulatedAdvancePercent: calc.toFixed(2) || 0 }))
     }
     if (activity.activityTotalAmount === 0) {
-      setActivity({ ...activity, activityAccumulatedAdvancePercent: 0 })
+      setActivity((prev) => ({ ...prev, activityAccumulatedAdvancePercent: 0 }))
     }
   }, [
     activity.activityPreviousAcumulatedAmount,
@@ -310,7 +310,7 @@ const Activities = () => {
 
   useEffect(() => {
     if (!isViewMode) storeActivity(activityList)
-  }, [activityList])
+  }, [isViewMode, storeActivity, activityList])
 
   return (
     <div className="work-force-report">

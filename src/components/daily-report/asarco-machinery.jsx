@@ -201,7 +201,7 @@ const AsarcoMachinery = () => {
 
   useEffect(() => {
     if (!isViewMode) storeAsarcoMachinery(asarcoMachineryList)
-  }, [asarcoMachineryList])
+  }, [isViewMode, storeAsarcoMachinery, asarcoMachineryList])
 
   useEffect(() => {
     let asarcoMachineryTotalsCounter = {
@@ -283,7 +283,7 @@ const AsarcoMachinery = () => {
     if (!isViewMode) {
       if (imagenPieChart !== undefined) storeGraphs({ name: 'asarcoChart', value: imagenPieChart })
     }
-  }, [imagenPieChart])
+  }, [isViewMode, storeGraphs, imagenPieChart])
 
   return (
     <div className="work-force-report">

@@ -11,16 +11,10 @@ const DailyReportPage = () => {
   let navigate = useNavigate()
 
   const { getProject, getContract } = useRegisterGeneralData()
-  const { clearData } = useRegisterDailyReport()
 
-  const projectLS = JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
-  const { data, isLoading, error, refetch } = useGetBasicData(contractLS.id)
-
-  useEffect(() => {
-    refetch()
-  }, [])
+  useGetBasicData(contractLS.id)
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
@@ -29,7 +23,7 @@ const DailyReportPage = () => {
     if (!basicQuery) {
       navigate(`/inicio`)
     }
-  }, [basicQuery])
+  }, [basicQuery, navigate])
 
   return (
     <div className="daily-report">

@@ -71,12 +71,10 @@ const DailyReportViewCollapse = () => {
     navigate(url)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isFetching) loadData()
-  }, [isFetching])
+  }, [isFetching, loadData])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isError) {
       redirectTo(`/dashboard-reportes`)
@@ -86,7 +84,6 @@ const DailyReportViewCollapse = () => {
   const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
   const [totalWorkDotation, setTotalWorkDotation] = useState(0)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setTotalPlanedDotation(totalDirectWorkForce.directSubtotalOfferedNumber)
     setTotalWorkDotation(totalDirectWorkForce.directSubtotalWorkNumber)

@@ -4,7 +4,7 @@ import useGantt from 'src/hooks/useGantt'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const GanttChart = () => {
-  const {} = useGantt()
+  useGantt()
   const { getData } = useGetCachedQueryData()
   const ganttQuery = getData('gantt')
 
