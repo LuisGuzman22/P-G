@@ -9,6 +9,7 @@ const useCompany = () => {
   const [errorMutate, setErrorMutate] = useState()
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState()
+  const [createdCompanyId, setCreatedCompanyId] = useState(null)
   const queryClient = useQueryClient()
 
   const registerMutation = useMutation({
@@ -21,6 +22,7 @@ const useCompany = () => {
     },
     onSuccess: (suc) => {
       setErrorMessage([])
+      setCreatedCompanyId(suc.data.data.id)
       queryClient.invalidateQueries({ queryKey: ['company'] })
     },
     onError: (err) => {
@@ -136,6 +138,7 @@ const useCompany = () => {
     updateCompany,
     restoreCompany,
     errorMessage,
+    createdCompanyId,
   }
 }
 

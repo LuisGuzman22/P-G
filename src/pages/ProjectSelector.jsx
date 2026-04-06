@@ -50,7 +50,7 @@ const ProjectSelector = () => {
         manager: project.manager || '',
       }
       saveProject(data)
-      navigate(`/dashboard`)
+      navigate(`/empresa`)
     }
   }
 

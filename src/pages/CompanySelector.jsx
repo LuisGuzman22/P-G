@@ -10,83 +10,72 @@ import {
   CCardText,
   CCardTitle,
 } from '@coreui/react'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-
 import CIcon from '@coreui/icons-react'
-import useGetContracts from 'src/hooks/useContracts'
-import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import ModalAddContract from 'src/components/maintainers/contract/ModalAddContract'
+import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
+import useCompany from 'src/hooks/useCompany'
+import ModalAddCompany from 'src/components/maintainers/company/ModalAddCompany'
 
-const ContractSelector = () => {
+const CompanySelector = () => {
   const navigate = useNavigate()
-  const { getProject, saveContract } = useRegisterGeneralData()
-  const [contractList, setContractList] = useState()
-  const { getData } = useGetCachedQueryData()
+  const { getProject } = useRegisterGeneralData()
+  const [companyList, setCompanyList] = useState()
 
-  const projectsQuery = getData('projects')
   const userType = localStorage.getItem('USER_TYPE')
-  const companyUser = localStorage.getItem('company_user')
 
-  const { data: contractData } = useGetContracts(1)
-  const projectLS = JSON.parse(getProject())
+  const { data: companyData, isLoading: companyLoading, refetch, createdCompanyId } = useCompany()
 
-  const [visibleContract, setVisibleContract] = useState(false)
+  const [visibleCompany, setVisibleCompany] = useState(false)
 
-  const onClickHandler = (contract) => {
-    if (userType !== 'admin') {
-      const data = {
-        name: contract.name,
-        id: contract.id,
-        code: contract.code,
-      }
-      saveContract(data)
-      navigate(`/inicio`)
+  const onClickHandler = (company) => {
+    localStorage.setItem('company_user', company.id)
+    localStorage.setItem('company_user_name', company.name)
+    navigate(`/contrato`)
+  }
+
+  const handleCompanyCreated = () => {
+    setVisibleCompany(false)
+    if (createdCompanyId) {
+      localStorage.setItem('company_user', createdCompanyId)
+      navigate(`/contrato`)
     } else {
-      const data = {
-        name: contract.name,
-        id: contract.id,
-        code: contract.code,
-      }
-      saveContract(data)
-      navigate(`/project_selector`)
+      refetch()
+      setTimeout(() => {
+        navigate(`/contrato`)
+      }, 500)
     }
   }
 
-  const onClickNewContract = () => {
-    setVisibleContract(!visibleContract)
+  const onClickNewCompany = () => {
+    setVisibleCompany(!visibleCompany)
   }
 
   useEffect(() => {
-    if (userType !== 'admin') {
-      if (projectLS && projectsQuery) {
-        const projectFinded = projectsQuery.find((projectData) => {
-          return projectData.id === projectLS.id
-        })
-        setContractList(projectFinded.contracts)
-      } else {
-        navigate(`/project_selector`)
-      }
+    if (companyData && companyData.length > 0) {
+      setCompanyList(companyData)
+      navigate(`/contrato`)
+    } else if (!companyLoading && companyData && companyData.length === 0) {
+      setVisibleCompany(true)
     }
-  }, [projectsQuery, projectLS, visibleContract])
-
-  useEffect(() => {
-    userType === 'admin' && contractData?.contract && setContractList(contractData.contract)
-  }, [contractData])
+  }, [companyData, companyLoading])
 
   return (
     <>
-      {visibleContract && (
-        <ModalAddContract
+      {visibleCompany && (
+        <ModalAddCompany
           visible={true}
+          onCompanyCreated={handleCompanyCreated}
           sendDataToParent={(data) => {
-            setVisibleContract(data)
+            if (!data) {
+              refetch()
+            }
+            setVisibleCompany(data)
           }}
         />
       )}
       <CCol sm={6} className="contract-selector-container">
         <CCard>
           <CCardTitle>
-            <h3>Selección de Contrato</h3>
+            <h3>Selección de Empresa</h3>
           </CCardTitle>
           <CCardBody>
             <CCardText>
@@ -94,8 +83,6 @@ const ContractSelector = () => {
                 <CCol>
                   <CWidgetStatsD
                     onClick={() => {
-                      // onClickNewContract()
-                      localStorage.removeItem('project')
                       navigate(`/project_selector`)
                     }}
                     className="mb-3"
@@ -112,15 +99,17 @@ const ContractSelector = () => {
                   />
                 </CCol>
               </CRow>
-              {contractList === undefined && <h3>No se encontraron contratos asociados</h3>}
-              {contractList &&
-                contractList?.map((contract, index) => {
+              {companyLoading && <h3>Cargando empresas...</h3>}
+              {!companyLoading && companyList === undefined && <h3>No se encontraron empresas</h3>}
+              {!companyLoading &&
+                companyList &&
+                companyList.map((company, index) => {
                   return (
                     <CRow key={index}>
                       <CCol>
                         <CWidgetStatsD
                           onClick={() => {
-                            onClickHandler(contract)
+                            onClickHandler(company)
                           }}
                           className="mb-3"
                           icon={
@@ -135,29 +124,23 @@ const ContractSelector = () => {
                           chart={
                             <CContainer className="project-selector-container">
                               <CRow>
-                                <span className="project-title">{contract.name}</span>
+                                <span className="project-title">{company.name}</span>
                               </CRow>
                             </CContainer>
                           }
                           style={{ '--cui-card-cap-bg': '#00778B', cursor: 'pointer' }}
-                          values={
-                            [
-                              // { title: 'Trisemanales', value: contract.trisemanal },
-                              // { title: 'Avance', value: contract.progress },
-                            ]
-                          }
                         />
                       </CCol>
                     </CRow>
                   )
                 })}
-              {companyUser === 'null' && (
+              {!companyLoading && (
                 <>
                   <CRow key={0}>
                     <CCol>
                       <CWidgetStatsD
                         onClick={() => {
-                          onClickNewContract()
+                          navigate(`/contrato`)
                         }}
                         className="mb-3"
                         icon={
@@ -172,7 +155,7 @@ const ContractSelector = () => {
                         chart={
                           <CContainer className="project-selector-container">
                             <CRow>
-                              <span className="project-title">Crear nuevo contrato</span>
+                              <span className="project-title">Crear Contrato</span>
                             </CRow>
                           </CContainer>
                         }
@@ -180,15 +163,11 @@ const ContractSelector = () => {
                       />
                     </CCol>
                   </CRow>
-                </>
-              )}
-              {userType === 'admin' && (
-                <>
-                  <CRow key={200}>
+                  <CRow key={1}>
                     <CCol>
                       <CWidgetStatsD
                         onClick={() => {
-                          navigate(`/empresa`)
+                          onClickNewCompany()
                         }}
                         className="mb-3"
                         icon={
@@ -203,7 +182,7 @@ const ContractSelector = () => {
                         chart={
                           <CContainer className="project-selector-container">
                             <CRow>
-                              <span className="project-title">Crear Empresa</span>
+                              <span className="project-title">Crear nueva Empresa</span>
                             </CRow>
                           </CContainer>
                         }
@@ -221,4 +200,4 @@ const ContractSelector = () => {
   )
 }
 
-export default ContractSelector
+export default CompanySelector

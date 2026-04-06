@@ -11,6 +11,7 @@ const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 // Pages
 const Login = React.lazy(() => import('./pages/Login'))
 const ProjectSelector = React.lazy(() => import('./pages/ProjectSelector'))
+const CompanySelector = React.lazy(() => import('./pages/CompanySelector'))
 const ContractSelector = React.lazy(() => import('./pages/ContractSelector'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
@@ -46,6 +47,7 @@ const App = () => {
         <Routes>
           <Route exact path="/login" name="Login Page" element={<Login />} />
           <Route exact path="/project_selector" name="Login Page" element={<ProjectSelector />} />
+          <Route exact path="/empresa" name="Empresa Page" element={<CompanySelector />} />
           <Route exact path="/contrato" name="Login Page" element={<ContractSelector />} />
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/500" name="Page 500" element={<Page500 />} />
