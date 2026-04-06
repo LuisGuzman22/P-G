@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CButton,
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
-} from '@coreui/react'
+import { CButton, CTable } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
@@ -36,10 +28,10 @@ const DirectPersonalList = () => {
   }
 
   useEffect(() => {
-    let dir = []
+    const dir = []
     directPersonalQuery
       ?.filter((dp) => dp.deleted_at === null)
-      .map((dp) => {
+      .forEach((dp) => {
         dir.push({
           id: dp.id,
           name: dp.name,

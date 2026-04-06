@@ -25,8 +25,7 @@ import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 
 const ModalAddCategory = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
   const { getData } = useGetCachedQueryData()

@@ -20,8 +20,7 @@ import useEquipment from 'src/hooks/useEquipment'
 import './css.scss'
 
 const ModalAddEquipment = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {

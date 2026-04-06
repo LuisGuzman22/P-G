@@ -32,16 +32,14 @@ const RoleList = () => {
   }
 
   useEffect(() => {
-    let rol = []
-    roleQuery
-      // ?.filter((role) => role.deleted_at === null)
-      .map((role) => {
-        rol.push({
-          id: role.id,
-          name: role.name,
-          permissions: role.permissions,
-        })
+    const rol = []
+    roleQuery.forEach((role) => {
+      rol.push({
+        id: role.id,
+        name: role.name,
+        permissions: role.permissions,
       })
+    })
     setRoleData(rol)
   }, [roleQuery])
 

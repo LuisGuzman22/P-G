@@ -31,10 +31,10 @@ const UserList = () => {
   }
 
   useEffect(() => {
-    let usr = []
+    const usr = []
     userQuery
       ?.filter((user) => user.deleted_at === null)
-      .map((user) => {
+      .forEach((user) => {
         usr.push({
           id: user.id,
           name: user.name,

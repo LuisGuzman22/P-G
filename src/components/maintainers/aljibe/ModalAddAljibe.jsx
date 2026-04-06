@@ -20,8 +20,7 @@ import useAljibe from 'src/hooks/useAljibe'
 import './css.scss'
 
 const ModalAddAljibe = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {

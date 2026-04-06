@@ -31,10 +31,10 @@ const ShiftList = () => {
   }
 
   useEffect(() => {
-    let shif = []
+    const shif = []
     shiftQuery
       ?.filter((shift) => shift.deleted_at === null)
-      .map((shift) => {
+      .forEach((shift) => {
         shif.push({
           id: shift.id,
           name: shift.name,

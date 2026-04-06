@@ -22,8 +22,7 @@ import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
 
 const ModalAddMachinery = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {

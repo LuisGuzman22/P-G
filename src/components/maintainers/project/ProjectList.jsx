@@ -32,17 +32,15 @@ const ProjectList = () => {
   }
 
   useEffect(() => {
-    let proj = []
-    projectsQuery
-      // ?.filter((project) => project.deleted_at === null)
-      .map((project) => {
-        proj.push({
-          id: project.id,
-          projectName: project.name,
-          projectManager: project.manager,
-          projectDescription: project.description,
-        })
+    const proj = []
+    projectsQuery.forEach((project) => {
+      proj.push({
+        id: project.id,
+        projectName: project.name,
+        projectManager: project.manager,
+        projectDescription: project.description,
       })
+    })
     setProjectData(proj)
   }, [projectsQuery])
 

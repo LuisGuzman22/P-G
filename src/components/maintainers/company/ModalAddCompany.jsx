@@ -14,7 +14,6 @@ import {
   CToast,
   CToastBody,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useEquipment from 'src/hooks/useEquipment'
 import './css.scss'
@@ -22,8 +21,6 @@ import useCompany from 'src/hooks/useCompany'
 
 const ModalAddCompany = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {
     props.sendDataToParent(false)

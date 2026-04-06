@@ -17,7 +17,6 @@ import {
   CToastBody,
   CFormSelect,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
 import useUser from 'src/hooks/useUser'
@@ -34,8 +33,6 @@ const ModalAddUser = (props) => {
     job_position: undefined,
   }
   const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
 
   const [user, setUser] = useState(props.selectedUser ? props.selectedUser : initialState)
   const [userNameError, setUserNameError] = useState(false)

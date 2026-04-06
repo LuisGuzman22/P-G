@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CButton,
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
-} from '@coreui/react'
+import { CButton, CTable } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
@@ -40,10 +32,10 @@ const WorkFrontList = () => {
   }
 
   useEffect(() => {
-    let wf = []
+    const wf = []
     workFrontQuery
       ?.filter((work) => work.deleted_at === null)
-      .map((work) => {
+      .forEach((work) => {
         wf.push({
           id: work.id,
           name: work.name,

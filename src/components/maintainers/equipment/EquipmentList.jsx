@@ -39,10 +39,10 @@ const EquipmentList = () => {
   }
 
   useEffect(() => {
-    let equip = []
+    const equip = []
     equipmentQuery
       ?.filter((equipment) => equipment.deleted_at === null)
-      .map((equipment) => {
+      .forEach((equipment) => {
         const plates = getPlates(equipment.plate)
         equip.push({
           id: equipment.id,

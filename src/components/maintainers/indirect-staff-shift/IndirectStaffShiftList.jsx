@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CButton,
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
-} from '@coreui/react'
+import { CButton, CTable } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
@@ -40,10 +32,10 @@ const IndirectStaffShiftList = () => {
   }
 
   useEffect(() => {
-    let shif = []
+    const shif = []
     indirectStaffShiftQuery
       ?.filter((shift) => shift.deleted_at === null)
-      .map((shift) => {
+      .forEach((shift) => {
         shif.push({
           id: shift.id,
           name: shift.name,

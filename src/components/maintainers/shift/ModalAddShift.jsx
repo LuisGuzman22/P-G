@@ -14,14 +14,12 @@ import {
   CToast,
   CToastBody,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
 import useShift from 'src/hooks/useShift'
 
 const ModalAddShift = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {

@@ -32,8 +32,8 @@ const RestrictionList = () => {
   }
 
   useEffect(() => {
-    let restrict = []
-    restrictionQuery.map((restriction) => {
+    const restrict = []
+    restrictionQuery.forEach((restriction) => {
       restrict.push({
         id: restriction.id,
         name: restriction.name,

@@ -30,10 +30,10 @@ const WeatherList = () => {
   }
 
   useEffect(() => {
-    let wea = []
+    const wea = []
     weatherQuery
       ?.filter((weather) => weather.deleted_at === null)
-      .map((weather) => {
+      .forEach((weather) => {
         wea.push({
           id: weather.id,
           name: weather.name,

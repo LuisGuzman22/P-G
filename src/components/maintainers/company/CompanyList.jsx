@@ -30,10 +30,10 @@ const CompanyList = () => {
   }
 
   useEffect(() => {
-    let comp = []
+    const comp = []
     companyQuery
       ?.filter((company) => company.deleted_at === null)
-      .map((company) => {
+      .forEach((company) => {
         comp.push({
           id: company.id,
           name: company.name,

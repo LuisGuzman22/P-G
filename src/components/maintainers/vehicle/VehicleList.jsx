@@ -28,10 +28,10 @@ const VehicleList = () => {
   const [vehicleData, setVehicleData] = useState([])
 
   useEffect(() => {
-    let veh = []
+    const veh = []
     vehicleQuery
       ?.filter((vehicle) => vehicle.deleted_at === null)
-      .map((vehicle) => {
+      .forEach((vehicle) => {
         const plates = getPlates(vehicle.plate)
         veh.push({
           id: vehicle.id,

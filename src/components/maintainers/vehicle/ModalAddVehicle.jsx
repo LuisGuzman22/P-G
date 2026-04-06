@@ -20,8 +20,7 @@ import useVehicle from 'src/hooks/useVehicle'
 import './css.scss'
 
 const ModalAddVehicle = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {

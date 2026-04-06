@@ -39,10 +39,10 @@ const MachineryList = () => {
   }
 
   useEffect(() => {
-    let mac = []
+    const mac = []
     machineryQuery
       ?.filter((machinery) => machinery.deleted_at === null)
-      .map((machinery) => {
+      .forEach((machinery) => {
         const plates = getPlates(machinery.plate)
         mac.push({
           id: machinery.id,

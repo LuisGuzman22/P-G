@@ -16,14 +16,12 @@ import {
   CToast,
   CToastBody,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useDirectPersonal from 'src/hooks/useDirectPersonal'
 import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
 
 const ModalAddIndirectPersonal = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {

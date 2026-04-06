@@ -40,7 +40,7 @@ const AljibeList = () => {
   }
 
   useEffect(() => {
-    let alj = []
+    const alj = []
     aljibeQuery
       ?.filter((aljibe) => aljibe.deleted_at === null)
       .forEach((aljibe) => {

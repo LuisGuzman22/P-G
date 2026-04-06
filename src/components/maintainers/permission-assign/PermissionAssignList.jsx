@@ -32,10 +32,10 @@ const PermissionAssignList = () => {
   }
 
   useEffect(() => {
-    let us = []
+    const us = []
     userQuery
       ?.filter((role) => role.deleted_at === null)
-      .map((usr) => {
+      .forEach((usr) => {
         us.push({
           id: usr.id,
           name: usr.name,
