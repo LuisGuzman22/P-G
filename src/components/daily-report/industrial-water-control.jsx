@@ -347,7 +347,7 @@ const IndustrialWaterControl = () => {
           <CTableBody>
             {aljibeListContext.map((item, index) => {
               const aljibe = basicQuery.aljibe.find((alj) => {
-                return alj.id == item.aljibe
+                return alj.id === item.aljibe
               })
               const plate = aljibe.plate.find((pl) => {
                 return pl.id.toString() === item.aljibePlate.toString()

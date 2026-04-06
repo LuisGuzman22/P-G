@@ -46,7 +46,6 @@ const DailyReportCollapse = () => {
   const { getData } = useGetCachedQueryData()
   const reportsQuery = getData('reports')
   const [visible, setVisible] = useState(false)
-  const currentLocation = useLocation().pathname
   const { isFetching } = useFetchReportData()
 
   // useEffect(() => {
@@ -74,7 +73,7 @@ const DailyReportCollapse = () => {
 
   useEffect(() => {
     if (success) navigate(`/inicio`)
-  }, [success])
+  }, [success, navigate])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {

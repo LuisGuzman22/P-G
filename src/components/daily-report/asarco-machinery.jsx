@@ -509,7 +509,7 @@ const AsarcoMachinery = () => {
           <CTableBody>
             {asarcoMachineryListContext.map((item, index) => {
               const machinery = basicQuery.machinery.find((machinery) => {
-                return machinery.id == item.machinery
+                return machinery.id === item.machinery
               })
               const plate = machinery.plate.find((pl) => {
                 return pl.id.toString() === item.machineryPlate.toString()

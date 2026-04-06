@@ -251,10 +251,10 @@ const MachineryWorkForce = () => {
               <CTableBody>
                 {machineryWorkForceListContext.map((item, index) => {
                   const selectedWorkFront = basicQuery.workFront.find((workF) => {
-                    return workF.id == item.machineryWorkForce
+                    return workF.id === item.machineryWorkForce
                   })
                   const selectedCharge = basicQuery.machinery.find((mac) => {
-                    return mac.id == item.machineryWorkFrontCharge
+                    return mac.id === item.machineryWorkFrontCharge
                   })
                   return (
                     <CTableRow key={item.id}>

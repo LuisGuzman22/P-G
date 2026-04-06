@@ -66,7 +66,7 @@ const DailyReportEditCollapse = () => {
     if (isError) {
       redirectTo(`/dashboard-reportes`)
     }
-  }, [isError])
+  }, [isError, redirectTo])
 
   const { updateData, loading, error, success, errorMessage } = useRegisterDailyReport()
 
@@ -81,7 +81,7 @@ const DailyReportEditCollapse = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (success) navigate(`/inicio`)
-  }, [success])
+  }, [success, navigate])
 
   const [showError, setShowError] = useState(false)
   useEffect(() => {

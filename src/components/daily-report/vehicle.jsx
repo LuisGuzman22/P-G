@@ -230,7 +230,7 @@ const Vehicle = () => {
           <CTableBody>
             {vehicleListContext.map((item, index) => {
               const charge = basicQuery.vehicles.find((vehic) => {
-                return vehic.id == item.vehicle
+                return vehic.id === item.vehicle
               })
               return (
                 <CTableRow key={index}>

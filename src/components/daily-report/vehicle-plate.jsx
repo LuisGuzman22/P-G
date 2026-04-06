@@ -347,7 +347,7 @@ const VehiclePlate = () => {
           <CTableBody>
             {vehiclePlateListContext.map((item, index) => {
               const vehicle = basicQuery.vehicles.find((vehic) => {
-                return vehic.id == item.vehicle
+                return vehic.id === item.vehicle
               })
               const plate = vehicle.plate.find((pl) => {
                 return pl.id.toString() === item.vehiclePlate.toString()

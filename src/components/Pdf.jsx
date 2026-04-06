@@ -1,14 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState } from 'react'
-import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
+import React, { useEffect, useState } from 'react'
+import { Page, Document } from '@react-pdf/renderer'
 import ReactDOMServer from 'react-dom/server'
 import { Html } from 'react-pdf-html'
-import firma1 from 'src/assets/images/firma1.png'
-import firma2 from 'src/assets/images/firma2.png'
-import firma3 from 'src/assets/images/firma3.png'
-import not_found from 'src/assets/images/not_found.jpeg'
 
 /**
  * 
@@ -21,7 +15,7 @@ import not_found from 'src/assets/images/not_found.jpeg'
  */
 const Pdf = (props) => {
   const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
+  JSON.parse(getProject())
   const contractLS = JSON.parse(getContract())
 
   const {
@@ -1031,7 +1025,7 @@ const Pdf = (props) => {
                       })
 
                       const selectedPlate = selectedAljibe.plate.find((plate) => {
-                        return plate.id.toString() == al.aljibePlate.toString()
+                        return plate.id.toString() === al.aljibePlate.toString()
                       })
 
                       return (

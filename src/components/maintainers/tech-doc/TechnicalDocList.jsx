@@ -35,7 +35,7 @@ const TechnicalDocList = () => {
         </CTableHead>
         <CTableBody>
           {techDocQuery?.map((doc, index) => {
-            const catName = techDocCatQuery?.find((cat) => cat.id == doc.category)
+            const catName = techDocCatQuery?.find((cat) => cat.id === doc.category)
             return (
               <CTableRow key={doc.id}>
                 <CTableDataCell> {doc.url.split('/')[4]}</CTableDataCell>

@@ -123,7 +123,7 @@ const DirectWorkForce = () => {
   const editDirectWorkForce = (id) => {
     const selectedDirectWorkForce = directWorkForceListContext.find((item) => item.id === id)
     const charge = basicQuery.directPersonal.find((personal) => {
-      return personal.id == selectedDirectWorkForce.directWorkForce
+      return personal.id === selectedDirectWorkForce.directWorkForce
     })
     setDirectWorkForce({
       directWorkForce: selectedDirectWorkForce.directWorkForce,
@@ -372,7 +372,7 @@ const DirectWorkForce = () => {
           <CTableBody>
             {directWorkForceListContext.map((item, index) => {
               const charge = basicQuery.directPersonal.find((personal) => {
-                return personal.id == item.directWorkForce
+                return personal.id === item.directWorkForce
               })
               return (
                 <CTableRow key={index}>

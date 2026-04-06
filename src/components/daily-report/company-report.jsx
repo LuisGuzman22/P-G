@@ -347,11 +347,11 @@ const CompanyReport = () => {
               <CTableBody>
                 {indirectCompanyTurnListContext.map((item, index) => {
                   const selectedJourney = basicQuery?.shifts.find(
-                    (shift) => shift.id == item.dailyReportIndirectPersonalJourney,
+                    (shift) => shift.id === item.dailyReportIndirectPersonalJourney,
                   )
 
                   const selectedShift = basicQuery?.indirect_staff_shift.find(
-                    (turn) => turn.id == item.dailyReportIndirectPersonalShift,
+                    (turn) => turn.id === item.dailyReportIndirectPersonalShift,
                   )
 
                   return (

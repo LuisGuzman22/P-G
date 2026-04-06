@@ -81,7 +81,7 @@ const DailyReportViewCollapse = () => {
     if (isError) {
       redirectTo(`/dashboard-reportes`)
     }
-  }, [isError])
+  }, [isError, redirectTo])
 
   const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
   const [totalWorkDotation, setTotalWorkDotation] = useState(0)
@@ -101,39 +101,43 @@ const DailyReportViewCollapse = () => {
   const [reserves, setReserves] = useState(0)
   const [totals, setTotals] = useState(0)
   useEffect(() => {
+    let newTotals = 0
+    let newEffectiveTime = 0
+    let newScheduleMaintimeTime = 0
+    let newScheduleDelay = 0
+    let newOpperationalLoss = 0
+    let newUnscheduleMaintimeTime = 0
+    let newUnscheduleDelay = 0
+    let newReserves = 0
     for (let asarcoData of asarcoMachineryList) {
-      setTotals(
-        totals +
-          Number(asarcoData.asarcoMachineryEffectiveTime) +
-          Number(asarcoData.asarcoMachineryScheduleMaintenance) +
-          Number(asarcoData.asarcoMachineryScheduleDelay) +
-          Number(asarcoData.asarcoMachineryOpperationalLoss) +
-          Number(asarcoData.asarcoMachineryUnscheduleMaintenance) +
-          Number(asarcoData.asarcoMachineryUnscheduleDelay) +
-          Number(asarcoData.asarcoMachineryReserves),
-      )
-      setEffectiveTime(effectiveTime + Number(asarcoData.asarcoMachineryEffectiveTime))
-      setScheduleMaintimeTime(
-        scheduleMaintimeTime + Number(asarcoData.asarcoMachineryScheduleMaintenance),
-      )
-      setScheduleDelay(scheduleDelay + Number(asarcoData.asarcoMachineryScheduleDelay))
-      setOpperationalLoss(opperationalLoss + Number(asarcoData.asarcoMachineryOpperationalLoss))
-      setUnscheduleMaintimeTime(
-        unscheduleMaintimeTime + Number(asarcoData.asarcoMachineryUnscheduleMaintenance),
-      )
-      setUnscheduleDelay(unscheduleDelay + Number(asarcoData.asarcoMachineryUnscheduleDelay))
-      setReserves(reserves + Number(asarcoData.asarcoMachineryReserves))
+      newTotals +=
+        Number(asarcoData.asarcoMachineryEffectiveTime) +
+        Number(asarcoData.asarcoMachineryScheduleMaintenance) +
+        Number(asarcoData.asarcoMachineryScheduleDelay) +
+        Number(asarcoData.asarcoMachineryOpperationalLoss) +
+        Number(asarcoData.asarcoMachineryUnscheduleMaintenance) +
+        Number(asarcoData.asarcoMachineryUnscheduleDelay) +
+        Number(asarcoData.asarcoMachineryReserves)
+      newEffectiveTime += Number(asarcoData.asarcoMachineryEffectiveTime)
+      newScheduleMaintimeTime += Number(asarcoData.asarcoMachineryScheduleMaintenance)
+      newScheduleDelay += Number(asarcoData.asarcoMachineryScheduleDelay)
+      newOpperationalLoss += Number(asarcoData.asarcoMachineryOpperationalLoss)
+      newUnscheduleMaintimeTime += Number(asarcoData.asarcoMachineryUnscheduleMaintenance)
+      newUnscheduleDelay += Number(asarcoData.asarcoMachineryUnscheduleDelay)
+      newReserves += Number(asarcoData.asarcoMachineryReserves)
     }
+    setTotals(newTotals)
+    setEffectiveTime(newEffectiveTime)
+    setScheduleMaintimeTime(newScheduleMaintimeTime)
+    setScheduleDelay(newScheduleDelay)
+    setOpperationalLoss(newOpperationalLoss)
+    setUnscheduleMaintimeTime(newUnscheduleMaintimeTime)
+    setUnscheduleDelay(newUnscheduleDelay)
+    setReserves(newReserves)
   }, [asarcoMachineryList])
 
   const { getData } = useGetCachedQueryData()
   const basicQuery = getData('basics')
-
-  const registerDailyReport = () => {
-    if (isViewMode) {
-      setVisibleSendDailyReportModal(!visibleSendDailyReportModal)
-    }
-  }
 
   useEffect(() => {
     setPdfName(

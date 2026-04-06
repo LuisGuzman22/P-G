@@ -48,7 +48,7 @@ const ModalAddRole = (props) => {
   }
 
   const onChangeSelectPermission = (e) => {
-    const isChecked = rolePermissions?.some((p) => p.id == e.target.id)
+    const isChecked = rolePermissions?.some((p) => p.id === e.target.id)
 
     if (!isChecked) {
       if (rolePermissions) {
@@ -181,7 +181,7 @@ const ModalAddRole = (props) => {
             </CCol>
           </CRow>
           {dataPermission?.map((permission) => {
-            const isChecked = rolePermissions?.some((p) => p.id == permission.id)
+            const isChecked = rolePermissions?.some((p) => p.id === permission.id)
             console.log('isChecked', isChecked)
             return (
               <CRow key={permission.id}>

@@ -348,7 +348,7 @@ const EquipmentPlate = () => {
           <CTableBody>
             {equipmentPlateListContext.map((item, index) => {
               const equipment = basicQuery.equipment.find((equip) => {
-                return equip.id == item.equipment
+                return equip.id === item.equipment
               })
               const plate = equipment.plate.find((pl) => {
                 return pl.id.toString() === item.equipmentPlate.toString()

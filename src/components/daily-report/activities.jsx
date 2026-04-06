@@ -593,7 +593,7 @@ const Activities = () => {
           <CTableBody>
             {activityListContext.map((item, index) => {
               const charge = basicQuery.workFront.find((work) => {
-                return work.id == item.activityFrontWork
+                return work.id === item.activityFrontWork
               })
 
               const selectedDicipline = basicQuery.diciplines.find((dicipline) => {

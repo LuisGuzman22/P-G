@@ -52,7 +52,7 @@ const ModalAssignPermission = (props) => {
   const { data: dataPermission } = usePermission()
 
   const onChangeSelectPermission = (e) => {
-    const isChecked = userPermissions?.some((p) => p == e.target.name)
+    const isChecked = userPermissions?.some((p) => p === e.target.name)
     if (!isChecked) {
       if (userPermissions) {
         setUserPermissions((prev) => [...prev, e.target.name])
@@ -148,7 +148,7 @@ const ModalAssignPermission = (props) => {
         </CToast>
         <CForm>
           {dataPermission?.map((permission) => {
-            const isChecked = userPermissions?.some((p) => p == permission.name)
+            const isChecked = userPermissions?.some((p) => p === permission.name)
             return (
               <CRow key={permission.id}>
                 <CCol sm={6}>
