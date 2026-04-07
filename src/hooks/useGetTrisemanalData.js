@@ -17,6 +17,7 @@ const useGetTrisemanalData = () => {
   const {
     data: planningData,
     isLoading: loadingPlanning,
+    // eslint-disable-next-line no-unused-vars
     error: errorPlanning,
   } = useFetchPlanningData(projectLS.id, contractLS.id)
 

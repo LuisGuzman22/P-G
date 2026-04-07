@@ -19,7 +19,7 @@ import './css.scss'
 import useWeather from 'src/hooks/useWeather'
 
 const ModalAddWeather = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
+  const { getContract } = useRegisterGeneralData()
   const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {

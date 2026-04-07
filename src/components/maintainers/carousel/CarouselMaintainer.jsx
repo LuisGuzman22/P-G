@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { PERMISSIONS } from 'src/utils/contant'
 
 const CarouselMaintainer = () => {
-  const { isLoading, refetch, isRefetching } = useCarousel()
+  const { isLoading, isRefetching } = useCarousel()
   let navigate = useNavigate()
 
   const [visibleCategory, setVisibleCategory] = useState(false)

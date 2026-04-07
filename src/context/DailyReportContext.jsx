@@ -16,6 +16,7 @@ export const DailyReportProvider = ({ children }) => {
 
   const { getData } = useGetCachedQueryData()
 
+  // eslint-disable-next-line no-unused-vars
   const reportsQuery = getData('reports')
 
   const [selectedReportQuery, setSelectedReportQuery] = useState()
@@ -24,6 +25,7 @@ export const DailyReportProvider = ({ children }) => {
     setSelectedReportQuery(getData('selectedReport'))
   }
 
+  // eslint-disable-next-line no-unused-vars
   const reportId = localStorage.getItem('daily_report')
 
   useEffect(() => {

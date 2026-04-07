@@ -142,7 +142,7 @@ const IndustrialWaterControl = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let tempAcumulated = selectedReport?.aljibeList[0]?.aljibeM3Accumulated || 0
-    aljibeList.map((aljibe) => {
+    aljibeList.forEach((aljibe) => {
       tempAcumulated = Number(tempAcumulated) + Number(aljibe?.aljibeM3 || 0)
     })
     // setAccumulatedM3(tempAcumulated)
@@ -158,7 +158,7 @@ const IndustrialWaterControl = () => {
     let aljData = {}
     let algDataList = []
     if (aljibeList.length > 0) {
-      aljibeList.map((aljibe) => {
+      aljibeList.forEach((aljibe) => {
         aljData = {
           id: aljibe.id,
           aljibe: aljibe.aljibe,

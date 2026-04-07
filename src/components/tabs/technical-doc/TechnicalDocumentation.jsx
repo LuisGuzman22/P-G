@@ -5,7 +5,6 @@ import {
   CCard,
   CCardBody,
   CCardText,
-  CButton,
   CAccordion,
   CAccordionItem,
   CAccordionHeader,

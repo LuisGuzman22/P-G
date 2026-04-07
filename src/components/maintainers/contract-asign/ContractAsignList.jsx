@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  CButton,
   CTable,
   CTableHead,
   CTableRow,

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { React, useEffect, useState } from 'react'
+import { React, useState } from 'react'
 import {
   CButton,
   CModalHeader,
@@ -11,8 +11,6 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CToast,
-  CToastBody,
   CFormSelect,
 } from '@coreui/react'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
