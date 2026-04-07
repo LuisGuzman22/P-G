@@ -142,6 +142,7 @@ const TotalIndirectWorkForce = () => {
     indirectWorkForceListContext,
     totalIndirectWorkForcePrevious,
     totalIndirectWorkForceContext,
+    totalIndirectWorkForce.indirectPreviusAccumulated,
   ])
 
   useEffect(() => {
