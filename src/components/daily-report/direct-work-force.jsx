@@ -83,7 +83,6 @@ const DirectWorkForce = () => {
     setDirectWorkForce({ directWorkForce: e.value })
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const data = []
     if (basicQuery && basicQuery.directPersonal) {
@@ -92,7 +91,7 @@ const DirectWorkForce = () => {
       })
       setOptions(data)
     }
-  }, [basicQuery.directPersonal])
+  }, [basicQuery])
 
   const registerDirectWorkForce = () => {
     if (!directWorkForce.directWorkForce) {
@@ -144,12 +143,10 @@ const DirectWorkForce = () => {
     deleteDirectWorkForce(id)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeDirectWorkForce(directWorkForceList)
-  }, [directWorkForceList])
+  }, [isViewMode, directWorkForceList, storeDirectWorkForce])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let offered = 0
     let worked = 0
@@ -159,7 +156,6 @@ const DirectWorkForce = () => {
     })
     setTotalPlanedDotation(offered)
     setTotalWorkDotation(worked)
-    // convertDotationChart()
   }, [directWorkForceListContext])
 
   const convertDotationChart = () => {
@@ -190,7 +186,7 @@ const DirectWorkForce = () => {
       if (imagenColumnChart !== undefined)
         storeGraphs({ name: 'dotationChart', value: imagenColumnChart })
     }
-  }, [imagenColumnChart])
+  }, [isViewMode, imagenColumnChart, storeGraphs])
 
   const checkInView = () => {
     const rect = columnChartElement?.current?.getBoundingClientRect()

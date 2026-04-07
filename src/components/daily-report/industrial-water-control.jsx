@@ -139,20 +139,17 @@ const IndustrialWaterControl = () => {
     deletealjibe(id)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let tempAcumulated = selectedReport?.aljibeList[0]?.aljibeM3Accumulated || 0
     aljibeList.forEach((aljibe) => {
       tempAcumulated = Number(tempAcumulated) + Number(aljibe?.aljibeM3 || 0)
     })
-    // setAccumulatedM3(tempAcumulated)
 
     if (!isViewMode) {
       storealjibe(aljibeList)
     }
-  }, [aljibeList])
+  }, [isViewMode, aljibeList, selectedReport, storealjibe])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     storeAccumulatedM3(accumulatedM3)
     let aljData = {}
@@ -172,9 +169,8 @@ const IndustrialWaterControl = () => {
       })
       setAlgibeList(algDataList)
     }
-  }, [accumulatedM3])
+  }, [accumulatedM3, aljibeList, storeAccumulatedM3])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let aljibeTotalsCounter = {
       aljibeM3: 0,
@@ -191,7 +187,6 @@ const IndustrialWaterControl = () => {
     setAlgibeTotals(aljibeTotalsCounter)
   }, [aljibeListContext])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isCreatingMode || isEditMode) {
       if (selectedReport && selectedReport.aljibeList.length > 0) {
@@ -203,11 +198,8 @@ const IndustrialWaterControl = () => {
       }
     } else {
       setAccumulatedM3(selectedReport.aljibeList[0]?.aljibeM3Accumulated || 0)
-      // setAccumulatedM3(
-      //   selectedReport.aljibeList[0].aljibeM3Accumulated + Number(aljibeTotals.aljibeM3),
-      // )
     }
-  }, [aljibeTotals])
+  }, [isCreatingMode, isEditMode, selectedReport, aljibeTotals])
 
   return (
     <div className="work-force-report">

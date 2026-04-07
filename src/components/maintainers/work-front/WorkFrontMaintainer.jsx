@@ -19,12 +19,11 @@ const WorkFrontMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.WORK_FRONT.VIEW)) {
       navigate('/inicio')
     }
-  }, [])
+  }, [hasPermission, navigate])
   return (
     <div className="work-front-maintainer">
       <h2 className="title">Administrar Frentes de trabajo</h2>

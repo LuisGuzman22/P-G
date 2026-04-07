@@ -142,10 +142,9 @@ const EquipmentPlate = () => {
     deleteEquipment(id)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeEquipmentPlate(equipmentPlateList)
-  }, [equipmentPlateList])
+  }, [isViewMode, equipmentPlateList, storeEquipmentPlate])
 
   return (
     <div className="work-force-report">

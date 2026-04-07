@@ -97,10 +97,9 @@ const Machinery = () => {
     deleteMachinery(id)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeMachinery(machineryList)
-  }, [machineryList])
+  }, [isViewMode, machineryList, storeMachinery])
 
   useEffect(() => {
     let machineryTotalsCounter = {

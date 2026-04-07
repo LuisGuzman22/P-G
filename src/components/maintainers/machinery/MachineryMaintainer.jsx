@@ -19,12 +19,11 @@ const MachineryMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.MACHINERY.VIEW)) {
       navigate('/inicio')
     }
-  }, [])
+  }, [hasPermission, navigate])
 
   return (
     <div className="machinery-maintainer">

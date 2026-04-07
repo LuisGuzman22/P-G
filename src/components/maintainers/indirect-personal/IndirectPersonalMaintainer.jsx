@@ -19,12 +19,11 @@ const IndirectPersonalMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.INDIRECT_PERSONAL.VIEW)) {
       navigate('/inicio')
     }
-  }, [])
+  }, [hasPermission, navigate])
 
   return (
     <div className="indirect-staff-maintainer">

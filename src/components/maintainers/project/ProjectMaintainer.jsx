@@ -17,12 +17,11 @@ const ProjectMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.PROJECT.VIEW)) {
       navigate('/inicio')
     }
-  }, [])
+  }, [hasPermission, navigate])
 
   return (
     <div className="project-maintainer">

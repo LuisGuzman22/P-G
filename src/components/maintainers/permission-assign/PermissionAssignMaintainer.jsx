@@ -16,12 +16,11 @@ const PermissionAssignMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.USER.VIEW)) {
       navigate('/inicio')
     }
-  }, [])
+  }, [hasPermission, navigate])
 
   return (
     <div className="role-maintainer">

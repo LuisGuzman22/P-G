@@ -138,7 +138,6 @@ const Activities = () => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const realHpurs = activity.activityHoursSpendShift
       ? Number(activity.activityHoursSpendShift)
@@ -146,11 +145,11 @@ const Activities = () => {
     const prevHours = activity.activityHoursSpendPrevius
       ? Number(activity.activityHoursSpendPrevius)
       : 0
-    setActivity({
-      ...activity,
+    setActivity((prev) => ({
+      ...prev,
       activityHoursAccumulated: prevHours + realHpurs,
-    })
-  }, [activity.activityHoursSpendShift, activity.activityHoursSpendPrevius])
+    }))
+  }, [activity])
 
   useEffect(() => {
     if (
@@ -181,7 +180,6 @@ const Activities = () => {
     activity.activityTotalAmount,
   ])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // El primero debe llamarse "HH Ganadas Real Turno" que debe ser un campo abierto,
     // numérico, y que se debe precalcular de la siguiente forma:
@@ -192,21 +190,21 @@ const Activities = () => {
       activity.activityAccumulatedAdvancePercent !== 0 &&
       activity.activityAccumulatedAdvancePercent !== undefined
     ) {
-      setActivity({
-        ...activity,
+      setActivity((prev) => ({
+        ...prev,
         activityHoursEarnedShift:
           (
             (activity.activityTotalAmount * activity.activityAccumulatedAdvancePercent) /
             100
           ).toFixed(1) || 0,
-      })
+      }))
     } else {
-      setActivity({
-        ...activity,
+      setActivity((prev) => ({
+        ...prev,
         activityHoursEarnedShift: 0,
-      })
+      }))
     }
-  }, [activity.activityAccumulatedAdvancePercent])
+  }, [activity])
 
   useEffect(() => {
     // El segundo campo debe llamarse "Motivo" el cual debe ser un campo deshabilitado y
@@ -217,7 +215,7 @@ const Activities = () => {
     setDisplayRestriction(
       activity.activityHoursEarnedShift && activity.activityHoursEarnedShift.toString() === '0',
     )
-  }, [activity.activityHoursEarnedShift])
+  }, [activity])
 
   const registerActivity = () => {
     if (

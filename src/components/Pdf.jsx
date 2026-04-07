@@ -87,7 +87,7 @@ const Pdf = (props) => {
     setSelectedWeather(weatherSel?.name || '')
     setSelectedDirectStaffShift(directStaffShiftSel?.name || '')
     setSelectedDirectShift(directShiftSel?.name || '')
-  }, [company])
+  }, [company, weather, direct_staff_shift, shifts])
 
   const [totalMacOffered, setTotalMacOffered] = useState(0)
   const [totalMacCertified, setTotalMacCertified] = useState(0)

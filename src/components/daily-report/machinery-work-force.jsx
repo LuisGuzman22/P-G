@@ -114,20 +114,16 @@ const MachineryWorkForce = () => {
     deleteMachineryWorkForce(id)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    setMachineryWorkForce({
-      ...machineryWorkForce,
-      machinerySubWorkFront: enableSubFrontWork
-        ? machineryWorkForce.machinerySubWorkFront
-        : undefined,
-    })
+    setMachineryWorkForce((prev) => ({
+      ...prev,
+      machinerySubWorkFront: enableSubFrontWork ? prev.machinerySubWorkFront : undefined,
+    }))
   }, [enableSubFrontWork])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeMachineryWorkForce(machineryWorkForceList)
-  }, [machineryWorkForceList])
+  }, [isViewMode, machineryWorkForceList, storeMachineryWorkForce])
 
   return (
     <div className="work-force-report">

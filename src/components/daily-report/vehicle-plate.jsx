@@ -135,10 +135,9 @@ const VehiclePlate = () => {
     deletevehiclePlate(id)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeVehiclePlate(vehiclePlateList)
-  }, [vehiclePlateList])
+  }, [isViewMode, vehiclePlateList, storeVehiclePlate])
 
   return (
     <div className="work-force-report">

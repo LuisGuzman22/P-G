@@ -70,14 +70,11 @@ const DirectDotationWorkForce = () => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    setDirectDotationWorkForce({
-      ...directDotationWorkForce,
-      directSubWorkFront: enableSubFrontWork
-        ? directDotationWorkForce.directSubWorkFront
-        : undefined,
-    })
+    setDirectDotationWorkForce((prev) => ({
+      ...prev,
+      directSubWorkFront: enableSubFrontWork ? prev.directSubWorkFront : undefined,
+    }))
   }, [enableSubFrontWork])
 
   const registerDirectDotationWorkForce = () => {
@@ -130,10 +127,9 @@ const DirectDotationWorkForce = () => {
     deletedirectDotationWorkForce(id)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeDirectDotationWorkForceData(directDotationWorkForceList)
-  }, [directDotationWorkForceList])
+  }, [isViewMode, directDotationWorkForceList, storeDirectDotationWorkForceData])
 
   return (
     <div className="work-force-report">

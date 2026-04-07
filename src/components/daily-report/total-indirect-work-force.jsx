@@ -68,23 +68,20 @@ const TotalIndirectWorkForce = () => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    setTotalIndirectWorkForce({
-      ...totalIndirectWorkForce,
+    setTotalIndirectWorkForce((prev) => ({
+      ...prev,
       indirectCurrentAccumulated: indirectAccumulatedActual,
-    })
+    }))
   }, [indirectAccumulatedActual])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    setTotalIndirectWorkForce({
-      ...totalIndirectWorkForce,
+    setTotalIndirectWorkForce((prev) => ({
+      ...prev,
       indirectPreviusAccumulated: totalIndirectWorkForcePrevious?.indirectCurrentAccumulated || 0,
-    })
+    }))
   }, [totalIndirectWorkForcePrevious])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) {
       let hours = 0
@@ -140,12 +137,16 @@ const TotalIndirectWorkForce = () => {
 
       setIndirectAccumulatedPrevious(totalIndirectWorkForceContext.indirectPreviusAccumulated)
     }
-  }, [indirectWorkForceListContext])
+  }, [
+    isViewMode,
+    indirectWorkForceListContext,
+    totalIndirectWorkForcePrevious,
+    totalIndirectWorkForceContext,
+  ])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode && total > 0) storeTotalIndirectWorkForce(totalIndirectWorkForce)
-  }, [totalIndirectWorkForce])
+  }, [isViewMode, total, totalIndirectWorkForce, storeTotalIndirectWorkForce])
 
   return (
     <div className="work-force-report form-group">

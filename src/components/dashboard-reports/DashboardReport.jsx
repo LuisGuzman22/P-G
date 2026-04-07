@@ -23,12 +23,11 @@ const DashboardReport = () => {
     navigate(`/informe-diario/${action}`)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.REPORTS.CREATE)) {
       navigate('/inicio')
     }
-  }, [])
+  }, [hasPermission, navigate])
 
   useEffect(() => {
     let rep = []

@@ -115,20 +115,16 @@ const EquipmentWorkForce = () => {
     deleteEquipmentWorkForce(id)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    setEquipmentWorkForce({
-      ...equipmentWorkForce,
-      equipmentSubWorkFront: enableSubFrontWork
-        ? equipmentWorkForce.equipmentSubWorkFront
-        : undefined,
-    })
+    setEquipmentWorkForce((prev) => ({
+      ...prev,
+      equipmentSubWorkFront: enableSubFrontWork ? prev.equipmentSubWorkFront : undefined,
+    }))
   }, [enableSubFrontWork])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeEquipmentWorkForce(equipmentWorkForceList)
-  }, [equipmentWorkForceList])
+  }, [isViewMode, equipmentWorkForceList, storeEquipmentWorkForce])
 
   return (
     <div className="work-force-report">

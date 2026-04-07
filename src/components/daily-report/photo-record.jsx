@@ -34,10 +34,9 @@ const PhotoRecord = () => {
 
   const [items, setFileAndDescription] = useFileState(5) // Adjust the number of files as needed
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storePhoto(items)
-  }, [items])
+  }, [isViewMode, items, storePhoto])
 
   const onChangeFile = (pos, e) => {
     if (pos >= 0 && pos < items.length) {

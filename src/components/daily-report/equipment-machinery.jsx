@@ -96,10 +96,9 @@ const EquipmentMachinery = () => {
     deleteEquipment(id)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeEquipment(equipmentList)
-  }, [equipmentList])
+  }, [isViewMode, equipmentList, storeEquipment])
 
   useEffect(() => {
     let equipmentTotalsInitialStateCounter = {
