@@ -71,7 +71,6 @@ const ModalAddMachinery = (props) => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedMachinery?.name) {
@@ -89,36 +88,24 @@ const ModalAddMachinery = (props) => {
           name: machineryName,
           plates: plateFiltered,
         })
-        // props.sendDataToParent(false)
       } else {
         register({
           name: machineryName,
           plates: plateList,
         })
-        // props.sendDataToParent(false)
       }
     }
-  }, [errorForm])
+  }, [errorForm, machineryName, plateList, props, register, updateMachinery])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
-      // console.log('1')
       if (errorMessage) {
-        // console.log('2')
         if (errorMessage.length === 0) {
-          // console.log('se cierra')
           props.sendDataToParent(false)
-        } else {
-          // console.log('3')
         }
-      } else {
-        // console.log('4')
       }
-    } else {
-      // console.log('5')
     }
-  }, [errorMessage, errorForm])
+  }, [errorForm, errorMessage, props])
 
   return (
     <CModal

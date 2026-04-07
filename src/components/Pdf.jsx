@@ -67,7 +67,6 @@ const Pdf = (props) => {
   const [selectedIndirectShift, setSelectedIndirectShift] = useState('')
   const [selectedIndirectHours, setSelectedIndirectHours] = useState('')
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const weatherSel = company?.dailyReportWeather
       ? weather.find((weath) => weath.id === company?.dailyReportWeather)

@@ -65,7 +65,6 @@ const ModalAssignPermission = (props) => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       const permissionsNameList = []
@@ -79,21 +78,18 @@ const ModalAssignPermission = (props) => {
         permissions: permissionsNameList,
       })
     }
-  }, [errorForm])
+  }, [errorForm, userId, userName, userPermissions, updateUser])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (userErrorMessage) {
         if (userErrorMessage.length === 0) {
           props.sendDataToParent(false)
-        } else {
         }
-      } else {
       }
     } else {
     }
-  }, [userErrorMessage, errorForm])
+  }, [errorForm, userErrorMessage, props])
 
   return (
     <CModal

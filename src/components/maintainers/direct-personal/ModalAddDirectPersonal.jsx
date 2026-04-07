@@ -56,7 +56,6 @@ const ModalAddDirectPersonal = (props) => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedDirectPersonal?.name) {
@@ -74,7 +73,7 @@ const ModalAddDirectPersonal = (props) => {
         props.sendDataToParent(false)
       }
     }
-  }, [errorForm])
+  }, [errorForm, directPersonalName, contractLS, props, register, updateDirectPersonal])
 
   return (
     <CModal

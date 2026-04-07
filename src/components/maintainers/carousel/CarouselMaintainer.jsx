@@ -17,12 +17,11 @@ const CarouselMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.CAROUSEL.CREATE)) {
       navigate('/inicio')
     }
-  }, [])
+  }, [hasPermission, navigate])
 
   return (
     <div className="technical-doc-maintainer">

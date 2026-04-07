@@ -46,7 +46,6 @@ const ModalAddCompany = (props) => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedCompany?.name) {
@@ -54,17 +53,14 @@ const ModalAddCompany = (props) => {
           id: props.selectedCompany.id,
           name: companyName,
         })
-        // props.sendDataToParent(false)
       } else {
         register({
           name: companyName,
         })
-        // props.sendDataToParent(false)
       }
     }
-  }, [errorForm])
+  }, [errorForm, companyName, props, register, updateCompany])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3 && errorMessage && errorMessage.length === 0) {
       if (props.onCompanyCreated) {
@@ -73,7 +69,7 @@ const ModalAddCompany = (props) => {
         props.sendDataToParent(false)
       }
     }
-  }, [errorMessage, errorForm])
+  }, [errorForm, errorMessage, props])
 
   return (
     <CModal

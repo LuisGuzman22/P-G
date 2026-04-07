@@ -80,7 +80,6 @@ const ModalAddProject = (props) => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (project?.id) {
@@ -90,33 +89,21 @@ const ModalAddProject = (props) => {
           description: project.projectDescription,
           manager: project.projectManager,
         })
-        // props.sendDataToParent(false)
       } else {
         register(project)
-        // props.sendDataToParent(false)
       }
     }
-  }, [errorForm])
+  }, [errorForm, project, register, update])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
-      // console.log('1')
       if (errorMessage) {
-        // console.log('2')
         if (errorMessage.length === 0) {
-          // console.log('se cierra')
           props.sendDataToParent(false)
-        } else {
-          // console.log('3')
         }
-      } else {
-        // console.log('4')
       }
-    } else {
-      // console.log('5')
     }
-  }, [errorMessage, errorForm])
+  }, [errorForm, errorMessage, props])
 
   return (
     <CModal

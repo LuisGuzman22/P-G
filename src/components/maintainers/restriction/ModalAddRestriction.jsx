@@ -58,7 +58,6 @@ const ModalAddRestriction = (props) => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedRestriction?.name) {
@@ -67,36 +66,24 @@ const ModalAddRestriction = (props) => {
           name: restrictionName,
           contract_id: contractLS.id,
         })
-        // props.sendDataToParent(false)
       } else {
         register({
           name: restrictionName,
           contract_id: contractLS.id,
         })
-        // props.sendDataToParent(false)
       }
     }
-  }, [errorForm])
+  }, [errorForm, restrictionName, contractLS, props, register, updateRestriction])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
-      // console.log('1')
       if (errorMessage) {
-        // console.log('2')
         if (errorMessage.length === 0) {
-          // console.log('se cierra')
           props.sendDataToParent(false)
-        } else {
-          // console.log('3')
         }
-      } else {
-        // console.log('4')
       }
-    } else {
-      // console.log('5')
     }
-  }, [errorMessage, errorForm])
+  }, [errorForm, errorMessage, props])
 
   return (
     <CModal
