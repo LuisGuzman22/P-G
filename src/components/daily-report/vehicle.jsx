@@ -97,6 +97,7 @@ const Vehicle = () => {
     deletevehicle(id)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeVehicle(vehicleList)
   }, [vehicleList])

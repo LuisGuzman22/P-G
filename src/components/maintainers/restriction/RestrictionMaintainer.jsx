@@ -17,13 +17,10 @@ const RestrictionMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.RESTRICTIONS.VIEW)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 

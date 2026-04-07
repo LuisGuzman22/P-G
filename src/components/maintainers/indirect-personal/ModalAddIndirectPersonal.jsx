@@ -11,13 +11,10 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
-  CFormCheck,
   CToast,
   CToastBody,
 } from '@coreui/react'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useDirectPersonal from 'src/hooks/useDirectPersonal'
 import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
 
 const ModalAddIndirectPersonal = (props) => {
@@ -59,6 +56,7 @@ const ModalAddIndirectPersonal = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedIndirectPersonal?.name) {

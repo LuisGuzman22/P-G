@@ -6,7 +6,7 @@ import { usePermissions } from 'src/providers/PermissionsProvider'
 
 const useLogin = () => {
   const [error, setError] = useState()
-  const [isError, setIsError] = useState(false)
+  const [, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const queryClient = useQueryClient()
   const navigate = useNavigate()

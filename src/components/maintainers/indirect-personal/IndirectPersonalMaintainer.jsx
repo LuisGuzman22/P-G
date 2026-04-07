@@ -19,13 +19,10 @@ const IndirectPersonalMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.INDIRECT_PERSONAL.VIEW)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 

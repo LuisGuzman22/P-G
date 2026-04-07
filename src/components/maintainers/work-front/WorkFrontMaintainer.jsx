@@ -19,13 +19,10 @@ const WorkFrontMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.WORK_FRONT.VIEW)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
   return (

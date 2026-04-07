@@ -115,6 +115,7 @@ const EquipmentWorkForce = () => {
     deleteEquipmentWorkForce(id)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setEquipmentWorkForce({
       ...equipmentWorkForce,
@@ -124,6 +125,7 @@ const EquipmentWorkForce = () => {
     })
   }, [enableSubFrontWork])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeEquipmentWorkForce(equipmentWorkForceList)
   }, [equipmentWorkForceList])

@@ -14,13 +14,10 @@ import {
   CToast,
   CToastBody,
 } from '@coreui/react'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useEquipment from 'src/hooks/useEquipment'
 import './css.scss'
 import useCompany from 'src/hooks/useCompany'
 
 const ModalAddCompany = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
 
   const handleClick = () => {
     props.sendDataToParent(false)
@@ -50,6 +47,7 @@ const ModalAddCompany = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedCompany?.name) {
@@ -67,6 +65,7 @@ const ModalAddCompany = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3 && errorMessage && errorMessage.length === 0) {
       if (props.onCompanyCreated) {

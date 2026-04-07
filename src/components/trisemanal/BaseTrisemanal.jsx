@@ -2,19 +2,15 @@
 import {
   CAlert,
   CButton,
-  CCol,
   CFormInput,
-  CRow,
   CTable,
   CTableBody,
   CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
   CTableRow,
   CToast,
   CToastBody,
 } from '@coreui/react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import useGetTrisemanalData from 'src/hooks/useGetTrisemanalData'
 import './css.scss'
@@ -41,7 +37,7 @@ const BaseTrisemanal = () => {
   const [file, setFile] = useState()
 
   const onHandleSubmit = () => {
-    const data = uploadTrisemanal(file)
+    uploadTrisemanal(file)
   }
 
   const handleUploadFile = (e) => {
@@ -49,13 +45,10 @@ const BaseTrisemanal = () => {
     setFile(xls[0])
   }
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.ACTIVITY.VIEW)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 

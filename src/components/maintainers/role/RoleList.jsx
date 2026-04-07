@@ -3,8 +3,6 @@ import { CButton } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import useMachinery from 'src/hooks/useMachinery'
-import ModalAddMachinery from './ModalAddRole'
 import './css.scss'
 
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'

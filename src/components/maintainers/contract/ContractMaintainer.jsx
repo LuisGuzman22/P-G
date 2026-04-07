@@ -12,20 +12,17 @@ import { PERMISSIONS } from 'src/utils/contant'
 
 const ContractMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useContracts()
-  const { data } = useCompany()
+  useCompany()
   let navigate = useNavigate()
 
   const [visibleContract, setVisibleContract] = useState(false)
 
   const { hasPermission } = usePermissions()
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.CONTRACT.CREATE)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 

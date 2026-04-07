@@ -2,7 +2,6 @@ import { React, useEffect, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import './css.scss'
-import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import CarouselList from './CarouselList'
 import ModalAddImage from './ModalAddImage'
 import useCarousel from 'src/hooks/useCarousel'
@@ -18,13 +17,10 @@ const CarouselMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.CAROUSEL.CREATE)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 

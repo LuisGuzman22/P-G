@@ -15,12 +15,10 @@ import {
   CToastBody,
   CFormCheck,
 } from '@coreui/react'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
 import useWorkFront from 'src/hooks/useWorkFront'
 
 const ModalAddWorkFront = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
 
   const handleClick = () => {
     props.sendDataToParent(false)
@@ -59,6 +57,7 @@ const ModalAddWorkFront = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedWorkFront?.name) {
@@ -78,6 +77,7 @@ const ModalAddWorkFront = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       // console.log('1')

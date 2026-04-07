@@ -47,19 +47,15 @@ const DailyReportEditCollapse = () => {
 
   const [isLoading] = useState(false)
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
   useEffect(() => {
     if (!isFetching) loadData()
   }, [isFetching, loadData])
 
   useEffect(() => {
     if (isError) {
-      redirectTo(`/dashboard-reportes`)
+      navigate(`/dashboard-reportes`)
     }
-  }, [isError, redirectTo])
+  }, [isError, navigate])
 
   const { updateData, loading, error, success, errorMessage } = useRegisterDailyReport()
 

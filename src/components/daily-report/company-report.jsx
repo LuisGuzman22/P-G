@@ -48,7 +48,7 @@ const CompanyReport = () => {
 
   const [indirectPersonalList, setIndirectPersonalList] = useState([])
   const [indirectPersonal, setIndirectPersonal] = useState(initialState)
-  const [error, setError] = useState(false)
+  const [, setError] = useState(false)
 
   const onChangeData = (e) => {
     storeCompanyData(e)

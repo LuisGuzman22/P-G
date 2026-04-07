@@ -57,6 +57,7 @@ const TotalDirectWorkForce = () => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setTotalDirectWorkForce({
       ...totalDirectWorkForce,
@@ -64,6 +65,7 @@ const TotalDirectWorkForce = () => {
     })
   }, [directAccumulatedActual])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setTotalDirectWorkForce({
       ...totalDirectWorkForce,
@@ -71,6 +73,7 @@ const TotalDirectWorkForce = () => {
     })
   }, [totalDirectWorkForcePrevious])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) {
       let hours = 0
@@ -124,6 +127,7 @@ const TotalDirectWorkForce = () => {
     }
   }, [directWorkForceListContext])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode && total > 0) storeTotalDirectWorkForce(totalDirectWorkForce)
   }, [totalDirectWorkForce])

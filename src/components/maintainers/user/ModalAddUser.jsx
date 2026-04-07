@@ -11,17 +11,13 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
-  CFormCheck,
   CToast,
   CToastBody,
   CFormSelect,
 } from '@coreui/react'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
 import useUser from 'src/hooks/useUser'
 import { regex } from 'src/utils/regex'
-import useCompany from 'src/hooks/useCompany'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const ModalAddUser = (props) => {
@@ -32,8 +28,6 @@ const ModalAddUser = (props) => {
     company_id: undefined,
     job_position: undefined,
   }
-  const { getProject, getContract } = useRegisterGeneralData()
-
   const [user, setUser] = useState(props.selectedUser ? props.selectedUser : initialState)
   const [userNameError, setUserNameError] = useState(false)
   const [userEmailError, setUserEmailError] = useState(false)
@@ -58,8 +52,6 @@ const ModalAddUser = (props) => {
     isError,
     updateUser,
     errorMessage,
-    refetch,
-    isRefetching,
   } = useUser()
 
   const onChangeData = (e) => {
@@ -132,6 +124,7 @@ const ModalAddUser = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedUser?.name) {
@@ -159,6 +152,7 @@ const ModalAddUser = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       // console.log('1')

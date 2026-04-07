@@ -50,6 +50,7 @@ const ModalAddShift = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedShift?.name) {
@@ -69,6 +70,7 @@ const ModalAddShift = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       // console.log('1')

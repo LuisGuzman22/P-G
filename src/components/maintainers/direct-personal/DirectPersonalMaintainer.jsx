@@ -1,4 +1,4 @@
-import { React, useEffect, useMemo, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { CCard, CCardBody, CButton } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import ModalAddDirectPersonal from './ModalAddDirectPersonal'
@@ -17,19 +17,12 @@ const DirectPersonalMaintainer = () => {
   const [visibleDirectPersonal, setVisibleDirectPersonal] = useState(false)
   const [visibleRestoreDirectPersonal, setVisibleRestoreDirectPersonal] = useState(false)
 
-  const directPersonalListMemo = useMemo(() => {
-    return <DirectPersonalList />
-  }, [isLoading, isRefetching])
-
   const { hasPermission } = usePermissions()
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.DIRECT_PERSONAL.VIEW)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 

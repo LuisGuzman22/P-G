@@ -83,10 +83,11 @@ const DirectWorkForce = () => {
     setDirectWorkForce({ directWorkForce: e.value })
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const data = []
     if (basicQuery && basicQuery.directPersonal) {
-      basicQuery.directPersonal.map((directPersonalCached) => {
+      basicQuery.directPersonal.forEach((directPersonalCached) => {
         data.push({ value: directPersonalCached.id, label: directPersonalCached.name })
       })
       setOptions(data)
@@ -143,14 +144,16 @@ const DirectWorkForce = () => {
     deleteDirectWorkForce(id)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeDirectWorkForce(directWorkForceList)
   }, [directWorkForceList])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let offered = 0
     let worked = 0
-    directWorkForceListContext.map((data) => {
+    directWorkForceListContext.forEach((data) => {
       offered = offered + Number(data.offeredNumber)
       worked = worked + Number(data.workNumber)
     })

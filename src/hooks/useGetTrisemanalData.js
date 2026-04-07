@@ -72,7 +72,6 @@ const useGetTrisemanalData = () => {
     errorTrisemanal,
     uploadTrisemanal,
     loadingPlanning,
-    loadingTrisemanal,
   }
 }
 

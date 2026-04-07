@@ -3,7 +3,6 @@ import { CButton } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import useVehicle from 'src/hooks/useVehicle'
 import ModalAddProject from 'src/components/maintainers/project/ModalAddProject'
 import useProjects from 'src/hooks/useProjects'
 

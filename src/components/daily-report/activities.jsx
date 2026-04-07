@@ -138,6 +138,7 @@ const Activities = () => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const realHpurs = activity.activityHoursSpendShift
       ? Number(activity.activityHoursSpendShift)
@@ -180,6 +181,7 @@ const Activities = () => {
     activity.activityTotalAmount,
   ])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // El primero debe llamarse "HH Ganadas Real Turno" que debe ser un campo abierto,
     // numérico, y que se debe precalcular de la siguiente forma:

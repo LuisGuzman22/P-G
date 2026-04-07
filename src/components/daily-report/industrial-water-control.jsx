@@ -57,7 +57,6 @@ const IndustrialWaterControl = () => {
     removealjibe,
     aljibeList: aljibeListContext,
     storeAccumulatedM3,
-    accumulatedM3: accumulatedM3Context,
   } = useRegisterDailyReportCompany()
 
   const selectedReport = getData('selectedReport')
@@ -140,6 +139,7 @@ const IndustrialWaterControl = () => {
     deletealjibe(id)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let tempAcumulated = selectedReport?.aljibeList[0]?.aljibeM3Accumulated || 0
     aljibeList.map((aljibe) => {
@@ -152,6 +152,7 @@ const IndustrialWaterControl = () => {
     }
   }, [aljibeList])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     storeAccumulatedM3(accumulatedM3)
     let aljData = {}
@@ -173,6 +174,7 @@ const IndustrialWaterControl = () => {
     }
   }, [accumulatedM3])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let aljibeTotalsCounter = {
       aljibeM3: 0,
@@ -189,6 +191,7 @@ const IndustrialWaterControl = () => {
     setAlgibeTotals(aljibeTotalsCounter)
   }, [aljibeListContext])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isCreatingMode || isEditMode) {
       if (selectedReport && selectedReport.aljibeList.length > 0) {

@@ -11,8 +11,6 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
-  CFormCheck,
   CToast,
   CToastBody,
 } from '@coreui/react'
@@ -81,6 +79,7 @@ const ModalAddProject = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (project?.id) {
@@ -98,6 +97,7 @@ const ModalAddProject = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       // console.log('1')

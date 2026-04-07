@@ -3,23 +3,15 @@ import {
   CCard,
   CCardBody,
   CButton,
-  CTable,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableBody,
-  CTableDataCell,
 } from '@coreui/react'
-import Skeleton from 'react-loading-skeleton'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useNavigate } from 'react-router-dom'
 import CIcon from '@coreui/icons-react'
-import { cilNotes, cilPencil, cilWatch, cilTrash } from '@coreui/icons'
+import { cilNotes, cilPencil } from '@coreui/icons'
 import './css.scss'
 
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
-import { MenuItem } from '@mui/material'
 import { usePermissions } from 'src/providers/PermissionsProvider'
 import { PERMISSIONS } from 'src/utils/contant'
 
@@ -30,24 +22,21 @@ const DashboardReport = () => {
   const { hasPermission } = usePermissions()
   const [reportsData, setReportsData] = useState([])
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
   const handleSelectReport = (report, action) => {
     localStorage.setItem('daily_report', report.id)
-    redirectTo(`/informe-diario/${action}`)
+    navigate(`/informe-diario/${action}`)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.REPORTS.CREATE)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 
   useEffect(() => {
     let rep = []
-    reportsQuery.map((report) => {
+    reportsQuery.forEach((report) => {
       rep.push({
         id: report.id,
         date: report.company?.dailyReportDate,

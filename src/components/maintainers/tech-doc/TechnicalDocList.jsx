@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   CButton,
   CTable,
@@ -9,7 +9,7 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilPencil, cilTrash } from '@coreui/icons'
+import { cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import { usePermissions } from 'src/providers/PermissionsProvider'

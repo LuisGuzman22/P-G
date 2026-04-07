@@ -19,7 +19,7 @@ import EquipmentPlate from './daily-report/equipment-plate'
 import VehiclePlate from './daily-report/vehicle-plate'
 import IndustrialWaterControl from './daily-report/industrial-water-control'
 import PhotoRecord from './daily-report/photo-record'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import ModalSendDailyReport from './ModalSendDailyReport'
 import Pdf from './Pdf'
@@ -30,8 +30,6 @@ import Skeleton from 'react-loading-skeleton'
 import { useFetchReportData } from 'src/hooks/useFetch'
 
 const DailyReportViewCollapse = () => {
-  const currentLocation = useLocation().pathname
-  const isViewMode = currentLocation.includes('/view')
   const navigate = useNavigate()
 
   const { isFetching, isError } = useFetchReportData()
@@ -67,19 +65,15 @@ const DailyReportViewCollapse = () => {
   const [url, setUrl] = useState()
   const [pdfName, setPdfName] = useState('')
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
   useEffect(() => {
     if (!isFetching) loadData()
   }, [isFetching, loadData])
 
   useEffect(() => {
     if (isError) {
-      redirectTo(`/dashboard-reportes`)
+      navigate(`/dashboard-reportes`)
     }
-  }, [isError, redirectTo])
+  }, [isError, navigate])
 
   const [totalPlanedDotation, setTotalPlanedDotation] = useState(0)
   const [totalWorkDotation, setTotalWorkDotation] = useState(0)
@@ -96,7 +90,7 @@ const DailyReportViewCollapse = () => {
   const [unscheduleMaintimeTime, setUnscheduleMaintimeTime] = useState(0)
   const [unscheduleDelay, setUnscheduleDelay] = useState(0)
   const [reserves, setReserves] = useState(0)
-  const [totals, setTotals] = useState(0)
+  const [, setTotals] = useState(0)
   useEffect(() => {
     let newTotals = 0
     let newEffectiveTime = 0

@@ -11,8 +11,6 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
-  CFormCheck,
   CToast,
   CToastBody,
 } from '@coreui/react'
@@ -58,6 +56,7 @@ const ModalAddDirectPersonal = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedDirectPersonal?.name) {

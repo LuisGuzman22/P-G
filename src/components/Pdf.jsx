@@ -67,6 +67,7 @@ const Pdf = (props) => {
   const [selectedIndirectShift, setSelectedIndirectShift] = useState('')
   const [selectedIndirectHours, setSelectedIndirectHours] = useState('')
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const weatherSel = company?.dailyReportWeather
       ? weather.find((weath) => weath.id === company?.dailyReportWeather)
@@ -725,6 +726,7 @@ const Pdf = (props) => {
                           </tr>
                         )
                       }
+                      return null
                     })}
                     <tr>
                       <td className="td-total-label">Total</td>
@@ -837,6 +839,7 @@ const Pdf = (props) => {
                           </tr>
                         )
                       }
+                      return null
                     })}
                     <tr>
                       <td className="td-total-label">Total</td>
@@ -925,6 +928,7 @@ const Pdf = (props) => {
                           </tr>
                         )
                       }
+                      return null
                     })}
                     <tr>
                       <td className="td-total-label">Total</td>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   CButton,
   CTable,
@@ -8,14 +8,7 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilPencil, cilTrash } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import useVehicle from 'src/hooks/useVehicle'
-import ModalAddProject from 'src/components/maintainers/project/ModalAddProject'
-import useProjects from 'src/hooks/useProjects'
-import ModalAddContract from './ModalAsignContract'
-import useContracts from 'src/hooks/useContracts'
 
 const ContractAsignList = () => {
   const { getData } = useGetCachedQueryData()

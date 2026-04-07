@@ -4,7 +4,6 @@ import {
   CCol,
   CCard,
   CCardBody,
-  CCardTitle,
   CCardText,
   CButton,
   CAccordion,

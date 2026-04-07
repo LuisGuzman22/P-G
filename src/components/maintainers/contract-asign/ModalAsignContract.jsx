@@ -8,16 +8,12 @@ import {
   CModal,
   CModalBody,
   CForm,
-  CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
-  CFormCheck,
   CToast,
   CToastBody,
   CFormSelect,
 } from '@coreui/react'
-import useContracts from 'src/hooks/useContracts'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useAsignContracts from 'src/hooks/useAsignContract'
 const ModalAsignContract = (props) => {
@@ -29,7 +25,7 @@ const ModalAsignContract = (props) => {
   const projectsQuery = getData('projects')
   const contractQuery = getData('contracts')
 
-  const { errorMutate, isError, register, errorMessage } = useAsignContracts()
+  const { isError, register, errorMessage } = useAsignContracts()
 
   const [projectContract, setProjectContract] = useState(initialState)
 
@@ -69,6 +65,7 @@ const ModalAsignContract = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       register(projectContract)
@@ -76,6 +73,7 @@ const ModalAsignContract = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       // console.log('1')

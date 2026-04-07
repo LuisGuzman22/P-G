@@ -31,8 +31,7 @@ const ProjectSelector = () => {
 
   const { data: projectData, isLoading } = useGetProjects(1)
 
-  const { data: companyData, isLoading: companyLoading } = useCompany()
-  const [companyList, setCompanyList] = useState()
+  const { data: companyData } = useCompany()
 
   const [projectList, setProjectList] = useState()
 

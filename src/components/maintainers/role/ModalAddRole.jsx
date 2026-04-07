@@ -11,19 +11,15 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
   CFormCheck,
   CToast,
   CToastBody,
 } from '@coreui/react'
-import useMachinery from 'src/hooks/useMachinery'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
 import useRole from 'src/hooks/useRole'
 import usePermission from 'src/hooks/usePermission'
 
 const ModalAddRole = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
 
   const handleClick = () => {
     props.sendDataToParent(false)
@@ -54,7 +50,7 @@ const ModalAddRole = (props) => {
         setRolePermissions([{ id: e.target.id, name: e.target.name }])
       }
     } else {
-      setRolePermissions((prev) => prev.filter((p) => p.id != e.target.id))
+      setRolePermissions((prev) => prev.filter((p) => p.id !== e.target.id))
     }
   }
 
@@ -72,10 +68,11 @@ const ModalAddRole = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       const permissionsNameList = []
-      rolePermissions?.map((permission) => {
+      rolePermissions?.forEach((permission) => {
         permissionsNameList.push({ name: permission.name })
       })
       if (props?.selectedRole?.name) {
@@ -95,6 +92,7 @@ const ModalAddRole = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       // console.log('1')

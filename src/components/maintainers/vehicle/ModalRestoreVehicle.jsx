@@ -14,19 +14,13 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import useVehicle from 'src/hooks/useVehicle'
 
 const ModalRestoreVehicle = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
   const vehicleQuery = getData('vehicle')
   const { restoreVehicle } = useVehicle()
-
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {
     props.sendDataToParent(false)

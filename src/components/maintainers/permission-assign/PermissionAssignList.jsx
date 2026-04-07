@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { CButton } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilPencil, cilTrash } from '@coreui/icons'
+import { cilPencil } from '@coreui/icons'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import useMachinery from 'src/hooks/useMachinery'
-import ModalAddMachinery from './ModalAssignPermission'
 import './css.scss'
 
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
@@ -12,8 +10,6 @@ import { MRT_Localization_ES } from 'material-react-table/locales/es'
 
 import { MenuItem } from '@mui/material'
 import { usePermissions } from 'src/providers/PermissionsProvider'
-import ModalAddRole from './ModalAssignPermission'
-import useRole from 'src/hooks/useRole'
 import ModalAssignPermission from './ModalAssignPermission'
 import { PERMISSIONS } from 'src/utils/contant'
 

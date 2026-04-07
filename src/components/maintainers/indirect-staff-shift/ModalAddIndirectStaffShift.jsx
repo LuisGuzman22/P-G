@@ -16,7 +16,6 @@ import {
 } from '@coreui/react'
 import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
-import useShift from 'src/hooks/useShift'
 import useIndirectStaffShift from 'src/hooks/useIndirectStaffShift'
 
 const ModalAddIndirectStaffShift = (props) => {
@@ -59,6 +58,7 @@ const ModalAddIndirectStaffShift = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (props?.selectedIndirectStaffShift?.name) {
@@ -78,6 +78,7 @@ const ModalAddIndirectStaffShift = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       // console.log('1')

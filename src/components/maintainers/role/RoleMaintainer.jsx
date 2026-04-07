@@ -19,13 +19,10 @@ const RoleMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.ROLES.VIEW)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 

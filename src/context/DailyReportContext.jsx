@@ -25,13 +25,6 @@ export const DailyReportProvider = ({ children }) => {
   }
 
   const reportId = localStorage.getItem('daily_report')
-  let selectedReport
-
-  if (reportId && reportsQuery) {
-    selectedReport = reportsQuery.find((report) => {
-      return report.id.toString() === reportId.toString()
-    })
-  }
 
   useEffect(() => {
     console.log('selectedReportQuery', selectedReportQuery)

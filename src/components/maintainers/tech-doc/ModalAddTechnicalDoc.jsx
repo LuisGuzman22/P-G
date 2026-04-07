@@ -11,18 +11,14 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
-  CFormCheck,
   CToast,
   CToastBody,
   CFormSelect,
 } from '@coreui/react'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const ModalAddTechnicalDoc = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
   const techDocCatQuery = getData('technical-documentation-categories')
 

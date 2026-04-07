@@ -70,6 +70,7 @@ const DirectDotationWorkForce = () => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setDirectDotationWorkForce({
       ...directDotationWorkForce,
@@ -129,6 +130,7 @@ const DirectDotationWorkForce = () => {
     deletedirectDotationWorkForce(id)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeDirectDotationWorkForceData(directDotationWorkForceList)
   }, [directDotationWorkForceList])

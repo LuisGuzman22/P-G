@@ -114,6 +114,7 @@ const MachineryWorkForce = () => {
     deleteMachineryWorkForce(id)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setMachineryWorkForce({
       ...machineryWorkForce,
@@ -123,6 +124,7 @@ const MachineryWorkForce = () => {
     })
   }, [enableSubFrontWork])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeMachineryWorkForce(machineryWorkForceList)
   }, [machineryWorkForceList])

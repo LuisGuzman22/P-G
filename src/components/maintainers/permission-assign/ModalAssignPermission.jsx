@@ -8,44 +8,33 @@ import {
   CModal,
   CModalBody,
   CForm,
-  CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
   CFormCheck,
   CToast,
   CToastBody,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
-import useMachinery from 'src/hooks/useMachinery'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import './css.scss'
 import useRole from 'src/hooks/useRole'
 import usePermission from 'src/hooks/usePermission'
 import useUser from 'src/hooks/useUser'
 
 const ModalAssignPermission = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
-
   const handleClick = () => {
     props.sendDataToParent(false)
   }
 
-  const [userId, setUserId] = useState(props?.selectedUser?.id || undefined)
-  const [userName, setUserName] = useState(props?.selectedUser?.name || undefined)
+  const [userId] = useState(props?.selectedUser?.id || undefined)
+  const [userName] = useState(props?.selectedUser?.name || undefined)
   const [userPermissions, setUserPermissions] = useState(
     props?.selectedUser?.permissions || undefined,
   )
 
-  const [roleError, setRoleError] = useState(false)
+  const [, setRoleError] = useState(false)
   const [errorForm, setErrorForm] = useState(0)
 
-  const { register, errorRole: error, isError, updateRole, errorMessage } = useRole()
+  const { errorRole: error, isError } = useRole()
   const {
-    errorRole: userError,
-    isError: userIsError,
     updateUser,
     errorMessage: userErrorMessage,
   } = useUser()
@@ -61,7 +50,7 @@ const ModalAssignPermission = (props) => {
       }
     } else {
       console.log('4')
-      setUserPermissions((prev) => prev.filter((p) => p != e.target.name))
+      setUserPermissions((prev) => prev.filter((p) => p !== e.target.name))
     }
   }
 
@@ -79,10 +68,11 @@ const ModalAssignPermission = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       const permissionsNameList = []
-      userPermissions?.map((permission) => {
+      userPermissions?.forEach((permission) => {
         permissionsNameList.push(permission)
       })
       console.log('permissionsNameList', permissionsNameList)
@@ -94,6 +84,7 @@ const ModalAssignPermission = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (userErrorMessage) {

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { React, useEffect, useState } from 'react'
+import { React } from 'react'
 import {
   CButton,
   CModalHeader,
@@ -7,14 +7,6 @@ import {
   CModalFooter,
   CModal,
   CModalBody,
-  CForm,
-  CFormInput,
-  CRow,
-  CCol,
-  CFormTextarea,
-  CFormCheck,
-  CToast,
-  CToastBody,
   CTable,
   CTableHead,
   CTableRow,
@@ -22,20 +14,13 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useDirectPersonal from 'src/hooks/useDirectPersonal'
-import useIndirectPersonal from 'src/hooks/useIndirectPersonal'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 
 const ModalRestoreDirectPersonal = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
   const directPersonalQuery = getData('direct-personal')
   const { restoreDirectPersonal } = useDirectPersonal()
-
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {
     props.sendDataToParent(false)

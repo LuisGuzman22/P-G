@@ -13,8 +13,8 @@ import { PERMISSIONS } from 'src/utils/contant'
 
 const UserMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useUser()
-  const { isLoading: roleLoading, refetch: roleRefetch, isRefetching: roleIsRefetching } = useRole()
-  const { data } = useCompany()
+  useRole()
+  useCompany()
   let navigate = useNavigate()
 
   const [visibleUser, setVisibleUser] = useState(false)
@@ -22,13 +22,10 @@ const UserMaintainer = () => {
 
   const { hasPermission } = usePermissions()
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.USER.VIEW)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 

@@ -76,10 +76,11 @@ const IndirectWorkForce = () => {
   //   if (isCreatingMode) setIndirectWorkForceList(indirectWorkForceListContext)
   // }, [indirectWorkForceListContext])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const data = []
     if (basicQuery && basicQuery.indirectPersonal) {
-      basicQuery.indirectPersonal.map((indirectPersonalCached) => {
+      basicQuery.indirectPersonal.forEach((indirectPersonalCached) => {
         //  return (
         //  <option key={indirectPersonalCached.id} value={indirectPersonalCached.id}>
         //    {indirectPersonalCached.name}
@@ -115,6 +116,7 @@ const IndirectWorkForce = () => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storeIndirectWorkForceData(indirectWorkForceList)
   }, [indirectWorkForceList])

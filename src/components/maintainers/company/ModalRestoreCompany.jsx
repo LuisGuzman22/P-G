@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { React, useEffect, useState } from 'react'
+import { React } from 'react'
 import {
   CButton,
   CModalHeader,
@@ -14,20 +14,14 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import useEquipment from 'src/hooks/useEquipment'
 import './css.scss'
 import useCompany from 'src/hooks/useCompany'
 
 const ModalRestoreCompany = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
   const companyQuery = getData('company')
   const { restoreCompany } = useCompany()
-
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {
     props.sendDataToParent(false)

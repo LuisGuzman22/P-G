@@ -16,7 +16,6 @@ import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 const TotalIndirectWorkForce = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
-  const isCreatingMode = currentLocation === '/informe-diario'
   const { getData } = useGetCachedQueryData()
   const reportsQuery = getData('reports')
 
@@ -69,6 +68,7 @@ const TotalIndirectWorkForce = () => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setTotalIndirectWorkForce({
       ...totalIndirectWorkForce,
@@ -76,6 +76,7 @@ const TotalIndirectWorkForce = () => {
     })
   }, [indirectAccumulatedActual])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setTotalIndirectWorkForce({
       ...totalIndirectWorkForce,
@@ -83,6 +84,7 @@ const TotalIndirectWorkForce = () => {
     })
   }, [totalIndirectWorkForcePrevious])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) {
       let hours = 0
@@ -140,6 +142,7 @@ const TotalIndirectWorkForce = () => {
     }
   }, [indirectWorkForceListContext])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode && total > 0) storeTotalIndirectWorkForce(totalIndirectWorkForce)
   }, [totalIndirectWorkForce])

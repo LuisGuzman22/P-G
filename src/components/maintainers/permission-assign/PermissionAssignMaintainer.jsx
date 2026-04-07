@@ -1,9 +1,8 @@
-import { React, useEffect, useState } from 'react'
-import { CCard, CCardBody, CButton } from '@coreui/react'
+import { React, useEffect } from 'react'
+import { CCard, CCardBody } from '@coreui/react'
 import Skeleton from 'react-loading-skeleton'
 import './css.scss'
 import { useNavigate } from 'react-router-dom'
-import ModalAddRole from './ModalAssignPermission'
 import usePermission from 'src/hooks/usePermission'
 import useUser from 'src/hooks/useUser'
 import { usePermissions } from 'src/providers/PermissionsProvider'
@@ -11,19 +10,16 @@ import PermissionAssignList from './PermissionAssignList'
 import { PERMISSIONS } from 'src/utils/contant'
 
 const PermissionAssignMaintainer = () => {
-  const { isLoading, refetch, isRefetching } = usePermission()
-  const { isLoading: userLoading, refetch: userRefetch, isRefetching: userIsRefetching } = useUser()
+  const { isLoading, isRefetching } = usePermission()
+  useUser()
   let navigate = useNavigate()
 
   const { hasPermission } = usePermissions()
 
-  const redirectTo = (url) => {
-    navigate(url)
-  }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!hasPermission(PERMISSIONS.USER.VIEW)) {
-      redirectTo('/inicio')
+      navigate('/inicio')
     }
   }, [])
 

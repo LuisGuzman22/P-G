@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { React, useEffect, useState } from 'react'
+import { React, useState } from 'react'
 import {
   CButton,
   CModalHeader,
@@ -11,21 +11,10 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
-  CFormCheck,
-  CToast,
-  CToastBody,
-  CFormSelect,
 } from '@coreui/react'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
-import useTechnicalDoc from 'src/hooks/useTechnicalDoc'
-import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import useCarousel from 'src/hooks/useCarousel'
 import useGantt from 'src/hooks/useGantt'
 
 const ModalAddGantt = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
-  const { getData } = useGetCachedQueryData()
 
   const { register } = useGantt()
   const [documentError, setDocumentError] = useState(false)

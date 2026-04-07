@@ -11,15 +11,12 @@ import {
   CFormInput,
   CRow,
   CCol,
-  CFormTextarea,
-  CFormCheck,
   CToast,
   CToastBody,
   CFormSelect,
 } from '@coreui/react'
 import useContracts from 'src/hooks/useContracts'
 import useCompany from 'src/hooks/useCompany'
-import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import ModalAddCompany from '../company/ModalAddCompany'
 const ModalAddContract = (props) => {
   const initialState = {
@@ -33,8 +30,6 @@ const ModalAddContract = (props) => {
 
   const { register, error, isError, update, errorMessage } = useContracts()
   const { data } = useCompany()
-  const { getData } = useGetCachedQueryData()
-  const companyQuery = getData('company')
 
   const [contract, setContract] = useState(
     props.selectedContract ? props.selectedContract : initialState,
@@ -120,6 +115,7 @@ const ModalAddContract = (props) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       if (contract?.id) {
@@ -132,6 +128,7 @@ const ModalAddContract = (props) => {
     }
   }, [errorForm])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (errorForm === 3) {
       // console.log('1')

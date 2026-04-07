@@ -14,20 +14,14 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useAljibe from 'src/hooks/useAljibe'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import './css.scss'
 
 const ModalRestoreAljibe = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
   const aljibeQuery = getData('aljibe')
   const { restoreAljibe } = useAljibe()
-
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {
     props.sendDataToParent(false)

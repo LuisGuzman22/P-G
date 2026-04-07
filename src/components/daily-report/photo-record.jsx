@@ -9,7 +9,7 @@ const PhotoRecord = () => {
   const currentLocation = useLocation().pathname
   const isViewMode = currentLocation.includes('/view')
 
-  const { photoList: photoListContext, storePhoto, removePhoto } = useRegisterDailyReportCompany()
+  const { storePhoto } = useRegisterDailyReportCompany()
 
   const useFileState = (initialCount) => {
     const [items, setItems] = useState(
@@ -34,6 +34,7 @@ const PhotoRecord = () => {
 
   const [items, setFileAndDescription] = useFileState(5) // Adjust the number of files as needed
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!isViewMode) storePhoto(items)
   }, [items])

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { React, useEffect, useState } from 'react'
+import { React } from 'react'
 import {
   CButton,
   CModalHeader,
@@ -14,20 +14,14 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import './css.scss'
-import useShift from 'src/hooks/useShift'
 import useIndirectStaffShift from 'src/hooks/useIndirectStaffShift'
 
 const ModalRestoreIndirectStaffShift = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
   const indirectStaffShiftQuery = getData('indirect_staff_shift')
   const { restoreIndirectStaffShift } = useIndirectStaffShift()
-
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {
     props.sendDataToParent(false)

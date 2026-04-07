@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { React, useEffect, useState } from 'react'
+import { React } from 'react'
 import {
   CButton,
   CModalHeader,
@@ -14,20 +14,13 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react'
-import { v4 as uuidv4 } from 'uuid'
-import useRegisterGeneralData from 'src/hooks/useRegisterGeneralData'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
-import useMachinery from 'src/hooks/useMachinery'
 import useRole from 'src/hooks/useRole'
 
 const ModalRestoreRole = (props) => {
-  const { getProject, getContract } = useRegisterGeneralData()
   const { getData } = useGetCachedQueryData()
   const roleQuery = getData('role')
   const { restoreRole } = useRole()
-
-  const projectLS = JSON.parse(getProject())
-  const contractLS = JSON.parse(getContract())
 
   const handleClick = () => {
     props.sendDataToParent(false)
