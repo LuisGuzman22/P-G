@@ -15,7 +15,6 @@ import {
 import useGantt from 'src/hooks/useGantt'
 
 const ModalAddGantt = (props) => {
-
   const { register } = useGantt()
   const [documentError, setDocumentError] = useState(false)
 

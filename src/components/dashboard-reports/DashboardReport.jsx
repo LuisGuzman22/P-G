@@ -1,9 +1,5 @@
 import { React, useEffect, useState } from 'react'
-import {
-  CCard,
-  CCardBody,
-  CButton,
-} from '@coreui/react'
+import { CCard, CCardBody, CButton } from '@coreui/react'
 import useGetCachedQueryData from 'src/hooks/useGetCachedQueryData'
 import { useNavigate } from 'react-router-dom'
 import CIcon from '@coreui/icons-react'

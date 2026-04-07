@@ -18,7 +18,6 @@ import './css.scss'
 import useCompany from 'src/hooks/useCompany'
 
 const ModalAddCompany = (props) => {
-
   const handleClick = () => {
     props.sendDataToParent(false)
   }

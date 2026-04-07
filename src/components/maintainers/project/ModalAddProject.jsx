@@ -9,6 +9,7 @@ import {
   CModalBody,
   CForm,
   CFormInput,
+  CFormTextarea,
   CRow,
   CCol,
   CToast,

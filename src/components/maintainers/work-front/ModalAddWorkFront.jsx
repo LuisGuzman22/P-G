@@ -19,7 +19,6 @@ import './css.scss'
 import useWorkFront from 'src/hooks/useWorkFront'
 
 const ModalAddWorkFront = (props) => {
-
   const handleClick = () => {
     props.sendDataToParent(false)
   }

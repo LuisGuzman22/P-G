@@ -34,10 +34,7 @@ const ModalAssignPermission = (props) => {
   const [errorForm, setErrorForm] = useState(0)
 
   const { errorRole: error, isError } = useRole()
-  const {
-    updateUser,
-    errorMessage: userErrorMessage,
-  } = useUser()
+  const { updateUser, errorMessage: userErrorMessage } = useUser()
   const { data: dataPermission } = usePermission()
 
   const onChangeSelectPermission = (e) => {

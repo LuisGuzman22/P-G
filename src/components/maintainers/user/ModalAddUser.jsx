@@ -46,13 +46,7 @@ const ModalAddUser = (props) => {
 
   const [errorForm, setErrorForm] = useState(0)
 
-  const {
-    register,
-    errorUser: error,
-    isError,
-    updateUser,
-    errorMessage,
-  } = useUser()
+  const { register, errorUser: error, isError, updateUser, errorMessage } = useUser()
 
   const onChangeData = (e) => {
     setErrorForm(0)

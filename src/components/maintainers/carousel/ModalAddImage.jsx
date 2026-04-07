@@ -15,7 +15,6 @@ import {
 import useCarousel from 'src/hooks/useCarousel'
 
 const ModalAddImage = (props) => {
-
   const { register } = useCarousel()
   const [documentError, setDocumentError] = useState(false)
 

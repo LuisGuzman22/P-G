@@ -9,9 +9,7 @@ import ModalAsignContract from './ModalAsignContract'
 
 const ContractAsignMaintainer = () => {
   const { isLoading, refetch, isRefetching } = useProjects()
-  const {
-    refetch: contractRefetch,
-  } = useContracts()
+  const { refetch: contractRefetch } = useContracts()
 
   const [visibleContract, setVisibleContract] = useState(false)
 

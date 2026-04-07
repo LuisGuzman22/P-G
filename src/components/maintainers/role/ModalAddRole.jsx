@@ -20,7 +20,6 @@ import useRole from 'src/hooks/useRole'
 import usePermission from 'src/hooks/usePermission'
 
 const ModalAddRole = (props) => {
-
   const handleClick = () => {
     props.sendDataToParent(false)
   }
